@@ -1,0 +1,109 @@
+/* Reset cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header full chiều ngang */
+.header {
+    width: 100%;
+    background-color: #EECFA1;
+}
+
+/* Nếu không dùng bootstrap thì tự định nghĩa container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    /* đệm cho mobile*/
+}
+
+/* Header layout */
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+/* Logo */
+.logo {}
+
+/* Menu */
+.menu {
+    display: flex;
+    gap: 54px;
+    margin-left: auto;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.menu a:hover {
+    color: #000;
+}
+
+/* Auth */
+.auth {
+    display: flex;
+    gap: 12px;
+}
+
+.auth a {
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+/* Đăng ký */
+/* .register {
+    background-color: #00ffcc;
+    color: #000;
+} */
+
+/* Đăng nhập */
+.login {
+    color: #fff;
+    border: 1px solid #fff;
+    margin-left: 52px;
+}
+
+.login:hover {
+    background-color: #fd9644;
+    color: #000;
+}
+
+/* ================Responsive==================== */
+/* Tablet & Desktop */
+@media (min-width: 768px) {
+    .header-inner {
+        height: 72px;
+    }
+
+    .logo {}
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .header-inner {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 0;
+    }
+
+    .menu {
+        width: 100%;
+        justify-content: center;
+        margin: 12px 0;
+    }
+
+    .auth {
+        width: 100%;
+        justify-content: center;
+    }
+}

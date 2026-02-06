@@ -1,0 +1,27 @@
+.auth-container {
+    width: 300px;
+    margin: 100px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.auth-container h2 {
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 8px;
+
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #f7b731;
+    color: #fff;
+}
