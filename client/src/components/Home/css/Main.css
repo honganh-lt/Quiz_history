@@ -47,13 +47,13 @@
 
 /* Ảnh chồng lên nhau */
 .body-images img {
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: -100%;
     width: 100%;
     height: auto;
     border-radius: 12px;
-    animation: slide 9s infinite;
+    /* animation: slide 9s infinite; */
 
     /* width: 100%;
     max-width: 180px;
@@ -62,7 +62,7 @@
 }
 
 /* Delay cho từng ảnh  */
-.body-images img:nth-child(1) {
+/* .body-images img:nth-child(1) {
     animation-delay: 0s;
     z-index: 3;
 }
@@ -75,7 +75,7 @@
 .body-images img:nth-child(3) {
     animation-delay: 6s;
     z-index: 1;
-}
+} */
 
 /* Animation chạy trái sang  */
 @keyframes slide {

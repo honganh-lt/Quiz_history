@@ -23,7 +23,7 @@ function ReviseLop12() {
                     </div> */}
                     <div className='body-layout-ten'>
                         <div className='body-text-ten'>
-                            <h1>Bài tập và đề thi lịch sử lớp 12</h1>
+                            <h1>Lịch sử lớp 12</h1>
                         </div>
                     </div>
                 </div>

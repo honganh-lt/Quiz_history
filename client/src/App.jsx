@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Homepage from './components/Home/homepage'
 import Practice from './components/Practice/Practice'
-import LoginSignup from './components/RegisterLogin/LoginSignup'
+// import LoginSignup from './components/RegisterLogin/LoginSignup'
 import Login from './components/RegisterLogin/Login'
 import Signup from './components/RegisterLogin/Register'
 import ReviseLop10 from './components/Practice/ReviseLop10'
@@ -18,9 +18,9 @@ function App() {
   return (
     <Routes>
       {/* <Route path="/login" element={<LoginSignup />} /> */}
-      <Route path="/" element={<Login />} />
+      {/* <Route path="/" element={<Login />} /> */}
       <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/register" element={<Signup />} />
       <Route path="/home" element={<Homepage />} />
 
 

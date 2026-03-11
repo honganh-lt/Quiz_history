@@ -22,9 +22,9 @@ function Revise() {
                     {/* Phần chữ */}
                     <div className='body-layout-revise'>
                         <div className='body-text-revise'>
-                            <h1>Bộ bài tập và đề thi trắc nghiệm online các lớp THPT</h1>
+                            <h1>Bộ bài tập trắc nghiệm online các lớp THPT</h1>
                             <p>
-                                Bộ bài tập và đề thi cá nhân hóa theo trình độ từng học sinh giúp các
+                                Bộ bài tập cá nhân hóa theo trình độ từng học sinh giúp các
                                 em tự tin đứng top chỉ với 30 phút học mỗi ngày.
                             </p>
 
@@ -38,26 +38,26 @@ function Revise() {
                 {/* <h2>Luyện theo lớp học - Sách kết nối tri thức</h2> */}
                 <div className='feature-list-revise'>
                     <div className='feature-card-revise'>
-                        <img src={img10} alt="Lịch sử lớp 10" />
-                        <h3> lớp 10</h3>
+                        {/* <img src={img10} alt="Lịch sử lớp 10" /> */}
+                        <h3> Lớp 10</h3>
                         <button className="btn-practice"
                             onClick={() => navigate("/practice/lop-10")}
                         >Luyện tập</button>
                     </div>
                     <div className='feature-card-revise'>
-                        <img src={img11} alt="Lịch sử lớp 10" />
-                        <h3> lớp 11</h3>
+                        {/* <img src={img11} alt="Lịch sử lớp 10" /> */}
+                        <h3> Lớp 11</h3>
                         <button className="btn-practice"
                             onClick={() => navigate("/practice/lop-11")}
                         >Luyện tập</button>                    </div>
                     <div className='feature-card-revise'>
-                        <img src={img12} alt="Lịch sử lớp 10" />
-                        <h3> lớp 12</h3>
+                        {/* <img src={img12} alt="Lịch sử lớp 10" /> */}
+                        <h3> Lớp 12</h3>
                         <button className="btn-practice"
                             onClick={() => navigate("/practice/lop-12")}
                         >Luyện tập</button>                    </div>
                     <div className='feature-card-revise'>
-                        <img src={img13} alt="Lịch sử lớp 10" />
+                        {/* <img src={img13} alt="Lịch sử lớp 10" /> */}
                         <h3>Đánh giá năng lực</h3>
                         <button className="btn-practice"
                             onClick={() => navigate("/practice/ĐGNL")}

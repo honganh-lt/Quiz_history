@@ -30,9 +30,9 @@ function Main() {
                         {/* Phần ảnh chuyển động */}
                         <div className='body-images'>
                             <img src={banner1} alt="slide 1" />
-                            <img src={banner1} alt="slide 2" />
+                            {/* <img src={banner1} alt="slide 2" /> */}
                             {/* <img src={banner2} alt="slide 3" /> */}
-                            <img src={banner1} alt="slide 4" />
+                            {/* <img src={banner1} alt="slide 4" /> */}
                         </div>
                     </div>
                 </div>
@@ -43,15 +43,15 @@ function Main() {
                 <h2>Luyện theo lớp học - Sách kết nối tri thức</h2>
                 <div className='feature-list'>
                     <div className='feature-card'>
-                        <img src={img10} alt="Lịch sử lớp 10" />
+                        {/* <img src={img10} alt="Lịch sử lớp 10" /> */}
                         <h3>Lịch sử lớp 10</h3>
                     </div>
                     <div className='feature-card'>
-                        <img src={img11} alt="Lịch sử lớp 10" />
+                        {/* <img src={img11} alt="Lịch sử lớp 10" /> */}
                         <h3>Lịch sử lớp 11</h3>
                     </div>
                     <div className='feature-card'>
-                        <img src={img12} alt="Lịch sử lớp 10" />
+                        {/* <img src={img12} alt="Lịch sử lớp 10" /> */}
                         <h3>Lịch sử lớp 12</h3>
                     </div>
                 </div>

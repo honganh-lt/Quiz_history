@@ -1,9 +1,20 @@
+.register-page{
+    display: flex;
+    /* căn giữa ngang */
+    justify-content: center; 
+    /* căn giữa dọc */
+    align-items: center;
+    /* background-color: white; */
+}
 .auth-container {
-    width: 300px;
-    margin: 100px auto;
+    width: 350px;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background-color: #f7b731;
 }
 
 .auth-container h2 {
@@ -22,6 +33,19 @@ button {
 }
 
 button:hover {
-    background-color: #f7b731;
+    background-color: #ee5f0c;
     color: #fff;
+}
+.auth-container label{
+    display: flex;
+    /* position: relative; */
+
+}
+.auth-container label p{
+    color: gray;
+    font-size: 13px;
+}
+.required{
+    color: red;
+    margin-left: 4px;
 }
