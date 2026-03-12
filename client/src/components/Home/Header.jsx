@@ -20,7 +20,7 @@ function Header() {
         // Sau khi xóa thì hệ thống sẽ hiểu là chưa đăng nhập
         localStorage.removeItem("user");
         // Chuyển người dùng về trang đăng nhập
-        navigate("/home");
+        navigate("/");
     }
 
     return (
@@ -32,7 +32,7 @@ function Header() {
 
                     {/* Menu chính */}
                     <nav className="menu">
-                        <a href="/home">Trang chủ</a>
+                        <a href="/">Trang chủ</a>
                         <a href="/practice">Ôn luyện</a>
                         {/* <a href="/kiem-tra">Kiểm tra</a> */}
                     </nav>

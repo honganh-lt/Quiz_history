@@ -4,11 +4,12 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
-import Users from './components/Users/Users'
+// import Users from './components/Users/Users'
 import Home from './components/Home/Home'
 import Questions from './components/Questions/Questions'
 import Chapters from './components/Chapters/Chapters'
 import LoginAdmin from './Login/LoginAdmin'
+import UserManagement from './components/Users/UserManagement'
 
 function App() {
 
@@ -37,7 +38,7 @@ function App() {
         <div className="grid-container">
           <Header OpenSidebar={OpenSidebar} />
           <Sidebar openSidebarToggle={openSidebarToggle} />
-          <Users />
+          <UserManagement />
         </div>
       } />
 

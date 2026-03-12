@@ -29,7 +29,7 @@ const Login = () => {
             if(result.user){
                 // Luu thong tin user vao localStorage
                 localStorage.setItem("user", JSON.stringify(result.user))
-                navigate("/home");
+                navigate("/");
             }else{
                 alert("Sai tài khoản hoặc mật khẩu");
             }

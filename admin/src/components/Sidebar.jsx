@@ -14,7 +14,7 @@ function Sidebar({ openSidebarToggle }) {
       <ul className="sidebar-list">
 
         <li className="sidebar-list-item">
-          <NavLink to="/home">
+          <NavLink to="/admin">
             <BsHouse className="icon" />
             Home
           </NavLink>

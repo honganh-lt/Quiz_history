@@ -5,6 +5,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  grid-area: sidebar;
   padding-top: 80px;   /* đẩy menu xuống */
 
   box-shadow: 2px 0 10px rgba(0,0,0,0.1);  /* tạo nổi */
