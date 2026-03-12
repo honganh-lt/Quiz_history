@@ -1,0 +1,37 @@
+/* .loginAdmin-container {
+    display: flex;
+    width: 500px;
+} */
+.loginAdmin {
+    width: 300px;
+    /* height: 30vh; */
+    margin: 100px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f7b731;
+}
+.loginAdmin h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+.loginAdmin input{
+    margin: 10px;
+    padding: 8px;
+    border: none;
+}
+.loginAdmin button{
+    margin: 10px;
+    padding: 8px;
+    border: none;
+    font-size: 14px;
+}
+.loginAdmin button:hover{
+    background-color: #f66e13;
+    color: #fff;
+}

@@ -122,15 +122,15 @@ body {
 
 }
 
-.sidebar-list-item>a .icon {
+/* .sidebar-list-item>a .icon {
   margin-right: 8px;
   /* chỉnh 6–10px tùy mắt */
-}
 
+/* 
 .sidebar-list-item:hover {
   background-color: rgb(250, 138, 34);
   cursor: pointer;
-}
+} */ 
 
 .sidebar-reponsive {
   display: inline !important;

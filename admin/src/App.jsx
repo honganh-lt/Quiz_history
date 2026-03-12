@@ -1,24 +1,17 @@
 import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
-// import Home from './components/Home'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
+
 import Users from './components/Users/Users'
 import Home from './components/Home/Home'
 import Questions from './components/Questions/Questions'
 import Chapters from './components/Chapters/Chapters'
-// import Home from './components/Home'
-// import Home from './components/Users/Home'
-// import { Route, Router, Routes } from 'react-router-dom'
-// import HomeAdmin from './components/Home/HomeAdmin'
-// import Homepage from '../../client/src/components/Home/homepage'
-// import HomeAdmin from './components/Home/homepage'
+import LoginAdmin from './Login/LoginAdmin'
 
 function App() {
-  // const [count, setCount] = useState(0)
+
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
 
   const OpenSidebar = () => {
@@ -26,22 +19,48 @@ function App() {
   }
 
   return (
-    <div className="grid-container">
-      <Header OpenSidebar={OpenSidebar} />
-      <Sidebar openSidebarToggle={openSidebarToggle} />
-      {/* <Home /> */}
+    <Routes>
 
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/users' element={<Users />} />
-        <Route path='/questions' element={<Questions />} />
-        <Route path='/chapters' element={<Chapters />} />
+      {/* Trang login KHÔNG có sidebar */}
+      <Route path="/login" element={<LoginAdmin />} />
 
+      {/* Trang admin */}
+      <Route path="/admin" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <Home />
+        </div>
+      } />
 
-      </Routes>
+      <Route path="/users" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <Users />
+        </div>
+      } />
 
-    </div>
+      <Route path="/questions" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <Questions />
+        </div>
+      } />
 
+      <Route path="/chapters" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <Chapters />
+        </div>
+      } />
+
+      {/* vào web sẽ chuyển về login */}
+      <Route path="/" element={<Navigate to="/login" />} />
+
+    </Routes>
   )
 }
 
