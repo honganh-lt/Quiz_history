@@ -76,16 +76,26 @@
 
 .answers {
     display: flex;
-    gap: 12px;
     margin-top: 8px;
+    /* Xếp dọc */
+    flex-direction: column;
+    /* Khoảng cách giữa các đáp án */
+     gap: 10px;
 }
 
 .answer-btn {
-    padding: 8px 14px;
+    /* padding: 8px 14px;
     border-radius: 6px;
     border: 1px solid #ccc;
     background: white;
+    cursor: pointer; */
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: white;
     cursor: pointer;
+    border-radius: 6px;
 }
 
 .answer-btn.selected {

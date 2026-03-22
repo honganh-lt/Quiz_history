@@ -6,10 +6,15 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 
 // import Users from './components/Users/Users'
 import Home from './components/Home/Home'
-import Questions from './components/Questions/Questions'
-import Chapters from './components/Chapters/Chapters'
+// import Questions from './components/Questions/Questions'
+// import Chapters from './components/Chapters/Chapters'
 import LoginAdmin from './Login/LoginAdmin'
 import UserManagement from './components/Users/UserManagement'
+import ManageTopics from './components/Topics/ManageTopics'
+import { ManageQuestions } from './components/Questions/ManageQuestions'
+import { ManageLessons } from './components/Lessons/ManageLessons'
+import { ManageExam } from './components/Exam/ManageExam'
+// import ManageTopics from './components/Chapters/ManageTopics'
 
 function App() {
 
@@ -42,19 +47,33 @@ function App() {
         </div>
       } />
 
+      <Route path="/topics" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <ManageTopics/>
+        </div>
+      } />
+      <Route path="/lessons" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <ManageLessons />
+        </div>
+      } />
       <Route path="/questions" element={
         <div className="grid-container">
           <Header OpenSidebar={OpenSidebar} />
           <Sidebar openSidebarToggle={openSidebarToggle} />
-          <Questions />
+          <ManageQuestions />
         </div>
       } />
 
-      <Route path="/chapters" element={
+      <Route path="/exam" element={
         <div className="grid-container">
           <Header OpenSidebar={OpenSidebar} />
           <Sidebar openSidebarToggle={openSidebarToggle} />
-          <Chapters />
+          <ManageExam />
         </div>
       } />
 

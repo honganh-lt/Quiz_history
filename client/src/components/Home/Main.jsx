@@ -2,12 +2,12 @@ import './css/Main.css'
 // import banner from "../../assets/images/banner-ls.png";
 import banner1 from "../../assets/images/banner-ls.png";
 
-import banner2 from "../../assets/images/banner-ls2.jpg";
+// import banner2 from "../../assets/images/banner-ls2.jpg";
 // import banner3 from "../../assets/images/banner-ls2.jpg";
-import banner4 from "../../assets/images/banner-ls4.png";
-import img10 from "../../assets/images/lop10.jpg";
-import img11 from "../../assets/images/lop11.jpg";
-import img12 from "../../assets/images/lop12.jpg";
+// import banner4 from "../../assets/images/banner-ls4.png";
+// import img10 from "../../assets/images/lop10.jpg";
+// import img11 from "../../assets/images/lop11.jpg";
+// import img12 from "../../assets/images/lop12.jpg";
 
 
 

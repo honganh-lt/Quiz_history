@@ -85,7 +85,9 @@
 .user-info{
     padding: 8px 12px;
     /* tạo chữ cái đầu viết hoa */
-    text-transform: capitalize; 
+    text-transform: capitalize;
+    color: #000; 
+    margin-left: 80px;
 }
 .dropdown{
     position: absolute;

@@ -33,8 +33,8 @@ function Header() {
                     {/* Menu chính */}
                     <nav className="menu">
                         <a href="/">Trang chủ</a>
-                        <a href="/practice">Ôn luyện</a>
-                        {/* <a href="/kiem-tra">Kiểm tra</a> */}
+                        <a href="/practice">Ôn tập</a>
+                        <a href="/exam">Luyện thi</a>
                     </nav>
 
                     {/* Auth */}

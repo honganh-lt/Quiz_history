@@ -1,0 +1,46 @@
+/* nền mờ phía sau modal */
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+/* khung modal */
+.modal-delete{
+    background: rgb(249, 232, 232);
+    padding: 25px;
+    border-radius: 6px;
+    width: 350px;
+    text-align: center;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Tiêu đề */
+.modal-delete h3{
+    margin-bottom: 20px;
+}
+ /* container chung */
+ .modal-actions-delete button{
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 20px;
+ }
+
+ /* nút xóa */
+ .modal-actions-delete button:first-child{
+    background: #e74c3c;
+    color: white;
+ }
+ /* nút đóng */
+.modal-actions-delete button:last-child{
+    background: #bdc3c7;
+}

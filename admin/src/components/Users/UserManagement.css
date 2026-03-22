@@ -114,7 +114,11 @@
 
 /* Pagination */
 .pagination{
-    margin-top: 15px;
+    margin-top: 20px;
+    display: flex;
+    /* gap: 10px; */
+    justify-content: center;
+    align-items: center;
 
 }
 .pagination button {
@@ -122,8 +126,14 @@
     padding: 5px 10px;
     border: 1px solid #ddd;
     background: white;
+    cursor: pointer;
 }
-.pagination .active:hover {
+.pagination button.active {
     background: #2f80ed;
     color: white;
+}
+.pagination button.disabled{
+    /*  */
+    opacity: 0.5;
+    cursor: not-allowed;
 }

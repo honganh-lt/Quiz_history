@@ -21,6 +21,7 @@ function LoginAdmin() {
     }
 
     try {
+      // dùng .trim():
       const result = await login(username.trim(), password.trim());
       //chạy
       console.log(result);
@@ -36,11 +37,19 @@ function LoginAdmin() {
     }
 
       //Kiểm tra có user trả về không
+        localStorage.setItem("token", result.token)
         //Lưu thông tin user vào localStorage
         localStorage.setItem("user", JSON.stringify(result.user))
         navigate("/admin");
     } catch(error){
       console.error(error);
+
+      // kiểm tra kết nối server
+      if(error.response){
+        alert(error.response.data.message || "Đăng nhập thất bại");
+      }else{
+        alert("Không kết nối được với server")
+      }
       
     }
   }

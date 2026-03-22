@@ -3,7 +3,8 @@ import {
   BsPerson,
   BsBook,
   BsBookshelf,
-  BsHouse
+  BsHouse,
+  BsQuestion
 } from 'react-icons/bs'
 import './sidebar.css'
 import { NavLink } from 'react-router-dom'
@@ -16,28 +17,40 @@ function Sidebar({ openSidebarToggle }) {
         <li className="sidebar-list-item">
           <NavLink to="/admin">
             <BsHouse className="icon" />
-            Home
+            Trang chủ
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/users">
             <BsPerson className="icon" />
-            Người dùng
+            Quản lý User
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
-          <NavLink to="/questions">
-            <BsBook className="icon" />
-            Quản lý đề
-          </NavLink>
-        </li>
-
-        <li className="sidebar-list-item">
-          <NavLink to="/chapters">
+          <NavLink to="/topics">
             <BsBookshelf className="icon" />
             Quản lý chương
+          </NavLink>
+        </li>
+
+        <li className="sidebar-list-item">
+          <NavLink to="/lessons">
+            <BsBook className="icon" />
+            Quản lý bài học
+          </NavLink>
+        </li>
+        <li className="sidebar-list-item">
+          <NavLink to="/questions">
+            <BsQuestion className="icon" />
+            Quản lý câu hỏi
+          </NavLink>
+        </li>
+        <li className="sidebar-list-item">
+          <NavLink to="/exam">
+            {/* <BsBook className="icon" /> */}
+            Quản lý đề thi
           </NavLink>
         </li>
 

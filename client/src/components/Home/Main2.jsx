@@ -1,7 +1,7 @@
 import './css/Main2.css'
-import img10 from "../../assets/images/lop10.jpg";
-import img11 from "../../assets/images/lop11.jpg";
-import img12 from "../../assets/images/lop12.jpg";
+// import img10 from "../../assets/images/lop10.jpg";
+// import img11 from "../../assets/images/lop11.jpg";
+// import img12 from "../../assets/images/lop12.jpg";
 
 
 

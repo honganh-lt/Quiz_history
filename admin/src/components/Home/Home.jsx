@@ -15,37 +15,37 @@ function Home() {
                 {/* <h3>DASHBOARD</h3> */}
             </div>
             <div className="main-cards">
-                <div className='card'>
+                {/* <div className='card'>
                     <div className="cardr-inner">
                         <h3>Products</h3>
                         <BsFillArchiveFill className='card_icon' />
 
                     </div>
                     <h1>300</h1>
-                </div>
+                </div> */}
                 <div className='card'>
                     <div className="cardr-inner">
                         <h3>Quản lý người dùng</h3>
                         <BsFillGrid3X3GapFill className='card_icon' />
 
                     </div>
-                    <h1>200</h1>
+                    {/* <h1>200</h1> */}
                 </div>
                 <div className='card'>
                     <div className="cardr-inner">
-                        <h3>Quản lý bài thi</h3>
+                        <h3>Quản lý chương</h3>
                         <BsBook className='card_icon' />
 
                     </div>
-                    <h1>300</h1>
+                    {/* <h1>300</h1> */}
                 </div>
                 <div className='card'>
                     <div className="cardr-inner">
-                        <h3>Quảng lý chương</h3>
+                        <h3>Quảng lý bài</h3>
                         <BsBookshelf className='card_icon' />
 
                     </div>
-                    <h1>300</h1>
+                    {/* <h1>300</h1> */}
                 </div>
             </div>
             {/* <div className="charts">
