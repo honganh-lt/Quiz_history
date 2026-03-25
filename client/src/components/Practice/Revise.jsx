@@ -1,10 +1,10 @@
 import './css/revise.css'
 
-import banner4 from "../../assets/images/banner-ls4.png";
-import img10 from "../../assets/images/anhlt2.jpg";
-import img11 from "../../assets/images/anhlt3.jpg";
-import img12 from "../../assets/images/anhlt1.jpg";
-import img13 from "../../assets/images/anhlt4.avif";
+// import banner4 from "../../assets/images/banner-ls4.png";
+// import img10 from "../../assets/images/anhlt2.jpg";
+// import img11 from "../../assets/images/anhlt3.jpg";
+// import img12 from "../../assets/images/anhlt1.jpg";
+// import img13 from "../../assets/images/anhlt4.avif";
 
 import { useNavigate } from 'react-router-dom';
 
@@ -56,12 +56,13 @@ function Revise() {
                         <button className="btn-practice"
                             onClick={() => navigate("/practice/lop-12")}
                         >Luyện tập</button>                    </div>
-                    <div className='feature-card-revise'>
-                        {/* <img src={img13} alt="Lịch sử lớp 10" /> */}
+                    {/* <div className='feature-card-revise'>
+                        <img src={img13} alt="Lịch sử lớp 10" />
                         <h3>Đánh giá năng lực</h3>
                         <button className="btn-practice"
                             onClick={() => navigate("/practice/ĐGNL")}
-                        >Luyện tập</button>                    </div>
+                        >Luyện tập</button>                    
+                        </div> */}
                 </div>
             </section>
             {/* </div> */}

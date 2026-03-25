@@ -3,12 +3,12 @@ import "./ManageTopics.css"
 
 export const ManageTopics = () => {
 
-    const topics = [
-  { topic_id: 1, grade_id: 10, topic_number: 1, name: " Lịch sử và sử học" },
-  { topic_id: 2, grade_id: 10, topic_number: 2, name: " Vai trò của sử học" },
-  { topic_id: 3, grade_id: 10, topic_number: 3, name: "Một số nền văn minh thế giới thời kì cổ-trung đại" },
-  { topic_id: 4, grade_id: 10, topic_number: 4, name: "Cách mạng công nghiệp trong lịch sử thế giới" }
-];
+//     const topics = [
+//   { topic_id: 1, grade_id: 10, topic_number: 1, name: " Lịch sử và sử học" },
+//   { topic_id: 2, grade_id: 10, topic_number: 2, name: " Vai trò của sử học" },
+//   { topic_id: 3, grade_id: 10, topic_number: 3, name: "Một số nền văn minh thế giới thời kì cổ-trung đại" },
+//   { topic_id: 4, grade_id: 10, topic_number: 4, name: "Cách mạng công nghiệp trong lịch sử thế giới" }
+// ];
   return (
     <div className='admin-container'>
         {/* Sidebar */}
@@ -30,18 +30,19 @@ export const ManageTopics = () => {
                     {/* chapter_id */}
                     {/* <th>Grade_id</th> */}
                     {/* chapter_number */}
-                    <th>Tên</th>
+                    <th>Tên chương</th>
+                    <th>Mã môn học</th>
                     <th>Chương số</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
   {topics.map((item) => {
     return (
       <tr key={item.topic_id}>
-        <td>{item.topic_id}</td>
+        <td>{item.topic_id}</td> */}
         {/* <td>{item.grade_id}</td> */}
-        <td>{item.name}</td>
+        {/* <td>{item.name}</td>
         <td>{item.topic_number}</td>
         <td>
           <button className='edit-btn'>Edit</button>
@@ -50,7 +51,7 @@ export const ManageTopics = () => {
       </tr>
     );
   })}
-</tbody>
+</tbody> */}
         </table>
       </div>
 

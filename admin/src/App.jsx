@@ -14,6 +14,7 @@ import ManageTopics from './components/Topics/ManageTopics'
 import { ManageQuestions } from './components/Questions/ManageQuestions'
 import { ManageLessons } from './components/Lessons/ManageLessons'
 import { ManageExam } from './components/Exam/ManageExam'
+import ManagementSubject from './components/Subject/ManagementSubject'
 // import ManageTopics from './components/Chapters/ManageTopics'
 
 function App() {
@@ -44,6 +45,13 @@ function App() {
           <Header OpenSidebar={OpenSidebar} />
           <Sidebar openSidebarToggle={openSidebarToggle} />
           <UserManagement />
+        </div>
+      } />
+      <Route path="/subjects" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <ManagementSubject />
         </div>
       } />
 

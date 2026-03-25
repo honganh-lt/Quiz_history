@@ -34,7 +34,7 @@ function Header() {
                     <nav className="menu">
                         <a href="/">Trang chủ</a>
                         <a href="/practice">Ôn tập</a>
-                        <a href="/exam">Luyện thi</a>
+                        {/* <a href="/exam">Luyện thi</a> */}
                     </nav>
 
                     {/* Auth */}
@@ -46,7 +46,7 @@ function Header() {
                                 // false -> true (mở menu)
                                 // true -> false (đóng menu)
                                onClick={() => setOpenMenu(!openMenu)}>
-                               Xin chào, {user.username} ▼
+                                {user.username} ▼
                                </div>
                                 {/* tạo một trang profile để xem quá trinh học tập  */}
                                {openMenu && (
