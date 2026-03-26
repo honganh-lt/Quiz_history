@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './EditUserModal.css'
 import axios from 'axios';
 
-export const EditUserModal = ({user, closeModal, updateUser}) => {
+export const EditUserModal = ({user, onClose, updateUser}) => {
 
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
@@ -25,39 +25,41 @@ export const EditUserModal = ({user, closeModal, updateUser}) => {
                 role
             });
 
-            closeModal(); //đóng modal
+            onClose(); //đóng modal
         } catch(err){
             console.log(err);
         }
     } 
 
   return (
-    <div className='modal'>
-        <div className="modal-content">
-            <h3>Edit</h3>
-            <input 
-                type='text'
-                // placeholder='Username'
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input 
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-            >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
+    <div className="modal-overlay">
+        <div className='modal'>
+            <div className="modal-content">
+                <h3>Edit</h3>
+                <input 
+                    type='text'
+                    // placeholder='Username'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <input 
+                    type='email'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                >
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
 
-            <div className="modal-actions">
-            <button className='btn-save' onClick={handleSubmit}>Cập nhật</button>
-            <button className='btn-close' onClick={closeModal}>Đóng</button>
-        </div>
+                <div className="modal-actions">
+                <button className='save-btn' onClick={handleSubmit}>Cập nhật</button>
+                <button className='close-btn' onClick={onClose}>Đóng</button>
+            </div>
+            </div>
         </div>
     </div>
   )

@@ -37,6 +37,8 @@ export const UserManagement = () => {
 
     //5+6: Tạo hàm tự động refesh trang  ============ Edit+Delete
     // tìm user có id giống -> thay bằng uset mới -> react render lại table
+
+    //======================Edit========================
     const updateUser = (updatedUser) => {
     setUsers(prevUsers =>
         prevUsers.map(user =>
@@ -45,6 +47,7 @@ export const UserManagement = () => {
         );
     };
     //refesh sau khi delete -> Update user sau khi delete
+    //=====================Delete=========================
     const deleteUser = (id) => {
         setUsers(prevUsers =>
             prevUsers.filter(user => user.id !== id)
@@ -75,6 +78,7 @@ export const UserManagement = () => {
         : users.filter((user) => user.role === roleFilter);
 
 
+    //================Tìm Kiếm=================== 
     //3: Lọc danh sách user -> tìm kiếm theo username + email + role
     // ?: Nếu usernam NULL howcj undefined thì không chyaj toLowerCase -> tránh crash
     // const filteredUsers = users.filter((user) => 
@@ -103,7 +107,7 @@ export const UserManagement = () => {
 // console.log("FILTERED:", filteredUsers);
 
     // search + pagination
-    //4: Tính user hiển thị theo trang 
+    //====================4: Tính user hiển thị theo trang ========================
     const indexOfLastUser = currentPage * usersPerPage; //1*5 = 5     0*5=0
     const indexOfFirstUser = indexOfLastUser - usersPerPage; // 5-5 = 0   0-5=-5
 
@@ -232,6 +236,7 @@ export const UserManagement = () => {
                     ))}
                 </tbody>
             </table>
+
             {/* Edit Modal*/}
                 {showEditModal && selectedUser &&(
                     <EditUserModal 

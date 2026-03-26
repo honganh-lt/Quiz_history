@@ -86,3 +86,27 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.pagination{
+  margin-top: 15px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.pagination button{
+   margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+}
+.pagination button.active {
+  background: #2f80ed;
+  color: white;
+}
+.pagination button:disabled{
+   /* background: #ccc; */
+   opacity: 0.5;
+    cursor: not-allowed;
+}

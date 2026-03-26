@@ -7,7 +7,7 @@ export const ManagementSubject = () => {
 
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
-    //
+    //Modal
     const [isOpen, setIsOpen] = useState(false); //??????
     const [selectedSubject, setSelectedSubject] = useState(null); // ????
 
@@ -26,7 +26,13 @@ export const ManagementSubject = () => {
     };
     useEffect(() => {
         fetchData();
+        // fetchSubjects(); //Dùng cho modal "/chapters"
     }, []);
+    // //Dùng cho modal "/chapters" để chọn môn học
+    // const fetchSubjects = async () => {
+    //     const data = await getSubjects();
+    //     setSubjects(data);
+    // }
 
     // Gọi API từ sibjectService -> lấy dữ liệu -> Lưu vào state subjects
     // const fetchData = async () => {

@@ -36,18 +36,19 @@ function Sidebar({ openSidebarToggle }) {
         </li>
 
         <li className="sidebar-list-item">
-          <NavLink to="/topics">
+          <NavLink to="/chapters">
             <BsBookshelf className="icon" />
             Quản lý chương
           </NavLink>
         </li>
 
-        {/* <li className="sidebar-list-item">
+        <li className="sidebar-list-item">
           <NavLink to="/lessons">
             <BsBook className="icon" />
             Quản lý bài học
           </NavLink>
-        </li> */}
+        </li>
+        
         <li className="sidebar-list-item">
           <NavLink to="/questions">
             <BsQuestion className="icon" />

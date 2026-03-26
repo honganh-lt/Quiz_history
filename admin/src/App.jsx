@@ -10,11 +10,13 @@ import Home from './components/Home/Home'
 // import Chapters from './components/Chapters/Chapters'
 import LoginAdmin from './Login/LoginAdmin'
 import UserManagement from './components/Users/UserManagement'
-import ManageTopics from './components/Topics/ManageTopics'
+// import ManageTopics from './components/Topics/ManageTopics'
 import { ManageQuestions } from './components/Questions/ManageQuestions'
 import { ManageLessons } from './components/Lessons/ManageLessons'
 import { ManageExam } from './components/Exam/ManageExam'
 import ManagementSubject from './components/Subject/ManagementSubject'
+// import ManageChapters from './components/Topics/ManageChapters'
+import ManagementChapters from './components/Topics/ManagementChapters'
 // import ManageTopics from './components/Chapters/ManageTopics'
 
 function App() {
@@ -55,11 +57,12 @@ function App() {
         </div>
       } />
 
-      <Route path="/topics" element={
+      <Route path="/chapters" element={
         <div className="grid-container">
           <Header OpenSidebar={OpenSidebar} />
           <Sidebar openSidebarToggle={openSidebarToggle} />
-          <ManageTopics/>
+          {/* <ManageTopics/> */}
+          <ManagementChapters/>
         </div>
       } />
       <Route path="/lessons" element={
