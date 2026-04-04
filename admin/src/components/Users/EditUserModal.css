@@ -8,8 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  z-index: 999;
+    /* Quan trọng */
+  z-index: 9999;
 }
 /* Modal */
 .modal{
@@ -90,7 +90,7 @@
  .save-btn:hover{
     background: #2563eb;
  }
- .close-btn{
+ .close-btn-btn{
     background: #e5e7eb;
     border: none;
     padding: 8px 16px;

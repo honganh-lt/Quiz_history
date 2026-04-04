@@ -34,7 +34,7 @@ function Header() {
                     <nav className="menu">
                         <a href="/">Trang chủ</a>
                         <a href="/practice">Ôn tập</a>
-                        {/* <a href="/exam">Luyện thi</a> */}
+                        <a href="/exam">Luyện thi</a>
                     </nav>
 
                     {/* Auth */}

@@ -8,6 +8,7 @@ export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
   const [subjectId, setSubjectId] = useState("");
   const [chapterNumber, setChapterNumber] = useState("");
 
+
   //Đổ dữ liệu vào form khi mở modal
   //Nó tự chọn đúng môn vì có useEffet(setSubjectId)
   useEffect(() => {
@@ -54,6 +55,7 @@ export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
           onChange={(e) => setChapterName(e.target.value)}
         />
 
+        {/* Môn học từ chức năng môn học */}
         <h4>Môn học</h4>
         {/* <input 
           type="text" 

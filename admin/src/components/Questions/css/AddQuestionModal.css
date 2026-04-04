@@ -1,0 +1,153 @@
+.modal-overlay-ques{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+/* Box modal */
+.modal-ques{
+    /* background: white;
+    padding: 65px;
+    width: 800px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: faden 0.3s ease; */
+    width: 600px;              /* nhỏ lại */
+    max-height: 80vh;          
+    overflow-y: auto;          /* scroll dọc */
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+.modal-ques h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    /* position: sticky; */
+  /* top: 0; */
+  background: white;
+  /* padding-bottom: 10px; */
+}
+.modal-ques h4 {
+    margin: 10px 5px;
+    color: #817f7f;
+}
+
+/* Input - select */
+.modal-ques input,
+.modal-ques select,
+.modal-ques textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+     box-sizing: border-box; /* QUAN TRỌNG */
+
+    outline: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+/* cho phép kéo cao lên */
+/* .modal-ques textarea{
+    min-height: 80px;
+  resize: vertical; 
+} */
+.modal-ques input:focus,
+.modal-ques select:focus {
+    border-color: #007bff;
+}
+/* Mượt hơn */
+.modal-ques::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-ques::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+
+/* Radio-group */
+.radio-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.radio-group label {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 0;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: #f9f9f9;
+}
+
+/* Ẩn radio mặc định */
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+/* Hover */
+.radio-group label:hover {
+  background: #e6f2ff;
+  border-color: #4da3ff;
+}
+
+/* Khi được chọn */
+.radio-group input[type="radio"]:checked + span {
+  color: white;
+}
+
+.radio-group label:has(input:checked) {
+  background: #4da3ff;
+  color: white;
+  border-color: #4da3ff;
+}
+
+/* Thêm + đóng */
+.modal-actions-ques{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.save-btn {
+  background: #0553d0;
+   /* margin-left: 20px; */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  width: 120px;
+}
+
+.close-btn {
+  background: #929090;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Animation */
+/* @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} */

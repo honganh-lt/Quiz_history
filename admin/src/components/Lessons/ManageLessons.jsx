@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import "./ManageLessons.css"
-import { getLesson } from '../../api/lessonApi';
+import { deleteLesson, getLesson } from '../../api/lessonApi';
+import { AddLessonModal } from './AddLessonModal';
+import { getChapters } from '../../api/chapterApi';
+import EditLessonModal from './EditLessonModal';
 
 export const ManageLessons = () => {
 
@@ -8,10 +11,12 @@ export const ManageLessons = () => {
     const [loading, setLoading] = useState(true);
 
     //Thêm state điều khiển modal
-    // const [isOpen, setIsOpen] = useState(false);
-    // const [chapters, setChapters] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [chapters, setChapters] = useState([]);
 
     //Edit
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectLesson, setSelectedLesson] = useState(null); //Lí do?
 
     //==================Phân trang====================
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,10 +25,10 @@ export const ManageLessons = () => {
 
     useEffect (() => {
         fetchData();
-        // fetchChapters();
+        fetchChapters(); //ADD
     }, []);
 
-    //=============GET===========
+    //=============GET /lessons===========
     const fetchData = async () => {
         try {
             const data = await getLesson();
@@ -35,12 +40,40 @@ export const ManageLessons = () => {
         }
     }
 
-    //========ADD=========
-
+    //========ADD========= GET /chapters : liên quan đến lấy bài theo chương
+    const fetchChapters = async () => {
+        try {
+            const data = await getChapters(); //
+            setChapters(data); //
+        } catch (error) {
+            console.error(error);           
+        }
+    }
+    //ADD ============ Thêm hàm lấy tên chương (tìm)
+    const getChapterNumber = (id) => {
+        const chapter = chapters.find(chap => chap.chapter_id === id);
+        return chapter ? chapter.chapter_number : "Không rõ"
+    };
 
     //EDIT
+     const updateLes = (updatedLesson) => {
+        setLessons(prevLes => 
+            prevLes.map(les => 
+                les.lesson_id === updatedLesson.lesson_id ? updatedLesson : les
+            )
+        )
+     }
 
     //DELETE
+    const handleDelete = async (id) => {
+        //Check FE có gọi không
+        // console.log("Delete id: ", id);
+
+        if(window.confirm("Bạn có chắc muốn xóa không?")) {
+            await deleteLesson(id);
+            fetchData(); //bắt buộc
+        }
+    }
 
     //Phân trang
     const indexOfLastChap = currentPage * lessonsPerPage;
@@ -59,7 +92,7 @@ export const ManageLessons = () => {
             <h2>Quản lý bài học</h2>
             <button 
                 className='add-btn'
-                // onClick={() => setIsOpen(true)}
+                onClick={() => setIsOpen(true)}
             >
                 +
             </button>
@@ -72,7 +105,6 @@ export const ManageLessons = () => {
                 <thead>
                     <tr>
                         <th>Mã bài</th>
-                        {/* <th>Chapter_id</th> */}
                         <th>Tên bài</th>
                         <th>Chương số</th>
                         <th>Bài số</th>
@@ -87,18 +119,22 @@ export const ManageLessons = () => {
                             <td>{les.lesson_id}</td>
                             
                             <td>{les.lesson_name}</td>
-                            <td>{les.chapter_id}</td>
+                            {/* ???????????????? */}
+                            <td>{getChapterNumber(les.chapter_id)}</td> 
                             <td> Bài {les.lesson_number}</td>
                             <td>
                                 <button 
                                     className='edit-btn'
-
+                                    onClick={() => {
+                                        setSelectedLesson(les);//Mở modal-> cần đổ dữ liệu vào input
+                                        setShowEditModal(true);
+                                    }}
                                 >
                                     Edit
                                 </button>
                                 <button 
                                     className='delete-btn'
-
+                                    onClick={() => handleDelete(les.lesson_id)}
                                 >
                                     Delete
                                 </button>
@@ -135,8 +171,22 @@ export const ManageLessons = () => {
             </div>
 
             {/* Render modal ADD */}
+            < AddLessonModal
+                isOpen = {isOpen}
+                onClose = {() => setIsOpen(false)}
+                onSuccess = {fetchData}
+                chapters = {chapters} //cái này phải có dữ liệu
+            />
 
             {/* Modal Edit */}
+            {showEditModal && selectLesson && (
+                <EditLessonModal
+                les={selectLesson}
+                onClose={() => setShowEditModal(false)}
+                updateLes={updateLes}
+                chapters={chapters} //lấy danh sách chương môn học để sửa
+            />
+            )}
 
         </div>
     </div>

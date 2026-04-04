@@ -58,7 +58,6 @@ function Main() {
             </section>
             {/* </div> */}
         </main>
-
     )
 }
 

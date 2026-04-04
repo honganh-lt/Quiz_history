@@ -1,0 +1,168 @@
+import React, { useEffect, useState } from 'react'
+import "./css/ManagementExam.css"
+import { deleteExam, getExam } from '../../api/examApi';
+import { getSubjects } from '../../api/subjectService';
+import AddExamModal from './AddExamModal';
+
+export const ManagementExam = () => {
+
+  const [exam, setExam] = useState([]);
+
+  //Thêm state điều khiển modal
+  const [isOpen, setIsOpen] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+
+  //EDIT
+  // const [showEditModal, setShowEditModal] = useState(false);
+  // const [selectedExam, setSelectedExam] = useState(null);
+
+  //===============Phân trang==============
+  const [currentPage, setCurrentPage] = useState(1);
+  const examPerPage = 5;
+
+  useEffect (() => {
+    fetchData();
+    fetchSubjects();
+  }, []);
+
+  // Component render lần đầu -> gọi API -> set state hiển thị dữ liệu
+  //================GET chapters======================
+  const fetchData = async () => {
+    try {
+      const data = await getExam();
+      console.log("Exam data:", data);
+      setExam(data || []);
+    } catch (err) {
+      console.error(err);
+      setExam([]);
+    }
+  };
+
+  //==================ADD==============
+   //Dùng cho modal "/chapters" để chọn môn học 
+  //  GET subjects : lấy dữ liệu môn học để chọn
+  const fetchSubjects = async () => {
+    try {
+      const data = await getSubjects();
+      setSubjects(data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  //Thêm hàm lấy tên môn ===ADD
+
+
+  //Edit
+
+
+  //Delete
+  const handleDelete = async (id) => {
+      console.log("Delete id: ", id);
+
+      if(window.confirm("Bạn có chắc chắn muốn xóa không?"));
+      
+      try {
+        await deleteExam(id);
+        fetchData();
+      } catch (err) {
+        console.error(err);
+      }
+  }
+
+  //Phân trang
+  const indexOfLastExam = currentPage * examPerPage;
+  const indexOfFirstExam = indexOfLastExam - examPerPage;
+
+  //slice từ danh sách exam
+  const currentExam = exam?.slice(indexOfFirstExam, indexOfLastExam) || [];
+  const totalPages = Math.ceil((exam?.length || 0) / examPerPage);
+
+  return (
+     <div className='admin-container'>
+      {/* Top bar */}
+      <div className="top-bar">
+        <h2>Quản lý đề thi</h2>
+         <button className='add-btn' onClick={() => setIsOpen(true)}>+</button>
+      </div>
+
+      {/* Table */}
+      <div className="main-content">
+        <table className="exam-table">
+          <thead>
+            <tr>
+              <th>Mã môn học</th>
+              <th>Tên đề thi</th>
+              <th>Mô tả</th>
+              {/* <th>Tên môn học</th> */}
+              <th>Thời gian</th>
+              <th>Số câu hỏi</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {currentExam.length > 0 ? (
+              currentExam.map((ex) => (
+                <tr key={ex.exam_id}>
+                  <td>{ex.subject_name}</td>
+                  <td>{ex.title}</td>
+                  <td>{ex.description}</td>
+                  <td>{ex.duration} phút</td>
+                  <td>{ex.question_count}</td>
+                  <td>
+                    <button className='edit-btn'>Edit</button>
+                    <button 
+                      className='delete-btn'
+                      onClick={() => handleDelete(ex.exam_id)}
+                    >Delete</button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} style={{textAlign: "center"}}>Chưa có đề thi</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+            {/* Phân trang */}
+            <div className="pagination">
+            <button 
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+            {/* sử dụng thư viện */}
+              <i className="fa-solid fa-angle-left"></i> 
+            </button> 
+            {Array.from({length: totalPages}, (_, i) => (
+              <button
+                key={i}
+                className={currentPage === i + 1 ? "active" : ""}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}   
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              <i className="fa-solid fa-angle-right"></i>
+            </button>
+          </div>
+
+      {/* ADD */}
+          <AddExamModal
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            onSuccess={fetchData}
+            subjects={subjects}
+          />
+
+      </div>
+    </div>
+  )
+}
+
+export default ManagementExam;

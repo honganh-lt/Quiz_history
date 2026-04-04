@@ -16,7 +16,7 @@ function ReviseLop10() {
             </div>
             {/* Khung trên */}
             <section className='hero-section-ten'>
-                <div className='container'>
+                <div className='container-ten'>
                     {/* Phần chữ */}
                     {/* <div className="back-revise">
                         <a href="/practice">Quay lại</a>
@@ -24,6 +24,10 @@ function ReviseLop10() {
                     <div className='body-layout-ten'>
                         <div className='body-text-ten'>
                             <h1>Lịch sử lớp 10</h1>
+                        </div>
+
+                        <div className="revise-search">
+                            <input type="text" placeholder="Tìm kiếm..." />
                         </div>
                     </div>
                 </div>

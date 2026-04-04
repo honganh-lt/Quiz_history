@@ -1,0 +1,108 @@
+.main-exam{
+    
+}
+
+
+.section-exam{
+    text-align: center;
+    /* margin-bottom: 30px;
+    padding: 55px; */
+    margin: 30px 0;
+    padding: 20px;
+}
+
+/* Khung dưới */
+.down-section-exam{
+    display: flex;
+    justify-content: center;
+    /* align-items: center;
+    width: 100%; */
+    width: 100%;
+    padding: 40px;
+}
+.card-list-exam {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    /* justify-items: left; 🔥 thêm dòng này */
+    width: 100%;
+    max-width: 1000px;
+}
+/* .down-list-exam{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    flex-direction: column;
+    gap: 20px; */
+    /* max-width: 900px; */
+    /* Căn giữa */
+    /* margin: 0 auto; 
+    align-items: center;
+} */
+/* CARD */
+.card-item-exam {
+    width: 500px;     /* 🔥 cố định chiều rộng */
+    height: 150px;    /* 🔥 cố định chiều cao */
+
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+
+    padding: 30px;
+}
+
+.card-item-exam:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* TITLE */
+.card-item-exam h3 {
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #1f2937;
+}
+.exam-bottom{
+    display: flex;
+    /* đẩy ra 2 bên */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: -5px;
+}
+/* BUTTON */
+/* .btn-exam {
+    padding: 10px 18px;
+    border: 1px solid #f97316;
+    background: transparent;
+    color: #f97316;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 20%; 
+}
+
+.btn-exam:hover {
+    background: #f97316;
+    color: #fff;
+} */
+
+.btn-exam {
+    margin-top: 10px;
+    padding: 8px 16px;
+    color: #fa7b21;
+    border-radius: 6px;
+    border: 1px solid #fa7b21;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-exam:hover {
+    background-color: #c98021;
+    color: #fff;
+}
+

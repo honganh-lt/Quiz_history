@@ -3,6 +3,7 @@
     /* background: #f5bf75; */
     /* padding: 180px 0; */
     width: 100%;
+    background: #fff;
 }
 
 /* Khung trên */
@@ -45,7 +46,8 @@
 
 .body-text-revise p {
     font-size: 16px;
-    color: #555;
+    /* color: #; */
+    font-weight: 400;
     margin-bottom: 24px;
 }
 
@@ -55,8 +57,11 @@
 
 /*============================= Khung dưới =================================*/
 .feature-section-revise {
-    padding: 80px 0;
-    /* background-color: antiquewhite; */
+    /* margin: 30px; */
+    /* width: 0%; */
+    /* padding: 30px ; */
+    margin-bottom: 60px;
+    /* background-color: rgb(251, 198, 130); */
 }
 
 .feature-section-revise h2 {
@@ -69,16 +74,15 @@
 /* Grid card  */
 .feature-list-revise {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     /*Khoảng cách giẵ các item*/
 }
 
 .feature-card-revise {
-
     margin-left: 20px;
     margin-right: 20px;
-    background: #fff;
+    background: #f8d8ab;
     padding: 54px;
     border-radius: 12px;
     overflow: hidden;
@@ -121,7 +125,7 @@
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
     .feature-list-revise {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -135,10 +139,10 @@
     .feature-section-revise {
         padding: 40px 0;
     }
-}
+} */
 
 /* Responsive Mobile */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .body-layout-revise {
         grid-template-columns: 1fr;
         text-align: center;
@@ -156,4 +160,4 @@
     .body-text h1 {
         font-size: 26px;
     }
-}
+} */

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './UserManagement.css'
-import axios from 'axios';
+// import axios from 'axios';
 import EditUserModal from './EditUserModal';
 import DeleteUserModal from './DeleteUserModal';
+import { deleteUser, getUser } from '../../api/userApi';
 // import AddUserModal from './AddUserModal';
 // import { data } from 'react-router-dom';
 // import { getUsers } from '../../api/userApi';
@@ -12,7 +13,7 @@ export const UserManagement = () => {
     //1: Tạo state lưu bảng database
     const [users, setUsers] = useState([]);
 
-     //2: Tạo state lưu filter?
+     //2: Tạo state lưu filter? ======ALL======ADMIN=======User
     const [roleFilter, setRoleFilter] = useState("all");
 
     //3: Tạo state lưu từ khóa tìm kiếm
@@ -24,8 +25,8 @@ export const UserManagement = () => {
     const [selectedUser, setSelectedUser] = useState(null); //Lí do?
 
     //6: Delete: thông tin người dùng==================
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [deleteUserId, setDeleteUserId] = useState(null); //tạo state lưu user cần xóa
+    // const [showDeleteModal, setShowDeleteModal] = useState(false);
+    // const [deleteUserId, setDeleteUserId] = useState(null); //tạo state lưu user cần xóa
 
      //4: Phân trang Pagination =================
     //  để là một vì trang đầu tiên là 1 - nếu để 0 là sẽ bị sai
@@ -33,27 +34,28 @@ export const UserManagement = () => {
     // số lượng dữ liệu có ở một trang
     const usersPerPage = 5;
 
+    useEffect (() => {
+        fetchData();
+        // fetchUser();
+    }, []);
 
-
-    //5+6: Tạo hàm tự động refesh trang  ============ Edit+Delete
-    // tìm user có id giống -> thay bằng uset mới -> react render lại table
-
-    //======================Edit========================
-    const updateUser = (updatedUser) => {
-    setUsers(prevUsers =>
-        prevUsers.map(user =>
-            user.id === updatedUser.id ? updatedUser : user
-            )
-        );
-    };
+    // Component render lần đầu -> gọi API -> set state hiển thị dữ liệu
+  //================GET chapters======================
+  const fetchData = async () => {
+    try {
+        const data = await getUser();
+        setUsers(data);
+    } catch (err) {
+        console.error(err);
+    }
+  }
     //refesh sau khi delete -> Update user sau khi delete
     //=====================Delete=========================
-    const deleteUser = (id) => {
-        setUsers(prevUsers =>
-            prevUsers.filter(user => user.id !== id)
-        );
-    };
-
+    // const deleteUser = (id) => {
+    //     setUsers(prevUsers =>
+    //         prevUsers.filter(user => user.id !== id)
+    //     );
+    // };
 
     //1: lấy dữ liệu từ CSDL useState([]);
     // useEffect(() => {
@@ -63,16 +65,8 @@ export const UserManagement = () => {
     //     .catch(err => console.log(err));
     // },[]);
 
-    useEffect(() => {
-    axios.get("http://localhost:3000/api/users")
-    .then(res => {
-        // console.log("DATA:", res.data); // kiểm tra dữ liệu
-        setUsers(res.data);
-    })
-    .catch(err => console.log(err));
-    }, []);
 
-    //2: Lọc filter theo role
+    //2: Lọc filter theo role ======ALL======ADMIN=======User
     const roleFilteredUsers = roleFilter === "all"
         ? users
         : users.filter((user) => user.role === roleFilter);
@@ -105,6 +99,37 @@ export const UserManagement = () => {
     });
 // console.log("search", search)
 // console.log("FILTERED:", filteredUsers);
+
+        useEffect(() => {
+                fetchData();
+                // fetchSubjects(); //Dùng cho modal "/chapters"
+            }, []);
+
+
+
+    //5+6: Tạo hàm tự động refesh trang  ============ Edit+Delete
+    // tìm user có id giống -> thay bằng uset mới -> react render lại table
+
+    //======================Edit========================
+    const updateUser = (updatedUser) => {
+    setUsers(prevUsers =>
+        prevUsers.map(user =>
+            user.user_id === updatedUser.user_id ? updatedUser : user
+            )
+        );
+    };
+
+    //============================Delete========================
+        const handleDelete = async (id) => {
+    
+            //Check FE có gọi không
+            console.log("Delete id: ", id);
+    
+            if(window.confirm("Bạn có chắc muốn xóa không?")) {
+                await deleteUser(id); //ở file api
+                 fetchData(); //bắt buộc
+            }
+        }
 
     // search + pagination
     //====================4: Tính user hiển thị theo trang ========================
@@ -205,8 +230,9 @@ export const UserManagement = () => {
                     {/* Crash là gì? */}
                     {/* đổi users.map() -> currentUsers.map() */}
                     {/* currentUsers lúc này đã là dữ liệu đã search + pagination rồi. */}
-                    {Array.isArray(users) && currentUsers.map((user) => (
-                        <tr key={user.id}>
+                    {/* {Array.isArray(users) && currentUsers.map((user) => ( */}
+                    {currentUsers.map((user) => ( 
+                        <tr key={user.user_id}>
                             {/* <td>{user.id}</td> */}
                             <td>{user.username}</td>
                             <td>{user.email}</td>
@@ -225,8 +251,9 @@ export const UserManagement = () => {
                                 {/*  */}
                                 <button className='delete'
                                     onClick={() => {
-                                        setDeleteUserId(user.id)
-                                        setShowDeleteModal(true);
+                                        handleDelete(user.user_id)
+                                        // setDeleteUserId(user.id)
+                                        // setShowDeleteModal(true);
                                     }}
                                 >
                                     Delete
@@ -242,20 +269,20 @@ export const UserManagement = () => {
                     <EditUserModal 
                         //truyền user vào modal
                         user={selectedUser}
-                        closeModal = {() => setShowEditModal(false)}
+                        onClose = {() => setShowEditModal(false)}
                         updateUser={updateUser}
                     />
                 )}
 
                 {/* Delete Modal*/}
-                {showDeleteModal &&(
+                {/* {showDeleteModal &&(
                     <DeleteUserModal 
                         //truyền id vào modal
                         id = {deleteUserId}
-                        closeModal={() => setShowDeleteModal(false)}
-                        deleteUser={deleteUser}
+                        onClose={() => setShowDeleteModal(false)}
+                        // deleteUser={deleteUser}
                     />
-                )}
+                )} */}
 
                     {/* Phân trang: tạo số trang tự động*/}
             <div className='pagination'>

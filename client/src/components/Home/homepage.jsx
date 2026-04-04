@@ -3,6 +3,7 @@
 import Header from './Header'
 import Main from './Main'
 import Main2 from './Main2'
+import { Main3 } from './Main3'
 
 
 function Homepage() {
@@ -11,6 +12,7 @@ function Homepage() {
             <Header />
             <Main />
             <Main2 />
+            <Main3/>
 
         </>
 

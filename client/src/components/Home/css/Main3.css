@@ -1,0 +1,66 @@
+.home-feature{
+    display: flex;
+    padding: 70px;
+    /* background: #fff; */
+    background: antiquewhite;
+    /* width: 100%; */
+}
+
+/* Khung trái */
+.home-feature-left{
+    padding: 10px 30px;
+    width: 50%;
+
+}
+.home-feature-img{
+    
+
+}
+
+/* Khung phải */
+.home-feature-right{
+    width: 90%;
+    
+
+
+}
+.home-feature-list{
+    display: grid;
+    /* 2 cột */
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px 60px;
+    /* Khoảng cách giữa các 2 item */
+    gap: 20px;
+    /* text-align: left; */
+
+}
+.feature-list-main3{
+    /* background: #fff; */
+    padding: 20px;
+    /* border-radius: 20px; */
+    text-align: center;
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); */
+
+}
+.list-main3-item{
+    /* width: 60px; */
+    margin-bottom: 10px;
+    text-align: left;
+    
+}
+.list-main3-item img{
+    width: 16%;
+    /* background: #f7c7ae; */
+}
+.list-main3-item h4{
+    margin: 10px 0;
+    font-size: 18px;
+}
+.list-main3-item p{
+    font-size: 15px;
+    font-weight: 450;
+    color: #000;
+}
+.main3-item-img{
+
+}

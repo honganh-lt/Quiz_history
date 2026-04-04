@@ -12,14 +12,14 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
     const handleSubmit = async () => {
         // console.log("Sửa"); //kiểm tra
         try {
-            await axios.put(`http://localhost:3000/api/users/${user.id}`, {
+            await axios.put(`http://localhost:3000/api/users/${user.user_id}`, {
                 username,
                 email,
                 role
             });
 
             updateUser({
-                id: user.id,
+                user_id: user.user_id,
                 username,
                 email,
                 role
@@ -57,7 +57,7 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
 
                 <div className="modal-actions">
                 <button className='save-btn' onClick={handleSubmit}>Cập nhật</button>
-                <button className='close-btn' onClick={onClose}>Đóng</button>
+                <button className='close-btn-btn' onClick={onClose}>Đóng</button>
             </div>
             </div>
         </div>

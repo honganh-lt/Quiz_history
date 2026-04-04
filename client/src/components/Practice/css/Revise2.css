@@ -1,0 +1,57 @@
+.revise {
+    width: 80%;
+    margin: 0 auto; /* 👈 QUAN TRỌNG */
+    padding: 80px 20px;
+    /* background: #f4d1a3; */
+}
+
+.revise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Card */
+.card-revise {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Đảo chiều cho card thứ 2 */
+.card-revise:nth-child(2) {
+    flex-direction: row-reverse;
+}
+
+/* Nếu có nhiều thì dùng cái này */
+.card-revise:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+/* Image */
+.img-revise {
+    width: 40%;
+    height: 180px;
+    background: #ddd;
+}
+
+.img-revise img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text */
+.text-revise {
+    width: 60%;
+}
+
+.text-revise h4 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.text-revise p {
+    color: #555;
+    line-height: 1.6;
+}

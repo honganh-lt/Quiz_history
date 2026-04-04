@@ -1,15 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import "./ManagementSubject.css"
+import "./css/ManagementSubject.css"
 import { deleteSubject, getSubjects } from '../../api/subjectService';
-import SubjectModal from './SubjectModal';
+// import SubjectModal from './SubjectModal';
+import EditSubjectModal from './EditSubjectModal';
+import AddSubjectModal from './AddSubjectModal';
 
 export const ManagementSubject = () => {
 
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
-    //Modal
+    //Modal Thêm state điều khiền
     const [isOpen, setIsOpen] = useState(false); //??????
+
+    //===============Edit==============
+    const [showEditModal, setShowEditModal] = useState(false);
     const [selectedSubject, setSelectedSubject] = useState(null); // ????
+
+
+    //=============Phân trang============
+    const [currentPage, setCurrentPage] = useState(1);
+    const questionsPerPage = 5;
+    
+
+
+    //=========================
+    useEffect(() => {
+        fetchData();
+        // fetchSubjects(); //Dùng cho modal "/chapters"
+    }, []);
 
 
     // Component render lần đầu -> gọi API -> set state hiển thị dữ liệu
@@ -24,10 +42,6 @@ export const ManagementSubject = () => {
             setLoading(false);
         }
     };
-    useEffect(() => {
-        fetchData();
-        // fetchSubjects(); //Dùng cho modal "/chapters"
-    }, []);
     // //Dùng cho modal "/chapters" để chọn môn học
     // const fetchSubjects = async () => {
     //     const data = await getSubjects();
@@ -41,16 +55,21 @@ export const ManagementSubject = () => {
     // }
 
     //Add
-    const handleAdd = () => {
-        setSelectedSubject(null);
-        setIsOpen(true);
+    const handleOpenAdd = () => {
+      setIsOpen(true);
+    };
+    const handleCloseAdd = () => {
+      setIsOpen(false);
     };
 
     //Edit
-    const handleEdit = (sub) => {
-        setSelectedSubject(sub);
-        setIsOpen(true);
-    };
+    const updateSub = (updatedSubject) => {
+      setSubjects(prevSub => 
+        prevSub.map(sub => 
+          sub.subject_id === updatedSubject.subject_id ? updatedSubject : sub
+        )
+      )
+    }
     
     //Delete
     const handleDelete = async (id) => {
@@ -59,17 +78,35 @@ export const ManagementSubject = () => {
         console.log("Delete id: ", id);
 
         if(window.confirm("Bạn có chắc muốn xóa không?")) {
-            await deleteSubject(id);
-             fetchData(); //bắt buộc
+          //Các file delete khác có thể thêm cái này try-catch
+            try {
+                await deleteSubject(id);
+                fetchData();
+              } catch (error) {
+                console.error(error);
+                alert("Xóa thất bại!");
+              }
         }
     }
+
+    //Phân trang
+    const indexOfLastChap = currentPage * questionsPerPage;
+    const indexOfFirstChap = indexOfLastChap - questionsPerPage;
+
+    //slice từ danh sách chapters
+    const currentSubjects = subjects.slice(indexOfFirstChap, indexOfLastChap);
+    const totalPages = Math.ceil(subjects.length / questionsPerPage);
+
 
   return (
      <div className='admin-container'>
         {/* Sidebar */}
       <div className='top-bar'>
             <h2 className='title'>Quản lý môn học</h2>
-            <button className='add-btn' onClick={handleAdd}>+</button>
+            <button 
+              className='add-btn' 
+              onClick={handleOpenAdd}
+            >+</button>
         </div>
 
       {/* Main content */}
@@ -90,7 +127,7 @@ export const ManagementSubject = () => {
                 </tr>
             </thead>
             <tbody>
-            {subjects.map((sub) => {
+            {currentSubjects.map((sub) => {
             return (
                 <tr key={sub.subject_id}>
                 <td>{sub.subject_id}</td>
@@ -98,8 +135,21 @@ export const ManagementSubject = () => {
                 <td>{sub.subject_name}</td>
                 <td>{sub.description}</td>
                 <td>
-                    <button className='edit-btn' onClick={() => handleEdit(sub)}>Edit</button>
-                    <button className='delete-btn' onClick={() => handleDelete(sub.subject_id)}>Delete</button>
+                    <button 
+                      className='edit-btn' 
+                      onClick={() => {
+                        setSelectedSubject(sub); //Mở modal _ cần đổ dữ liệu vào input
+                        setShowEditModal(true);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      className='delete-btn' 
+                      onClick={() => handleDelete(sub.subject_id)}
+                    >
+                      Delete
+                    </button>
                 </td>
                 </tr>
             );
@@ -107,12 +157,57 @@ export const ManagementSubject = () => {
             </tbody>
         </table>
         ) }
-        < SubjectModal
+
+        {/* Phân trang */}
+        <div className="pagination">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1 )}
+          >
+            <i className="fa-solid fa-angle-left"></i> 
+          </button>
+
+          {Array.from({length: totalPages}, (_, i) => (
+            <button
+              key={i}
+              className={currentPage === i + 1 ? "active" : ""}
+              onClick={() => {setCurrentPage(i+1)}}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            <i className="fa-solid fa-angle-right"></i>
+          </button>
+        </div>
+
+        {/* < SubjectModal
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}
             onSuccess={fetchData}
             subject={selectedSubject}
+        /> */}
+
+        {/* ADD */}
+        <AddSubjectModal
+          isOpen={isOpen}
+          onClose={handleCloseAdd}
+          onSuccess={fetchData} //???? reload lại list sau khi thêm
         />
+
+        {/* EDIT */}
+        {showEditModal && selectedSubject && (
+          <EditSubjectModal
+             sub = {selectedSubject}
+             onClose={() => setShowEditModal(false)}
+             updateSub={updateSub}
+            //  Không có lấy thên danh sách từ qly khác
+          />
+        )}
       </div>
 
     </div>

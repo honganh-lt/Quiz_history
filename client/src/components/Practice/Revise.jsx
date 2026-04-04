@@ -1,3 +1,4 @@
+import Header from '../Home/Header';
 import './css/revise.css'
 
 // import banner4 from "../../assets/images/banner-ls4.png";
@@ -13,9 +14,10 @@ import { useNavigate } from 'react-router-dom';
 function Revise() {
 
     const navigate = useNavigate();
-
+    
     return (
         <main className='main'>
+            {/* <Header/> */}
             {/* Khung trên */}
             <section className='hero-section-revise'>
                 <div className='container'>
@@ -23,10 +25,10 @@ function Revise() {
                     <div className='body-layout-revise'>
                         <div className='body-text-revise'>
                             <h1>Bộ bài tập trắc nghiệm online các lớp THPT</h1>
-                            <p>
+                            {/* <p>
                                 Bộ bài tập cá nhân hóa theo trình độ từng học sinh giúp các
                                 em tự tin đứng top chỉ với 30 phút học mỗi ngày.
-                            </p>
+                            </p> */}
 
                         </div>
                     </div>
@@ -56,16 +58,8 @@ function Revise() {
                         <button className="btn-practice"
                             onClick={() => navigate("/practice/lop-12")}
                         >Luyện tập</button>                    </div>
-                    {/* <div className='feature-card-revise'>
-                        <img src={img13} alt="Lịch sử lớp 10" />
-                        <h3>Đánh giá năng lực</h3>
-                        <button className="btn-practice"
-                            onClick={() => navigate("/practice/ĐGNL")}
-                        >Luyện tập</button>                    
-                        </div> */}
                 </div>
             </section>
-            {/* </div> */}
         </main>
 
     )

@@ -35,16 +35,16 @@ function ExamTenAnswer() {
     const [selectedAnswers, setSelectedAnswers] = useState({});
 
     ////////////////// timeUsed
-    const [timeUsed, setTimeUsed] = useState(0);
+    // const [timeUsed, setTimeUsed] = useState(0);
 
     useEffect(() => {
         const saveAnswers = JSON.parse(
             localStorage.getItem("selectedAnswers")
         ) || {};
         // setSelectedAnswers(saveAnswers);
-        const usedTime = Number(localStorage.getItem("timeUsed")) || 0;
+        // const usedTime = Number(localStorage.getItem("timeUsed")) || 0;
         setSelectedAnswers(saveAnswers);
-        setTimeUsed(usedTime);
+        // setTimeUsed(usedTime);
     }, []);
 
 
@@ -54,21 +54,21 @@ function ExamTenAnswer() {
     ).length;
 
     // 4.tính điểm 
-    const score = questions.length > 0
-        ? ((correctCount / questions.length) * 10).toFixed(1)
-        : 0;
+    // const score = questions.length > 0
+    //     ? ((correctCount / questions.length) * 10).toFixed(1)
+    //     : 0;
     // console.log("lessonId:", lessonId);
     // console.log("questionsTen:", questionsTen);
     // console.log("questions:", questions);
 
     // Thời gian
-    const formatTime = (seconds) => {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m.toString().padStart(2, "0")}:${s
-            .toString()
-            .padStart(2, "0")}`;
-    };
+    // const formatTime = (seconds) => {
+    //     const m = Math.floor(seconds / 60);
+    //     const s = seconds % 60;
+    //     return `${m.toString().padStart(2, "0")}:${s
+    //         .toString()
+    //         .padStart(2, "0")}`;
+    // };
 
     return (
         <main className="main-examTen">
@@ -81,11 +81,11 @@ function ExamTenAnswer() {
                     <h4>{title}</h4>
                     <p>Tổng số câu: {questions.length}</p>
                     <p>Số câu đúng: <strong>{correctCount}</strong></p>
-                    <p>Điểm: <strong>{score}</strong></p>
+                    {/* <p>Điểm: <strong>{score}</strong></p>
                     <p>
                         Thời gian làm bài: <strong>{formatTime(timeUsed)}</strong>
 
-                    </p>
+                    </p> */}
                     {/*số câu đúng và điểm sau khi nộp bài */}
 
 

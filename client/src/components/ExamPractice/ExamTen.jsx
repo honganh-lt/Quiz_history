@@ -26,9 +26,7 @@ function ExamTen() {
     // dữ liệu có tên bài 1
     const lessonData = questionsTen[lessonId];
 
-    if (!lessonData) {
-        return <p>Không tìm thấy đề thi</p>;
-    }
+
     const { title, questions } = lessonData;
 
     //Lưu đáp án đã chọn
@@ -58,14 +56,19 @@ function ExamTen() {
 
     }, [timeLeft]);
 
+        // sau đó mới check
+    if (!lessonData) {
+        return <p>Không tìm thấy đề thi</p>;
+    }
+
     // Hàm format thời gian (mm:ss)
-    const formatTime = (seconds) => {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m.toString().padStart(2, "0")}:${s
-            .toString()
-            .padStart(2, "0")}`;
-    };
+    // const formatTime = (seconds) => {
+    //     const m = Math.floor(seconds / 60);
+    //     const s = seconds % 60;
+    //     return `${m.toString().padStart(2, "0")}:${s
+    //         .toString()
+    //         .padStart(2, "0")}`;
+    // };
 
 
     return (
@@ -78,12 +81,12 @@ function ExamTen() {
                     <h3>Trắc nghiệm Sử 10</h3>
                     <h4>{title}</h4>
                     <h5>Tổng số câu: {questions.length}</h5>
-                    <p>
+                    {/* <p>
                         Thời gian còn lại :
                         <strong style={{ marginLeft: 6, color: timeLeft <= 60 ? "red" : "" }}>
                             {formatTime(timeLeft)}
                         </strong>
-                    </p>
+                    </p> */}
 
                     <div className="question-status">
                         {questions.map((q, index) => (

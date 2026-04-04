@@ -11,6 +11,14 @@ import ExamTen from './components/ExamPractice/ExamTen'
 import ExamTenAnswer from './components/ExamPractice/ExamTenAnswer'
 import ExamEleven from './components/ExamPractice/ExamEleven'
 import ExamElevenAnswer from './components/ExamPractice/ExamElevenAnswer'
+import ExamLop10 from './components/Exam/ExamLop10'
+import Revise from './components/Practice/Revise'
+import Exam2 from './components/Exam/Exam2'
+import MakeAnExamTen from './components/ExamMakeAnExam/MakeAnExamTen'
+// import MakeAnExamTenAnswer from './components/ExamMakeAnExam/MakeAnExamTenAnswer'
+import MakeAnExamTenResult from './components/ExamMakeAnExam/MakeAnExamTenResult'
+import Exam from './components/Exam/Exam'
+// import MakeAnExamTen from './components/ExamMakeAnExam/MakeAnExamTen'
 // import ExamTen from './components/Exam/Examten'
 // import Exam10 from './components/Practice/ExamPractice/Exam10'
 
@@ -24,17 +32,28 @@ function App() {
       <Route path="/" element={<Homepage />} />
 
 
+      {/* Ôn tập */}
       <Route path="/practice" element={<Practice />} />
+
       <Route path="/practice/lop-10" element={<ReviseLop10 />} />
       <Route path="/practice/lop-11" element={<ReviseLop11 />} />
       <Route path="/practice/lop-12" element={<ReviseLop12 />} />
 
-      {/* Làm đề */}
+      {/* Làm đề ôn tập */}
       <Route path="/practice/lop-10/:lessonId" element={<ExamTen />} />
       <Route path="/practice/lop-10/:lessonId/answer" element={<ExamTenAnswer />} />
 
       <Route path="/practice/lop-11/:lessonId" element={<ExamEleven />} />
       <Route path="/practice/lop-11/:lessonId/answer" element={<ExamElevenAnswer />} />
+
+      {/* Luyện thi */}
+      <Route path="/exam" element={<Exam />} />
+      <Route path="/exam/lop-10" element={<ExamLop10 />} />
+
+      {/* làm đề thi */}
+      <Route path="/exam/lop-10/:examId" element={<MakeAnExamTen />} />
+<Route path="/exam/lop-10/:examId/answer" element={<MakeAnExamTenResult />} />
+
 
     </Routes>
   )

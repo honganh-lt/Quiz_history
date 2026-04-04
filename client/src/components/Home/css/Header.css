@@ -8,7 +8,10 @@
 /* Header full chiều ngang */
 .header {
     width: 100%;
-    background-color: #EECFA1;
+    background-color: #f6cb8f;
+    /* background: #fff; */
+    /* border-bottom: 1px solid #f3e2d5; */
+    /* margin-bottom: 15px; */
 }
 
 /* Nếu không dùng bootstrap thì tự định nghĩa container */
@@ -33,8 +36,9 @@
 /* Menu */
 .menu {
     display: flex;
-    gap: 54px;
+    gap: 55px;
     margin-left: auto;
+    margin-top: 14px;
 }
 
 .menu a {
@@ -44,7 +48,7 @@
 }
 
 .menu a:hover {
-    color: #000;
+    color: #fff;
 }
 
 /* Auth */
@@ -68,12 +72,13 @@
 
 /* Đăng nhập */
 .login {
-    color: #fff;
-    border: 1px solid #fff;
+    color: #000;
+    border: 2px solid #000;
     margin-left: 52px;
 }
 
 .login:hover {
+    border: 2px solid #fd9644;
     background-color: #fd9644;
     color: #000;
 }

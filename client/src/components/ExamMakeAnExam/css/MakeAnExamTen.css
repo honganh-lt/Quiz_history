@@ -1,0 +1,14 @@
+
+
+
+/* KHUNG NÚT NỘP */
+.submit-exam {
+    height: 20%;
+}
+
+.btn-practice-examTen {
+    display: block;
+    margin: 24px auto;
+    /* auto = ra giữa */
+
+}

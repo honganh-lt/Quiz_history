@@ -45,8 +45,8 @@ export const ManagementChapters = () => {
   };
 
   //==================ADD==============
-   //Dùng cho modal "/chapters" để chọn môn học
-  //  GET subjects
+   //Dùng cho modal "/chapters" để chọn môn học 
+  //  GET subjects : lấy dữ liệu môn học để chọn
   const fetchSubjects = async () => {
       try{
       const data = await getSubjects();
@@ -56,7 +56,7 @@ export const ManagementChapters = () => {
     }
   };
     
-//Thêm hàm lấy tên môn  
+//Thêm hàm lấy tên môn  ==== ADD 
   const getSubjectName = (id) => {
     const subject = subjects.find(sub => sub.subject_id === id);
     return subject ? subject.subject_name : "không rõ"
@@ -130,8 +130,9 @@ export const ManagementChapters = () => {
                 return (
                   <tr key={chap.chapter_id}>
                     <td>{chap.chapter_id}</td>
-                    {/* <td>{item.grade_id}</td> */}
+                    
                     <td>{chap.chapter_name}</td>
+                    {/* ???????????????? */}
                     <td>{getSubjectName(chap.subject_id)}</td>
                     <td>{chap.chapter_number}</td>
                     <td>
@@ -141,7 +142,12 @@ export const ManagementChapters = () => {
                             setShowEditModal(true);
                           }}
                       >Edit</button>
-                      <button className='delete-btn' onClick={() => handleDelete(chap.chapter_id)}>Delete</button>
+                      <button 
+                        className='delete-btn' 
+                        onClick={() => handleDelete(chap.chapter_id)}
+                      >
+                          Delete
+                      </button>
                     </td>
                   </tr>
                 );
