@@ -7,7 +7,7 @@ export const Main3 = () => {
         {/* Khung trái */}
         <div className="home-feature-left">
             <div className="home-feature-img">
-                <img src="/imghome/2.png" alt="feature" />
+                {/* <img src="/imghome/3.png" alt="feature" /> */}
             </div>
         </div>
         {/* Khung phải */}

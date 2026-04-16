@@ -142,13 +142,15 @@ export const ManagementSubject = () => {
                         setShowEditModal(true);
                       }}
                     >
-                      Edit
+                      {/* Edit */}
+                      <i class="fa-solid fa-pen-to-square"></i>
                     </button>
                     <button 
                       className='delete-btn' 
                       onClick={() => handleDelete(sub.subject_id)}
                     >
-                      Delete
+                      {/* Delete */}
+                    <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
                 </tr>

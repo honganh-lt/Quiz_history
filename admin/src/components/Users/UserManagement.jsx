@@ -246,7 +246,8 @@ export const UserManagement = () => {
                                         setShowEditModal(true);
                                     }}
                                 >
-                                    Edit
+                                    {/* Edit */}
+                                    <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 {/*  */}
                                 <button className='delete'
@@ -256,7 +257,8 @@ export const UserManagement = () => {
                                         // setShowDeleteModal(true);
                                     }}
                                 >
-                                    Delete
+                                    {/* Delete */}
+                                    <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>

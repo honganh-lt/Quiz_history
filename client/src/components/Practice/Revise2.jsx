@@ -4,7 +4,7 @@ function Revise2() {
     return (
     <div className='revise'>
         <div className='revise-list'>
-            <h2>Giới thiệu</h2>
+            {/* <h2>Giới thiệu</h2> */}
             {/* Left */}
             <div className='card-revise'>
                 <div className='img-revise'>

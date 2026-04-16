@@ -1,0 +1,51 @@
+.main-onProfile{
+    background: #eef2f7;
+    /* min-height: 100vh; */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
+    padding-bottom: 50px;
+    /* margin-bottom: 30px; */
+}
+/* Card */
+.container-onProfile{
+    background: #fff;
+    width: 500px;
+    border-radius: 12px;
+    padding: 30px 40px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+}
+/* Avatar */
+.container-onProfile img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+/* Title */
+.container-onProfile h2{
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333;
+}
+
+/* List */
+.list-personal{
+    text-align: left;
+    margin-bottom: 20px;
+}
+.list-personal p{
+    margin: 8px 0;
+    font-size: 15px;
+    color: #444;
+}
+
+.list-personal strong{
+    font-weight: 600;
+    color: #000;
+}
+
+/* Phần đổi mật khẩu nếu có */

@@ -59,7 +59,7 @@ export const ManagementChapters = () => {
 //Thêm hàm lấy tên môn  ==== ADD 
   const getSubjectName = (id) => {
     const subject = subjects.find(sub => sub.subject_id === id);
-    return subject ? subject.subject_name : "không rõ"
+    return subject ? subject.subject_name : " "
   };
 
   //Edit
@@ -141,12 +141,16 @@ export const ManagementChapters = () => {
                             setSelectedChap(chap); //Mở modal-> cần đổ dữ liệu vào input
                             setShowEditModal(true);
                           }}
-                      >Edit</button>
+                      >
+                        {/* Edit */}
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </button>
                       <button 
                         className='delete-btn' 
                         onClick={() => handleDelete(chap.chapter_id)}
                       >
-                          Delete
+                        {/* Delete */}
+                        <i class="fa-solid fa-trash"></i>
                       </button>
                     </td>
                   </tr>

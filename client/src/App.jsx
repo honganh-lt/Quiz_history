@@ -18,6 +18,7 @@ import MakeAnExamTen from './components/ExamMakeAnExam/MakeAnExamTen'
 // import MakeAnExamTenAnswer from './components/ExamMakeAnExam/MakeAnExamTenAnswer'
 import MakeAnExamTenResult from './components/ExamMakeAnExam/MakeAnExamTenResult'
 import Exam from './components/Exam/Exam'
+import Profile from './components/PersonalProfile/Profile'
 // import MakeAnExamTen from './components/ExamMakeAnExam/MakeAnExamTen'
 // import ExamTen from './components/Exam/Examten'
 // import Exam10 from './components/Practice/ExamPractice/Exam10'
@@ -30,6 +31,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/" element={<Homepage />} />
+
+      {/* Hồ sơ */}
+      <Route path='/profile' element={<Profile />}/>
 
 
       {/* Ôn tập */}

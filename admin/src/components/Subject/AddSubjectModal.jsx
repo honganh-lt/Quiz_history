@@ -14,7 +14,7 @@ export const AddSubjectModal = ({isOpen, onClose, onSuccess}) => {
 
   //3: xử lý khi bấm thêm
   const handleAdd = async () => {
-    if (!subjectName || !description) {
+    if (!subjectName) {
       alert("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
@@ -50,6 +50,12 @@ export const AddSubjectModal = ({isOpen, onClose, onSuccess}) => {
           placeholder='Tên môn học'
           value={subjectName}
           onChange={(e) => setSubjectName(e.target.value)}
+           //Enter
+            onKeyDown={(e) => {
+              if(e.key === "Enter"){
+                handleAdd(); //Gọi luôn hàm thêm
+              }
+            }} 
         />
 
         {/* Mô tả */}
@@ -58,11 +64,17 @@ export const AddSubjectModal = ({isOpen, onClose, onSuccess}) => {
           placeholder='Mô tả'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          //Enter ở input chạy - còn textarea thì không
+          onKeyDown={(e) => {
+            if(e.key === "Enter" && e.ctrlKey) {
+              handleAdd(); //ctrl + Enter mới submit
+            }
+          }}
         />
 
         <div className="modal-actions-sub">
           <button className='save-btn' onClick={handleAdd}>Thêm</button>
-          <button className='close-btn' onClick={onClose}>Đóng</button>
+          <button className='close-btn' onClick={onClose}>Hủy</button>
         </div>
       </div>
     </div>

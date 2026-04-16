@@ -41,20 +41,34 @@ export const EditSubjectModal = ({sub, onClose, updateSub}) => {
 
   return (
     <div className="modal-overlay-sub">
-      <div className="moddal-sub">
+      <div className="modal-sub">
         <h3>Sửa môn học</h3>
 
         {/* Tên môn học */}
+        <h4>Tên môn học</h4>
         <input 
           type="text"
+          // placeholder='Tên môn học'
            value={subjectName}
            onChange={(e) => setSubjectName(e.target.value)}
+           //Enter
+           onKeyDown={(e) => {
+            if(e.key === "Enter") {
+              handleSubmit();
+            }
+           }}
         />
         {/* Mô tả */}
         <textarea 
           name="description"
+          placeholder='Mô tả'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          onKeyDown={(e) => {
+            if(e.key === "Enter" && e.ctrlKey) {
+              handleSubmit();
+            }
+          }}
         />
         <div className="modal-actions-sub">
           <button className='save-btn' onClick={handleSubmit}>Cập nhật</button>

@@ -16,51 +16,51 @@ function Sidebar({ openSidebarToggle }) {
 
         <li className="sidebar-list-item">
           <NavLink to="/admin">
-            <BsHouse className="icon" />
+            {/* <BsHouse className="icon" /> */}
             Trang chủ
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/users">
-            <BsPerson className="icon" />
+            {/* <BsPerson className="icon" /> */}
             Quản lý User
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/subjects">
-            <BsBookshelf className="icon" />
+            {/* <BsBookshelf className="icon" /> */}
             Quản lý môn học
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/chapters">
-            <BsBookshelf className="icon" />
+            {/* <BsBookshelf className="icon" /> */}
             Quản lý chương
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/lessons">
-            <BsBook className="icon" />
+            {/* <BsBook className="icon" /> */}
             Quản lý bài học
           </NavLink>
         </li>
         
         <li className="sidebar-list-item">
           <NavLink to="/questions">
-            <BsQuestion className="icon" />
+            {/* <BsQuestion className="icon" /> */}
             Quản lý câu hỏi
           </NavLink>
         </li>
-        <li className="sidebar-list-item">
+        {/* <li className="sidebar-list-item">
           <NavLink to="/exam">
-            {/* <BsBook className="icon" /> */}
+            <BsBook className="icon" />
             Quản lý đề thi
           </NavLink>
-        </li>
+        </li> */}
 
       </ul>
     </aside>

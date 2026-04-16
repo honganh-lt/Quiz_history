@@ -36,9 +36,11 @@
 /* Menu */
 .menu {
     display: flex;
-    gap: 55px;
+    /* Giảm lại cho gọn */
+    gap: 30px;
     margin-left: auto;
-    margin-top: 14px;
+    /* margin-top: 14px; */
+    align-items: center;
 }
 
 .menu a {
@@ -50,11 +52,61 @@
 .menu a:hover {
     color: #fff;
 }
+/*  */
+/* Dropdown menu */
+.menu-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.menu-item span {
+    font-size: 16px;
+    color: #000;
+    font-weight: 600;
+}
+
+/* Submenu */
+.submenu {
+    position: absolute;
+    top: 120%;
+    left: 0;
+    width: 160px;
+    background: #fff;
+    border-top: 3px solid #fd9644;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 100;
+
+    /* opacity: 0;
+    transform: translateY(10px);
+    transition: 0.25s; */
+}
+
+/* Hiện submenu */
+/* .menu-item:hover .submenu {
+    opacity: 1;
+    transform: translateY(0);
+} */
+
+/* Item */
+.submenu div {
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.submenu div:hover {
+    background: #f5f5f5;
+}
+
 
 /* Auth */
 .auth {
     display: flex;
     gap: 12px;
+    align-items: center;
+    /* Tạo khoảng cách với menu */
+    margin-left: 30px;
 }
 
 .auth a {
@@ -93,6 +145,17 @@
     text-transform: capitalize;
     color: #000; 
     margin-left: 80px;
+    align-items: center;
+    /* Khoảng cách icon và chữ */
+    gap: 8px;
+    cursor: pointer;
+}
+.user-icon{
+    font-size: 18px;
+    color: #333;
+}
+.username{
+    text-transform: capitalize;
 }
 .dropdown{
     position: absolute;

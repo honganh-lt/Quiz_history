@@ -65,6 +65,12 @@ export const AddChapterModal = ({isOpen, onClose, onSuccess, subjects}) => {
             <select 
                 value={subjectId}
                 onChange={(e) => setSubjectId(e.target.value)}
+                // // Enter
+                // onKeyDown={(e) => {
+                //     if(e.key === "Enter"){
+                //         handleAdd();
+                //     }
+                // }}
             >
                 {/* <div className="option-subject"> */}
                     <option value="">Chọn môn học</option>
@@ -89,6 +95,12 @@ export const AddChapterModal = ({isOpen, onClose, onSuccess, subjects}) => {
                 // placeholder='Tên chương'
                 value={chapterName}
                 onChange={(e) => setChapterName(e.target.value)}
+                //Enter
+                //  onKeyDown={(e) => {
+                //     if(e.key === "Enter"){
+                //         handleAdd();
+                //     }
+                // }}
             />
 
             {/* Chương số */}
@@ -98,6 +110,12 @@ export const AddChapterModal = ({isOpen, onClose, onSuccess, subjects}) => {
                 // placeholder='Số chương'
                 value={chapterNumber}
                 onChange={(e) => setChapterNumber(e.target.value)}
+                //Enter
+                 onKeyDown={(e) => {
+                    if(e.key === "Enter"){
+                        handleAdd();
+                    }
+                }}
             />
             <div className="modal-actions-chap">
                 <button onClick={handleAdd} className='save-btn'>Thêm</button>

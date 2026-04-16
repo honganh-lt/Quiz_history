@@ -53,6 +53,12 @@ export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
           type="text" 
           value={chapterName}
           onChange={(e) => setChapterName(e.target.value)}
+          //Enter
+           onKeyDown={(e) => {
+                    if(e.key === "Enter"){
+                        handleSubmit();
+                    }
+                }}
         />
 
         {/* Môn học từ chức năng môn học */}
@@ -65,6 +71,11 @@ export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
         <select 
         value={subjectId}
         onChange={(e) => setSubjectId(e.target.value)}
+        onKeyDown={(e) => {
+                    if(e.key === "Enter"){
+                        handleSubmit();
+                    }
+                }}
         >
           <option value=""></option>
           {subjects && subjects.map((sub) => (
@@ -79,6 +90,11 @@ export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
           type="text" 
           value={chapterNumber}
           onChange={(e) => setChapterNumber(e.target.value)}
+          onKeyDown={(e) => {
+                    if(e.key === "Enter"){
+                        handleSubmit();
+                    }
+                }}
         />
         <div className="modal-actions-chap">
           <button className='save-btn' onClick={handleSubmit}>Cập nhật</button>

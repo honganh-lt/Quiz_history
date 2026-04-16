@@ -16,7 +16,6 @@ export const ManageQuestions = () => {
   const [chapters, setChapters] = useState([]);
   const [subjects, setSubjects] = useState([]);
 
-
   //==========Edit===============
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null); //Lí do?
@@ -88,12 +87,25 @@ const getCorrectAnswer = (answers) => {
   //   )
   // }
 
+
   //DELETE
-  const handleDelete = async (id) => {
-    if(!window.confirm("Bạn có chắc chắn muốn xóa không?"));
-    await deleteQuestion(id);
-    fetchData();//bắt buộc
-  }
+   //Delete
+      const handleDelete = async (id) => {
+  
+          //Check FE có gọi không
+          console.log("Delete id: ", id);
+  
+          if(window.confirm("Bạn có chắc muốn xóa không?")) {
+            //Các file delete khác có thể thêm cái này try-catch
+              try {
+                  await deleteQuestion(id);
+                  fetchData();
+                } catch (error) {
+                  console.error(error);
+                  alert("Xóa thất bại!");
+                }
+          }
+      }
 
   //Phân trang
     const indexOfLastChap = currentPage * questionsPerPage;
@@ -168,13 +180,15 @@ const getCorrectAnswer = (answers) => {
                       setShowEditModal(true);
                     }}
                   >
-                    Edit
+                    {/* Edit */}
+                   <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button 
                     className='delete-btn'
                     onClick={() => handleDelete(q.question_id)}
                   >
-                    Delete
+                    {/* Delete */}
+                    <i class="fa-solid fa-trash"></i>
                   </button>
                 </td>
               </tr>

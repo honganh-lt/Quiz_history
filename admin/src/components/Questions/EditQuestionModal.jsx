@@ -1,32 +1,33 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import "./css/EditQuestionModal.css";
 
 const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => {
+
   const [content, setContent] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [subjectId, setSubjectId] = useState("");
   const [chapterId, setChapterId] = useState("");
+
   const [answers, setAnswers] = useState([
-    { content: "", is_correct: false},
-    { content: "", is_correct: false},
-    { content: "", is_correct: false},
-    { content: "", is_correct: false},
+    { content: "", is_correct: false },
+    { content: "", is_correct: false },
+    { content: "", is_correct: false },
+    { content: "", is_correct: false },
   ]);
-  
-  // ✅ Đổ dữ liệu vào form khi mở modal
-  //==================LOAD DATA====================
+
+  // ================= LOAD DATA =================
   useEffect(() => {
     if (ques && chapters.length > 0) {
       setContent(ques.content || "");
       setDifficulty(String(ques.difficulty || ""));
       setChapterId(String(ques.chapter_id || ""));
 
-      // ✅ Tìm subject từ chapter
+      // tìm subject từ chapter
       const chap = chapters.find(c => c.chapter_id === ques.chapter_id);
       setSubjectId(chap ? String(chap.subject_id) : "");
 
-      //Đổ answers (quan trọng)
-      // 🔥 FIX: chỉ lấy 4 đáp án
+      // đổ answers
       if (ques.answers && ques.answers.length > 0) {
         const fixed = ques.answers
           .sort((a, b) => a.answer_id - b.answer_id)
@@ -45,12 +46,11 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
     }
   }, [ques, chapters]);
 
-  // ✅ Lọc chapter theo subject === FILTER CHAPTER
+  // ================= FILTER CHAPTER =================
   const filteredChapters = subjectId
     ? chapters.filter(c => String(c.subject_id) === String(subjectId))
     : [];
 
-  // ✅ Submit update
   // ================= UPDATE =================
   const handleSubmit = async () => {
 
@@ -72,7 +72,6 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
       return;
     }
 
-
     try {
       await axios.put(`http://localhost:3000/api/questions/${ques.question_id}`, {
         content,
@@ -81,7 +80,7 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
         answers
       });
 
-      onSuccess(); // 🔥 reload lại table
+      onSuccess();
       onClose();
 
     } catch (err) {
@@ -90,12 +89,11 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
     }
   };
 
-
-
   return (
     <div className="modal-overlay-ques">
       <div className="modal-ques">
-        <h3>Edit câu hỏi</h3>
+
+        <h3>Sửa câu hỏi</h3>
 
         {/* Môn học */}
         <h4>Môn học</h4>
@@ -149,18 +147,9 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
         </select>
 
         {/* Đáp án */}
+        <h4>Đáp án</h4>
         {answers.map((ans, index) => (
-          <div key={index}>
-            <h4>Đáp án {String.fromCharCode(65 + index)}</h4>
-
-            <input
-              value={ans.content}
-              onChange={(e) => {
-                const newAns = [...answers];
-                newAns[index].content = e.target.value;
-                setAnswers(newAns);
-              }}
-            />
+          <div key={index} className="answer-item">
 
             <input
               type="radio"
@@ -173,7 +162,18 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
                 })));
               }}
             />
-            
+
+            <input
+              type="text"
+              placeholder={`Đáp án ${String.fromCharCode(65 + index)}`}
+              value={ans.content}
+              onChange={(e) => {
+                const newAns = [...answers];
+                newAns[index].content = e.target.value;
+                setAnswers(newAns);
+              }}
+            />
+
           </div>
         ))}
 
@@ -186,6 +186,7 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
             Đóng
           </button>
         </div>
+
       </div>
     </div>
   );
