@@ -2,28 +2,39 @@ import React, { useState } from 'react'
 import { createQuestion } from '../../api/questionApi';
 import "./css/AddQuestionModal.css"
 
-export const AddQuestionModal = ({isOpen, onClose, onSuccess, chapters, subjects }) => {
+export const AddQuestionModal = ({
+    isOpen,
+    onClose,
+    onSuccess,
+    subjects,
+    chapters,
+    lessons,
+    setLessons,
+    fetchLessons
+}) => {
 
     const [content, setContent] = useState("");
     const [difficulty, setDifficulty] = useState("");
     const [subjectId, setSubjectId] = useState("");
     const [chapterId, setChapterId] = useState("");
+    const [lessonId, setLessonId] = useState("");
 
     const [answers, setAnswers] = useState([
-        {content: "", is_correct: false},
-        {content: "", is_correct: false},
-        {content: "", is_correct: false},
-        {content: "", is_correct: false},
-    ])
+        { content: "", is_correct: false },
+        { content: "", is_correct: false },
+        { content: "", is_correct: false },
+        { content: "", is_correct: false },
+    ]);
 
-    if(!isOpen) return null;
+    if (!isOpen) return null;
 
+    // ================= ADD QUESTION =================
     const handleAdd = async () => {
         const isValidAnswers = answers.every(a => a.content.trim() !== "");
         const hasCorrect = answers.some(a => a.is_correct);
 
-        if (!content || !difficulty || !chapterId || !isValidAnswers || !hasCorrect) {
-            alert("Nhập đầy đủ và chọn đáp án đúng!");
+        if (!content || !difficulty || !lessonId || !isValidAnswers || !hasCorrect) {
+            alert("Nhập đầy đủ nội dung + mức độ + bài học + đáp án!");
             return;
         }
 
@@ -31,7 +42,7 @@ export const AddQuestionModal = ({isOpen, onClose, onSuccess, chapters, subjects
             await createQuestion({
                 content,
                 difficulty,
-                chapter_id: Number(chapterId),
+                lesson_id: Number(lessonId),
                 answers: answers.map(a => ({
                     content: a.content.trim(),
                     is_correct: a.is_correct ? 1 : 0
@@ -41,11 +52,14 @@ export const AddQuestionModal = ({isOpen, onClose, onSuccess, chapters, subjects
             onSuccess();
             onClose();
 
-            // reset
+            // reset form
             setContent("");
             setDifficulty("");
-            setChapterId("");
             setSubjectId("");
+            setChapterId("");
+            setLessonId("");
+            setLessons([]);
+
             setAnswers([
                 { content: "", is_correct: false },
                 { content: "", is_correct: false },
@@ -55,20 +69,50 @@ export const AddQuestionModal = ({isOpen, onClose, onSuccess, chapters, subjects
 
         } catch (err) {
             console.error(err);
-            alert("Lỗi khi thêm!");
+            alert("Lỗi khi thêm câu hỏi!");
         }
-    }
+    };
+
+    // ================= SUBJECT CHANGE =================
+    const handleChangeSubject = (value) => {
+        setSubjectId(value);
+        setChapterId("");
+        setLessonId("");
+        setLessons([]);
+    };
+
+    // ================= CHAPTER CHANGE =================
+    const handleChangeChapter = (value) => {
+        setChapterId(value);
+        setLessonId("");
+
+        if (value) {
+            fetchLessons(value);
+        } else {
+            setLessons([]);
+        }
+    };
+
+    // ================= FILTER DATA =================
+    const filteredChapters = chapters.filter(
+        c => c.subject_id === Number(subjectId)
+    );
+
+    const filteredLessons = lessons.filter(
+        l => l.chapter_id === Number(chapterId)
+    );
 
     return (
         <div className="modal-overlay-ques">
             <div className="modal-ques">
+
                 <h3>Thêm câu hỏi</h3>
 
-                {/* Môn học */}
-                <h4>Chọn môn học</h4>
-                <select 
+                {/* SUBJECT */}
+                <h4>Môn học</h4>
+                <select
                     value={subjectId}
-                    onChange={(e) => setSubjectId(e.target.value)}
+                    onChange={(e) => handleChangeSubject(e.target.value)}
                 >
                     <option value="">Chọn môn học</option>
                     {subjects?.map(sub => (
@@ -78,30 +122,46 @@ export const AddQuestionModal = ({isOpen, onClose, onSuccess, chapters, subjects
                     ))}
                 </select>
 
-                {/* Chương */}
-                <h4>Chọn chương</h4>
-                <select 
-                    value={chapterId} 
-                    onChange={e => setChapterId(e.target.value)}
+                {/* CHAPTER */}
+                <h4>Chương</h4>
+                <select
+                    value={chapterId}
+                    disabled={!subjectId}
+                    onChange={(e) => handleChangeChapter(e.target.value)}
                 >
                     <option value="">Chọn chương</option>
-                    {chapters.map(c => (
+                    {filteredChapters.map(c => (
                         <option key={c.chapter_id} value={c.chapter_id}>
-                            {c.chapter_name}
+                            Chương {c.chapter_number} - {c.chapter_name}
                         </option>
                     ))}
                 </select>
 
-                {/* Nội dung */}
+                {/* LESSON */}
+                <h4>Bài học</h4>
+                <select
+                    value={lessonId}
+                    disabled={!chapterId}
+                    onChange={(e) => setLessonId(e.target.value)}
+                >
+                    <option value="">Chọn bài học</option>
+                    {filteredLessons.map(l => (
+                        <option key={l.lesson_id} value={l.lesson_id}>
+                            Bài {l.lesson_number} - {l.lesson_name}
+                        </option>
+                    ))}
+                </select>
+
+                {/* CONTENT */}
                 <h4>Nội dung</h4>
-                <textarea 
+                <textarea
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                 />
 
-                {/* Mức độ */}
+                {/* DIFFICULTY */}
                 <h4>Mức độ</h4>
-                <select 
+                <select
                     value={difficulty}
                     onChange={(e) => setDifficulty(e.target.value)}
                 >
@@ -111,7 +171,7 @@ export const AddQuestionModal = ({isOpen, onClose, onSuccess, chapters, subjects
                     <option value="HARD">HARD</option>
                 </select>
 
-                {/* Đáp án */}
+                {/* ANSWERS */}
                 <h4>Đáp án</h4>
 
                 {answers.map((ans, i) => (
@@ -128,7 +188,7 @@ export const AddQuestionModal = ({isOpen, onClose, onSuccess, chapters, subjects
                             }}
                         />
 
-                        <input 
+                        <input
                             type="text"
                             placeholder={`Đáp án ${String.fromCharCode(65 + i)}`}
                             value={ans.content}
@@ -141,18 +201,19 @@ export const AddQuestionModal = ({isOpen, onClose, onSuccess, chapters, subjects
                     </div>
                 ))}
 
-                {/* Button */}
+                {/* BUTTON */}
                 <div className="modal-actions-ques">
-                    <button onClick={handleAdd} className='save-btn'>
+                    <button onClick={handleAdd} className="save-btn">
                         Thêm
                     </button>
-                    <button onClick={onClose} className='close-btn'>
+                    <button onClick={onClose} className="close-btn">
                         Đóng
                     </button>
                 </div>
+
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default AddQuestionModal;

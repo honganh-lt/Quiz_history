@@ -1,13 +1,52 @@
+import { useEffect, useState } from 'react';
 import Header from '../Home/Header'
 import './css/reviseLop10.css'
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getChapters } from '../../api/chapterApi';
+import { getLesson } from '../../api/lessonApi';
+import { getSubjects } from '../../api/subjectApi';
 
 
 
 function ReviseLop10() {
 
     const navigate = useNavigate();
+
+    //sửa reviseLop10 -> thành dynamic
+
+    const {subjectId} = useParams(); 
+
+    const [subjects, setSubjects] = useState([]);
+    const [chapters, setChapters] = useState([]);
+    const [lessons, setLessons] = useState([]);
+
+
+
+
+    //load chapters + lessons
+    useEffect(() => {
+        getSubjects()
+        .then(res => setSubjects(res.data))
+        .catch(err => console.error(err));
+
+        getChapters()
+        .then(res => setChapters(res.data))
+        .catch(err => console.error(err));
+
+        getLesson()
+        .then(res => setLessons(res.data))
+        .catch(err => console.error(err));
+    }, []);
+
+    //tìm subject hiện tại 
+    const currentSubject = subjects.find(
+        s => Number(s.subject_id) === Number(subjectId)
+    )
+    // 🔥 lọc chương theo môn
+    const filteredChapters = chapters.filter(
+        c => Number(c.subject_id) === Number(subjectId)
+    );
 
     return (
         <main className='main'>
@@ -23,7 +62,7 @@ function ReviseLop10() {
                     </div> */}
                     <div className='body-layout-ten'>
                         <div className='body-text-ten'>
-                            <h1>Lịch sử lớp 10</h1>
+                            <h1>{currentSubject?.subject_name}</h1>
                         </div>
 
                         <div className="revise-search">
@@ -37,75 +76,32 @@ function ReviseLop10() {
             <section className='feature-section-ten'>
                 <div className="feature-list-ten">
                     {/* Chương 1 */}
-                    <div className="card-list">
-                        <h2>Chương 1: Lịch sử và sử học</h2>
+                   {filteredChapters.map((chapter) => (
+                         <div className="card-list" key={chapter.chapter_id}>
+                        <h2>Chương {chapter.chapter_number}: {chapter.chapter_name}</h2>
                         <div className="card-list-ten">
-                            <div className="card-ten-item">
-                                <h3>Trắc nghiệm sử 10</h3>
-                                <h4>Bài 1: Hiện thực lịch sử và nhận thức lịch sử </h4>
+                           {lessons
+                            .filter(l => Number(l.chapter_id) === Number(chapter.chapter_id))
+                            .map((lesson) => (
+                                 <div className="card-ten-item" key={lesson.lesson_id}>
+                                <h3>Trắc nghiệm</h3>
+                                <h4> Bài {lesson.lesson_number} - {lesson.lesson_name}</h4>
                                 {/* trang làm đề */}
                                 <button className="btn-practice"
-                                    onClick={() => navigate("/practice/lop-10/bai1")}
+                                    onClick={() => navigate(`/practice/${subjectId}/${lesson.lesson_id}`)}
                                 >Làm đề</button>
                             </div>
-                            <div className="card-ten-item">
-                                <h3>Trắc nghiệm sử 10</h3>
-                                <h4>Bài 2: Tri thức lịch sử và cuộc sống </h4>
-                                <button className="btn-practice"
-                                    onClick={() => navigate("/practice/lop-10/bai2")}
-                                >Làm đề</button>
-                            </div>
+                            ))}
+                            
                         </div>
                     </div>
+                   ))}
 
                     {/* Chương 2 */}
-                    <div className="card-list">
-                        <h2>Chương 2: Vai trò của Sử học</h2>
-                        <div className="card-list-ten">
-                            <div className="card-ten-item">
-                                <h3>Trắc nghiệm sử 10</h3>
-                                <h4>Bài 3: Sử học với các lĩnh vực khoa học khác</h4>
-                                <button className="btn-practice"
-                                    onClick={() => navigate("/practice/lop-10/bai3")}
-                                >Làm đề</button>
-                            </div>
-                            <div className="card-ten-item">
-                                <h3>Trắc nghiệm sử 10</h3>
-                                <h4>Bài 4: Sử học với một số lĩnh vực, ngành hiện đại </h4>
-                                <button className="btn-practice"
-                                    onClick={() => navigate("/practice/lop-10/bai4")}
-                                >Làm đề</button>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     {/* Chương 3 */}
-                    <div className="card-list">
-                        <h2>Chương 3: Một số nền văn minh thế giới thời kì cổ -trung đại</h2>
-                        <div className="card-list-ten">
-                            <div className="card-ten-item">
-                                <h3>Trắc nghiệm sử 10</h3>
-                                <h4>Bài 5: Khái niệm văn minh</h4>
-                                <button className="btn-practice"
-                                    onClick={() => navigate("/practice/lop-10/bai5")}
-                                >Làm đề</button>
-                            </div>
-                            <div className="card-ten-item">
-                                <h3>Trắc nghiệm sử 10</h3>
-                                <h4>Bài 6: Một số nền văn minh Phương Đông </h4>
-                                <button className="btn-practice"
-                                    onClick={() => navigate("/practice/lop-10/bai6")}
-                                >Làm đề</button>
-                            </div>
-                            <div className="card-ten-item">
-                                <h3>Trắc nghiệm sử 10</h3>
-                                <h4>Bài 7: Một số nền văn minh Phương Tây</h4>
-                                <button className="btn-practice"
-                                    onClick={() => navigate("/practice/lop-10/bai7")}
-                                >Làm đề</button>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                 </div>
             </section>

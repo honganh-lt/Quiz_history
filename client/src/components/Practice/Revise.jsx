@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Header from '../Home/Header';
 import './css/revise.css'
 
@@ -8,12 +9,25 @@ import './css/revise.css'
 // import img13 from "../../assets/images/anhlt4.avif";
 
 import { useNavigate } from 'react-router-dom';
+import { getSubjects } from '../../api/subjectApi';
 
 
 
 function Revise() {
 
     const navigate = useNavigate();
+    const [subjects, setSubjects] = useState([]);
+
+    //GỌi API khi load trang
+    useEffect(() => {
+        getSubjects()
+        .then(res => {
+            setSubjects(res.data);
+        })
+
+        .catch (err => console.error(err));
+        
+    }, []);
     
     return (
         <main className='main'>
@@ -39,25 +53,17 @@ function Revise() {
             <section className='feature-section-revise'>
                 {/* <h2>Luyện theo lớp học - Sách kết nối tri thức</h2> */}
                 <div className='feature-list-revise'>
-                    <div className='feature-card-revise'>
+                    
+                    {subjects.map((item) => (
+                        <div className='feature-card-revise' key={item.subject_id}>
                         {/* <img src={img10} alt="Lịch sử lớp 10" /> */}
-                        <h3> Lớp 10</h3>
+                        <h3>{item.subject_name}</h3>
                         <button className="btn-practice"
-                            onClick={() => navigate("/practice/lop-10")}
+                            onClick={() => navigate(`/practice/${item.subject_id}`)}
                         >Luyện tập</button>
                     </div>
-                    <div className='feature-card-revise'>
-                        {/* <img src={img11} alt="Lịch sử lớp 10" /> */}
-                        <h3> Lớp 11</h3>
-                        <button className="btn-practice"
-                            onClick={() => navigate("/practice/lop-11")}
-                        >Luyện tập</button>                    </div>
-                    <div className='feature-card-revise'>
-                        {/* <img src={img12} alt="Lịch sử lớp 10" /> */}
-                        <h3> Lớp 12</h3>
-                        <button className="btn-practice"
-                            onClick={() => navigate("/practice/lop-12")}
-                        >Luyện tập</button>                    </div>
+                    ))}
+                    
                 </div>
             </section>
         </main>

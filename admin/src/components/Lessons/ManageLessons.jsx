@@ -123,14 +123,15 @@ export const ManageLessons = () => {
                                                 setShowEditModal(true);
                                             }}
                                         >
-                                            ✏️
+                                            {/* Edit */}
+                                            <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
 
                                         <button
                                             className='delete-btn'
                                             onClick={() => handleDelete(les.lesson_id)}
                                         >
-                                            🗑️
+                                            <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>

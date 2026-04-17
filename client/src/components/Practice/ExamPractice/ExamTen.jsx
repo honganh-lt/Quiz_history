@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 // import questions from '../../aData/question';
 import { useEffect, useState } from 'react';
-import Header from '../Home/Header';
+// import Header from '../Home/Header';
 // import questions from '../../aData/question';
 import { useParams } from "react-router-dom";
-import questionsTen from "../../aData/questionsTen";
+// import questionsTen from "../../aData/questionsTen";
+import { getQuestionsByLesson } from '../../../api/questionApi';
+import Header from '../../Home/Header';
 
 
 
@@ -19,47 +21,80 @@ function ExamTen() {
 
     // làm đề theo bài
 
-    const { lessonId } = useParams();
+    const {subjectId, lessonId } = useParams();
+    const [questions, setQuestions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    //Lưu đáp án đã chọn
+    const [selectedAnswers, setSelectedAnswers] = useState({});
     // dữ liệu không có tên bài 1
     // const questions = questionsTen[lessonId] || [];
 
     // dữ liệu có tên bài 1
-    const lessonData = questionsTen[lessonId];
+    // const lessonData = questionsTen[lessonId];
 
 
-    const { title, questions } = lessonData;
+    // const { title } = lessonData;
 
-    //Lưu đáp án đã chọn
-    const [selectedAnswers, setSelectedAnswers] = useState({});
+    //====Load question theo lesson
+    useEffect(() => {
+        setLoading(true);
 
+        getQuestionsByLesson(lessonId)
+        .then(res => {
+            setQuestions(res.data);
+            setLoading(false);
+        })
+        .catch(err => {
+            console.error(err);
+            setLoading(false);
+        });
+    }, [lessonId]);
+
+
+
+
+//=================================================================
+//==============Chọn đáp án============
     const handleSelectAnswer = (questionId, answer) => { // handlSelectAnswer: hiện thị đáp án đã chọn
         setSelectedAnswers({
             ...selectedAnswers,
             [questionId]: answer
         });
     };
+    
+    //=============Loading==========
+    if(loading) {
+        return <p>Đang tải đề...</p>;
+    }
+
+    //======Không có câu hỏi=========
+    if(questions.length === 0) {
+        return <p>Không có câu hỏi cho bài này</p>
+    }
+
 
 
     // Thêm state & effect tính thời gian
-    const TOTAL_TIME = 15 * 60; // 15:00 phút (giây)
+    // const TOTAL_TIME = 15 * 60; // 15:00 phút (giây)
 
-    const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
+    // const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
 
-    useEffect(() => {
-        if (timeLeft <= 0) return;
+    // useEffect(() => {
+    //     if (timeLeft <= 0) return;
 
-        const timer = setInterval(() => {
-            setTimeLeft((prev) => prev - 1);
-        }, 1000);
+    //     const timer = setInterval(() => {
+    //         setTimeLeft((prev) => prev - 1);
+    //     }, 1000);
 
-        return () => clearInterval(timer);
+    //     return () => clearInterval(timer);
 
-    }, [timeLeft]);
+    // }, [timeLeft]);
 
-        // sau đó mới check
-    if (!lessonData) {
-        return <p>Không tìm thấy đề thi</p>;
-    }
+    //     // sau đó mới check
+    // if (!lessonData) {
+    //     return <p>Không tìm thấy đề thi</p>;
+    // }
 
     // Hàm format thời gian (mm:ss)
     // const formatTime = (seconds) => {
@@ -78,8 +113,8 @@ function ExamTen() {
             <div className="exam-layout">
                 {/* ===== KHUNG TRÁI ===== */}
                 <aside className="exam-left">
-                    <h3>Trắc nghiệm Sử 10</h3>
-                    <h4>{title}</h4>
+                    <h3>Trắc nghiệm</h3>
+                    {/* <h4>{title}</h4> */}
                     <h5>Tổng số câu: {questions.length}</h5>
                     {/* <p>
                         Thời gian còn lại :
@@ -91,9 +126,9 @@ function ExamTen() {
                     <div className="question-status">
                         {questions.map((q, index) => (
                             <span
-                                key={q.id}
+                                key={q.question_id}
                                 className={
-                                    selectedAnswers[q.id]
+                                    selectedAnswers[q.question_id]
                                         ? "question-number answered"
                                         : "question-number"
                                 }
@@ -109,25 +144,25 @@ function ExamTen() {
                     <h1>Bài làm</h1>
 
                     {questions.map((q, index) => (
-                        <div key={q.id} className="question-card">
+                        <div key={q.question_id} className="question-card">
                             <h4>
-                                Câu {index + 1}: {q.question}
+                                Câu {index + 1}: {q.content}
                             </h4>
 
                             <div className="answers">
                                 {q.answers.map((ans) => (
                                     <button
-                                        key={ans}
+                                        key={ans.answer_id}
                                         className={
-                                            selectedAnswers[q.id] === ans
+                                            selectedAnswers[q.question_id] === ans.content
                                                 ? "answer-btn selected"
                                                 : "answer-btn"
                                         }
                                         onClick={() =>
-                                            handleSelectAnswer(q.id, ans)
+                                            handleSelectAnswer(q.question_id, ans.content)
                                         }
                                     >
-                                        {ans}
+                                        {ans.content}
                                     </button>
                                 ))}
                             </div>
@@ -141,12 +176,12 @@ function ExamTen() {
                                     "selectedAnswers",
                                     JSON.stringify(selectedAnswers)
                                 );
-                                localStorage.setItem(
-                                    "timeUsed",
-                                    (TOTAL_TIME - timeLeft).toString()
-                                );
+                                // localStorage.setItem(
+                                //     "timeUsed",
+                                //     (TOTAL_TIME - timeLeft).toString()
+                                // );
 
-                                navigate(`/practice/lop-10/${lessonId}/answer`)
+                                navigate(`/practice/${subjectId}/${lessonId}/answer`)
                             }
                             }
                         >
@@ -164,4 +199,4 @@ function ExamTen() {
     )
 }
 
-export default ExamTen
+export default ExamTen;

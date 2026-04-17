@@ -5,6 +5,7 @@ import { getChapters } from '../../api/chapterApi';
 import AddQuestionModal from './AddQuestionModal';
 import { getSubjects } from '../../api/subjectService';
 import EditQuestionModal from './EditQuestionModal';
+import { getLesson } from '../../api/lessonApi';
 
 export const ManageQuestions = () => {
 
@@ -15,6 +16,7 @@ export const ManageQuestions = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [chapters, setChapters] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [lessons, setLessons] = useState([]);
 
   //==========Edit===============
   const [showEditModal, setShowEditModal] = useState(false);
@@ -27,6 +29,7 @@ export const ManageQuestions = () => {
     fetchData();
     fetchChapters(); //add
     fetchSubjects(); //add
+    // fetchLessons(); //add
   }, []);
 
   //GET===questions
@@ -58,7 +61,7 @@ const getCorrectAnswer = (answers) => {
   return i !== -1 ? String.fromCharCode(65 + i) : "";
 };
 
-  //ADD
+  //ADD - chapter
   const fetchChapters = async () => {
     try {
       const data = await getChapters();
@@ -76,6 +79,16 @@ const getCorrectAnswer = (answers) => {
       console.error(error);
     }
   }
+  const fetchLessons = async (chapterId) => {
+  try {
+    const data = await getLesson(chapterId);
+    console.log("LESSONS:", data);
+    setLessons(data);
+  } catch (error) {
+    console.error(error);
+    setLessons([]); // 👈 THÊM DÒNG NÀY
+  }
+};
 
 
   //EDIT
@@ -137,7 +150,7 @@ const getCorrectAnswer = (answers) => {
               <th>Mã câu hỏi</th>
               <th>Nội dung</th>
               <th>Mức độ</th>
-              <th>Tên chương</th>
+              <th>Phân loại</th>
               <th>Đáp án A</th>
               <th>Đáp án B</th>
               <th>Đáp án C</th>
@@ -153,7 +166,13 @@ const getCorrectAnswer = (answers) => {
                 <td>{q.question_id}</td>
                 <td title={q.content}>{q.content}</td>
                 <td title={q.difficulty}>{q.difficulty}</td>
-                <td title={q.chapter_name}>{q.chapter_name}</td>
+                <td
+                  title={`${q.subject_name} > Chương ${q.chapter_number}: ${q.chapter_name} > Bài ${q.lesson_number}: ${q.lesson_name}`}
+                >
+                  {q.subject_name} {" > "} 
+                  Chương {q.chapter_number}: {q.chapter_name} {" > "} 
+                  Bài {q.lesson_number}: {q.lesson_name}
+                </td>
                 {/* <td>
                   {q.answers?.map((a, i) => (
                     <div key={i}>
@@ -181,14 +200,14 @@ const getCorrectAnswer = (answers) => {
                     }}
                   >
                     {/* Edit */}
-                   <i class="fa-solid fa-pen-to-square"></i>
+                   <i className="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button 
                     className='delete-btn'
                     onClick={() => handleDelete(q.question_id)}
                   >
                     {/* Delete */}
-                    <i class="fa-solid fa-trash"></i>
+                    <i className="fa-solid fa-trash"></i>
                   </button>
                 </td>
               </tr>
@@ -230,6 +249,9 @@ const getCorrectAnswer = (answers) => {
           onSuccess={fetchData}
           subjects={subjects}
           chapters={chapters}
+          lessons={lessons}
+          setLessons={setLessons}   // ✅ THÊM DÒNG NÀY
+  fetchLessons={fetchLessons} // 👈 THÊM DÒNG NÀY
         />
 
         {/* Modal Edit */}
@@ -239,7 +261,9 @@ const getCorrectAnswer = (answers) => {
             onClose={() => setShowEditModal(false)}
             // updateQuestion={updateQues}   // ✅ đúng tên bị sai chỗ này nên không lấy được subject
             chapters={chapters}
-            subjects={subjects}           // ✅ thêm dòng này
+            subjects={subjects}   
+            lessons={lessons}        // ✅ thêm dòng này
+            fetchLessons={fetchLessons}
             onSuccess={fetchData}
           />
         )}

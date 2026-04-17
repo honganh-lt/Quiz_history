@@ -104,7 +104,7 @@ export const AddChapterModal = ({isOpen, onClose, onSuccess, subjects}) => {
             />
 
             {/* Chương số */}
-            <h4>Số chương</h4>
+            <h4>Chương số</h4>
             <input 
                 type='number'
                 // placeholder='Số chương'

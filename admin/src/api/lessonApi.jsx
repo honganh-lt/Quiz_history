@@ -4,15 +4,21 @@ const API_URL = "http://localhost:3000/api/lessons";
 
 //Tạo function đồng bộ
 //GET
-export const getLesson = async () => {
+export const getLesson = async (chapterId) => {
     try {
-        const res = await axios.get(API_URL);
+        let url = API_URL;
+
+        if (chapterId) {
+            url += `?chapter_id=${chapterId}`;
+        }
+
+        const res = await axios.get(url);
         return res.data;
     } catch(error) {
         console.error(error);
         return [];
     }
-}
+};
 
 //POST
 export const createLesson = async (data) => {

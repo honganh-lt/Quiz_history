@@ -2,12 +2,21 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import "./css/EditQuestionModal.css";
 
-const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => {
+const EditQuestionModal = ({
+  ques,
+  onClose,
+  onSuccess,
+  chapters,
+  subjects,
+  lessons,
+  fetchLessons
+}) => {
 
   const [content, setContent] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [subjectId, setSubjectId] = useState("");
   const [chapterId, setChapterId] = useState("");
+  const [lessonId, setLessonId] = useState("");
 
   const [answers, setAnswers] = useState([
     { content: "", is_correct: false },
@@ -18,67 +27,94 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
 
   // ================= LOAD DATA =================
   useEffect(() => {
-    if (ques && chapters.length > 0) {
-      setContent(ques.content || "");
-      setDifficulty(String(ques.difficulty || ""));
-      setChapterId(String(ques.chapter_id || ""));
+    if (!ques) return;
 
-      // tìm subject từ chapter
-      const chap = chapters.find(c => c.chapter_id === ques.chapter_id);
-      setSubjectId(chap ? String(chap.subject_id) : "");
+    setContent(ques.content || "");
+    setDifficulty(String(ques.difficulty || ""));
+    setChapterId(String(ques.chapter_id || ""));
+    setLessonId(String(ques.lesson_id || ""));
 
-      // đổ answers
-      if (ques.answers && ques.answers.length > 0) {
-        const fixed = ques.answers
-          .sort((a, b) => a.answer_id - b.answer_id)
-          .slice(0, 4)
-          .map(a => ({
-            content: a.content,
-            is_correct: !!a.is_correct
-          }));
+    // 🔥 tìm subject từ chapter
+    const chap = chapters.find(
+      c => String(c.chapter_id) === String(ques.chapter_id)
+    );
 
-        while (fixed.length < 4) {
-          fixed.push({ content: "", is_correct: false });
-        }
+    setSubjectId(chap ? String(chap.subject_id) : "");
 
-        setAnswers(fixed);
+    // 🔥 load lesson theo chapter
+    if (ques.chapter_id) {
+      fetchLessons(ques.chapter_id);
+    }
+
+    // answers
+    if (ques.answers?.length) {
+      const sorted = [...ques.answers]
+        .sort((a, b) => a.answer_id - b.answer_id)
+        .slice(0, 4)
+        .map(a => ({
+          content: a.content,
+          is_correct: !!a.is_correct
+        }));
+
+      while (sorted.length < 4) {
+        sorted.push({ content: "", is_correct: false });
       }
+
+      setAnswers(sorted);
     }
   }, [ques, chapters]);
 
-  // ================= FILTER CHAPTER =================
-  const filteredChapters = subjectId
-    ? chapters.filter(c => String(c.subject_id) === String(subjectId))
-    : [];
+  // ================= FILTER =================
+  const filteredChapters = chapters.filter(
+    c => String(c.subject_id) === String(subjectId)
+  );
+
+  const filteredLessons = lessons.filter(
+    l => String(l.chapter_id) === String(chapterId)
+  );
+
+  // ================= CHANGE =================
+  const handleChangeSubject = (value) => {
+    setSubjectId(value);
+    setChapterId("");
+    setLessonId("");
+  };
+
+  const handleChangeChapter = (value) => {
+    setChapterId(value);
+    setLessonId("");
+    if (value) fetchLessons(value);
+  };
 
   // ================= UPDATE =================
   const handleSubmit = async () => {
-
-    const isValidAnswers = answers.every(a => a.content.trim() !== "");
+    const isValid = answers.every(a => a.content.trim() !== "");
     const hasCorrect = answers.some(a => a.is_correct);
 
-    if (!content || !difficulty || !chapterId) {
+    if (!content || !difficulty || !subjectId || !chapterId || !lessonId) {
       alert("Thiếu thông tin!");
       return;
     }
 
-    if (!isValidAnswers) {
-      alert("Đáp án không được để trống!");
-      return;
-    }
-
-    if (!hasCorrect) {
-      alert("Phải chọn 1 đáp án đúng!");
+    if (!isValid || !hasCorrect) {
+      alert("Đáp án không hợp lệ!");
       return;
     }
 
     try {
-      await axios.put(`http://localhost:3000/api/questions/${ques.question_id}`, {
-        content,
-        difficulty,
-        chapter_id: Number(chapterId),
-        answers
-      });
+      await axios.put(
+        `http://localhost:3000/api/questions/${ques.question_id}`,
+        {
+          content,
+          difficulty,
+          chapter_id: Number(chapterId),
+          lesson_id: Number(lessonId),
+          answers: answers.map(a => ({
+            content: a.content.trim(),
+            is_correct: a.is_correct ? 1 : 0
+          }))
+        }
+      );
 
       onSuccess();
       onClose();
@@ -95,17 +131,11 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
 
         <h3>Sửa câu hỏi</h3>
 
-        {/* Môn học */}
+        {/* Môn */}
         <h4>Môn học</h4>
-        <select
-          value={subjectId}
-          onChange={(e) => {
-            setSubjectId(e.target.value);
-            setChapterId("");
-          }}
-        >
+        <select value={subjectId} onChange={(e) => handleChangeSubject(e.target.value)}>
           <option value="">Chọn môn</option>
-          {subjects.map((sub) => (
+          {subjects.map(sub => (
             <option key={sub.subject_id} value={sub.subject_id}>
               {sub.subject_name}
             </option>
@@ -113,33 +143,42 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
         </select>
 
         {/* Chương */}
-        <h4>Chọn chương</h4>
+        <h4>Chương</h4>
         <select
           value={chapterId}
           disabled={!subjectId}
-          onChange={(e) => setChapterId(e.target.value)}
+          onChange={(e) => handleChangeChapter(e.target.value)}
         >
           <option value="">Chọn chương</option>
-          {filteredChapters.map((chap) => (
-            <option key={chap.chapter_id} value={chap.chapter_id}>
-              {chap.chapter_name}
+          {filteredChapters.map(c => (
+            <option key={c.chapter_id} value={c.chapter_id}>
+              Chương {c.chapter_number} - {c.chapter_name}
+            </option>
+          ))}
+        </select>
+
+        {/* Bài học */}
+        <h4>Bài học</h4>
+        <select
+          value={lessonId}
+          disabled={!chapterId}
+          onChange={(e) => setLessonId(e.target.value)}
+        >
+          <option value="">Chọn bài học</option>
+          {filteredLessons.map(l => (
+            <option key={l.lesson_id} value={l.lesson_id}>
+              Bài {l.lesson_number} - {l.lesson_name}
             </option>
           ))}
         </select>
 
         {/* Nội dung */}
         <h4>Nội dung</h4>
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
+        <textarea value={content} onChange={(e) => setContent(e.target.value)} />
 
         {/* Mức độ */}
         <h4>Mức độ</h4>
-        <select
-          value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value)}
-        >
+        <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
           <option value="">Chọn mức độ</option>
           <option value="EASY">EASY</option>
           <option value="MEDIUM">MEDIUM</option>
@@ -148,36 +187,34 @@ const EditQuestionModal = ({ ques, onClose, onSuccess, chapters, subjects }) => 
 
         {/* Đáp án */}
         <h4>Đáp án</h4>
-        {answers.map((ans, index) => (
-          <div key={index} className="answer-item">
+        {answers.map((ans, i) => (
+          <div key={i} className="answer-item">
 
             <input
               type="radio"
               name="correct"
               checked={ans.is_correct}
               onChange={() => {
-                setAnswers(answers.map((a, i) => ({
+                setAnswers(answers.map((a, idx) => ({
                   ...a,
-                  is_correct: i === index
+                  is_correct: idx === i
                 })));
               }}
             />
 
             <input
               type="text"
-              placeholder={`Đáp án ${String.fromCharCode(65 + index)}`}
               value={ans.content}
               onChange={(e) => {
                 const newAns = [...answers];
-                newAns[index].content = e.target.value;
+                newAns[i].content = e.target.value;
                 setAnswers(newAns);
               }}
             />
-
           </div>
         ))}
 
-        {/* Actions */}
+        {/* BUTTON */}
         <div className="modal-actions-ques">
           <button className="save-btn" onClick={handleSubmit}>
             Cập nhật
