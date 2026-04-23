@@ -1,59 +1,81 @@
-import React from 'react'
-import {
-    BsFillArchiveFill,
-    BsFillGrid3X3GapFill,
-    BsBook,
-    BsBookshelf,
-} from 'react-icons/bs';
-// import PieChartCustom from './PieChartCustom';
+import React, { useEffect, useState } from 'react'
+import { getDashBoardStats } from '../../api/dashboardApi';
+import { Bar, Pie } from 'react-chartjs-2';
+// import { data } from 'react-router-dom';
+import "./home.css"
+import "chart.js/auto";
 
-function Home() {
+export const Home = () => {
 
-    return (
-        <main className='main-container'>
-            <div className='main-title'>
-                {/* <h3>DASHBOARD</h3> */}
-            </div>
-            <div className="main-cards">
-                {/* <div className='card'>
-                    <div className="cardr-inner">
-                        <h3>Products</h3>
-                        <BsFillArchiveFill className='card_icon' />
+    const [stats, setStats] = useState(null);
 
-                    </div>
-                    <h1>300</h1>
-                </div> */}
-                <div className='card'>
-                    <div className="cardr-inner">
-                        <h3>Quản lý người dùng</h3>
-                        <BsFillGrid3X3GapFill className='card_icon' />
+    useEffect(() => {
+        getDashBoardStats()
+        .then(res => {
+            console.log("DATA:", res.data); // 👈 QUAN TRỌNG
+            setStats(res.data);
+        })
+        .catch(err => console.log(err));
+    }, []);
 
-                    </div>
-                    {/* <h1>200</h1> */}
+    //biểu đồ
+    const barData = {
+        labels: ["Câu hỏi", "Đề thi", "Người dùng", "Môn học"],
+        datasets: [
+            {
+                label: "Số lượng",
+                data: stats 
+                ? [
+                    stats.questions,
+                    stats.exams,
+                    stats.users,
+                    stats.subjects
+                ]
+                :[],
+                backgroundColor: "#4e73df"
+            }
+        ]
+    };
+
+    // const pieData = {
+    //     labels: ["Easy", "Medium", "Hard"],
+    //     datasets: [
+    //         {
+    //             data: stats
+    //             ? [
+    //                 stats.difficulty.easy,
+    //                 stats.difficulty.medium,
+    //                 stats.difficulty.hard
+    //             ]
+    //             : [],
+    //             backgroundColor: ["#f6c23e", "#1cc88a", "#e74a3b"]
+    //         }
+    //     ]
+    // }
+
+  return (
+    <div className="admin-container">
+        <div className="dashboard">
+        {/* Box */}
+        <div className="top-box">
+            <div>{stats?.subjects} <p>Số môn học</p></div>
+            <div>{stats?.questions} <p>Số câu hỏi</p></div>
+            <div>{stats?.exams} <p>Số đề thi</p></div>
+            <div>{stats?.users} <p>Số người dùng</p></div>
+        </div>
+
+        {/* Chart */}
+        <div className="chart-row">
+            <div style={{ width: "60%" }}>
+                <Bar data={barData} />
                 </div>
-                <div className='card'>
-                    <div className="cardr-inner">
-                        <h3>Quản lý chương</h3>
-                        <BsBook className='card_icon' />
-
-                    </div>
-                    {/* <h1>300</h1> */}
-                </div>
-                <div className='card'>
-                    <div className="cardr-inner">
-                        <h3>Quảng lý bài</h3>
-                        <BsBookshelf className='card_icon' />
-
-                    </div>
-                    {/* <h1>300</h1> */}
-                </div>
-            </div>
-            {/* <div className="charts">
-                <PieChartCustom />
+            {/* <div style={{ width: "40%" }}>
+                <Pie data={pieData} />
             </div> */}
-        </main>
-    )
+        </div>
+    </div>
+    </div>
+  )
 }
 
-
-export default Home
+export default Home;

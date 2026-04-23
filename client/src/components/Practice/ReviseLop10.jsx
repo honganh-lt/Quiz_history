@@ -75,7 +75,7 @@ function ReviseLop10() {
             {/* Khung dưới */}
             <section className='feature-section-ten'>
                 <div className="feature-list-ten">
-                    {/* Chương 1 */}
+                    {/* Chương  */}
                    {filteredChapters.map((chapter) => (
                          <div className="card-list" key={chapter.chapter_id}>
                         <h2>Chương {chapter.chapter_number}: {chapter.chapter_name}</h2>

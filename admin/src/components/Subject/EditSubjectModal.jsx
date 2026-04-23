@@ -1,7 +1,8 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 // import { updateSubject } from '../../api/subjectService';
 import "./css/EditSubjectModal.css"
+import { updateSubject } from '../../api/subjectService';
 
 export const EditSubjectModal = ({sub, onClose, updateSub}) => {
 
@@ -20,7 +21,8 @@ export const EditSubjectModal = ({sub, onClose, updateSub}) => {
     //Luồng Click - modal mở -> sửa dữ liệu -> click sửa - put API ->
   const handleSubmit = async () => {
     try {
-      await axios.put(`http://localhost:3000/api/chapters/${sub.subject_id}`, {
+      // await axios.put(`http://localhost:3000/api/chapters/${sub.subject_id}`, {
+      await updateSubject(sub.subject_id, { //Không dùng axios trực tiếp → dùng:
         subject_name: subjectName,
         description: description
       });

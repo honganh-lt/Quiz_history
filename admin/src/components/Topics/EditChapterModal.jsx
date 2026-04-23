@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./css/EditChapterModal.css"
-import axios from 'axios';
+import { updateChapter } from '../../api/chapterApi';
+// import axios from 'axios';
 
 export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
 
@@ -23,7 +24,8 @@ export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
   const handleSubmit = async () => {
     // console.log("sửa") //kiểm tra
     try{
-        await axios.put(`http://localhost:3000/api/chapters/${chap.chapter_id}`, {
+        // await axios.put(`http://localhost:3000/api/chapters/${chap.chapter_id}`, {
+        await updateChapter(chap.chapter_id, { //Không dùng axios trực tiếp → dùng:
         subject_id: Number(subjectId),
         chapter_name: chapterName,
         chapter_number: Number(chapterNumber)
@@ -71,6 +73,7 @@ export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
         <select 
         value={subjectId}
         onChange={(e) => setSubjectId(e.target.value)}
+        // Enter
         onKeyDown={(e) => {
                     if(e.key === "Enter"){
                         handleSubmit();

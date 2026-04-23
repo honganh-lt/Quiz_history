@@ -22,21 +22,22 @@ const Login = () => {
     }
 
         try {
-            const result = await login(username, password);
-            console.log(result);
+            const res = await login(username, password);
+            console.log(res);
             
             //Kiểm tra có user trả về không
-            if(result.user){
-                // Luu thong tin user vao localStorage
-                localStorage.setItem("user", JSON.stringify(result.user))
-                navigate("/");
-            }else{
-                alert("Sai tài khoản hoặc mật khẩu");
-            }
-        } catch(error){
-            console.error(error);
-            // alert("Đăng nhập thất bại");
+            // ✅ FIX
+        if (res.user) {
+            localStorage.setItem("user", JSON.stringify(res.user));
+            navigate("/");
+        } else {
+            alert("Sai tài khoản hoặc mật khẩu");
         }
+
+    } catch (error) {
+        console.error(error);
+        alert("Đăng nhập thất bại");
+    }
     };
 
 

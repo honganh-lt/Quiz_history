@@ -30,5 +30,13 @@ export const register = async (username, email, password) => {
             password
         })
     });
-    return response.json();
-}
+
+    const data = await response.json();
+
+    // 🔥 BẮT LỖI 400, 500
+    if (!response.ok) {
+        throw data; // 👈 QUAN TRỌNG
+    }
+
+    return data;
+};

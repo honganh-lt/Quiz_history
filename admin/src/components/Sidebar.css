@@ -29,3 +29,22 @@
   padding: 10px;
   border-radius: 5px;
 }
+
+.sidebar-list-item-login a {
+  text-decoration: none;
+  color: red;
+  display: flex;
+  font-size: 20px;
+  margin: 15px 25px;
+  gap: 10px;
+}
+.sidebar-list-item-login a:hover {
+  background: none;
+}
+
+.sidebar-list-item-login a.active {
+  background-color: #2962ff;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}

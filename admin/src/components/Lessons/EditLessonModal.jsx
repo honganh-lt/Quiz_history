@@ -1,5 +1,6 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { updateLesson } from '../../api/lessonApi';
 
 export const EditLessonModal = ({ les, onClose, updateLes, chapters, subjects }) => {
 
@@ -31,14 +32,14 @@ export const EditLessonModal = ({ les, onClose, updateLes, chapters, subjects })
     // ===== Submit =====
     const handleSubmit = async () => {
         if (!subjectId || !chapterId || !lessonName || !lessonNumber) {
-            alert("Vui lòng nhập đầy đủ!");
+            alert("Vui lòng nhập thông tin đầy đủ!");
             return;
         }
 
         try {
-            await axios.put(
-                `http://localhost:3000/api/lessons/${les.lesson_id}`, // ✅ FIX API
-                {
+            // await axios.put(`http://localhost:3000/api/lessons/${les.lesson_id}`, // ✅ FIX API //xem lại cái này có đổi đc không
+            await updateLesson(les.lesson_id,    //Không dùng axios trực tiếp → dùng:
+            {
                     chapter_id: Number(chapterId),
                     lesson_name: lessonName,
                     lesson_number: Number(lessonNumber)

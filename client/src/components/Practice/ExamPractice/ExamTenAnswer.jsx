@@ -10,7 +10,7 @@ function ExamTenAnswer() {
     const {subjectId, lessonId } = useParams();
 
     const [questions, setQuestions] = useState([]);
-    const [selectedAnswers, setSelectedAnswers] = useState({});
+    const [selectedAnswers, setSelectedAnswers] = useState({}); /////
 
     // ================= LOAD QUESTIONS =================
     useEffect(() => {

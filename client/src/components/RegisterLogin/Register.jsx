@@ -44,7 +44,7 @@ const Signup = () => {
             }
         }catch(error){
             console.error(error);
-            
+            alert(error.message); // 👈 HIỂN THỊ RA
         }
     };
 

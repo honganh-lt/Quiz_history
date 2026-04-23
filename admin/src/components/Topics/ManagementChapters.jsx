@@ -160,6 +160,7 @@ export const ManagementChapters = () => {
         </table>
       ) }
 
+      {/* Phân trang */}
       <div className="pagination">
         <button 
           disabled={currentPage === 1}

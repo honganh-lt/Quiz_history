@@ -17,7 +17,7 @@ function Sidebar({ openSidebarToggle }) {
         <li className="sidebar-list-item">
           <NavLink to="/admin">
             {/* <BsHouse className="icon" /> */}
-            Trang chủ
+            Home
           </NavLink>
         </li>
 
@@ -55,12 +55,25 @@ function Sidebar({ openSidebarToggle }) {
             Quản lý câu hỏi
           </NavLink>
         </li>
-        {/* <li className="sidebar-list-item">
+        <li className="sidebar-list-item">
           <NavLink to="/exam">
-            <BsBook className="icon" />
+            {/* <BsBook className="icon" /> */}
             Quản lý đề thi
           </NavLink>
-        </li> */}
+        </li>
+
+        <li className="sidebar-list-item">
+          <NavLink to="/user-exam">
+            {/* <BsBook className="icon" /> */}
+            Quản lý bài thi User
+          </NavLink>
+        </li>
+        <li className="sidebar-list-item-login">
+          <NavLink to="/login">
+            {/* <BsBook className="icon" /> */}
+            Đăng xuất
+          </NavLink>
+        </li>
 
       </ul>
     </aside>

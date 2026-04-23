@@ -1,0 +1,19 @@
+.top-box {
+  display: flex;
+  gap: 20px;
+}
+
+.top-box div {
+  flex: 1;
+  background: #eee;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.chart-row {
+  display: flex;
+  margin-top: 20px;
+  gap: 20px;
+}

@@ -57,7 +57,9 @@ function Revise() {
                     {subjects.map((item) => (
                         <div className='feature-card-revise' key={item.subject_id}>
                         {/* <img src={img10} alt="Lịch sử lớp 10" /> */}
-                        <h3>{item.subject_name}</h3>
+                        <h3>{item.subject_name}</h3> 
+
+                        {/*Đường dẫn tới trang ../practice/1 -> khi ấn vào "Luyện tập"  */}
                         <button className="btn-practice"
                             onClick={() => navigate(`/practice/${item.subject_id}`)}
                         >Luyện tập</button>

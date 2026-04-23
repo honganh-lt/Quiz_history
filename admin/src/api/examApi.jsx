@@ -2,43 +2,57 @@
 import axios from "axios";
 
 // URL API backend
-const API_URL = "http://localhost:3000/api/exam";
+const API_URL = "http://localhost:3000/api/exams";
 
-// GET tất cả exam
-export const getExam = async () => {
+// GET tất cả exam ALL
+export const getExams = async () => {
   try {
     const res = await axios.get(API_URL);
     return res.data;
   } catch (err) {
-    console.error("Lỗi GET exam:", err);
-    return [];
+     console.error(err);
+     throw err;
   }
 };
 
-// POST tạo exam bình thường
+//====Get Detail=======
+export const getExamDetail = async (id) => {
+  try {
+    const res = await axios.get(`${API_URL}/${id}`);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+
+// POST tạo exam thủ công
 export const createExam = async (data) => {
   try {
-    const res = await axios.post(`${API_URL}`, data);
+    const res = await axios.post(API_URL, data);
     return res.data;
   } catch (err) {
-    console.error("Lỗi POST exam:", err);
+    console.error(err);
     throw err;
   }
 };
 
-// POST tạo exam + random câu hỏi (full exam)
-export const createFullExam = async (data) => {
+//POst CREATE RANDOM theo subject = BE
+export const createExamBySubject = async (data) => {
   try {
-    const res = await axios.post(`${API_URL}/create-full`, data);
-    return res.data;
+   const res = await axios.post(`${API_URL}/subject`, data);
+  return res.data;
   } catch (err) {
-    console.error("Lỗi POST full exam:", err);
+    console.error(err);
     throw err;
   }
-};
+}
+
+
 
 // PUT cập nhật exam theo id
-export const updateExam = async (id, data) => {
+export const updateExams = async (id, data) => {
   try {
     const res = await axios.put(`${API_URL}/${id}`, data);
     return res.data;

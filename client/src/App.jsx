@@ -21,6 +21,7 @@ import Exam from './components/Exam/Exam'
 import Profile from './components/PersonalProfile/Profile'
 import ExamTen from './components/Practice/ExamPractice/ExamTen'
 import ExamTenAnswer from './components/Practice/ExamPractice/ExamTenAnswer'
+import ReviewPage from './components/PersonalProfile/ReviewPage'
 // import MakeAnExamTen from './components/ExamMakeAnExam/MakeAnExamTen'
 // import ExamTen from './components/Exam/Examten'
 // import Exam10 from './components/Practice/ExamPractice/Exam10'
@@ -41,6 +42,8 @@ function App() {
       {/* Ôn tập */}
       {/* Revise */}
       <Route path="/practice" element={<Practice />} /> 
+      {/* <Route path="/practice" element={<Revise />} /> Vì trong Practice chứa Revise*/}
+      {/* Ấn vào Ôn tập(/practice) -> hiện ra từng môn học -> tiếp ấn "Luyện tập" (/practice/:subjectId) */}
 
       <Route path="/practice/:subjectId" element={<ReviseLop10 />} />
       {/* <Route path="/practice/lop-11" element={<ReviseLop11 />} />
@@ -53,15 +56,18 @@ function App() {
 
       {/* <Route path="/practice/lop-11/:lessonId" element={<ExamEleven />} />
       <Route path="/practice/lop-11/:lessonId/answer" element={<ExamElevenAnswer />} /> */}
-
-      {/* Luyện thi */}
+      
+      {/* ============================Luyện thi============================ */}
       <Route path="/exam" element={<Exam />} />
-      <Route path="/exam/lop-10" element={<ExamLop10 />} />
+      <Route path="/exam/:subjectId" element={<ExamLop10 />} />
 
       {/* làm đề thi */}
-      <Route path="/exam/lop-10/:examId" element={<MakeAnExamTen />} />
-<Route path="/exam/lop-10/:examId/answer" element={<MakeAnExamTenResult />} />
+      <Route path="/exam/:subjectId/:examId/:userExamId" element={<MakeAnExamTen/>} />
+      <Route path="/result/:userExamId" element={<MakeAnExamTenResult />} />
 
+{/* <Route path="/exam/lop-10/:examId/answer" element={<MakeAnExamTenResult />} /> */}
+        {/* Review */}
+        <Route path="/review/:userExamId" element={<ReviewPage />} />
 
     </Routes>
   )

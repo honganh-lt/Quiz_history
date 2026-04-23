@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import "./css/ManagementExam.css"
-import { deleteExam, getExam } from '../../api/examApi';
+import { deleteExam, getExams } from '../../api/examApi';
 import { getSubjects } from '../../api/subjectService';
 import AddExamModal from './AddExamModal';
+import EditExamModal from './EditExamModal';
 
 export const ManagementExam = () => {
 
@@ -12,9 +13,9 @@ export const ManagementExam = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [subjects, setSubjects] = useState([]);
 
-  //EDIT
-  // const [showEditModal, setShowEditModal] = useState(false);
-  // const [selectedExam, setSelectedExam] = useState(null);
+  // EDIT
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedExam, setSelectedExam] = useState(null);
 
   //===============Phân trang==============
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,16 +23,17 @@ export const ManagementExam = () => {
 
   useEffect (() => {
     fetchData();
-    fetchSubjects();
+    fetchSubjects(); //vẫn cần cho modal
   }, []);
 
   // Component render lần đầu -> gọi API -> set state hiển thị dữ liệu
   //================GET chapters======================
   const fetchData = async () => {
     try {
-      const data = await getExam();
+      const data = await getExams();
       console.log("Exam data:", data);
       setExam(data || []);
+      setCurrentPage(1); //thêm Nếu đang ở page 3 mà thêm → không thấy dữ liệu mới
     } catch (err) {
       console.error(err);
       setExam([]);
@@ -41,6 +43,7 @@ export const ManagementExam = () => {
   //==================ADD==============
    //Dùng cho modal "/chapters" để chọn môn học 
   //  GET subjects : lấy dữ liệu môn học để chọn
+  // GET SUBJECT (cho dropdown modal)
   const fetchSubjects = async () => {
     try {
       const data = await getSubjects();
@@ -50,16 +53,27 @@ export const ManagementExam = () => {
     }
   };
   //Thêm hàm lấy tên môn ===ADD
+  // const getSubjectName = (id) => {
+  //   const subject = subjects.find(sub => sub.subject_id === id);
+  //   return subject ? subject.subject_name : " "
+  // }
 
 
   //Edit
+  const updateExam = (updatedExam) => {
+    setExam(prevEx => 
+      prevEx.map(ex => 
+        ex.exam_id === updatedExam.exam_id ? updatedExam : ex
+      )
+    )
+  }
 
 
   //Delete
   const handleDelete = async (id) => {
       console.log("Delete id: ", id);
 
-      if(window.confirm("Bạn có chắc chắn muốn xóa không?"));
+      if(!window.confirm("Bạn có chắc chắn muốn xóa không?")) return;
       
       try {
         await deleteExam(id);
@@ -107,10 +121,16 @@ export const ManagementExam = () => {
                   <td>{ex.subject_name}</td>
                   <td>{ex.title}</td>
                   <td>{ex.description}</td>
-                  <td>{ex.duration} phút</td>
-                  <td>{ex.question_count}</td>
+                  <td>{ex.duration || 0} phút</td>
+                  <td>{ex.question_count}</td> {/* ✅ thêm dòng này */}     
                   <td>
-                    <button className='edit-btn'>Edit</button>
+                    <button className='edit-btn'
+                          onClick={() => {
+                            setSelectedExam(ex); //Mở modal-> cần đổ dữ liệu vào input
+                            setShowEditModal(true);
+                          }}
+                      >
+                      Edit</button>
                     <button 
                       className='delete-btn'
                       onClick={() => handleDelete(ex.exam_id)}
@@ -145,7 +165,8 @@ export const ManagementExam = () => {
               </button>
             ))}   
             <button
-              disabled={currentPage === totalPages}
+              // disabled={currentPage === totalPages}
+               disabled={totalPages === 0}
               onClick={() => setCurrentPage(currentPage + 1)}
             >
               <i className="fa-solid fa-angle-right"></i>
@@ -159,6 +180,16 @@ export const ManagementExam = () => {
             onSuccess={fetchData}
             subjects={subjects}
           />
+
+      {/* MOdal Edit */}
+            {showEditModal && selectedExam && (
+              <EditExamModal 
+              exam = {selectedExam}
+              onClose = {() => setShowEditModal(false)}
+              updateExam = {updateExam}
+              subjects={subjects} //lấy danh sách môn học để sửa
+            />
+            )}
 
       </div>
     </div>

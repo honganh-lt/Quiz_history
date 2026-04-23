@@ -18,6 +18,8 @@ import ManagementSubject from './components/Subject/ManagementSubject'
 // import ManageChapters from './components/Topics/ManageChapters'
 import ManagementChapters from './components/Topics/ManagementChapters'
 import ManagementExam from './components/Exam/ManagementExam'
+import { ManagementUserExam } from './components/UserExam/ManagementUserExam'
+import UserExamDetail from './components/UserExam/UserExamDetail'
 // import ManageTopics from './components/Chapters/ManageTopics'
 
 function App() {
@@ -86,6 +88,21 @@ function App() {
           <Header OpenSidebar={OpenSidebar} />
           <Sidebar openSidebarToggle={openSidebarToggle} />
           <ManagementExam />
+        </div>
+      } />
+      <Route path="/user-exam" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <ManagementUserExam />
+        </div>
+      } />
+
+      <Route path="/admin/user-exam/:id" element={
+        <div className="grid-container">
+          <Header OpenSidebar={OpenSidebar} />
+          <Sidebar openSidebarToggle={openSidebarToggle} />
+          <UserExamDetail />
         </div>
       } />
 

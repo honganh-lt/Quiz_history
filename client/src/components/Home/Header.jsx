@@ -1,13 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import './css/Header.css'
-import { useState } from 'react';
+import {  useState } from 'react';
+// import { getSubjects } from '../../api/subjectApi';
 
 function Header() {
     const navigate = useNavigate();
+    //Subject: lấy dữ liệu theo môn học
+    // const [subjects, setSubjects] = useState([]);
+
 
     // ✅ Tách riêng 2 state
     const [openUserMenu, setOpenUserMenu] = useState(false);
-    const [openExamMenu, setOpenExamMenu] = useState(false);
+    // const [openExamMenu, setOpenExamMenu] = useState(false);
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -15,6 +19,15 @@ function Header() {
         localStorage.removeItem("user");
         navigate("/");
     }
+
+    //Gọi API khi load trang
+    // useEffect(() => {
+    //     getSubjects()
+    //     .then(res => {
+    //         setSubjects(res.data);
+    //     })
+    //     .catch(err => console.error(err));
+    // }, []);
 
     return (
         <header className="header">
@@ -27,29 +40,11 @@ function Header() {
                     {/* Menu */}
                     <nav className="menu">
                         <a href="/">Trang chủ</a>
-                        <a href="/practice">Ôn tập</a>
-
-                        {/* ✅ Luyện thi dropdown */}
-                        <div
-                            className="menu-item"
-                            onClick={() => {
-                                setOpenExamMenu(!openExamMenu);
-                                setOpenUserMenu(false); //tắt user menu
-                            }}
-                        >
-                            <span>Luyện thi ▾</span>
-
-                            {openExamMenu && (
-                                <div className="submenu"
-                                    //Nếu không có cái này -> click vào menu sẽ bị đóng ngay
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <div onClick={() => navigate("/exam/lop-10")}>Lớp 10</div>
-                                    <div onClick={() => navigate("/exam/lop-11")}>Lớp 11</div>
-                                    <div onClick={() => navigate("/exam/lop-12")}>Lớp 12</div>
-                                </div>
-                            )}
-                        </div>
+                        {/* Ấn vào Ôn tập sẽ hiện ra môn lịch sử theo lớp */}
+                        {/* Vào file: Revise: <h3>{item.subject_name}</h3> chính là lấy đc môn học */}
+                        <a href="/practice">Ôn tập</a> 
+                        <a href="/exam">Luyện thi</a>
+                        
                     </nav>
 
                     {/* Auth */}
@@ -60,7 +55,7 @@ function Header() {
                                     className='user-info'
                                     onClick={() => {
                                         setOpenUserMenu(!openUserMenu);
-                                        setOpenExamMenu(false); // tắt luyện thi
+                                        // setOpenExamMenu(false); // tắt luyện thi
                                     }}
                                 >
                                     <span>{user.username}</span>

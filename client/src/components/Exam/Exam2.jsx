@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import "./css/Exam2.css"
+import { getSubjects } from '../../api/subjectApi';
 
 export const Exam2 = () => {
 
     const navigate = useNavigate();
+    const [subjects, setSubjects] = useState([]);
+
+    //Gọi API khi load trang lấy ra tên môn học theo lớp
+    useEffect(() => {
+        getSubjects()
+        .then(res => {
+            setSubjects(res.data);
+        })
+        .catch (err => console.log(err));
+    }, []);
+
 
   return (
     <main className='main'>
@@ -29,30 +41,35 @@ export const Exam2 = () => {
         <section className="feature-section-exam">
             <div className="feature-list-exam">
                 {/* Lớp 10 */}
-                <div className="feature-card-exam">
-                    <h3>Lớp10</h3>
-                    <button className="btn-exam-btn"
-                        onClick={() => navigate("/exam/lop-10")}
-                    >
-                        Làm đề
-                    </button>
-                </div>
+                
+                {subjects.map((item) => (
+                    <div className="feature-card-exam" key={item.subject_id}>
+                        <h3>{item.subject_name}</h3>
+
+                        {/*Đường dẫn tới trang ../exam/1 -> khi ấn vào "Luyện tập"  */}
+                        <button className="btn-exam-btn"
+                            onClick={() => navigate(`/exam/${item.subject_id}`)}
+                        >
+                            Luyện đề
+                        </button>
+                    </div>
+                ))}
 
                 {/* Lớp 11 */}
-                <div className="feature-card-exam">
+                {/* <div className="feature-card-exam">
                     <h3>Lớp11</h3>
                     <button className="btn-exam-btn">
                         Làm đề
                     </button>
-                </div>
+                </div> */}
 
                 {/* Lớp 12 */}
-                <div className="feature-card-exam">
+                {/* <div className="feature-card-exam">
                     <h3>Lớp12</h3>
                     <button className="btn-exam-btn">
                         Làm đề
                     </button>
-                </div>
+                </div> */}
             </div>
         </section>
     </main>

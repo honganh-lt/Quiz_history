@@ -1,6 +1,7 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import "./css/EditQuestionModal.css";
+import { updateQuestion } from '../../api/questionApi';
 
 const EditQuestionModal = ({
   ques,
@@ -26,22 +27,17 @@ const EditQuestionModal = ({
   ]);
 
   // ================= LOAD DATA =================
-  useEffect(() => {
-    if (!ques) return;
-
+ useEffect(() => {
+  if (ques) {
     setContent(ques.content || "");
-    setDifficulty(String(ques.difficulty || ""));
-    setChapterId(String(ques.chapter_id || ""));
-    setLessonId(String(ques.lesson_id || ""));
+    setDifficulty(ques.difficulty || "");
 
-    // 🔥 tìm subject từ chapter
-    const chap = chapters.find(
-      c => String(c.chapter_id) === String(ques.chapter_id)
-    );
+    // 🔥 dùng trực tiếp từ BE
+    setSubjectId(ques.subject_id);
+    setChapterId(ques.chapter_id);
+    setLessonId(ques.lesson_id);
 
-    setSubjectId(chap ? String(chap.subject_id) : "");
-
-    // 🔥 load lesson theo chapter
+    // load lesson theo chapter
     if (ques.chapter_id) {
       fetchLessons(ques.chapter_id);
     }
@@ -62,8 +58,8 @@ const EditQuestionModal = ({
 
       setAnswers(sorted);
     }
-  }, [ques, chapters]);
-
+  }
+}, [ques]);
   // ================= FILTER =================
   const filteredChapters = chapters.filter(
     c => String(c.subject_id) === String(subjectId)
@@ -102,8 +98,8 @@ const EditQuestionModal = ({
     }
 
     try {
-      await axios.put(
-        `http://localhost:3000/api/questions/${ques.question_id}`,
+      // await axios.put(`http://localhost:3000/api/questions/${ques.question_id}`,
+      await updateQuestion(ques.question_id,
         {
           content,
           difficulty,
