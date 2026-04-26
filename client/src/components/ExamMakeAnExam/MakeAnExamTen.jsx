@@ -19,8 +19,12 @@ function MakeAnExamTen() {
     // ✅ HOOK LUÔN Ở TRÊN
     const [selectedAnswers, setSelectedAnswers] = useState({});
 
-    const TOTAL_TIME = 15 * 60;
-    const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
+    // const TOTAL_TIME = 15 * 60;
+    // const [timeLeft, setTimeLeft] = useState(TOTAL_TIME); -> BỎ
+
+    //thay 
+    const [timeLeft, setTimeLeft] = useState(0);
+
 
     // ✅ Load Data
     useEffect(() => {
@@ -28,8 +32,11 @@ function MakeAnExamTen() {
         getExamDetail(examId)
         .then(res => {
              console.log("DATA:", res.data); // 👈 DEBUG
-            setQuestions(res.data)
+            setQuestions(res.data.questions)
             // setTitle(res.data.title);
+
+            //lấy duration từ DB
+            setTimeLeft(Number(res.data.duration || 15 )* 60);
         })
         .catch(err => console.log(err));
     }, [examId]);

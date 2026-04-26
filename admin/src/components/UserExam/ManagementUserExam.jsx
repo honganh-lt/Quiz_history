@@ -142,3 +142,4 @@ export const ManagementUserExam = () => {
     </div>
   )
 }
+export default ManagementUserExam;

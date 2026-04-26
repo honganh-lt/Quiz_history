@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import "./css/EditChapterModal.css"
+import "./css/EditExamModal.css"
 import {  updateExams } from '../../api/examApi';
 // import axios from 'axios';
 // import { updateExam } from '../../api/examApi';
@@ -64,8 +64,8 @@ export const EditExamModal = ({exam, onClose, subjects, updateExam}) => {
   }
   
   return (
-    <div className="modal-overlay">
-      <div className="modal-chap">
+    <div className="modal-overlay-edit">
+      <div className="modal-exam-edit">
         <h3>Sửa đề thi</h3>
 
 
@@ -146,8 +146,8 @@ export const EditExamModal = ({exam, onClose, subjects, updateExam}) => {
                   <strong>Tổng số câu hỏi: {totalQuestions}</strong>
                 </div> */}
 
-        <div className="modal-actions-chap">
-          <button className='save-btn' onClick={handleSubmit}>Cập nhật</button>
+        <div className="modal-actions-exam">
+          <button className='save-btn-exam' onClick={handleSubmit}>Cập nhật</button>
           <button className='close-btn' onClick={onClose}>Đóng</button>
         </div>
       </div>

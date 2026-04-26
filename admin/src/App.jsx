@@ -20,6 +20,9 @@ import ManagementChapters from './components/Topics/ManagementChapters'
 import ManagementExam from './components/Exam/ManagementExam'
 import { ManagementUserExam } from './components/UserExam/ManagementUserExam'
 import UserExamDetail from './components/UserExam/UserExamDetail'
+
+import AdminLayout from './LayoutAdmin/AdminLayout'
+import ProtectedRoute from './Login/ProtectedRoute'
 // import ManageTopics from './components/Chapters/ManageTopics'
 
 function App() {
@@ -34,76 +37,91 @@ function App() {
     <Routes>
 
       {/* Trang login KHÔNG có sidebar */}
+      {/* =====LOGIN không layout */}
       <Route path="/login" element={<LoginAdmin />} />
 
-      {/* Trang admin */}
+      {/* Trang admin (có bảo vệ + layout) */}
       <Route path="/admin" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          <Home />
-        </div>
+        // <div className="grid-container">
+            <ProtectedRoute>
+                <AdminLayout>
+                  <Home />
+                </AdminLayout>
+            </ProtectedRoute>
+        // </div>
       } />
 
       <Route path="/users" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          <UserManagement />
-        </div>
+        
+            <ProtectedRoute>
+                <AdminLayout>
+                  <UserManagement />
+                </AdminLayout>
+            </ProtectedRoute>
       } />
       <Route path="/subjects" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          <ManagementSubject />
-        </div>
+        
+            <ProtectedRoute>
+                <AdminLayout>
+                  <ManagementSubject />
+                </AdminLayout>
+            </ProtectedRoute>
+      
       } />
 
       <Route path="/chapters" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          {/* <ManageTopics/> */}
-          <ManagementChapters/>
-        </div>
+        
+            <ProtectedRoute>
+                <AdminLayout>
+                  <ManagementChapters />
+                </AdminLayout>
+            </ProtectedRoute>
+        
       } />
       <Route path="/lessons" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          <ManageLessons />
-        </div>
+        
+            <ProtectedRoute>
+                <AdminLayout>
+                  <ManageLessons />
+                </AdminLayout>
+            </ProtectedRoute>
+       
       } />
       <Route path="/questions" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          <ManageQuestions />
-        </div>
+        
+            <ProtectedRoute>
+                <AdminLayout>
+                  <ManageQuestions />
+                </AdminLayout>
+            </ProtectedRoute>
+        
       } />
 
       <Route path="/exam" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          <ManagementExam />
-        </div>
+       
+            <ProtectedRoute>
+                <AdminLayout>
+                  <ManagementExam />
+                </AdminLayout>
+            </ProtectedRoute>
+       
       } />
       <Route path="/user-exam" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          <ManagementUserExam />
-        </div>
+        
+            <ProtectedRoute>
+                <AdminLayout>
+                  <ManagementUserExam />
+                </AdminLayout>
+            </ProtectedRoute>
+        
       } />
 
-      <Route path="/admin/user-exam/:id" element={
-        <div className="grid-container">
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar openSidebarToggle={openSidebarToggle} />
-          <UserExamDetail />
-        </div>
+      <Route path="/admin/user-exam/:id" element={ 
+            <ProtectedRoute>
+                <AdminLayout>
+                  <UserExamDetail />
+                </AdminLayout>
+            </ProtectedRoute>
       } />
 
       {/* vào web sẽ chuyển về login */}

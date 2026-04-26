@@ -35,6 +35,22 @@
 .lesson-table th{
     background: #f5f5f5;
 }
+.lesson-table td:not(:first-child):not(:last-child) {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s ease;
+}
+
+/* Hover → hiện full text */
+.lesson-table td:not(:first-child):not(:last-child):hover {
+  white-space: normal;     /* xuống dòng */
+  overflow: visible;
+  background: #f9f9f9;
+  z-index: 10;
+  position: relative;
+}
 
 /* Button */
 .edit-btn{

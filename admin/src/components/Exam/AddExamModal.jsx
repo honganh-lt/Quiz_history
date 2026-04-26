@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createExamBySubject } from '../../api/examApi';
+import "./css/AddExamModal.css"
 
 const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
 
@@ -52,7 +53,7 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
         setSubjectId("");
         setTitle("");
         setDescription("");
-        setDuration(20);
+        setDuration(15);
         setEasy(0);
         setMedium(0);
         setHard(0);
@@ -66,8 +67,8 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
 };
 
     return (
-        <div className="modal-overlay-chap">
-            <div className="modal-chap">
+        <div className="modal-overlay-exam">
+            <div className="modal-exam">
                 <h3>Thêm bài thi</h3>
 
                 <h4>Chọn môn học</h4>
@@ -139,7 +140,7 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
                     <strong>Tổng số câu hỏi: {totalQuestions}</strong>
                 </div>
 
-                <div className="modal-actions-chap">
+                <div className="modal-actions-exam">
                     <button onClick={handleAdd} className="save-btn">Thêm</button>
                     <button onClick={onClose} className="cancel-btn">Hủy</button>
                 </div>

@@ -14,6 +14,9 @@ export const getUser = async () => {
 
 //POST
 // export const create
+export const createdUser = async (data) => {
+    return await axios.post(`${API_URL}`, data);
+}
 
 //put
 export const updateUser = async (id, data) => {

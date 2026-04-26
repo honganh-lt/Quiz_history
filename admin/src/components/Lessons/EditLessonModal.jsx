@@ -115,7 +115,7 @@ export const EditLessonModal = ({ les, onClose, updateLes, chapters, subjects })
                 />
 
                 {/* SỐ BÀI */}
-                <h4>Số bài</h4>
+                <h4>Bài số</h4>
                 <input
                     type="number"
                     value={lessonNumber}

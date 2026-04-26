@@ -1,4 +1,4 @@
-.modal-overlay {
+.modal-overlay-u {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,22 +8,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-    /* Quan trọng */
-  z-index: 9999;
+
+  z-index: 999;
 }
-/* Modal */
-.modal{
-    position: fixed;
-    top: 0;
-    left: 0;
+
+/* Box modal */
+.modal-u {
+    /* background: #fff; */
+    padding: 25px;
     width: 600px;
-    /* height: 100%; */
-    /* background: rgba(0, 0, 0,0.5); */
+    border-radius: 12px;
+    /* box-shadow: 0 5px 20px rgba(0,0,0,0.2); */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    flex-direction: column;
+    gap: 15px;
+    animation: fadeIn 0.3s ease;
 }
+
 .modal-content{
     background: white;
     padding: 25px;

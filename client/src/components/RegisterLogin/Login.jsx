@@ -14,21 +14,26 @@ const Login = () => {
     const passwordRef = useRef(null);
 
 
+    //Làm lại vì có access + refresh-token
     const handleLogin = async () => {
 
-        if(!username || !password){
+    if(!username || !password){
         alert("Vui lòng nhập thông tin");
         return;
     }
 
-        try {
-            const res = await login(username, password);
-            console.log(res);
-            
-            //Kiểm tra có user trả về không
-            // ✅ FIX
+    try {
+        const res = await login(username, password);
+        console.log(res);
+
         if (res.user) {
+            // 🔥 LƯU TOKEN
+            localStorage.setItem("access_token", res.access_token);
+            localStorage.setItem("refresh_token", res.refresh_token);
+
+            // 🔥 LƯU USER
             localStorage.setItem("user", JSON.stringify(res.user));
+
             navigate("/");
         } else {
             alert("Sai tài khoản hoặc mật khẩu");
@@ -36,10 +41,9 @@ const Login = () => {
 
     } catch (error) {
         console.error(error);
-        alert("Đăng nhập thất bại");
+        alert(error.message || "Đăng nhập thất bại");
     }
-    };
-
+};
 
     return (
         <div className="login-container">

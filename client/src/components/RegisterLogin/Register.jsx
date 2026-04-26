@@ -23,7 +23,8 @@ const Signup = () => {
 
         // Regex kiểm tra email phải kết thúc bằng @gmail.com
         //^: bắt đầu; [a-zA-Z0-9._%+-]+: phần trước email(abc,abc123); @gmail; \.com: đuôi .com; $: kết thúc chuỗi 
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    // const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/; dùng cái này bị cứng
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if(!emailPattern.test(email)){
         alert("Email phải đúng định dạng");
@@ -44,7 +45,7 @@ const Signup = () => {
             }
         }catch(error){
             console.error(error);
-            alert(error.message); // 👈 HIỂN THỊ RA
+            alert(error.message || "Đăng ký thất bại");
         }
     };
 

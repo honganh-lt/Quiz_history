@@ -1,15 +1,38 @@
 import React from 'react'
-import {
-  BsPerson,
-  BsBook,
-  BsBookshelf,
-  BsHouse,
-  BsQuestion
-} from 'react-icons/bs'
+// import {
+//   BsPerson,
+//   BsBook,
+//   BsBookshelf,
+//   BsHouse,
+//   BsQuestion
+// } from 'react-icons/bs'
 import './sidebar.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { logout } from '../api/authApiAdmin';
 
 function Sidebar({ openSidebarToggle }) {
+
+  const navigate = useNavigate();
+
+const handleLogout = async () => {
+  try {
+    const refresh_token = localStorage.getItem("refresh_token");
+
+    await logout(refresh_token);
+
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user");
+
+    navigate("/login");
+  } catch (error) {
+    console.log(error);
+
+    localStorage.clear();
+    navigate("/login");
+  }
+};
+
   return (
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
       <ul className="sidebar-list">
@@ -69,10 +92,9 @@ function Sidebar({ openSidebarToggle }) {
           </NavLink>
         </li>
         <li className="sidebar-list-item-login">
-          <NavLink to="/login">
-            {/* <BsBook className="icon" /> */}
-            Đăng xuất
-          </NavLink>
+         <span onClick={handleLogout} style={{cursor: "pointer"}}>
+          Đăng xuất
+         </span>
         </li>
 
       </ul>

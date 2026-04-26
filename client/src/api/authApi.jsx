@@ -15,7 +15,13 @@ export const login = async (username, password) => {
             password
         })
     });
-    return response.json();
+    const data = await response.json();
+
+    if(!response.ok) {
+        throw data;
+    }
+
+    return data;
 };
 
 export const register = async (username, email, password) => {
@@ -39,4 +45,16 @@ export const register = async (username, email, password) => {
     }
 
     return data;
+};
+
+export const logout = async (refresh_token) => {
+    const response = await fetch(`${API_URL}/logout`, {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({ refresh_token })
+    });
+
+    return response.json();
 };

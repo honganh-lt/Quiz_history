@@ -46,7 +46,7 @@ export const EditChapterModal = ({chap, onClose, updateChap, subjects}) => {
   }
 
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay-chap">
       <div className="modal-chap">
         <h3>Sửa chương</h3>
 

@@ -1,20 +1,33 @@
-.header{
-    grid-area: header;
+/* .header {
     display: flex;
-    justify-content: flex-end;
+    width: 100%;
     align-items: center;
-    padding: 10px 12px;
-    background: #fff;
+    padding: 10px 20px;
+    background-color: #fff;
+} */
+/* Header */
+.header {
+  grid-area: header;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* 👈 đổi dòng này */
+  padding: 0 30px 0 30px;
+  box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
 }
 
-.header-right h4{
+/* 👇 dòng này là mấu chốt */
+.header-right {
+  margin: 0; /* 👈 bỏ auto đi */
+}
+
+.header-right h4 {
     display: flex;
     align-items: center;
-    padding: 55px;
-    /* Khoảng cách giữa tên và icon */
-    gap: 8px; 
+    gap: 8px;
     margin: 0;
 }
-.user-icon{
+
+.user-icon {
     font-size: 20px;
 }

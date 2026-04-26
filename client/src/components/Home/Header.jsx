@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import './css/Header.css'
 import {  useState } from 'react';
+import { logout } from '../../../../admin/src/api/authApiAdmin';
 // import { getSubjects } from '../../api/subjectApi';
 
 function Header() {
@@ -15,10 +16,32 @@ function Header() {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const handleLogout = () => {
+    // const handleLogout = () => {
+    //     localStorage.removeItem("user");
+    //     navigate("/");
+    // }
+
+    const handleLogout = async () => {
+    try {
+        const refresh_token = localStorage.getItem("refresh_token");
+
+        // gọi BE để revoke token
+        await logout(refresh_token);
+
+        // xoá toàn bộ
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
         localStorage.removeItem("user");
-        navigate("/");
+
+        navigate("/login");
+    } catch (error) {
+        console.log(error);
+
+        // fallback nếu lỗi
+        localStorage.clear();
+        navigate("/login");
     }
+};
 
     //Gọi API khi load trang
     // useEffect(() => {
@@ -74,7 +97,9 @@ function Header() {
                                 )}
                             </div>
                         ) : (
-                            <a href="/login" className='login'>Đăng nhập</a>
+                            <span onClick={() => navigate("/login")} className="login">
+                            Đăng nhập
+                            </span>  
                         )}
                     </div>
 

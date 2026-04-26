@@ -14,8 +14,8 @@ export const ManagementExam = () => {
   const [subjects, setSubjects] = useState([]);
 
   // EDIT
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedExam, setSelectedExam] = useState(null);
+  // const [showEditModal, setShowEditModal] = useState(false);
+  // const [selectedExam, setSelectedExam] = useState(null);
 
   //===============Phân trang==============
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,13 +60,13 @@ export const ManagementExam = () => {
 
 
   //Edit
-  const updateExam = (updatedExam) => {
-    setExam(prevEx => 
-      prevEx.map(ex => 
-        ex.exam_id === updatedExam.exam_id ? updatedExam : ex
-      )
-    )
-  }
+  // const updateExam = (updatedExam) => {
+  //   setExam(prevEx => 
+  //     prevEx.map(ex => 
+  //       ex.exam_id === updatedExam.exam_id ? updatedExam : ex
+  //     )
+  //   )
+  // }
 
 
   //Delete
@@ -124,17 +124,22 @@ export const ManagementExam = () => {
                   <td>{ex.duration || 0} phút</td>
                   <td>{ex.question_count}</td> {/* ✅ thêm dòng này */}     
                   <td>
-                    <button className='edit-btn'
+                    {/* <button className='edit-btn'
                           onClick={() => {
                             setSelectedExam(ex); //Mở modal-> cần đổ dữ liệu vào input
                             setShowEditModal(true);
                           }}
                       >
-                      Edit</button>
+                       {/* Edit */}
+                      {/* <i class="fa-solid fa-pen-to-square"></i>
+                      </button> */} 
                     <button 
                       className='delete-btn'
                       onClick={() => handleDelete(ex.exam_id)}
-                    >Delete</button>
+                    >
+                     {/* Delete */}
+                    <i className="fa-solid fa-trash"></i>
+                    </button>
                   </td>
                 </tr>
               ))
@@ -182,14 +187,14 @@ export const ManagementExam = () => {
           />
 
       {/* MOdal Edit */}
-            {showEditModal && selectedExam && (
+            {/* {showEditModal && selectedExam && (
               <EditExamModal 
               exam = {selectedExam}
               onClose = {() => setShowEditModal(false)}
               updateExam = {updateExam}
               subjects={subjects} //lấy danh sách môn học để sửa
             />
-            )}
+            )} */}
 
       </div>
     </div>

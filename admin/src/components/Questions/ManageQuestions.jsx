@@ -271,3 +271,5 @@ const getCorrectAnswer = (answers) => {
     </div>
   )
 }
+
+export default ManageQuestions;

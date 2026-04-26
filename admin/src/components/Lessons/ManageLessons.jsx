@@ -106,7 +106,7 @@ export const ManageLessons = () => {
                                 <th>Action</th>
                             </tr>
                         </thead>
-
+                        
                         <tbody>
                             {currentLessons.map((les) => (
                                 <tr key={les.lesson_id}>
@@ -186,3 +186,4 @@ export const ManageLessons = () => {
         </div>
     )
 }
+export default ManageLessons;

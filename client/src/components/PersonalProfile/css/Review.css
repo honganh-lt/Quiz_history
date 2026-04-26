@@ -1,0 +1,39 @@
+.review{
+    display: flex;
+    /* padding: 20px 30px; */
+    justify-content: center;
+    align-items: flex-start;
+
+}
+.review-page{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+}
+.review-page h2{
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    font-weight: 800;
+    font-size: 30px;
+}
+.review-page-list{
+    margin-bottom: 25px;
+}
+.review-page .review-page-ans{
+    border-radius: 7px;
+    /* border: 1px solid #adf394; */
+}
+.review button{
+    margin: 20px auto 0 auto;  /* auto giúp căn giữa ngang */
+    display: block;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+.review button:hover{
+    border: 1px solid #fa7b21;
+    color: #fff;
+}

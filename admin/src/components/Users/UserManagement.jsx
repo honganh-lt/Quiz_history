@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './UserManagement.css'
 // import axios from 'axios';
 import EditUserModal from './EditUserModal';
-import DeleteUserModal from './DeleteUserModal';
+// import DeleteUserModal from './DeleteUserModal';
 import { deleteUser, getUser } from '../../api/userApi';
+import AddUserModal from './AddUserModal';
 // import AddUserModal from './AddUserModal';
 // import { data } from 'react-router-dom';
 // import { getUsers } from '../../api/userApi';
@@ -18,6 +19,7 @@ export const UserManagement = () => {
 
     //3: Tạo state lưu từ khóa tìm kiếm
     const [search, setSearch] = useState("");
+    const [isOpen, setIsOpen] = useState("");
 
     //5: Edit ==============
     // // Mở modal bằng state -> thêm xong closeModal -> chạy setShowAddModal(false)
@@ -149,6 +151,10 @@ export const UserManagement = () => {
     <main className='main-conatiner'>
         <div className='top-bar'>
             <h2 className='title'>Quản lý User</h2>
+            <button 
+              className='add-btn'
+              onClick={() => setIsOpen(true)}
+            >+</button>
         </div>
         <div className='filter-bar'>
             <div>
@@ -201,7 +207,7 @@ export const UserManagement = () => {
                 <thead>
                     <tr>
                         {/* <th>ID</th> */}
-                        <th>Tên</th>
+                        <th>Tên tài khoản</th>
                         <th>Email</th>
                         <th>Role</th>
                         <th>Action</th>
@@ -247,7 +253,7 @@ export const UserManagement = () => {
                                     }}
                                 >
                                     {/* Edit */}
-                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    <i className="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 {/*  */}
                                 <button className='delete'
@@ -258,13 +264,20 @@ export const UserManagement = () => {
                                     }}
                                 >
                                     {/* Delete */}
-                                    <i class="fa-solid fa-trash"></i>
+                                    <i className="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {/* Add Modal*/}
+                <AddUserModal 
+                    isOpen={isOpen}
+                    onClose={() => setIsOpen(false)}
+                    onSuccess={fetchData}
+                />
 
             {/* Edit Modal*/}
                 {showEditModal && selectedUser &&(
@@ -276,15 +289,6 @@ export const UserManagement = () => {
                     />
                 )}
 
-                {/* Delete Modal*/}
-                {/* {showDeleteModal &&(
-                    <DeleteUserModal 
-                        //truyền id vào modal
-                        id = {deleteUserId}
-                        onClose={() => setShowDeleteModal(false)}
-                        // deleteUser={deleteUser}
-                    />
-                )} */}
 
                     {/* Phân trang: tạo số trang tự động*/}
             <div className='pagination'>

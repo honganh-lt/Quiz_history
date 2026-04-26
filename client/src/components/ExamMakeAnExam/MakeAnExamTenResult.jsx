@@ -1,5 +1,6 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Header from "../Home/Header";
+import "./css/Result.css"
 
 function MakeAnExamTenResult() {
 
@@ -21,19 +22,21 @@ function MakeAnExamTenResult() {
     }
 
     return (
-        <div>
-            <div>
+        <div className="result">
+            <div className="container-result">
                 {/* Khung trên */}
                 <Header/>
                 {/* Khung dưới */}
-                <div>
-                    <h2>Kết quả</h2>
-                    <p>Đúng: {data.correct} / {data.total}</p>
-                    <p>Điểm: {data.score}</p>
+                <div className="result-page">
+                    <div className="result-card">
+                        <h2>Kết quả</h2>
+                        <p>Đúng: {data.correct} / {data.total}</p>
+                        <p>Điểm: {data.score}</p>
 
-                    <button onClick={() => navigate(`/review/${userExamId}`)}>
-                        Xem chi tiết
-                    </button>
+                        <button onClick={() => navigate(`/review/${userExamId}`)}>
+                            Xem chi tiết
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

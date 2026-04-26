@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { reviewExam, startExam } from "../../api/userExamApi";
 import Header from "../Home/Header";
+import "./css/Review.css"
 
 function ReviewPage() {
 
@@ -78,11 +79,12 @@ function ReviewPage() {
         <div>
             <Header />
 
-            <div style={{ padding: "20px" }}>
-                <h2>📊 Review bài làm</h2>
+            <div className="review">
+                <div className="review-page" style={{ padding: "20px" }}>
+                <h2>Kết quả bài làm</h2>
 
                 {data.map((q, index) => (
-                    <div key={q.question_id}>
+                    <div key={q.question_id} className="review-page-list">
                         <h4>Câu {index + 1}: {q.question}</h4>
 
                         {q.answers.map(ans => {
@@ -91,12 +93,13 @@ function ReviewPage() {
 
                             return (
                                 <div
+                                    className="review-page-ans"
                                     key={ans.answer_id}
                                     style={{
                                         background: isCorrect
-                                            ? "#d4edda"
+                                            ? "#a4fcb9"
                                             : isUser
-                                            ? "#f8d7da"
+                                            ? "#faaab0"
                                             : "#f1f1f1",
                                         margin: "4px 0",
                                         padding: "6px"
@@ -112,6 +115,7 @@ function ReviewPage() {
                 <button onClick={handleRetry}>
                     Làm lại bài
                 </button>
+            </div>
             </div>
         </div>
     );

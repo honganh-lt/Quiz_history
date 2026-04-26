@@ -1,0 +1,130 @@
+.modal-overlay-exam {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+/* Box modal */
+.modal-exam {
+    background: #fff;
+    padding: 25px;
+    width: 800px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Title */
+.modal-exam h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.modal-exam h4{
+    margin: 0px 5px;
+    color: #817f7f;
+}
+/* Input + select */
+.modal-exam input,
+.modal-exam select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+/* .option-subject option{
+    background: #ba3232;
+} */
+/* Focus */
+.modal-exam input:focus,
+.modal-exam select:focus {
+    border-color: #007bff;
+}
+.modal-exam .difficulty-inputs label{
+    margin-left: 10px;
+}
+
+/* Button container */
+/* .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+} */
+
+/* Button chung */
+/* .modal-actions button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+} */
+
+/* Nút thêm */
+/* .modal-actions button:first-child {
+    background: #007bff;
+    color: white;
+    margin-right: 10px;
+}
+
+.modal-actions button:first-child:hover {
+    background: #0056b3;
+} */
+
+/* Nút hủy */
+/* .modal-actions button:last-child {
+    background: #ccc;
+}
+
+.modal-actions button:last-child:hover {
+    background: #999;
+} */
+
+.modal-actions-exam {
+  display: flex;
+  justify-self: flex-end;
+  gap: 10px;
+}
+
+.save-btn {
+  background: #0553d0;
+   /* margin-left: 20px; */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  width: 80px;
+}
+
+.cancel-btn {
+  background: #929090;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -30,7 +30,7 @@
   border-radius: 5px;
 }
 
-.sidebar-list-item-login a {
+.sidebar-list-item-login span{
   text-decoration: none;
   color: red;
   display: flex;
@@ -38,11 +38,11 @@
   margin: 15px 25px;
   gap: 10px;
 }
-.sidebar-list-item-login a:hover {
+.sidebar-list-item-login span:hover {
   background: none;
 }
 
-.sidebar-list-item-login a.active {
+.sidebar-list-item-login span.active {
   background-color: #2962ff;
   color: white;
   padding: 10px;
