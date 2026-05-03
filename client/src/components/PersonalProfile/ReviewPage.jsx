@@ -83,7 +83,9 @@ function ReviewPage() {
                 <div className="review-page" style={{ padding: "20px" }}>
                 <h2>Kết quả bài làm</h2>
 
-                {data.map((q, index) => (
+                {data.map((q, index) => {
+                    const correctAnswer = q.answers.find(ans => ans.is_correct);
+                return (
                     <div key={q.question_id} className="review-page-list">
                         <h4>Câu {index + 1}: {q.question}</h4>
 
@@ -109,8 +111,14 @@ function ReviewPage() {
                                 </div>
                             );
                         })}
+                        {/* Hiển thị đáp án đúng */}
+                        <p style={{marginTop: 8, color:"green"}}>
+                            Đáp án đúng: {correctAnswer?.answer}
+                            {/*{ans.answer} = {correctAnswer?.answer}  */}
+                        </p>
                     </div>
-                ))}
+                );
+            })}
 
                 <button onClick={handleRetry}>
                     Làm lại bài

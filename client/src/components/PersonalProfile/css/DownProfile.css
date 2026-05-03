@@ -1,3 +1,9 @@
+h2{
+  text-align: center;
+  padding: 16px 20px;
+}
+
+/* 
 .main-downProfile{
     padding: 20px;
     background: #f5f6fa;
@@ -8,7 +14,7 @@
     margin: auto;
 }
 /* Subject Header */
-.subject-header{
+/* .subject-header{
     background: rgb(203, 215, 239);
     color: black;
     padding: 12px 15px;
@@ -22,34 +28,34 @@
 }
 .subject-header:hover{
     background: #1f4fb8;
-}
+} */
 
 /* Arrow */
-.arrow{
+/* .arrow{
     transition: 0.3s;
     font-size: 18px;
 }
 .arrow.open{
     transform: rotate(180deg);
-}
+} */
 /* content */
-.subject-content {
+/* .subject-content {
     background: white;
     padding: 10px;
     border-radius: 0 0 8px 8px;
     border: 1px solid #eee;
-}
+} */
 
 /* ===== EXAM CARD ===== */
-.exam-card {
+/* .exam-card {
   background: #f9f9f9;
   padding: 10px;
   margin: 10px 0;
   border-radius: 8px;
-}
+} */
 
 /* ===== ATTEMPT ===== */
-.attempt-list {
+/* .attempt-list {
   margin-top: 10px;
 }
 
@@ -57,10 +63,10 @@
   display: flex;
   justify-content: space-between;
   padding: 5px 0;
-}
+} */
 
 /* BUTTON */
-.attempt-item button {
+/* .attempt-item button {
   padding: 5px 10px;
   border: none;
   background: #2d6cdf;
@@ -71,4 +77,4 @@
 
 .attempt-item button:hover {
   background: #1f4fb8;
-}
+} */

@@ -1,5 +1,88 @@
 .admin-container{
-    grid-area: main;
-    padding: 30px;
-    background: #f5f7fb;
+    
+}
+.admin-container {
+  padding: 20px;
+  grid-area: main;
+  padding: 30px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+/* Tiêu đề */
+.admin-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Box thông tin user */
+.exam-info {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.exam-info h4 {
+  margin: 6px 0;
+  font-weight: 500;
+}
+
+/* Card câu hỏi */
+.question-card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* Nội dung câu hỏi */
+.question-title {
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+/* Danh sách đáp án */
+.answer {
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  transition: 0.2s;
+}
+
+/* Đáp án đúng */
+.answer.correct {
+  background-color: #e6f9ed;
+  color: #1a7f37;
+  font-weight: 600;
+}
+
+/* Đáp án user chọn sai */
+.answer.wrong {
+  background-color: #fdeaea;
+  color: #d93025;
+  font-weight: 600;
+}
+
+/* Đáp án bình thường */
+.answer.normal {
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 10px;
+  }
+
+  .exam-info {
+    padding: 15px;
+  }
+
+  .question-card {
+    padding: 12px;
+  }
 }

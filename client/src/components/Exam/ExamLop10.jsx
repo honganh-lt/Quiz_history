@@ -114,9 +114,16 @@ function ExamLop10() {
                      <div className='card-list-exam'>
                         {/* Fix MAP */}
                         {filteredExams.map((exam) => (
-                            <div className='card-item-exam' key={exam.exam_id}>
+                            <div 
+                            // đổi màu để biết đề đã làm
+                                className={`card-item-exam ${
+                                    attemptMap[exam.exam_id] > 0 ? "done-exam" : ""
+                                }`} 
+                                key={exam.exam_id}
+                            >
 
                                 <h3>{exam.title}</h3>
+                                <h5>{exam.description}</h5>
 
                                 <div className="exam-bottom">
                                     {/* <h4>Lần thi: {getAttemptCount(exam.exam_id)}</h4> */}

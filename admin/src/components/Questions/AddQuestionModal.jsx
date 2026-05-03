@@ -26,21 +26,33 @@ export const AddQuestionModal = ({
         { content: "", is_correct: false },
     ]);
 
+    const [loading, setLoading] = useState(false);
+
     if (!isOpen) return null;
+
+    // ================= VALIDATE =================
+    const isValidAnswers = answers.every(a => a.content.trim() !== "");
+    const hasCorrect = answers.some(a => a.is_correct);
+
+    const isFormValid =
+        content.trim() &&
+        difficulty &&
+        lessonId &&
+        isValidAnswers &&
+        hasCorrect;
 
     // ================= ADD QUESTION =================
     const handleAdd = async () => {
-        const isValidAnswers = answers.every(a => a.content.trim() !== "");
-        const hasCorrect = answers.some(a => a.is_correct);
-
-        if (!content || !difficulty || !lessonId || !isValidAnswers || !hasCorrect) {
+        if (!isFormValid) {
             alert("Nhập đầy đủ nội dung + mức độ + bài học + đáp án!");
             return;
         }
 
         try {
+            setLoading(true);
+
             await createQuestion({
-                content,
+                content: content.trim(),
                 difficulty,
                 lesson_id: Number(lessonId),
                 answers: answers.map(a => ({
@@ -48,6 +60,8 @@ export const AddQuestionModal = ({
                     is_correct: a.is_correct ? 1 : 0
                 }))
             });
+
+            alert("Thêm thành công!");
 
             onSuccess();
             onClose();
@@ -58,7 +72,6 @@ export const AddQuestionModal = ({
             setSubjectId("");
             setChapterId("");
             setLessonId("");
-            setLessons([]);
 
             setAnswers([
                 { content: "", is_correct: false },
@@ -69,7 +82,13 @@ export const AddQuestionModal = ({
 
         } catch (err) {
             console.error(err);
-            alert("Lỗi khi thêm câu hỏi!");
+
+            const message =
+                err?.response?.data?.message || "Lỗi khi thêm câu hỏi!";
+
+            alert(message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -78,7 +97,7 @@ export const AddQuestionModal = ({
         setSubjectId(value);
         setChapterId("");
         setLessonId("");
-        setLessons([]);
+        setLessons([]); // ok vì sẽ load lại khi chọn chapter
     };
 
     // ================= CHAPTER CHANGE =================
@@ -93,7 +112,7 @@ export const AddQuestionModal = ({
         }
     };
 
-    // ================= FILTER DATA =================
+    // ================= FILTER =================
     const filteredChapters = chapters.filter(
         c => c.subject_id === Number(subjectId)
     );
@@ -203,9 +222,14 @@ export const AddQuestionModal = ({
 
                 {/* BUTTON */}
                 <div className="modal-actions-ques">
-                    <button onClick={handleAdd} className="save-btn">
-                        Thêm
+                    <button
+                        onClick={handleAdd}
+                        className="save-btn"
+                        disabled={!isFormValid || loading}
+                    >
+                        {loading ? "Đang thêm..." : "Thêm"}
                     </button>
+
                     <button onClick={onClose} className="close-btn">
                         Đóng
                     </button>

@@ -23,7 +23,7 @@ export const ManageQuestions = () => {
   const [selectedQuestion, setSelectedQuestion] = useState(null); //Lí do?
   //============Phân trang===========
   const [currentPage, setCurrentPage] = useState(1);
-  const questionsPerPage = 5;
+  const questionsPerPage = 8;
 
   useEffect(() => {
     fetchData();

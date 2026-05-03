@@ -19,7 +19,7 @@ export const ManagementExam = () => {
 
   //===============Phân trang==============
   const [currentPage, setCurrentPage] = useState(1);
-  const examPerPage = 5;
+  const examPerPage = 7;
 
   useEffect (() => {
     fetchData();

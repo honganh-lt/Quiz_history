@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createExamBySubject } from '../../api/examApi';
 import "./css/AddExamModal.css"
 
@@ -9,62 +9,54 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState(20);
 
+    // 👉 vẫn giữ UI difficulty nhưng KHÔNG cho user sửa
     const [easy, setEasy] = useState(0);
     const [medium, setMedium] = useState(0);
     const [hard, setHard] = useState(0);
 
+    // 👉 auto set theo BE (50-30-20 của 20 câu)
+    useEffect(() => {
+        if (isOpen) {
+            setEasy(10);
+            setMedium(6);
+            setHard(4);
+        }
+    }, [isOpen]);
+
     if (!isOpen) return null;
-    
-    const totalQuestions = Number(easy) + Number(medium) + Number(hard);
 
-   const handleAdd = async () => {
-    const easyNum = Number(easy) || 0;
-    const mediumNum = Number(medium) || 0;
-    const hardNum = Number(hard) || 0;
+    const totalQuestions = easy + medium + hard; // luôn = 20
 
-    if (!subjectId || !title.trim() || totalQuestions === 0) {
-        alert("Vui lòng nhập đầy đủ thông tin");
-        return;
-    }
+    const handleAdd = async () => {
 
-    // 👉 lấy user từ localStorage
-    // const user = JSON.parse(localStorage.getItem("user"));
+        if (!subjectId || !title.trim()) {
+            alert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
 
-    // if (!user || !user.id) {
-    //     alert("Bạn chưa đăng nhập");
-    //     return;
-    // }
+        try {
+            await createExamBySubject({
+                subject_id: subjectId,
+                title,
+                description,
+                duration: Number(duration)
+                // ❌ KHÔNG gửi total_questions nữa
+            });
 
-    try {
-        await createExamBySubject({
-    subject_id: subjectId,
-    title,
-    description,
-    duration: Number(duration),
-    total_questions: easyNum + mediumNum + hardNum
-});
+            onSuccess();
+            onClose();
 
-        // alert("Tạo đề thành công");
+            // reset form
+            setSubjectId("");
+            setTitle("");
+            setDescription("");
+            setDuration(20);
 
-        onSuccess();
-        onClose();
-
-        // reset form
-        setSubjectId("");
-        setTitle("");
-        setDescription("");
-        setDuration(15);
-        setEasy(0);
-        setMedium(0);
-        setHard(0);
-
-    } catch (err) {
-        console.error("FULL ERROR:", err);
-        console.error("BACKEND ERROR:", err?.response?.data);
-
-        alert(err?.response?.data?.error || "Tạo đề thất bại");
-    }
-};
+        } catch (err) {
+            console.error("ERROR:", err);
+            alert(err?.response?.data?.error || "Tạo đề thất bại");
+        }
+    };
 
     return (
         <div className="modal-overlay-exam">
@@ -104,36 +96,24 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
                     onChange={(e) => setDuration(e.target.value)}
                 />
 
-                {/* RULES THEO CHƯƠNG */}
+                {/* 👉 UI giữ nguyên nhưng disable */}
                 <h4>Số câu hỏi theo độ khó</h4>
                 <div className="difficulty-inputs">
                     <label>
                         Dễ:
-                        <input 
-                            type="number"
-                            value={easy}
-                            onChange={(e) => setEasy(e.target.value)}
-                        />
+                        <input type="number" value={easy} disabled />
                     </label>
+
                     <label>
                         Trung bình:
-                        <input
-                            type="number"
-                            value={medium}
-                            onChange={(e) => setMedium(e.target.value)}
-                        />
+                        <input type="number" value={medium} disabled />
                     </label>
 
                     <label>
                         Khó:
-                        <input
-                            type="number"
-                            value={hard}
-                            onChange={(e) => setHard(e.target.value)}
-                        />
+                        <input type="number" value={hard} disabled />
                     </label>
                 </div>
-                
 
                 {/* Tổng */}
                 <div className="mb-3">

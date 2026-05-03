@@ -108,7 +108,8 @@ function ExamTenAnswer() {
 
                                 {/* hiển thị đáp án đúng (optional) */}
                                 <p style={{ marginTop: 8, color: "green" }}>
-                                    Đáp án đúng: {correctAnswer?.content}
+                                    Đáp án đúng: {correctAnswer?.content} 
+                                    {/*{ans.content} =  correctAnswer?.content */}
                                 </p>
 
                             </div>

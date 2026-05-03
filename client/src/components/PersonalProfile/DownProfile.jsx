@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getHistory } from '../../api/userExamApi';
+import "./css/DownProfile.css"
 
 const DownProfile = () => {
 
@@ -61,7 +62,7 @@ const DownProfile = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>📊 Hồ sơ học tập</h2>
+      <h2>Hồ sơ học tập</h2>
 
       {Object.keys(grouped).map(subject => (
         <div key={subject} style={{ marginBottom: "20px" }}>

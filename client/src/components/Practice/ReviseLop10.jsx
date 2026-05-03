@@ -65,9 +65,10 @@ function ReviseLop10() {
                             <h1>{currentSubject?.subject_name}</h1>
                         </div>
 
-                        <div className="revise-search">
+                        {/* Tìm kiiếm */}
+                        {/* <div className="revise-search">
                             <input type="text" placeholder="Tìm kiếm..." />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

@@ -16,7 +16,7 @@ function Practice() {
         <>
             <Header />
             <Revise />
-            <Revise2/>
+            {/* <Revise2/> */}
         </>
 
     )

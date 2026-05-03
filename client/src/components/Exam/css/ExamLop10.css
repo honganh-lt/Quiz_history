@@ -27,6 +27,12 @@
     /* justify-items: left; 🔥 thêm dòng này */
     width: 100%;
     max-width: 1000px;
+    background-color: #fff;
+}
+/* Đề đã làm */
+.card-item-exam.done-exam {
+    background: #fff3e0;
+    border: 1px solid #ffcc80;
 }
 /* .down-list-exam{
     display: grid;
@@ -65,6 +71,11 @@
     font-size: 20px;
     margin-bottom: 15px;
     color: #1f2937;
+}
+.card-item-exam h5{
+    color: #989696;
+    font-weight: 500;
+    margin-top: -5px;
 }
 .exam-bottom{
     display: flex;

@@ -18,11 +18,11 @@ export const OnProfile = () => {
     <div className="main-onProfile">
         <div className="container-onProfile">
             {/* Ảnh */}
-            <img src="" alt="" />
+            {/* <img src="" alt="" /> */}
             <h2>Thông tin người dùng</h2>
             <div className='list-personal'>
                 <p><strong>Tên người dùng: {user.username} </strong></p>
-                <p><strong>Email: {user.email} </strong></p>
+                {/* <p><strong>Email: {user.email} </strong></p> */}
                 <p><strong>Vai trò: {user.role} </strong></p>
             </div>
         </div>
