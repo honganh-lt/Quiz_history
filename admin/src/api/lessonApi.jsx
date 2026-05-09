@@ -1,4 +1,6 @@
-import axios from "axios";
+// import axios from "axios";
+import axiosClient from "../../../api/axiosClient";
+
 
 const API_URL = "http://localhost:3000/api/lessons";
 
@@ -12,7 +14,7 @@ export const getLesson = async (chapterId) => {
             url += `?chapter_id=${chapterId}`;
         }
 
-        const res = await axios.get(url);
+        const res = await axiosClient.get(url);
         return res.data;
     } catch(error) {
         console.error(error);
@@ -22,15 +24,15 @@ export const getLesson = async (chapterId) => {
 
 //POST
 export const createLesson = async (data) => {
-    return await axios.post(API_URL, data);
+    return await axiosClient.post(API_URL, data);
 }
 
 //PUT
 export const updateLesson = async (id, data) => {
-    return await axios.put(`${API_URL}/${id}`, data);
+    return await axiosClient.put(`${API_URL}/${id}`, data);
 }
 
 //DELETE
 export const deleteLesson = async (id) => {
-    return await axios.delete(`${API_URL}/${id}`);
+    return await axiosClient.delete(`${API_URL}/${id}`);
 }

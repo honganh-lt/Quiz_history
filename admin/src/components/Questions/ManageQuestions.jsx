@@ -3,9 +3,10 @@ import "./ManageQuestions.css"
 import { deleteQuestion, getQuestion } from '../../api/questionApi';
 import { getChapters } from '../../api/chapterApi';
 import AddQuestionModal from './AddQuestionModal';
-import { getSubjects } from '../../api/subjectService';
+import { getSubjects } from '../../api/subjectApi';
 import EditQuestionModal from './EditQuestionModal';
 import { getLesson } from '../../api/lessonApi';
+import ImportQuestionModal from './ImportQuestionModal';
 
 export const ManageQuestions = () => {
 
@@ -21,6 +22,9 @@ export const ManageQuestions = () => {
   //==========Edit===============
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null); //Lí do?
+  //Import
+  // const [selectedFile, setSelectedFile] = useState(null);
+  const [showImportModal, setShowImportModal] = useState(false);
   //============Phân trang===========
   const [currentPage, setCurrentPage] = useState(1);
   const questionsPerPage = 8;
@@ -47,7 +51,7 @@ export const ManageQuestions = () => {
  const getSortedAnswers = (answers) => {
   return [...(answers || [])]
     .sort((a, b) => a.answer_id - b.answer_id)
-    .slice(0, 4); // 🔥 CHỈ LẤY 4
+    .slice(0, 4); // CHỈ LẤY 4
 };
 
 const getAnswer = (answers, index) => {
@@ -86,7 +90,7 @@ const getCorrectAnswer = (answers) => {
     setLessons(data);
   } catch (error) {
     console.error(error);
-    setLessons([]); // 👈 THÊM DÒNG NÀY
+    setLessons([]); //THÊM DÒNG NÀY
   }
 };
 
@@ -120,6 +124,35 @@ const getCorrectAnswer = (answers) => {
           }
       }
 
+    //Import file
+//     const handleImport = async () => {
+
+//     if (!selectedFile) {
+//         alert("Vui lòng chọn file");
+//         return;
+//     }
+
+//     const formData = new FormData();
+
+//     formData.append("file", selectedFile);
+
+//     try {
+
+//         await importQuestions(formData);
+
+//         alert("Import thành công");
+
+//         fetchData();
+
+//     } catch (error) {
+
+//         console.log(error);
+
+//         alert("Import thất bại");
+//     }
+// };
+
+
   //Phân trang
     const indexOfLastChap = currentPage * questionsPerPage;
     const indexOfFirstChap = indexOfLastChap - questionsPerPage;
@@ -133,13 +166,23 @@ const getCorrectAnswer = (answers) => {
       {/* Top bar */}
       <div className="top-bar">
         <h2>Quản lý câu hỏi</h2>
-         <button 
-          className='add-btn'
-          onClick={() => setIsOpen(true)}
-         >
-          +
-        </button>
-      </div>
+
+        <div className="action-buttons">
+            <button 
+                className='add-btn'
+                onClick={() => setIsOpen(true)}
+            >
+                +
+            </button>
+
+            <button
+                className="import-btn"
+                onClick={() => setShowImportModal(true)}
+            >
+                Import
+            </button>
+        </div>
+    </div>
 
       {/* Table */}
       <div className="main-content">
@@ -252,6 +295,18 @@ const getCorrectAnswer = (answers) => {
           lessons={lessons}
           setLessons={setLessons}   // ✅ THÊM DÒNG NÀY
   fetchLessons={fetchLessons} // 👈 THÊM DÒNG NÀY
+        />
+
+        <ImportQuestionModal
+          isOpen={showImportModal}
+          onClose={() => setShowImportModal(false)}
+          onSuccess={fetchData}
+
+          subjects={subjects}
+          chapters={chapters}
+          lessons={lessons}
+          setLessons={setLessons}
+          fetchLessons={fetchLessons}
         />
 
         {/* Modal Edit */}

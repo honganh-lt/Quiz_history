@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 // import { updateSubject } from '../../api/subjectService';
 import "./css/EditSubjectModal.css"
-import { updateSubject } from '../../api/subjectService';
+import { updateSubject } from '../../api/subjectApi';
 
 export const EditSubjectModal = ({sub, onClose, updateSub}) => {
 

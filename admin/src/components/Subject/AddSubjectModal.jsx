@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { createSubject } from '../../api/subjectService';
+import { createSubject } from '../../api/subjectApi';
 import "./css/AddSubjectModal.css"
 
 export const AddSubjectModal = ({isOpen, onClose, onSuccess}) => {

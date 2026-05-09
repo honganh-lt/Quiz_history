@@ -1,0 +1,138 @@
+/* ================= OVERLAY ================= */
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.45);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+/* ================= MODAL ================= */
+.import-modal{
+    width: 550px;
+    max-width: 95%;
+
+    background: #fff;
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+    animation: fadeIn 0.25s ease;
+}
+
+.import-modal h2{
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    color: #1677ff;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* ================= LABEL ================= */
+.import-modal h4{
+    margin-bottom: 8px;
+    margin-top: 18px;
+
+    color: #333;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ================= INPUT / SELECT ================= */
+.import-modal select{
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.import-modal select:focus:focus{
+    border-color: #1677ff;
+
+    box-shadow: 0 0 0 3px rgba(22,119,255,0.15);
+}
+
+/* ================= FILE INPUT ================= */
+.import-modal input[type="file"]{
+    background: #fafafa;
+
+    cursor: pointer;
+}
+.import-modal input[type="file"]:focus{
+    border-color: #1677ff;
+
+    box-shadow: 0 0 0 2px rgba(22,119,255,0.15);
+}
+
+/* ================= BUTTON AREA ================= */
+.import-actions{
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* ================= BUTTON ================= */
+.upload-btn,
+.cancel-btn{
+    border: none;
+
+    padding: 11px 22px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+/* IMPORT */
+.upload-btn{
+    background: #1677ff;
+    color: white;
+}
+
+.upload-btn:hover{
+    background: #0958d9;
+}
+
+/* CLOSE */
+.cancel-btn{
+    background: #f1f1f1;
+    color: #333;
+}
+
+.cancel-btn:hover{
+    background: #ddd;
+}
+
+/* DISABLED */
+.upload-btn:disabled{
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+

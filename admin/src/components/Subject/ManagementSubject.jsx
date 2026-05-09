@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./css/ManagementSubject.css"
-import { deleteSubject, getSubjects } from '../../api/subjectService';
+import { deleteSubject, getSubjects } from '../../api/subjectApi';
 // import SubjectModal from './SubjectModal';
 import EditSubjectModal from './EditSubjectModal';
 import AddSubjectModal from './AddSubjectModal';

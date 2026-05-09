@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+import axiosClient from "../../../api/axiosClient";
 // import { data } from "react-router-dom";
 import App from "../App";
 
@@ -13,7 +14,7 @@ export const getSubjects = async () => {
     //Thêm try-catch để tránh crash : ??????????
     try {
     // gửi request GET lên backend ; await = đợi server trả dữ liệu
-    const res =  await axios.get(API_URL);
+    const res =  await axiosClient.get(API_URL);
 
     // Lấy phần data trong response trả về cho component React => Đây chính là dữ liệu từ database
     return res.data;
@@ -24,15 +25,15 @@ export const getSubjects = async () => {
 };
 
 export const createSubject = async (data) => {
-  return await axios.post(API_URL, data);
+  return await axiosClient.post(API_URL, data);
 };
 
 export const updateSubject = async (id, data) => {
-  return await axios.put(`${API_URL}/${id}`, data);
+  return await axiosClient.put(`${API_URL}/${id}`, data);
 }
 
 export const deleteSubject = async (id) => {
-  return await axios.delete(`${API_URL}/${id}`);
+  return await axiosClient.delete(`${API_URL}/${id}`);
 }
 
 // res(response) có dạng:

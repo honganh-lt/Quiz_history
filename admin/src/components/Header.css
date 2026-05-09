@@ -19,6 +19,7 @@
 /* 👇 dòng này là mấu chốt */
 .header-right {
   margin: 0; /* 👈 bỏ auto đi */
+  grid-area: 3;
 }
 
 .header-right h4 {

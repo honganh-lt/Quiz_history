@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./ManageChapters.css"
 import { deleteChapter, getChapters } from '../../api/chapterApi';
 import AddChapterModal from './AddChapterModal';
-import { getSubjects } from '../../api/subjectService';
+import { getSubjects } from '../../api/subjectApi';
 import EditChapterModal from './EditChapterModal';
 
 export const ManagementChapters = () => {

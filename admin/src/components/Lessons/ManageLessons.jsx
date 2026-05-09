@@ -4,7 +4,7 @@ import { deleteLesson, getLesson } from '../../api/lessonApi';
 import { AddLessonModal } from './AddLessonModal';
 import { getChapters } from '../../api/chapterApi';
 import EditLessonModal from './EditLessonModal';
-import { getSubjects } from '../../api/subjectService';
+import { getSubjects } from '../../api/subjectApi';
 
 export const ManageLessons = () => {
 

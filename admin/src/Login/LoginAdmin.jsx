@@ -24,30 +24,30 @@ function LoginAdmin() {
 
       console.log("Kết quả login:", result);
 
-      // ❗ Kiểm tra user
+      //Kiểm tra user
       if (!result.user) {
         alert("Sai tài khoản hoặc mật khẩu");
         return;
       }
 
-      // ❗ Kiểm tra admin
+      // kiểm tra admin
       if (result.user.role !== "admin") {
         alert("Bạn không phải admin");
         return;
       }
 
-      // ✅ Lưu token
+      //  Lưu token
       localStorage.setItem("access_token", result.access_token);
       localStorage.setItem("refresh_token", result.refresh_token);
 
-      // ✅ Lưu user
+      // Lưu user
       localStorage.setItem("user", JSON.stringify(result.user));
 
        // TEST Ở ĐÂY
     const testAdmin = await getAdmin();
     console.log("TEST ADMIN:", testAdmin.data);
 
-      // 👉 chuyển trang
+      //  chuyển trang
       navigate("/admin");
 
     } catch (error) {

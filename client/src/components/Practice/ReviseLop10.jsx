@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getChapters } from '../../api/chapterApi';
 import { getLesson } from '../../api/lessonApi';
 import { getSubjects } from '../../api/subjectApi';
+import Footer from '../Home/Footer';
 
 
 
@@ -89,7 +90,21 @@ function ReviseLop10() {
                                 <h4> Bài {lesson.lesson_number} - {lesson.lesson_name}</h4>
                                 {/* trang làm đề */}
                                 <button className="btn-practice"
-                                    onClick={() => navigate(`/practice/${subjectId}/${lesson.lesson_id}`)}
+                                //vì practice không lưu vào database nên không cần verifyToken BE
+                                    onClick={() => {
+                                        const user = JSON.parse(localStorage.getItem("user"));
+
+                                        if (!user) {
+
+                                            alert("Bạn chưa đăng nhập");
+
+                                            navigate("/login");
+
+                                            return;
+                                        }
+
+                                        navigate(`/practice/${subjectId}/${lesson.lesson_id}`);
+                                    }}
                                 >Làm đề</button>
                             </div>
                             ))}
@@ -106,6 +121,7 @@ function ReviseLop10() {
 
                 </div>
             </section>
+            <Footer/>
             {/* </div> */}
         </main>
 

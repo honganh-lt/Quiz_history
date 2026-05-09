@@ -1,5 +1,7 @@
 // examApi.jsx
-import axios from "axios";
+// import axios from "axios";
+import axiosClient from "../../../api/axiosClient";
+
 
 // URL API backend
 const API_URL = "http://localhost:3000/api/exams";
@@ -7,7 +9,7 @@ const API_URL = "http://localhost:3000/api/exams";
 // GET tất cả exam ALL
 export const getExams = async () => {
   try {
-    const res = await axios.get(API_URL);
+    const res = await axiosClient.get(API_URL);
     return res.data;
   } catch (err) {
      console.error(err);
@@ -18,7 +20,7 @@ export const getExams = async () => {
 //====Get Detail=======
 export const getExamDetail = async (id) => {
   try {
-    const res = await axios.get(`${API_URL}/${id}`);
+    const res = await axiosClient.get(`${API_URL}/${id}`);
     return res.data;
   } catch (err) {
     console.error(err);
@@ -30,7 +32,7 @@ export const getExamDetail = async (id) => {
 // POST tạo exam thủ công
 export const createExam = async (data) => {
   try {
-    const res = await axios.post(API_URL, data);
+    const res = await axiosClient.post(API_URL, data);
     return res.data;
   } catch (err) {
     console.error(err);
@@ -41,7 +43,7 @@ export const createExam = async (data) => {
 //POst CREATE RANDOM theo subject = BE
 export const createExamBySubject = async (data) => {
   try {
-   const res = await axios.post(`${API_URL}/subject`, data);
+   const res = await axiosClient.post(`${API_URL}/subject`, data);
   return res.data;
   } catch (err) {
     console.error(err);
@@ -54,7 +56,7 @@ export const createExamBySubject = async (data) => {
 // PUT cập nhật exam theo id
 export const updateExams = async (id, data) => {
   try {
-    const res = await axios.put(`${API_URL}/${id}`, data);
+    const res = await axiosClient.put(`${API_URL}/${id}`, data);
     return res.data;
   } catch (err) {
     console.error("Lỗi PUT exam:", err);
@@ -65,7 +67,7 @@ export const updateExams = async (id, data) => {
 // DELETE exam theo id
 export const deleteExam = async (id) => {
   try {
-    const res = await axios.delete(`${API_URL}/${id}`);
+    const res = await axiosClient.delete(`${API_URL}/${id}`);
     return res.data;
   } catch (err) {
     console.error("Lỗi DELETE exam:", err);

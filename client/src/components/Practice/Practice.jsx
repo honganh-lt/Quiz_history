@@ -9,6 +9,7 @@ import Revise2 from "./Revise2"
 // import { useParams } from "react-router-dom";
 // import { getQuestionsByLesson } from "../../api/questionApi";
 import Header from "../Home/Header";
+import Footer from "../Home/Footer";
 
 
 function Practice() {
@@ -17,6 +18,7 @@ function Practice() {
             <Header />
             <Revise />
             {/* <Revise2/> */}
+            <Footer/>
         </>
 
     )

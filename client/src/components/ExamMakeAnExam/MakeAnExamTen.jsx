@@ -16,7 +16,7 @@ function MakeAnExamTen() {
     const [subjects]  = useState([]);
     const [questions, setQuestions] = useState([]);
     // const [title ,setTitle] = useState("");
-    // ✅ HOOK LUÔN Ở TRÊN
+    //  HOOK LUÔN Ở TRÊN
     const [selectedAnswers, setSelectedAnswers] = useState({});
 
     // const TOTAL_TIME = 15 * 60;
@@ -26,12 +26,12 @@ function MakeAnExamTen() {
     const [timeLeft, setTimeLeft] = useState(0);
 
 
-    // ✅ Load Data
+    // Load Data
     useEffect(() => {
         // getRandomExam(subje)
-        getExamDetail(examId)
+        getExamDetail(examId) //chi tiết từng câu hỏi đề thi examApi
         .then(res => {
-             console.log("DATA:", res.data); // 👈 DEBUG
+             console.log("DATA:", res.data); // DEBUG
             setQuestions(res.data.questions)
             // setTitle(res.data.title);
 
@@ -41,7 +41,7 @@ function MakeAnExamTen() {
         .catch(err => console.log(err));
     }, [examId]);
 
-    // ✅ TIMER
+    // TIMER
     useEffect(() => {
         const timer = setInterval(() => {
             setTimeLeft(prev => {
@@ -56,7 +56,7 @@ function MakeAnExamTen() {
          return () => clearInterval(timer);
     }, []);
 
-    // ✅ LẤY DATA SAU HOOK
+    // LẤY DATA SAU HOOK
     // const lessonData = question[String(examId)];
 
     // if (!lessonData) {
@@ -65,7 +65,7 @@ function MakeAnExamTen() {
 
     // const { title, questionExam } = lessonData;
 
-    // ✅ HANDLE Chon đáp án
+    //  HANDLE Chon đáp án
     const handleSelectAnswer = (questionId, answerId) => {
         setSelectedAnswers((prev) => ({
             ...prev,
@@ -92,7 +92,7 @@ function MakeAnExamTen() {
     const currentSubject = subjects.find(
         s => Number(s.subject_id) === Number(subjectId)
     )
-    // ✅ FIX: loading
+    //  FIX: loading
     if (!questions.length) {
         return <p>Đang tải đề...</p>;
     }
@@ -106,7 +106,7 @@ function MakeAnExamTen() {
             answer_id: selectedAnswers[qid]
         }));
 
-        const res = await submitExam({
+        const res = await submitExam({ //userExam
             user_exam_id: userExamId,
             answers
         });

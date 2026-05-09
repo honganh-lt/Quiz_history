@@ -39,7 +39,7 @@ export const register = async (username, email, password) => {
 
     const data = await response.json();
 
-    // 🔥 BẮT LỖI 400, 500
+    //  BẮT LỖI 400, 500
     if (!response.ok) {
         throw data; // 👈 QUAN TRỌNG
     }

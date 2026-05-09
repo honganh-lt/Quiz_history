@@ -23,7 +23,7 @@ export const ManagementUserExam = () => {
                 return;
             }
             setData(res.data);//  rows nằm ở đây
-            setCurrentPage(1); // ✅ thêm dòng này
+            setCurrentPage(1); //  
         })
         .catch(err => {
             console.error(err);

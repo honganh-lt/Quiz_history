@@ -26,14 +26,21 @@ const Login = () => {
         const res = await login(username, password);
         console.log(res);
 
+        //Kiểm tra user
+    //   if (!res.user) {
+    //     alert("Sai tài khoản hoặc mật khẩu");
+    //     return;
+    //   }
+
         if (res.user) {
-            // 🔥 LƯU TOKEN
+            //  LƯU TOKEN
             localStorage.setItem("access_token", res.access_token);
             localStorage.setItem("refresh_token", res.refresh_token);
 
-            // 🔥 LƯU USER
+            //  LƯU USER
             localStorage.setItem("user", JSON.stringify(res.user));
 
+            //chuyển trang
             navigate("/");
         } else {
             alert("Sai tài khoản hoặc mật khẩu");

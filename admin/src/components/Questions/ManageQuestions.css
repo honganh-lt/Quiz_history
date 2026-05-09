@@ -4,14 +4,31 @@
     background: #f5f7fb;
 }
 /* Top-bar */
-.top-bar{
+.top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+
+    padding: 16px 20px;
+    /* background: #dcdcdc; */
+    border-radius: 12px;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .add-btn{
     background: #4da3ff;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.import-btn{
+     background: #4da3ff;
     border: none;
     padding: 10px 15px;
     color: white;

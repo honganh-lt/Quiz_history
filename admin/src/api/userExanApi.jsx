@@ -1,11 +1,13 @@
-import axios from "axios";
+// import axios from "axios";
+import axiosClient from "../../../api/axiosClient";
+
 
 const API_URL = "http://localhost:3000/api/user-exam";
 
 
 export const getAllUserExams = async () => {
     try {
-        const res = await axios.get(API_URL);
+        const res = await axiosClient.get(API_URL);
         return res; // trả nguyên axios response
     } catch (err) {
         console.error(err);
@@ -13,15 +15,22 @@ export const getAllUserExams = async () => {
     }
 } 
 
+// export const getUserExamDetail = (id) => {
+//     return axios.get(`${API_URL}/review/${id}`)
+// }
 export const getUserExamDetail = (id) => {
-    return axios.get(`${API_URL}/review/${id}`)
+
+    const token = localStorage.getItem("access_token");
+
+    return axiosClient.get(
+        `${API_URL}/review/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
 }
-// export const getAllUserExams = async () => {
-//     try {
-//         const res = await axios.get(API_URL);
-//         return res.data;
-//     } catch (err) {
-//         console.error(err);
         
 //     }
 // } vì api BE là : res.json(rows); nghĩa là axios nhận đc là res.data = rows (mảng luôn)

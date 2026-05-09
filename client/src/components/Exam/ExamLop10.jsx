@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getSubjects } from '../../api/subjectApi';
 import { getExams } from '../../api/examApi';
 import { getHistory, startExam } from '../../api/userExamApi';
+import Footer from '../Home/Footer';
 
 function ExamLop10() {
 
@@ -66,6 +67,7 @@ function ExamLop10() {
     //     ).length;
     // };
 
+    //số lần FE tự tính
     const attemptMap = useMemo(() => {
         const map = {};
 
@@ -76,7 +78,7 @@ function ExamLop10() {
                 map[examId] = 0;
             }
 
-            map[examId] += 1;
+            map[examId] += 1;  // mỗi lần gặp cùng 1 đề thì số lần sẽ +1
         });
 
         return map;
@@ -141,7 +143,7 @@ function ExamLop10() {
                                                 return;
                                             }
 
-                                            const res = await startExam({
+                                            const res = await startExam({ //userExam
                                                 user_id: userId,
                                                 exam_id: exam.exam_id
                                             });
@@ -152,6 +154,11 @@ function ExamLop10() {
 
                                         } catch (err) {
                                             console.log(err);
+                                            if (err.response?.status === 401) {
+                                                alert("Bạn cần đăng nhập");
+
+                                                navigate("/login");
+                                            }
                                         }
                                     }}
                                 >
@@ -166,6 +173,7 @@ function ExamLop10() {
 
                 </div>
             </section>
+            {/* <Footer/> */}
         </main>
     );
 }

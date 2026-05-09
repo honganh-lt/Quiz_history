@@ -1,11 +1,13 @@
-import axios from "axios";
+// import axios from "axios";
+import axiosClient from "../../../api/axiosClient";
+
 
 const API_URL = "http://localhost:3000/api/questions";
 
 // GET
 export const getQuestion = async () => {
     try {
-        const res = await axios.get(API_URL);
+        const res = await axiosClient.get(API_URL);
         return res.data;
     } catch (error) {
         console.error(error);
@@ -16,8 +18,8 @@ export const getQuestion = async () => {
 // POST (đã fix đúng format mới)
 export const createQuestion = async (data) => {
     try {
-        const res = await axios.post(API_URL, data);
-        return res.data; // 🔥 quan trọng
+        const res = await axiosClient.post(API_URL, data);
+        return res.data; //  quan trọng
     } catch (error) {
         console.error(error);
         throw error;
@@ -27,7 +29,7 @@ export const createQuestion = async (data) => {
 // PUT
 export const updateQuestion = async (id, data) => {
     try {
-        const res = await axios.put(`${API_URL}/${id}`, data);
+        const res = await axiosClient.put(`${API_URL}/${id}`, data);
         return res.data;
     } catch (error) {
         console.error(error);
@@ -38,10 +40,31 @@ export const updateQuestion = async (id, data) => {
 // DELETE
 export const deleteQuestion = async (id) => {
     try {
-        const res = await axios.delete(`${API_URL}/${id}`);
+        const res = await axiosClient.delete(`${API_URL}/${id}`);
         return res.data;
     } catch (error) {
         console.error(error);
         throw error;
     }
 };
+
+//import - gửi formData
+export const importQuestions = async (formData) => {
+    try {
+        const res = await axiosClient.post(
+            `${API_URL}/import`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            }
+        );
+
+        return res.data;
+
+    } catch(err) {
+        console.log(err);
+        throw err;
+    }
+}

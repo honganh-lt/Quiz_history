@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../Home/Header'
 import { Exam2 } from './Exam2'
 import ExamLop10 from './ExamLop10'
+import Footer from '../Home/Footer'
 
 export const Exam = () => {
 
@@ -10,6 +11,7 @@ export const Exam = () => {
         <Header/>
         <Exam2/>
         {/* <ExamLop10/> */}
+        <Footer/>
     </>
   )
 }

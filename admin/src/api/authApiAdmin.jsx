@@ -17,7 +17,7 @@ export const logout = async (refresh_token) => {
     })
 }
 
-// 👉 THÊM CÁI NÀY
+// THÊM CÁI NÀY
 export const getAdmin = async () => {
     const token = localStorage.getItem("access_token");
 

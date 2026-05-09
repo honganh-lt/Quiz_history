@@ -18,6 +18,9 @@ export const Header = () => {
 
   return (
     <div className="header">
+        <div className='header-left'>
+            <h2></h2>
+        </div>
         <div className="header-right">
             {users && (
                 <h4>

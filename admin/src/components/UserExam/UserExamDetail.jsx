@@ -13,7 +13,7 @@ export const UserExamDetail = () => {
         getAllUserExams()
         .then(res => setUserData(res.data))
         .catch(err => console.log(err));
-    })
+    }, []); //có [] tránh lặp vô hạn thiếu dependency []
 
     //dùng để tìm dữ liệu người thi không dùng getAllUserExam nữa:
     const currentUserExam = userData.find(

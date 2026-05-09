@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./css/ManagementExam.css"
 import { deleteExam, getExams } from '../../api/examApi';
-import { getSubjects } from '../../api/subjectService';
+import { getSubjects } from '../../api/subjectApi';
 import AddExamModal from './AddExamModal';
 import EditExamModal from './EditExamModal';
 

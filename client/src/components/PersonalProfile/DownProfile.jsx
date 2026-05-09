@@ -62,7 +62,7 @@ const DownProfile = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Hồ sơ học tập</h2>
+      <h2>Lịch sử học tập</h2>
 
       {Object.keys(grouped).map(subject => (
         <div key={subject} style={{ marginBottom: "20px" }}>

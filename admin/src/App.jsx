@@ -42,7 +42,7 @@ function App() {
 
       {/* Trang admin (có bảo vệ + layout) */}
       <Route path="/admin" element={
-        // <div className="grid-container">
+        // <div className="grid-container"> Login - LayoutAmin
             <ProtectedRoute>
                 <AdminLayout>
                   <Home />

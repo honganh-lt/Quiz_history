@@ -10,7 +10,7 @@ function Header() {
     // const [subjects, setSubjects] = useState([]);
 
 
-    // ✅ Tách riêng 2 state
+    // Tách riêng 2 state
     const [openUserMenu, setOpenUserMenu] = useState(false);
     // const [openExamMenu, setOpenExamMenu] = useState(false);
 
@@ -33,7 +33,7 @@ function Header() {
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("user");
 
-        navigate("/login");
+        navigate("/");
     } catch (error) {
         console.log(error);
 

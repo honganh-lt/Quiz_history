@@ -1,9 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
+import axiosClient from "../../../api/axiosClient";
 
 const BASE_URL = "http://localhost:3000/api/exams";
 
-export const getExams = () => axios.get(BASE_URL)
+export const getExams = () => axiosClient.get(BASE_URL)
 
+//chi tiết câu hỏi cho đề thi 
 export const getExamDetail = (examId) => {
-    return axios.get(`${BASE_URL}/${examId}`);
+    return axiosClient.get(`${BASE_URL}/${examId}`);
 };
