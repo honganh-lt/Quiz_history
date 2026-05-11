@@ -1,5 +1,24 @@
+.answer-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    /* border: 1px solid #d1d5db;
+    background: white; */
+    cursor: pointer;
+    text-align: start;
+    transition: 0.2s;
+}
 
+/* .answer-btn:hover {
+    background: #f3f4f6;
+} */
 
+.answer-btn.selected {
+    background: #fdb785;
+    border: 2px solid#fa7b21;
+    color: #000;
+    font-weight: 600;
+}
 
 /* KHUNG NÚT NỘP */
 .submit-exam {

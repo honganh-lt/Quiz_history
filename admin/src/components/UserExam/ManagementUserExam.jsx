@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getAllUserExams } from '../../api/userExanApi';
 import { useNavigate } from 'react-router-dom';
+import "./ManagementUserExam.css"
 
 export const ManagementUserExam = () => {
 
@@ -14,7 +15,7 @@ export const ManagementUserExam = () => {
 
 
     //khác với code khác Giống phía GD user
-   // ✅ VIẾT Ở ĐÂY
+   //  VIẾT Ở ĐÂY
     useEffect(() => {
         getAllUserExams()
         .then(res => {
@@ -99,7 +100,7 @@ export const ManagementUserExam = () => {
                                     <button
                                         onClick={() => navigate(`/admin/user-exam/${item.user_exam_id}`)}
                                     >
-                                        Xem
+                                       <i class="fa-solid fa-circle-check"></i>
                                     </button>
                                 </td>
                             </tr>

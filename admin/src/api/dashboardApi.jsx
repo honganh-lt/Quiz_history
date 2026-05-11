@@ -2,7 +2,7 @@
 import axiosClient from "../../../api/axiosClient";
 
 
-const API_URL = "http://localhost:3000/api/dashboard";
+const API_URL = "/dashboard";
 
 export const getDashBoardStats = ()  => {
     return axiosClient.get(API_URL)

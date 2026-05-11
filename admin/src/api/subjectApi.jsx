@@ -1,12 +1,12 @@
 // import axios from "axios";
 import axiosClient from "../../../api/axiosClient";
 // import { data } from "react-router-dom";
-import App from "../App";
+// import App from "../App";
 
 // Đây là đường dẫn tới API BE trùng với route bạn đã tạo ở BE
 // app.use("/api/subjects", subjectRoutes);
 // GET http://localhost:3000/api/subjects
-const API_URL = "http://localhost:3000/api/subjects";
+const API_URL = "/subjects";
 
 // Tạo function bất đồng bộ (async) ; export để component khác dùng được
 export const getSubjects = async () => {

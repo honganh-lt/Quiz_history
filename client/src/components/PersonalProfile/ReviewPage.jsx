@@ -31,7 +31,7 @@ function ReviewPage() {
             .finally(() => setLoading(false));
     }, [userExamId]);
 
-    // ✅ LOADING
+    // LOADING
     if (loading) {
         return (
             <div>
@@ -41,7 +41,7 @@ function ReviewPage() {
         );
     }
 
-    // ✅ CHƯA NỘP
+    //  CHƯA NỘP
     if (!data.length) {
         return (
             <div>
@@ -55,7 +55,7 @@ function ReviewPage() {
         );
     }
 
-    // ✅ LÀM LẠI
+    //  LÀM LẠI
     const handleRetry = async () => {
         const user = JSON.parse(localStorage.getItem("user"));
 
@@ -95,17 +95,14 @@ function ReviewPage() {
 
                             return (
                                 <div
-                                    className="review-page-ans"
                                     key={ans.answer_id}
-                                    style={{
-                                        background: isCorrect
-                                            ? "#a4fcb9"
+                                    className={
+                                        isCorrect
+                                            ? "review-page-ans correct"
                                             : isUser
-                                            ? "#faaab0"
-                                            : "#f1f1f1",
-                                        margin: "4px 0",
-                                        padding: "6px"
-                                    }}
+                                            ? "review-page-ans wrong"
+                                            : "review-page-ans"
+                                    }
                                 >
                                     {ans.answer}
                                 </div>

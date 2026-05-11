@@ -2,7 +2,7 @@
 import axiosClient from "../../../api/axiosClient";
 
 
-const API_URL = "http://localhost:3000/api/lessons";
+const API_URL = "/lessons";
 
 //Tạo function đồng bộ
 //GET

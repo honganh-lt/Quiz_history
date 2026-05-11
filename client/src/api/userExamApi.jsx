@@ -2,7 +2,7 @@
 
 import axiosClient from "../../../api/axiosClient";
 
-const BASE_URL = "http://localhost:3000/api/user-exam";
+const BASE_URL = "/user-exam";
 
 // export const startExam = (data) => {
 //     const token = localStorage.getItem("access_token")

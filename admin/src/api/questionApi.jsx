@@ -2,7 +2,7 @@
 import axiosClient from "../../../api/axiosClient";
 
 
-const API_URL = "http://localhost:3000/api/questions";
+const API_URL = "/questions";
 
 // GET
 export const getQuestion = async () => {

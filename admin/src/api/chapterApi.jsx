@@ -4,7 +4,7 @@ import axiosClient from "../../../api/axiosClient";
 // import { data } from "react-router-dom";
 
 //Đường dẫn tới API BE
-const API_URL = "http://localhost:3000/api/chapters";
+const API_URL = "/chapters";
 
 // Tạo function bất đồng bộ
 //GET

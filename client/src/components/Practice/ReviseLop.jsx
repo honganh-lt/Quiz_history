@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from '../Home/Header'
-import './css/reviseLop10.css'
+import './css/reviseLop.css'
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { getChapters } from '../../api/chapterApi';
@@ -10,7 +10,7 @@ import Footer from '../Home/Footer';
 
 
 
-function ReviseLop10() {
+function ReviseLop() {
 
     const navigate = useNavigate();
 
@@ -128,4 +128,4 @@ function ReviseLop10() {
     )
 }
 
-export default ReviseLop10
+export default ReviseLop;

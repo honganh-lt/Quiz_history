@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import './EditUserModal.css'
-import axios from 'axios';
+import { updateUsers } from '../../api/userApi';
+// import axios from 'axios';
+// import axiosClient from '../../../../api/axiosClient';
 
 export const EditUserModal = ({user, onClose, updateUser}) => {
 
@@ -12,7 +14,7 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
     const handleSubmit = async () => {
         // console.log("Sửa"); //kiểm tra
         try {
-            await axios.put(`http://localhost:3000/api/users/${user.user_id}`, {
+            await updateUsers(user.user_id, {
                 username,
                 email,
                 role
@@ -27,7 +29,10 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
 
             onClose(); //đóng modal
         } catch(err){
-            console.log(err);
+
+            console.log(err.response.data);
+
+            alert(err.response.data.message);
         }
     } 
 

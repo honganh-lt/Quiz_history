@@ -52,7 +52,7 @@
     border-color: #28a745;
 }
 
-/* Khung phải */
+/* ===========Khung phải============= */
 .exam-right {
     width: 75%;
     height: 100%;
@@ -69,11 +69,12 @@
 .question-card {
     background: white;
     padding: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 26px;
     border-radius: 8px;
     border: 1px solid #ddd;
 }
 
+/* Trả lời */
 .answers {
     display: flex;
     margin-top: 8px;
@@ -82,28 +83,26 @@
     /* Khoảng cách giữa các đáp án */
      gap: 10px;
 }
-
-.answer-btn {
-    /* padding: 8px 14px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer; */
-    width: 100%;
-    text-align: left;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-    border-radius: 6px;
+.answer-btn{
+    text-align: start;
+}
+.answer-btn.correct {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #22c55e;
 }
 
-.answer-btn.selected {
-    background: #fa7b21;
-    color: white;
-    border-color: #fa7b21;
+.answer-btn.wrong {
+    background: #f99898;
+    color: #5c0c03;
+    border: 2px solid #ef4444;
 }
 
+.answer-btn.show-correct {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #22c55e;
+}
 /* Submit */
 /* .submit-exam {
     display: flex;

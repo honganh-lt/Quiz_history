@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createExamBySubject } from '../../api/examApi';
-import "./css/AddExamModal.css"
+import "./css/AddExamModal.css";
 
 const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
 
@@ -9,12 +9,12 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState(20);
 
-    // 👉 vẫn giữ UI difficulty nhưng KHÔNG cho user sửa
-    const [easy, setEasy] = useState(0);
-    const [medium, setMedium] = useState(0);
-    const [hard, setHard] = useState(0);
+    // 👉 để "" để xoá số 0 và nhập tay
+    const [easy, setEasy] = useState("");
+    const [medium, setMedium] = useState("");
+    const [hard, setHard] = useState("");
 
-    // 👉 auto set theo BE (50-30-20 của 20 câu)
+    // 👉 auto set khi mở modal
     useEffect(() => {
         if (isOpen) {
             setEasy(10);
@@ -25,7 +25,10 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
 
     if (!isOpen) return null;
 
-    const totalQuestions = easy + medium + hard; // luôn = 20
+    const totalQuestions =
+        (Number(easy) || 0) +
+        (Number(medium) || 0) +
+        (Number(hard) || 0);
 
     const handleAdd = async () => {
 
@@ -34,13 +37,21 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
             return;
         }
 
+        if (totalQuestions <= 0) {
+            alert("Tổng số câu phải lớn hơn 0");
+            return;
+        }
+
         try {
             await createExamBySubject({
                 subject_id: subjectId,
                 title,
                 description,
-                duration: Number(duration)
-                // ❌ KHÔNG gửi total_questions nữa
+                duration: Number(duration),
+
+                easy_count: Number(easy || 0),
+                medium_count: Number(medium || 0),
+                hard_count: Number(hard || 0)
             });
 
             onSuccess();
@@ -51,6 +62,10 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
             setTitle("");
             setDescription("");
             setDuration(20);
+
+            setEasy("");
+            setMedium("");
+            setHard("");
 
         } catch (err) {
             console.error("ERROR:", err);
@@ -64,65 +79,102 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
                 <h3>Thêm bài thi</h3>
 
                 <h4>Chọn môn học</h4>
-                <select 
-                    value={subjectId} 
+                <select
+                    value={subjectId}
                     onChange={(e) => setSubjectId(e.target.value)}
                 >
                     <option value="">Chọn môn học</option>
                     {subjects.map((sub) => (
-                        <option key={sub.subject_id} value={sub.subject_id}>
+                        <option
+                            key={sub.subject_id}
+                            value={sub.subject_id}
+                        >
                             {sub.subject_name}
                         </option>
                     ))}
                 </select>
 
                 <h4>Tên bài thi</h4>
-                <input 
+                <input
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
-            
+
                 <h4>Mô tả</h4>
-                <textarea 
+                <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                
+
                 <h4>Thời gian (phút)</h4>
-                <input 
+                <input
                     type="number"
                     value={duration}
-                    onChange={(e) => setDuration(e.target.value)}
+                    onChange={(e) =>
+                        setDuration(e.target.value)
+                    }
                 />
 
-                {/* 👉 UI giữ nguyên nhưng disable */}
                 <h4>Số câu hỏi theo độ khó</h4>
+
                 <div className="difficulty-inputs">
+
                     <label>
-                        Dễ:
-                        <input type="number" value={easy} disabled />
+                        Dễ: (tối đa: 10)
+                        <input
+                            type="number"
+                            value={easy}
+                            onChange={(e) =>
+                                setEasy(e.target.value)
+                            }
+                        />
                     </label>
 
                     <label>
                         Trung bình:
-                        <input type="number" value={medium} disabled />
+                        <input
+                            type="number"
+                            value={medium}
+                            onChange={(e) =>
+                                setMedium(e.target.value)
+                            }
+                        />
                     </label>
 
                     <label>
                         Khó:
-                        <input type="number" value={hard} disabled />
+                        <input
+                            type="number"
+                            value={hard}
+                            onChange={(e) =>
+                                setHard(e.target.value)
+                            }
+                        />
                     </label>
+
                 </div>
 
-                {/* Tổng */}
                 <div className="mb-3">
-                    <strong>Tổng số câu hỏi: {totalQuestions}</strong>
+                    <strong>
+                        Tổng số câu hỏi: {totalQuestions}
+                    </strong>
                 </div>
 
                 <div className="modal-actions-exam">
-                    <button onClick={handleAdd} className="save-btn">Thêm</button>
-                    <button onClick={onClose} className="cancel-btn">Hủy</button>
+                    <button
+                        onClick={handleAdd}
+                        className="save-btn"
+                    >
+                        Thêm
+                    </button>
+
+                    <button
+                        onClick={onClose}
+                        className="cancel-btn"
+                    >
+                        Hủy
+                    </button>
                 </div>
             </div>
         </div>

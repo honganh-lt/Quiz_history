@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Header from '../Home/Header';
 // import { useNavigate } from 'react-router-dom';
-import "./css/ExamLop10.css"
+import "./css/ExamLop.css"
 import { useNavigate, useParams } from 'react-router-dom';
 import { getSubjects } from '../../api/subjectApi';
 import { getExams } from '../../api/examApi';
 import { getHistory, startExam } from '../../api/userExamApi';
 import Footer from '../Home/Footer';
 
-function ExamLop10() {
+function ExamLop() {
 
     const navigate = useNavigate();
     //sửa ExamLop10 -> thành dynamic
@@ -178,4 +178,4 @@ function ExamLop10() {
     );
 }
 
-export default ExamLop10;
+export default ExamLop;

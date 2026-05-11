@@ -2,7 +2,7 @@
 import axiosClient from "../../../api/axiosClient";
 
 
-const API_URL = "http://localhost:3000/api/user-exam";
+const API_URL = "/user-exam";
 
 
 export const getAllUserExams = async () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./css/ManagementExam.css"
-import { deleteExam, getExams } from '../../api/examApi';
+import {  getExams } from '../../api/examApi';
 import { getSubjects } from '../../api/subjectApi';
 import AddExamModal from './AddExamModal';
 import EditExamModal from './EditExamModal';
@@ -70,18 +70,18 @@ export const ManagementExam = () => {
 
 
   //Delete
-  const handleDelete = async (id) => {
-      console.log("Delete id: ", id);
+  // const handleDelete = async (id) => {
+  //     console.log("Delete id: ", id);
 
-      if(!window.confirm("Bạn có chắc chắn muốn xóa không?")) return;
+  //     if(!window.confirm("Bạn có chắc chắn muốn xóa không?")) return;
       
-      try {
-        await deleteExam(id);
-        fetchData();
-      } catch (err) {
-        console.error(err);
-      }
-  }
+  //     try {
+  //       await deleteExam(id);
+  //       fetchData();
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  // }
 
   //Phân trang
   const indexOfLastExam = currentPage * examPerPage;
@@ -110,7 +110,7 @@ export const ManagementExam = () => {
               {/* <th>Tên môn học</th> */}
               <th>Thời gian</th>
               <th>Số câu hỏi</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
 
@@ -122,8 +122,8 @@ export const ManagementExam = () => {
                   <td>{ex.title}</td>
                   <td>{ex.description}</td>
                   <td>{ex.duration || 0} phút</td>
-                  <td>{ex.question_count}</td> {/* ✅ thêm dòng này */}     
-                  <td>
+                  <td>{ex.question_count}</td> {/* thêm dòng này */}     
+                  {/* <td> */}
                     {/* <button className='edit-btn'
                           onClick={() => {
                             setSelectedExam(ex); //Mở modal-> cần đổ dữ liệu vào input
@@ -133,14 +133,14 @@ export const ManagementExam = () => {
                        {/* Edit */}
                       {/* <i class="fa-solid fa-pen-to-square"></i>
                       </button> */} 
-                    <button 
+                    {/* <button 
                       className='delete-btn'
                       onClick={() => handleDelete(ex.exam_id)}
                     >
                      {/* Delete */}
-                    <i className="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
+                    {/* <i className="fa-solid fa-trash"></i>
+                    </button> */} 
+                  {/* </td> */}
                 </tr>
               ))
             ) : (

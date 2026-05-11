@@ -4,7 +4,7 @@ import axiosClient from "../../../api/axiosClient";
 
 
 // URL API backend
-const API_URL = "http://localhost:3000/api/exams";
+const API_URL = "/exams";
 
 // GET tất cả exam ALL
 export const getExams = async () => {

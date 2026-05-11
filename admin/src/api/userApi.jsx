@@ -2,7 +2,7 @@
 import axiosClient from "../../../api/axiosClient";
 
 
-const API_URL = "http://localhost:3000/api/users";
+const API_URL = "/users";
 
 export const getUser = async () => {
     try {
@@ -21,7 +21,7 @@ export const createdUser = async (data) => {
 }
 
 //put
-export const updateUser = async (id, data) => {
+export const updateUsers= async (id, data) => {
     return await axiosClient.put(`${API_URL}/${id}`, data);
 }
 
