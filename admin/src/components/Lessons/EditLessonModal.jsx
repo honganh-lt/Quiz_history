@@ -37,7 +37,7 @@ export const EditLessonModal = ({ les, onClose, updateLes, chapters, subjects })
         }
 
         try {
-            // await axios.put(`http://localhost:3000/api/lessons/${les.lesson_id}`, // ✅ FIX API //xem lại cái này có đổi đc không
+            // await axios.put(`http://localhost:3000/api/lessons/${les.lesson_id}`, //  FIX API //xem lại cái này có đổi đc không
             await updateLesson(les.lesson_id,    //Không dùng axios trực tiếp → dùng:
             {
                     chapter_id: Number(chapterId),

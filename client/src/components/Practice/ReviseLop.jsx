@@ -44,7 +44,7 @@ function ReviseLop() {
     const currentSubject = subjects.find(
         s => Number(s.subject_id) === Number(subjectId)
     )
-    // 🔥 lọc chương theo môn
+    // lọc chương theo môn
     const filteredChapters = chapters.filter(
         c => Number(c.subject_id) === Number(subjectId)
     );

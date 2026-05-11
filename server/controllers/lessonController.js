@@ -20,7 +20,7 @@ exports.getLesson = (req, res) => {
         sql += " WHERE l.chapter_id = ?";
     }
 
-    sql += " ORDER BY l.lesson_id ASC"; // 👈 chuyển xuống dưới
+    sql += " ORDER BY l.lesson_id ASC"; //chuyển xuống dưới
 
     db.query(sql, chapter_id ? [chapter_id] : [], (err, result) => {
         if(err) return res.status(500).json({error: "Database error"});

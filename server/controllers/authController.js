@@ -120,7 +120,7 @@ exports.refreshToken = (req, res) => {
             return res.status(403).json({ message: "Token đã hết hạn" });
         }
 
-        // 🔥 Lấy role từ users
+        //  Lấy role từ users
         const userSql = "SELECT role FROM users WHERE user_id = ?";
 
         db.query(userSql, [tokenData.user_id], (err, userResult) => {

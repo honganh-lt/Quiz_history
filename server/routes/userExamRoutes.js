@@ -6,7 +6,7 @@ const userExamController = require("../controllers/userExamController");
 
 const { verifyToken } = require("../middleware/authMiddleware"); //file: authMiddleware
 
-
+//lấy dữ liệu bắt đầu làm + nộp bài + lịch sử + review
 //GET ===Public==== lấy dữ liệu đổ vào bảng
 router.get("/",userExamController.getAllUserExams);
 

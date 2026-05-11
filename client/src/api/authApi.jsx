@@ -41,7 +41,7 @@ export const register = async (username, email, password) => {
 
     //  BẮT LỖI 400, 500
     if (!response.ok) {
-        throw data; // 👈 QUAN TRỌNG
+        throw data; //  QUAN TRỌNG
     }
 
     return data;

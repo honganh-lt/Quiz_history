@@ -23,7 +23,7 @@ exports.postUser = async (req, res) => {
     const { username, email, password, role } = req.body;
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10); // 🔐 hash
+        const hashedPassword = await bcrypt.hash(password, 10); // hash
 
         const sql = `
             INSERT INTO users (username, email, password, role)

@@ -294,13 +294,13 @@ exports.submitExam = (req, res) => {
 //     const sql = `
 //         SELECT 
 //             ue.user_exam_id,
-//             ue.exam_id, -- 🔥 THÊM DÒNG NÀY để hiển thị lần thi User phía người dung
+//             ue.exam_id, -- THÊM DÒNG NÀY để hiển thị lần thi User phía người dung
 //             ue.score,
 //             ue.start_time,
 //             ue.end_time,
 //             ue.status,         --thêm cho nút làm tiếp
-//             e.exam_id,          -- 🔥 THÊM cho nút làm tiếp
-//             s.subject_id,       -- 🔥 THÊM cho nút làm tiếp
+//             e.exam_id,          --  THÊM cho nút làm tiếp
+//             s.subject_id,       --  THÊM cho nút làm tiếp
 //             e.title,
 //             s.subject_name
 //         FROM user_exam ue

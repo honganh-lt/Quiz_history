@@ -220,7 +220,7 @@ const getCorrectAnswer = (answers) => {
                   {q.answers?.map((a, i) => (
                     <div key={i}>
                       {String.fromCharCode(65 + 1)}.{a.content}
-                      {a.is_correct && "✅"}
+                      {a.is_correct && ""}
                     </div>
                   ))}
                 </td> */}
@@ -293,8 +293,8 @@ const getCorrectAnswer = (answers) => {
           subjects={subjects}
           chapters={chapters}
           lessons={lessons}
-          setLessons={setLessons}   // ✅ THÊM DÒNG NÀY
-  fetchLessons={fetchLessons} // 👈 THÊM DÒNG NÀY
+          setLessons={setLessons}   // THÊM DÒNG NÀY
+          fetchLessons={fetchLessons} // THÊM DÒNG NÀY
         />
 
         <ImportQuestionModal
@@ -314,10 +314,10 @@ const getCorrectAnswer = (answers) => {
           <EditQuestionModal
             ques={selectedQuestion}
             onClose={() => setShowEditModal(false)}
-            // updateQuestion={updateQues}   // ✅ đúng tên bị sai chỗ này nên không lấy được subject
+            // updateQuestion={updateQues}   //  đúng tên bị sai chỗ này nên không lấy được subject
             chapters={chapters}
             subjects={subjects}   
-            lessons={lessons}        // ✅ thêm dòng này
+            lessons={lessons}        //  thêm dòng này
             fetchLessons={fetchLessons}
             onSuccess={fetchData}
           />

@@ -31,7 +31,7 @@ router.get(
     verifyToken,
     checkRole("admin"),
     (req, res) => {
-        res.json({ message: "Chào admin 🔥" });
+        res.json({ message: "Chào admin " });
     }
 );
 

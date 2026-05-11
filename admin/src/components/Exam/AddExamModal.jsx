@@ -9,12 +9,12 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState(20);
 
-    // 👉 để "" để xoá số 0 và nhập tay
+    // để "" để xoá số 0 và nhập tay
     const [easy, setEasy] = useState("");
     const [medium, setMedium] = useState("");
     const [hard, setHard] = useState("");
 
-    // 👉 auto set khi mở modal
+    // auto set khi mở modal
     useEffect(() => {
         if (isOpen) {
             setEasy(10);

@@ -32,7 +32,7 @@ const EditQuestionModal = ({
     setContent(ques.content || "");
     setDifficulty(ques.difficulty || "");
 
-    // 🔥 dùng trực tiếp từ BE
+    //  dùng trực tiếp từ BE
     setSubjectId(ques.subject_id);
     setChapterId(ques.chapter_id);
     setLessonId(ques.lesson_id);

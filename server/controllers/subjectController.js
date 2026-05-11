@@ -77,7 +77,7 @@ exports.deleteSubjects = (req, res) => {
 // → nếu OK → trả JSON về FE
 
 
-// 💡 Nói dễ hiểu kiểu đời thường:
+// Nói dễ hiểu kiểu đời thường:
 // db = người đi lấy dữ liệu
 // sql = yêu cầu bạn đưa cho database
 // query() = gửi yêu cầu

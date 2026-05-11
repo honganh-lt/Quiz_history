@@ -12,7 +12,7 @@ export const Home = () => {
     useEffect(() => {
         getDashBoardStats()
         .then(res => {
-            console.log("DATA:", res.data); // 👈 QUAN TRỌNG
+            console.log("DATA:", res.data); // QUAN TRỌNG
             setStats(res.data);
         })
         .catch(err => console.log(err));

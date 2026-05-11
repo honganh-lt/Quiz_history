@@ -36,7 +36,7 @@ exports.getDashboardStats = (req, res) => {
                             questions: questions[0].total,
                             exams: exams[0].total,
                             users: users[0].total,
-                            difficulty: difficultyData   // 👈 nhớ đồng bộ với FE
+                            difficulty: difficultyData   // đồng bộ với FE
                         });
                     });
 

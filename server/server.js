@@ -62,7 +62,7 @@
 // app.listen(3000, () => {
 //     // console.log("==================================");
 //     console.log("SERVER START SUCCESSFULLY");
-//     // console.log("🌐 http://localhost:3000");
+//     // console.log("http://localhost:3000");
 //     // console.log("==================================");
 // });
 
@@ -113,7 +113,7 @@ app.use("/api/user-exam", userExamRoutes);
 
 // ===== HOME =====
 app.get("/", (req, res) => {
-    res.send("SERVER RUNNING OK 🚀");
+    res.send("SERVER RUNNING OK");
 });
 
 // ===== 404 =====
