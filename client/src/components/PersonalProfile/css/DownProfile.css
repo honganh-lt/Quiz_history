@@ -1,80 +1,67 @@
-h2{
-  text-align: center;
-  padding: 16px 20px;
+.profile-container{
+  padding: 20px;
+  background: #fdf0e3;
+}
+.title{
+  font-size: 24px;
+  margin-bottom: 20px;
+  padding-left: 300px;
 }
 
-/* 
-.main-downProfile{
-    padding: 20px;
-    background: #f5f6fa;
-    min-height: 100vh;
+/* Chia 2 cột */
+.subject-list{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  width: 60%;
+  /* Đẩy ra giữa */
+  margin: 0 auto; 
 }
-.container-downProfile{
-    max-width: 900px;
-    margin: auto;
-}
-/* Subject Header */
-/* .subject-header{
-    background: rgb(203, 215, 239);
-    color: black;
-    padding: 12px 15px;
-    margin-top: 15px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-    align-items: center;
-    transition: 0.3s;
-}
-.subject-header:hover{
-    background: #1f4fb8;
-} */
-
-/* Arrow */
-/* .arrow{
-    transition: 0.3s;
-    font-size: 18px;
-}
-.arrow.open{
-    transform: rotate(180deg);
-} */
-/* content */
-/* .subject-content {
-    background: white;
-    padding: 10px;
-    border-radius: 0 0 8px 8px;
-    border: 1px solid #eee;
-} */
-
-/* ===== EXAM CARD ===== */
-/* .exam-card {
-  background: #f9f9f9;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-} */
-
-/* ===== ATTEMPT ===== */
-/* .attempt-list {
-  margin-top: 10px;
+.subject-card{
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.attempt-item {
+/* Header trong card */
+.subject-card h2{
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+/* Layout bên trang card */
+.subject-card-item{
   display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-} */
-
-/* BUTTON */
-/* .attempt-item button {
-  padding: 5px 10px;
-  border: none;
-  background: #2d6cdf;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+  align-items: center;
+  gap: 5px;
+}
+.subject-card-item img{
+  border-radius: 8px;
 }
 
-.attempt-item button:hover {
-  background: #1f4fb8;
-} */
+/* Button */
+.profile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+  margin: 16px 40px 10px;
+}
+.profile-nav h2{
+  margin-left: auto;
+}
+.profile-nav button{
+  width: fit-content;
+  padding: 6px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #fc9e40;
+  color: #fff;
+  cursor: pointer;
+  margin-left: auto;
+}
+.profile-nav button:hover{
+  background: #fc9e40;
+  color: #000;
+}

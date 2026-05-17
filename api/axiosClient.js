@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-    baseURL: "http://localhost:3000/api"
+    baseURL: "http://localhost:5000/api"
 });
 
 // Tự động gắn token
@@ -24,7 +24,7 @@ axiosClient.interceptors.response.use(
 
         if(error.response?.status === 403) {
 
-            alert("Phiên đăng nhập đã hết hạn");
+            alert("Phiên đăng nhập đã hết hạn hoặc tài khoản đã bị khóa");
 
             localStorage.clear();
 

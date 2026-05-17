@@ -20,6 +20,11 @@ export const createdUser = async (data) => {
     return await axiosClient.post(`${API_URL}`, data);
 }
 
+//====Status===
+export const toggleBlockUsers = async (id) => {
+    return await axiosClient.put(`${API_URL}/block/${id}`);
+}
+
 //put
 export const updateUsers= async (id, data) => {
     return await axiosClient.put(`${API_URL}/${id}`, data);
@@ -29,3 +34,4 @@ export const updateUsers= async (id, data) => {
 export const deleteUser = async (id) => {
     return await axiosClient.delete(`${API_URL}/${id}`);
 }
+

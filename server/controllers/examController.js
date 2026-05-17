@@ -59,6 +59,7 @@ exports.getExams = (req, res) => {
 //     });
 // };
 
+//Lấy đề thi
 exports.getExamDetail = (req, res) => {
     const { id } = req.params;
 
@@ -121,216 +122,6 @@ exports.getExamDetail = (req, res) => {
 };
 
 
-// ================= CREATE MANUAL =================
-//UpdateExam
-// exports.postExam = (req, res) => {
-//     const {
-//         title,
-//         description,
-//         duration,
-//         subject_id,
-//         questionIds = []
-//     } = req.body;
-
-//     const sqlExam = `
-//         INSERT INTO exam (title, description, duration, subject_id, created_time)
-//         VALUES (?, ?, ?, ?, NOW())
-//     `;
-
-//     db.query(sqlExam, [
-//         title,
-//         description,
-//         duration,
-//         subject_id
-//     ], (err, result) => {
-
-//         if (err) return res.status(500).json(err);
-
-//         const examId = result.insertId;
-
-//         // if (!questionIds.length) {
-//         //     return res.json({
-//         //         message: "Tạo exam thành công",
-//         //         examId
-//         //     });
-//         // }
-
-//         const values = questionIds.map(id => [examId, id]);
-
-//         const sqlQ = `
-//             INSERT INTO exam_questions (exam_id, question_id)
-//             VALUES ?
-//         `;
-
-//         db.query(sqlQ, [values], (err2) => {
-//             if (err2) return res.status(500).json(err2);
-
-//             res.json({
-//                 message: "Tạo đề thủ công thành công",
-//                 examId
-//             });
-//         });
-//     });
-// };
-
-
-// ================= RANDOM EXAM fix cứng=================
-// exports.createExamBySubject = (req, res) => {
-//     const {
-//         subject_id,
-//         title,
-//         description,
-//         duration
-//     } = req.body;
-
-//     const total_questions = 20;
-
-//     if (!subject_id || !title || !duration) {
-//         return res.status(400).json({
-//             error: "Thiếu dữ liệu"
-//         });
-//     }
-
-//     // ================= LẤY DATA- lấy câu hỏi theo môn(chương+độ khó) =================
-//     const sql = `
-//         SELECT 
-//             q.question_id,
-//             q.difficulty,
-//             c.chapter_id
-//         FROM questions q
-//         JOIN lessons l ON q.lesson_id = l.lesson_id
-//         JOIN chapters c ON l.chapter_id = c.chapter_id
-//         WHERE c.subject_id = ?
-//     `;
-
-//     db.query(sql, [subject_id], (err, questions) => {
-//         if (err) return res.status(500).json(err);
-
-//         if (questions.length < total_questions) {
-//             return res.status(400).json({
-//                 error: "Không đủ 20 câu hỏi"
-//             });
-//         }
-
-//         const shuffle = arr => arr.sort(() => Math.random() - 0.5);
-
-//         // ================= 1. CHIA THEO CHAPTER =================
-//         const chapterMap = {}; //gom câu hỏi theo từng chương
-
-//         questions.forEach(q => {
-//             if (!chapterMap[q.chapter_id]) {
-//                 chapterMap[q.chapter_id] = [];
-//             }
-//             chapterMap[q.chapter_id].push(q);
-//         });
-
-//         let baseSelected = [];
-
-//         // lấy mỗi chapter 1 câu (nếu có)
-//         Object.values(chapterMap).forEach(list => {
-//             if (baseSelected.length < total_questions) {
-//                 baseSelected.push(shuffle([...list])[0]); //mỗi chapter lấy ngẫu nhiên một câu hỏi trước
-//             }
-//         });
-
-//         // fill thêm cho đủ 20
-//         const remaining = questions.filter(q =>
-//             !baseSelected.some(b => b.question_id === q.question_id)
-//         );
-
-//         baseSelected = [
-//             ...baseSelected,
-//             ...shuffle(remaining).slice(0, total_questions - baseSelected.length) //trộn ngẫu nhiên + lấy thêm đủ số lg 20 câu
-//         ];
-
-//         // ================= 2. CHIA ĐỘ KHÓ 50-30-20 =================
-//         const easyList = baseSelected.filter(q => q.difficulty === "easy");
-//         const mediumList = baseSelected.filter(q => q.difficulty === "medium");
-//         const hardList = baseSelected.filter(q => q.difficulty === "hard");
-
-//         const easyCount = Math.floor(total_questions * 0.5);
-//         const mediumCount = Math.floor(total_questions * 0.3);
-//         const hardCount = total_questions - easyCount - mediumCount;
-
-//         let finalSelected = [];
-
-//         if (
-//             easyList.length >= easyCount &&
-//             mediumList.length >= mediumCount &&
-//             hardList.length >= hardCount
-//         ) {
-//             finalSelected = [ //random từng nhóm
-//                 ...shuffle(easyList).slice(0, easyCount),
-//                 ...shuffle(mediumList).slice(0, mediumCount),
-//                 ...shuffle(hardList).slice(0, hardCount)
-//             ];
-//         } else {
-//             // fallback: dùng baseSelected
-//             console.warn("⚠ fallback do thiếu độ khó");
-//             finalSelected = shuffle(baseSelected).slice(0, total_questions);
-//         }
-
-//         // ================= 3. TẠO EXAM =================
-//         const sqlExam = `
-//             INSERT INTO exam (title, description, duration, subject_id, created_time)
-//             VALUES (?, ?, ?, ?, NOW())
-//         `;
-
-//         db.query(sqlExam, [
-//             title,
-//             description,
-//             duration,
-//             subject_id
-//         ], (err2, result) => {
-
-//             if (err2) return res.status(500).json(err2);
-
-//             const examId = result.insertId;
-
-//             const values = finalSelected.map(q => [
-//                 examId,
-//                 q.question_id
-//             ]);
-
-//             const sqlInsert = `
-//                 INSERT INTO exam_questions (exam_id, question_id)
-//                 VALUES ?
-//             `;
-
-//             db.query(sqlInsert, [values], (err3) => {
-//                 if (err3) return res.status(500).json(err3);
-
-//                 res.json({
-//                     message: "Tạo đề thành công",
-//                     examId,
-//                     total: finalSelected.length,
-
-//                     difficulty: {
-//                         easy: finalSelected.filter(q => q.difficulty === "easy").length,
-//                         medium: finalSelected.filter(q => q.difficulty === "medium").length,
-//                         hard: finalSelected.filter(q => q.difficulty === "hard").length
-//                     }
-//                 });
-//             });
-//         });
-//     });
-// };
-
-//PUT
-// exports.putExam = (req, res) => {
-//     const {subject_id, title, description, duration, } = req.body;
-//     const sql = "UPDATE exam SET subject_id=?, title=?, description=?, duration=? WHERE exam_id=?";
-
-//     db.query(sql, [subject_id, title, description, duration, req.params.id], (err) => {
-//         if(err) {
-//             return res.status(500).json(err);
-//         }
-//         res.json({
-//         message: "Cập nhật thành công",
-//         examId: req.params.id
-//         })
-//     })
-// }
 
 // ================= DELETE =================
 exports.deleteExam = (req, res) => {
@@ -414,7 +205,7 @@ exports.createExamBySubject = (req, res) => {
             });
         }
 
-        // random
+        // =========random=============
         const shuffle = arr =>
             arr.sort(() => Math.random() - 0.5);
 
@@ -530,5 +321,50 @@ exports.createExamBySubject = (req, res) => {
                 });
             }
         );
+    });
+};
+
+//Thống kê độ khó
+exports.getQuestionCountByDifficulty = (req, res) => {
+
+    const { subject_id } = req.params;
+
+    const sql = `
+        SELECT 
+            q.difficulty,
+            COUNT(*) AS total
+        FROM questions q
+        JOIN lessons l 
+            ON q.lesson_id = l.lesson_id
+        JOIN chapters c 
+            ON l.chapter_id = c.chapter_id
+        WHERE c.subject_id = ?
+        GROUP BY q.difficulty
+    `;
+
+    db.query(sql, [subject_id], (err, result) => {
+
+        if (err) {
+            console.log("SQL ERROR:", err);
+            return res.status(500).json(err);
+        }
+
+        console.log("RESULT:", result);
+
+        let data = {
+            EASY: 0,
+            MEDIUM: 0,
+            HARD: 0
+        };
+
+        result.forEach(item => {
+
+            const difficulty =
+                item.difficulty?.trim().toUpperCase();
+
+            data[difficulty] = item.total;
+        });
+
+        res.json(data);
     });
 };

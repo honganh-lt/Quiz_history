@@ -55,8 +55,11 @@
 /* Search */
 .search {
     padding: 6px 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #4994f6;
     border-radius: 5px;
+}
+.search:focus{
+    outline: 1px solid #1073f6;
 }
 
 /* Table */
@@ -104,11 +107,24 @@
     color: #fff;
 }
 
+.block{
+    background: #f0f0f0;
+    color: #ff9800;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.block:hover{
+    background: #ff9800;
+    color: white;
+}
 .delete {
     background: #eb5757;
     color: white;
     border: none;
     padding: 5px 10px;
+    margin-right: 5px;
     border-radius: 4px;
     cursor: pointer;
 }

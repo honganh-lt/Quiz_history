@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
   }
 
   // không phải admin
-  if (user.role !== "admin") {
+  if (user.role !== "ADMIN") {
     return <Navigate to="/" />;
   }
 

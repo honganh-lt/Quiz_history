@@ -5,7 +5,8 @@ import "./css/ExamLop.css"
 import { useNavigate, useParams } from 'react-router-dom';
 import { getSubjects } from '../../api/subjectApi';
 import { getExams } from '../../api/examApi';
-import { getHistory, startExam } from '../../api/userExamApi';
+import { getHistory } from '../../api/userExamApi';
+//, startExam
 import Footer from '../Home/Footer';
 
 function ExamLop() {
@@ -71,7 +72,10 @@ function ExamLop() {
     const attemptMap = useMemo(() => {
         const map = {};
 
-        history.forEach(h => {
+        //chỉ lưu lần thi khi nộp bài
+        history
+        .filter(h => h.status === "submitted")
+        .forEach(h => {
             const examId = Number(h.exam_id);
 
             if (!map[examId]) {
@@ -95,8 +99,8 @@ function ExamLop() {
     );
 
     return (
-        <main className="main-exam">
-            <div className="home-ten">
+        <main className="main-exam-ten">
+            <div>
                 <Header />
             </div>
             
@@ -143,14 +147,14 @@ function ExamLop() {
                                                 return;
                                             }
 
-                                            const res = await startExam({ //userExam
-                                                user_id: userId,
-                                                exam_id: exam.exam_id
-                                            });
+                                            // const res = await startExam({ //userExam
+                                            //     user_id: userId,
+                                            //     exam_id: exam.exam_id
+                                            // });
 
-                                            const userExamId = res.data.user_exam_id;
+                                            // const userExamId = res.data.user_exam_id;
 
-                                            navigate(`/exam/${subjectId}/${exam.exam_id}/${userExamId}`);
+                                            navigate(`/exam/${subjectId}/${exam.exam_id}`);
 
                                         } catch (err) {
                                             console.log(err);

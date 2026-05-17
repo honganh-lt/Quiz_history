@@ -25,18 +25,6 @@
     border-radius: 7px;
     /* border: 1px solid #adf394; */
 }
-.review button{
-    margin: 20px auto 0 auto;  /* auto giúp căn giữa ngang */
-    display: block;
-    padding: 10px 18px;
-    border-radius: 6px;
-    border: 1px solid #000;
-    cursor: pointer;
-}
-.review button:hover{
-    border: 1px solid #fa7b21;
-    color: #fff;
-}
 /* Trả lời */
 .review-page-ans {
     margin: 6px 0;
@@ -55,4 +43,19 @@
     background: #f99898;
     color: #5c0c03;
     border: 2px solid #ef4444;
+}
+
+/* Làm lại bài */
+.review button{
+    margin: 20px auto 0 auto;  /* auto giúp căn giữa ngang */
+    display: block;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+.review button:hover{
+    border: 1px solid #fa7b21;
+    color: #fff;
+    background: #fc8835;
 }

@@ -9,7 +9,7 @@ const questionController = require("../controllers/questionController");
 const upload = require("../middleware/upload");
 
 //Tạo API method
-//GET
+//GET (getQuestionByLesson: câu hỏi theo bài ad+us)
 router.get("/", questionController.getQuestion);
 
 //POST

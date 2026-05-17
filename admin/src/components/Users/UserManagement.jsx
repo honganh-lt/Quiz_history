@@ -3,8 +3,9 @@ import './UserManagement.css'
 // import axios from 'axios';
 import EditUserModal from './EditUserModal';
 // import DeleteUserModal from './DeleteUserModal';
-import { deleteUser, getUser } from '../../api/userApi';
+import { deleteUser, getUser, toggleBlockUsers } from '../../api/userApi';
 import AddUserModal from './AddUserModal';
+// import { blockUser } from '../../../../server/controllers/userController';
 // import AddUserModal from './AddUserModal';
 // import { data } from 'react-router-dom';
 // import { getUsers } from '../../api/userApi';
@@ -95,6 +96,7 @@ export const UserManagement = () => {
 
         return (
             normalize(user.username)?.includes(keyword) ||
+            normalize(user.full_name)?.includes(keyword) ||
             normalize(user.email)?.split("@")[0].includes(keyword) || //split: bỏ đuôi: @gmail
             normalize(user.role)?.includes(keyword)
         );
@@ -121,6 +123,19 @@ export const UserManagement = () => {
         );
     };
 
+    //======Hàm block
+    const handleBlock = async (user) => {
+         const message =
+            user.status === "blocked"
+            ? "Mở tài khoản này?"
+            : "Khóa tài khoản này?";
+
+        if(window.confirm(message)) {
+            await toggleBlockUsers(user.user_id);
+
+            fetchData();
+        }
+    }
     //============================Delete========================
         const handleDelete = async (id) => {
     
@@ -168,18 +183,18 @@ export const UserManagement = () => {
                 All
             </button>
             <button 
-                className={`filter ${roleFilter === "admin" ? "active" : ""}`}
+                className={`filter ${roleFilter === "ADMIN" ? "active" : ""}`}
                 onClick={() => {
-                    setRoleFilter("admin");
+                    setRoleFilter("ADMIN");
                     setCurrentPage(1);
                 }}
             >
                 Admin
             </button>
             <button 
-                className={`filter ${roleFilter === "user" ? "active" : ""}`}
+                className={`filter ${roleFilter === "USER" ? "active" : ""}`}
                 onClick={() => {
-                    setRoleFilter("user");
+                    setRoleFilter("USER");
                     setCurrentPage(1);
                 }}
             >
@@ -208,8 +223,10 @@ export const UserManagement = () => {
                     <tr>
                         {/* <th>ID</th> */}
                         <th>Tên tài khoản</th>
+                        <th>Họ và tên</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -241,8 +258,16 @@ export const UserManagement = () => {
                         <tr key={user.user_id}>
                             {/* <td>{user.id}</td> */}
                             <td>{user.username}</td>
+                            <td>{user.full_name}</td>
                             <td>{user.email}</td>
                             <td>{user.role}</td>
+                            <td>
+                                {
+                                    user.status === "blocked"
+                                    ? "Blocked"
+                                    : "Active"
+                                }
+                            </td>
 
                             <td>
                             {/* click edit->setSelectedUser(user);-> setShowEditModal(true);-> mở modal  */}
@@ -265,6 +290,16 @@ export const UserManagement = () => {
                                 >
                                     {/* Delete */}
                                     <i className="fa-solid fa-trash"></i>
+                                </button>
+                                <button
+                                    className='block'
+                                    onClick={() => handleBlock(user)}
+                                >
+                                    {
+                                        user.status === "blocked"
+                                        ? <i class="fa-solid fa-lock-open"></i>
+                                        : <i class="fa-solid fa-lock"></i>
+                                    }
                                 </button>
                             </td>
                         </tr>

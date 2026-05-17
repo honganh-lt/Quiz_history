@@ -1,8 +1,9 @@
-.main-exam{
+.main-exam-ten{
+    /* *(header) */
     
 }
 
-
+/* ==========Khung trên=========== */
 .section-exam{
     text-align: center;
     /* margin-bottom: 30px;
@@ -10,8 +11,12 @@
     margin: 30px 0;
     padding: 20px;
 }
+.text-exam h1{
+    font-size: 3.2em;
+    line-height: 1.1;
+}
 
-/* Khung dưới */
+/* =================Khung dưới============= */
 .down-section-exam{
     display: flex;
     justify-content: center;
@@ -24,7 +29,6 @@
     display: grid;
     gap: 40px;
     grid-template-columns: repeat(2, 1fr);
-    /* justify-items: left; 🔥 thêm dòng này */
     width: 100%;
     max-width: 1000px;
     background-color: #fff;
@@ -46,8 +50,8 @@
 } */
 /* CARD */
 .card-item-exam {
-    width: 500px;     /* 🔥 cố định chiều rộng */
-    height: 150px;    /* 🔥 cố định chiều cao */
+    width: 500px;     /* cố định chiều rộng */
+    height: 150px;    /* cố định chiều cao */
 
     background: #f9fafb;
     border: 1px solid #e5e7eb;

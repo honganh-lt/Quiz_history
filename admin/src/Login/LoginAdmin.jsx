@@ -31,7 +31,7 @@ function LoginAdmin() {
       }
 
       // kiểm tra admin
-      if (result.user.role !== "admin") {
+      if (result.user.role !== "ADMIN") {
         alert("Bạn không phải admin");
         return;
       }

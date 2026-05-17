@@ -19,6 +19,14 @@
     align-items: center;
     gap: 10px;
 }
+.search-ques{
+    padding: 7px;
+    border-radius: 6px;
+    border: 1px solid #4da3ff;
+}
+.search-ques:focus{
+    outline: 1px solid #0c7ef8;
+}
 .add-btn{
     background: #4da3ff;
     border: none;

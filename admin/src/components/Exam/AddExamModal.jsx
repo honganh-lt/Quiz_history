@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createExamBySubject } from '../../api/examApi';
+import { createExamBySubject, getDifficultyCount } from '../../api/examApi';
 import "./css/AddExamModal.css";
 
 const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
@@ -14,14 +14,53 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
     const [medium, setMedium] = useState("");
     const [hard, setHard] = useState("");
 
+    const [difficultyCount, setDifficultyCount] = useState({
+        EASY: 0,
+        MEDIUM: 0,
+        HARD: 0
+    });
+
     // auto set khi mở modal
     useEffect(() => {
         if (isOpen) {
-            setEasy(10);
-            setMedium(6);
-            setHard(4);
+            setEasy("");
+            setMedium("");
+            setHard("");
         }
     }, [isOpen]);
+
+    
+    //Thống kê độ khó
+    //Thống kê độ khó
+    useEffect(() => {
+
+        if (!subjectId) return;
+
+        const fetchCount = async () => {
+
+            try {
+
+                const res = await getDifficultyCount(subjectId);
+
+                console.log("API RESPONSE:", res);
+
+                console.log("DATA:", res.data);
+
+                setDifficultyCount({
+                    EASY: res.data.EASY || 0,
+                    MEDIUM: res.data.MEDIUM || 0,
+                    HARD: res.data.HARD || 0
+                });
+
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchCount();
+
+    }, [subjectId]);
+
 
     if (!isOpen) return null;
 
@@ -41,6 +80,25 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
             alert("Tổng số câu phải lớn hơn 0");
             return;
         }
+
+        if (Number(easy) > difficultyCount.EASY) {
+            return alert(
+                `Chỉ có ${difficultyCount.EASY} câu dễ`
+            );
+        }
+
+        if (Number(medium) > difficultyCount.MEDIUM) {
+            return alert(
+                `Chỉ có ${difficultyCount.MEDIUM} câu trung bình`
+            );
+        }
+
+        if (Number(hard) > difficultyCount.HARD) {
+            return alert(
+                `Chỉ có ${difficultyCount.HARD} câu khó`
+            );
+        }
+
 
         try {
             await createExamBySubject({
@@ -73,6 +131,7 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
         }
     };
 
+
     return (
         <div className="modal-overlay-exam">
             <div className="modal-exam">
@@ -81,9 +140,15 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
                 <h4>Chọn môn học</h4>
                 <select
                     value={subjectId}
-                    onChange={(e) => setSubjectId(e.target.value)}
+                    onChange={(e) => {
+
+                        console.log("SELECT:", e.target.value);
+
+                        setSubjectId(e.target.value);
+                    }}
                 >
                     <option value="">Chọn môn học</option>
+
                     {subjects.map((sub) => (
                         <option
                             key={sub.subject_id}
@@ -120,40 +185,43 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
 
                 <div className="difficulty-inputs">
 
-                    <label>
-                        Dễ: (tối đa: 10)
-                        <input
-                            type="number"
-                            value={easy}
-                            onChange={(e) =>
-                                setEasy(e.target.value)
-                            }
-                        />
-                    </label>
+                        <label>
+                            Dễ (tối đa: {difficultyCount.EASY}) :
 
-                    <label>
-                        Trung bình:
-                        <input
-                            type="number"
-                            value={medium}
-                            onChange={(e) =>
-                                setMedium(e.target.value)
-                            }
-                        />
-                    </label>
+                            <input
+                                type="number"
+                                value={easy}
+                                onChange={(e) =>
+                                    setEasy(e.target.value)
+                                }
+                            />
+                        </label>
 
-                    <label>
-                        Khó:
-                        <input
-                            type="number"
-                            value={hard}
-                            onChange={(e) =>
-                                setHard(e.target.value)
-                            }
-                        />
-                    </label>
+                        <label>
+                            Trung bình (tối đa: {difficultyCount.MEDIUM}) :
 
-                </div>
+                            <input
+                                type="number"
+                                value={medium}
+                                onChange={(e) =>
+                                    setMedium(e.target.value)
+                                }
+                            />
+                        </label>
+
+                        <label>
+                            Khó (tối đa: {difficultyCount.HARD}) :
+
+                            <input
+                                type="number"
+                                value={hard}
+                                onChange={(e) =>
+                                    setHard(e.target.value)
+                                }
+                            />
+                        </label>
+
+                    </div>
 
                 <div className="mb-3">
                     <strong>

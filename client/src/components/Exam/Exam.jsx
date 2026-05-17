@@ -11,7 +11,7 @@ export const Exam = () => {
         <Header/>
         <Exam2/>
         {/* <ExamLop10/> */}
-        <Footer/>
+        {/* <Footer/> */}
     </>
   )
 }

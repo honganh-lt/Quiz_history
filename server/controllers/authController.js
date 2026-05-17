@@ -5,30 +5,116 @@ const crypto = require("crypto");
 
 // ================= REGISTER =================
 exports.register = async (req, res) => {
-    const { username, email, password } = req.body;
 
-    if (!username || !email || !password) {
-        return res.status(400).json({ message: "Thiếu dữ liệu" });
+    const {
+        username,
+        email,
+        password,
+        full_name
+    } = req.body;
+
+    if (
+        !username ||
+        !email ||
+        !password ||
+        !full_name
+    ) {
+        return res.status(400).json({
+            message: "Thiếu dữ liệu"
+        });
+    }
+
+    // username:
+    // - không dấu
+    // - không khoảng trắng
+    // - chỉ chữ thường, số, _
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+
+    if (!usernameRegex.test(username)) {
+        return res.status(400).json({
+            message:
+                "Username chỉ được chứa chữ, số và dấu _ , không dấu và không khoảng trắng"
+        });
     }
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
 
-        const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        // kiểm tra username tồn tại
+        const checkSql = `
+            SELECT user_id
+            FROM users
+            WHERE username = ?
+        `;
 
-        db.query(sql, [username, email, hashedPassword], (err) => {
+        db.query(checkSql, [username], async (err, result) => {
+
             if (err) {
-                if (err.code === "ER_DUP_ENTRY") {
-                    return res.status(400).json({ message: "Username hoặc email đã tồn tại" });
-                }
-                return res.status(500).json({ message: "Lỗi server" });
+                return res.status(500).json({
+                    message: "Server error"
+                });
             }
 
-            res.status(201).json({ message: "Đăng ký thành công" });
+            if (result.length > 0) {
+                return res.status(400).json({
+                    message: "Username đã tồn tại"
+                });
+            }
+
+            const hashedPassword =
+                await bcrypt.hash(password, 10);
+
+            const sql = `
+                INSERT INTO users
+                (
+                    username,
+                    email,
+                    password,
+                    role,
+                    full_name
+                )
+                VALUES (?, ?, ?, ?, ?)
+            `;
+
+            db.query(
+                sql,
+                [
+                    username,
+                    email,
+                    hashedPassword,
+                    "USER",
+                    full_name
+                ],
+                (err) => {
+
+                    if (err) {
+
+                        if (err.code === "ER_DUP_ENTRY") {
+                            return res.status(400).json({
+                                message:
+                                    "Username hoặc email đã tồn tại"
+                            });
+                        }
+
+                        return res.status(500).json({
+                            message: "Lỗi server"
+                        });
+                    }
+
+                    res.status(201).json({
+                        message: "Đăng ký thành công"
+                    });
+
+                }
+            );
+
         });
 
     } catch (error) {
-        res.status(500).json({ message: "Lỗi bcrypt" });
+
+        res.status(500).json({
+            message: "Lỗi server"
+        });
+
     }
 };
 
@@ -45,18 +131,29 @@ exports.login = async (req, res) => {
     db.query(sql, [username], async (err, result) => {
         if (err) return res.status(500).json({ message: "Server error" });
 
+        //Không tìm thấy User
         if (result.length === 0) {
             return res.status(401).json({ message: "Sai tài khoản hoặc mật khẩu" });
         }
 
-        const user = result[0];
+        // const user = result[0];
+         const user = result[0];
 
+        // CHECK BLOCK
+        if(user.status === "blocked"){
+            return res.status(403).json({
+                message: "Tài khoản đã bị khóa"
+            });
+        }
+
+        //Kiểm tra password
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
             return res.status(401).json({ message: "Sai tài khoản hoặc mật khẩu" });
         }
 
+        //Login success....
         //  ACCESS TOKEN(tạo)
         const accessToken = jwt.sign(
             { user_id: user.user_id, role: user.role },
@@ -87,7 +184,8 @@ exports.login = async (req, res) => {
                 user: {
                     user_id: user.user_id,
                     username: user.username,
-                    role: user.role
+                    role: user.role,
+                    full_name: user.full_name
                 }
             });
         });
@@ -131,7 +229,7 @@ exports.refreshToken = (req, res) => {
             const newAccessToken = jwt.sign(
                 { user_id: tokenData.user_id, role: user.role },
                 process.env.JWT_SECRET,
-                { expiresIn: "15m" }
+                { expiresIn: "7d" }
                 //Access token sốn 15 phút -> sau 15p sẽ hết hạn
                 //hết hạn -> trong middleware sẽ trả về "403: TokenExpiredError"
             );

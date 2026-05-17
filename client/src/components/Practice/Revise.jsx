@@ -30,11 +30,11 @@ function Revise() {
     }, []);
     
     return (
-        <main className='main'>
+        <main className='main-revise'>
             {/* <Header/> */}
             {/* Khung trên */}
             <section className='hero-section-revise'>
-                <div className='container'>
+                <div className='container-revise'>
                     {/* Phần chữ */}
                     <div className='body-layout-revise'>
                         <div className='body-text-revise'>
@@ -56,7 +56,7 @@ function Revise() {
                     
                     {subjects.map((item) => (
                         <div className='feature-card-revise' key={item.subject_id}>
-                        {/* <img src={img10} alt="Lịch sử lớp 10" /> */}
+                        {/* <img src="./imghome/1.png" alt="Lịch sử lớp 10" /> */}
                         <h3>{item.subject_name}</h3> 
 
                         {/*Đường dẫn tới trang ../practice/1 -> khi ấn vào "Luyện tập"  */}

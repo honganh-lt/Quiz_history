@@ -6,6 +6,9 @@ exports.checkRole = (role) => {
         if (!req.user) {
             return res.status(401).json({ message: "Chưa xác thực" });
         }
+         // DEBUG
+        console.log("TOKEN ROLE:", req.user.role);
+        console.log("ROLE CAN CHECK:", role);
 
         if (req.user.role !== role) {
             return res.status(403).json({ message: "Không có quyền" });

@@ -1,7 +1,9 @@
 // import { use } from "react";
 // import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/auth";
+// import axiosClient from "../../../api/axiosClient";
+
+const API_URL = "http://localhost:5000/api/auth";
 
 export const login = async (username, password) => {
 
@@ -24,7 +26,7 @@ export const login = async (username, password) => {
     return data;
 };
 
-export const register = async (username, email, password) => {
+export const register = async (username,fulName, email, password) => {
     const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: {
@@ -32,6 +34,7 @@ export const register = async (username, email, password) => {
         },
         body: JSON.stringify({
             username,
+            full_name: fulName,
             email,
             password
         })
@@ -58,3 +61,4 @@ export const logout = async (refresh_token) => {
 
     return response.json();
 };
+

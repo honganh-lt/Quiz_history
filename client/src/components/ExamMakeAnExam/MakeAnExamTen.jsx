@@ -4,36 +4,44 @@ import Header from '../Home/Header';
 // import question from "../../aData/question";
 import "./css/MakeAnExamTen.css"
 import { getExamDetail } from '../../api/examApi';
-import { submitExam } from '../../api/userExamApi';
+import { submitExam, startExam } from '../../api/userExamApi';
+import { getSubjects } from '../../api/subjectApi';
 
 function MakeAnExamTen() {
 
     const navigate = useNavigate();
 
     //Làm đề theo kiểu đã ramdom hết tất cả câu hỏi của các bài
-    const { subjectId, examId, userExamId} = useParams();
+    const { subjectId, examId} = useParams();
 
-    const [subjects]  = useState([]);
+    const [subjects, setSubjects]  = useState([]);
     const [questions, setQuestions] = useState([]);
-    // const [title ,setTitle] = useState("");
+    const [title ,setTitle] = useState("");
     //  HOOK LUÔN Ở TRÊN
     const [selectedAnswers, setSelectedAnswers] = useState({});
+    const [userExamId, setUserExamId] = useState(null)
 
     // const TOTAL_TIME = 15 * 60;
     // const [timeLeft, setTimeLeft] = useState(TOTAL_TIME); -> BỎ
 
     //thay 
-    const [timeLeft, setTimeLeft] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(null);
 
 
-    // Load Data
+    //=====LOAD SUBJECTS +
+    useEffect(() => {
+        getSubjects()
+        .then(res => setSubjects(res.data))
+        .catch(err => console.log(err))
+    }, []);
+    // Load Data chi tiết câu hỏi
     useEffect(() => {
         // getRandomExam(subje)
         getExamDetail(examId) //chi tiết từng câu hỏi đề thi examApi
         .then(res => {
              console.log("DATA:", res.data); // DEBUG
             setQuestions(res.data.questions)
-            // setTitle(res.data.title);
+            setTitle(res.data.title || "Đề thi");
 
             //lấy duration từ DB
             setTimeLeft(Number(res.data.duration || 15 )* 60);
@@ -41,21 +49,110 @@ function MakeAnExamTen() {
         .catch(err => console.log(err));
     }, [examId]);
 
-    // TIMER
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev <= 1) {
-                    clearInterval(timer);
-                    // handleSubmit();
-                    return 0;
-                }
-                return prev - 1;
-            });
-        }, 1000);
-         return () => clearInterval(timer);
-    }, []);
+    //=============Subject Find===========
+    // const 
+     // ví dụ trong nút nộp bài (sửa submit trong trang làm bài)
+   const handleSubmit = async (isAutoSubmit = false) => {
 
+        try {
+
+            // CONFIRM KHI BẤM NỘP
+            if (!isAutoSubmit) {
+
+                const confirmSubmit = window.confirm(
+                    "Bạn có chắc muốn nộp bài không?"
+                );
+
+                if (!confirmSubmit) return;
+            }
+
+            // CHƯA LÀM CÂU NÀO
+            if (!userExamId) {
+
+                alert("Bạn chưa làm câu nào");
+
+                return;
+            }
+
+            // FORMAT ANSWERS
+            const answers = Object.keys(selectedAnswers).map(qid => ({
+                question_id: Number(qid),
+                answer_id: selectedAnswers[qid]
+            }));
+
+            // SUBMIT
+            const res = await submitExam({
+                user_exam_id: userExamId,
+                answers
+            });
+
+            // CHUYỂN TRANG KẾT QUẢ
+            navigate(`/result/${userExamId}`, {
+                state: res.data
+            });
+
+        } catch (err) {
+
+            console.log(err);
+
+            alert("Có lỗi khi nộp bài");
+        }
+    };
+
+    // TIMER //khi thời gian về 0 thì true tự động nộp bài(isAutoSubmit = true)
+    useEffect(() => {
+
+        // chưa load thời gian
+        if (timeLeft === null) return;
+
+        // hết giờ
+        if (timeLeft <= 0) {
+
+            if (userExamId) {
+                handleSubmit(true);
+            }
+
+            return;
+        }
+
+        // đếm ngược
+        const timer = setTimeout(() => {
+            setTimeLeft(prev => prev - 1);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+
+    }, [timeLeft, userExamId]);
+
+    // cảnh báo thoát trang -> reload, đóng tab, thoát web
+    useEffect(() => {
+
+        const handleBeforeUnload = (e) => {
+
+            // ĐÃ BẮT ĐẦU LÀM BÀI
+            if (userExamId) {
+
+                e.preventDefault();
+
+                e.returnValue = "";
+            }
+        };
+
+        window.addEventListener(
+            "beforeunload",
+            handleBeforeUnload
+        );
+
+        return () => {
+
+            window.removeEventListener(
+                "beforeunload",
+                handleBeforeUnload
+            );
+        };
+
+    }, [userExamId]);
+    
     // LẤY DATA SAU HOOK
     // const lessonData = question[String(examId)];
 
@@ -66,12 +163,38 @@ function MakeAnExamTen() {
     // const { title, questionExam } = lessonData;
 
     //  HANDLE Chon đáp án
-    const handleSelectAnswer = (questionId, answerId) => {
+    const handleSelectAnswer = async (questionId, answerId) => {
+
+    try {
+
+        let currentUserExamId = userExamId;
+
+        // Chưa có bài thi -> tạo lần đầu
+        if (!currentUserExamId) {
+
+            const user = JSON.parse(localStorage.getItem("user"));
+
+            const res = await startExam({
+                user_id: user.user_id,
+                exam_id: examId
+            });
+
+            currentUserExamId = res.data.user_exam_id;
+
+            setUserExamId(currentUserExamId);
+        }
+
+        // lưu đáp án
         setSelectedAnswers((prev) => ({
             ...prev,
             [questionId]: answerId
         }));
-    };
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+  
 
     //Nộp bài
     // const handleSubmit = () => {
@@ -96,50 +219,28 @@ function MakeAnExamTen() {
     if (!questions.length) {
         return <p>Đang tải đề...</p>;
     }
-
-    // ví dụ trong nút nộp bài (sửa submit trong trang làm bài)
-   const handleSubmit = async () => {
-    try {
-
-        const answers = Object.keys(selectedAnswers).map(qid => ({
-            question_id: Number(qid),
-            answer_id: selectedAnswers[qid]
-        }));
-
-        const res = await submitExam({ //userExam
-            user_exam_id: userExamId,
-            answers
-        });
-
-        navigate(`/result/${userExamId}`, {
-            state: res.data
-        });
-
-    } catch (err) {
-        console.log(err);
-    }
-};
-
+   
     return (
-        <main className="main-examTen">
+        <main className="main-examMake">
             <Header />
 
-            <div className="exam-layout">
+            <div className="exam-layout-make">
 
                 {/* LEFT */}
-                <aside className="exam-left">
+                <aside className="exam-left-sidebar">
                     <h3>Trắc nghiệm {currentSubject?.subject_name}</h3>
-                    {/* <h4>{title}</h4> */}
-                    <h5>Tổng số câu: {questions.length}</h5>
+                    <h4>{title}</h4>
+                    {/* <h5>{examId.description}</h5> */}
+                    {/* <h5>Tổng số câu: {questions.length}</h5> */}
 
                     <p>
                         Thời gian:
                         <strong style={{ color: timeLeft <= 60 ? "red" : "" }}>
-                            {formatTime(timeLeft)}
+                            {timeLeft !== null ? formatTime(timeLeft) : "00:00"}
                         </strong>
                     </p>
 
-                    <div className="question-status">
+                    <div className="question-status-exam">
                         {questions.map((q, index) => (
                             <span
                                 key={q.question_id}
@@ -156,21 +257,21 @@ function MakeAnExamTen() {
                 </aside>
 
                 {/* RIGHT */}
-                <section className="exam-right">
+                <section className="exam-right-content">
                     <h1>Bài làm</h1>
 
                     {questions.map((q, index) => (
-                        <div key={q.question_id} className="question-card">
+                        <div key={q.question_id} className="question-card-exam">
                             <h4>Câu {index + 1}: {q.content}</h4>
 
-                            <div className="answers">
+                            <div className="answers-exam">
                                 {q.answers.map((ans) => (
                                     <button
                                         key={ans.answer_id}
                                         className={
                                             selectedAnswers[q.question_id] === ans.answer_id
-                                                ? "answer-btn selected"
-                                                : "answer-btn"
+                                                ? "answer-exam-btn selected"
+                                                : "answer-exam-btn"
                                         }
                                         onClick={() => handleSelectAnswer(q.question_id, ans.answer_id)}
                                     >
@@ -182,9 +283,17 @@ function MakeAnExamTen() {
                     ))}
 
                     <div className="submit-exam">
+
+                        {/* <button
+                            className="btn-exit-exam"
+                            onClick={handleExit}
+                        >
+                            Thoát
+                        </button> */}
                         <button 
+                            type='button'
                             className="btn-practice-examTen" 
-                            onClick={handleSubmit}
+                            onClick={() => handleSubmit(false)}
                             // onClick={() => {
                             //     localStorage.setItem(
                             //         "selectedAnswers",

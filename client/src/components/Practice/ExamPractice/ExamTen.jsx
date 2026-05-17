@@ -1,10 +1,13 @@
-import './css/examTen.css'
+import './css/examTen.css';
 
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 
 import { getQuestionsByLesson } from '../../../api/questionApi';
+import { getSubjects } from '../../../api/subjectApi';
 import Header from '../../Home/Header';
+import { getChapters } from '../../../api/chapterApi';
+import { getLesson } from '../../../api/lessonApi';
 
 function ExamTen() {
 
@@ -12,20 +15,40 @@ function ExamTen() {
     const { lessonId } = useParams();
 
     // ================= STATE =================
+    const [subjects, setSubjects] = useState([]);
+    const [chapters, setChapters] = useState([]);
+    const [lessons, setLessons] =  useState([]);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // lưu đáp án user chọn
     const [selectedAnswers, setSelectedAnswers] = useState({});
 
+    // ================= LOAD SUBJECTS + CHAPTER + LESSON =================
+    useEffect(() => {
+        getSubjects()
+            .then(res => setSubjects(res.data))
+            .catch(err => console.log(err));
+        
+        getChapters()
+        .then(res => setChapters(res.data))
+        .catch(err => console.log(err))
+
+        getLesson()
+        .then(res => setLessons(res.data))
+        .catch(err => console.log(err))
+    }, []);
+
+    //=========LOAD Chapter + Lesson=====
+
+
     // ================= LOAD QUESTIONS =================
     useEffect(() => {
-
         setLoading(true);
 
         getQuestionsByLesson(lessonId)
             .then(res => {
-                setQuestions(res.data);
+                setQuestions(res.data || []);
                 setLoading(false);
             })
             .catch(err => {
@@ -35,12 +58,57 @@ function ExamTen() {
 
     }, [lessonId]);
 
+    //lưu vào localStorage theo user_id
+    const user = JSON.parse(localStorage.getItem("user") || "{}")
+    const userId = user?.user_id;
+
+    const storageKey = `doneLessons_${userId}`;
+
+    useEffect(() => {
+
+        // nếu làm hết câu thì lưu bài đã hoàn thành
+        if (
+            questions.length > 0 &&
+            Object.keys(selectedAnswers).length === questions.length
+        ) {
+
+            const oldDone = JSON.parse(
+                localStorage.getItem(storageKey)
+            ) || [];
+
+            // tránh lưu trùng
+            if (!oldDone.includes(Number(lessonId))) {
+
+                const updated = [
+                    ...oldDone,
+                    Number(lessonId)
+                ];
+
+                localStorage.setItem(
+                    storageKey,
+                    JSON.stringify(updated)
+                );
+            }
+        }
+
+    }, [selectedAnswers, questions, lessonId, storageKey]);
+
+
+    // ================= SUBJECT FIND =================
+    const lesson = lessons?.find(
+        l => String(l.lesson_id) === String(lessonId)
+    );
+
+    const chapter = chapters?.find(
+        c => String(c.chapter_id) === String(lesson?.chapter_id)
+    );
+
+    const subject = subjects?.find(
+        s => String(s.subject_id) === String(chapter?.subject_id)
+    );
+
     // ================= CHỌN ĐÁP ÁN =================
     const handleSelectAnswer = (questionId, answer) => {
-
-        // không cho chọn lại
-        if (selectedAnswers[questionId]) return;
-
         setSelectedAnswers(prev => ({
             ...prev,
             [questionId]: answer
@@ -52,8 +120,8 @@ function ExamTen() {
         return <p>Đang tải đề...</p>;
     }
 
-    // ================= KHÔNG CÓ CÂU HỎI =================
-    if (questions.length === 0) {
+    // ================= EMPTY =================
+    if (!questions.length) {
         return <p>Không có câu hỏi cho bài này</p>;
     }
 
@@ -65,8 +133,7 @@ function ExamTen() {
         );
 
         return (
-            selectedAnswers[q.question_id] ===
-            correctAnswer?.content
+            selectedAnswers[q.question_id] === correctAnswer?.content
         );
 
     }).length;
@@ -81,21 +148,23 @@ function ExamTen() {
                 {/* ================= LEFT ================= */}
                 <aside className="exam-left">
 
-                    <h3>Trắc nghiệm</h3>
+                    <h3>Trắc nghiệm {subject?.subject_name || ""}</h3>
 
-                    <h5>Tổng số câu: {questions.length}</h5>
+                    <h4> Chương {chapter?.chapter_id || ""}: { chapter?.chapter_name || ""}</h4>
+                    <h5>Bài {lesson?.lesson_id || ""}: {lesson?.lesson_name || ""}</h5>
 
-                    <h5>
+                    {/* <p>Tổng số câu: {questions.length}</p> */}
+
+                    <p>
                         Số câu đúng:
                         <span style={{ color: "green", marginLeft: 6 }}>
-                            {correctCount}
+                            {correctCount} / {questions.length}
                         </span>
-                    </h5>
+                    </p>
 
                     <div className="question-status">
 
                         {questions.map((q, index) => (
-
                             <span
                                 key={q.question_id}
                                 className={
@@ -106,7 +175,6 @@ function ExamTen() {
                             >
                                 {index + 1}
                             </span>
-
                         ))}
 
                     </div>
@@ -118,74 +186,57 @@ function ExamTen() {
 
                     <h1>Bài làm</h1>
 
-                    {questions.map((q, index) => (
+                    {questions.map((q, index) => {
 
-                        <div
-                            key={q.question_id}
-                            className="question-card"
-                        >
+                        const selected = selectedAnswers[q.question_id];
 
-                            <h4>
-                                Câu {index + 1}: {q.content}
-                            </h4>
+                        return (
+                            <div
+                                key={q.question_id}
+                                className="question-card"
+                            >
 
-                            <div className="answers">
+                                <h4>
+                                    Câu {index + 1}: {q.content}
+                                </h4>
 
-                                {q.answers.map((ans) => {
+                                <div className="answers-practice">
 
-                                    const selected =
-                                        selectedAnswers[q.question_id];
+                                    {q.answers?.map(ans => {
 
-                                    let className = "answer-btn";
+                                        let className = "answer-practice-btn";
 
-                                    // user chọn đáp án này
-                                    if (selected === ans.content) {
+                                        const isCorrect = Number(ans.is_correct) === 1;
 
-                                        // đúng
-                                        if (Number(ans.is_correct) === 1) {
-                                            className += " correct";
+                                        if (selected === ans.content) {
+                                            className += isCorrect ? " correct" : " wrong";
                                         }
 
-                                        // sai
-                                        else {
-                                            className += " wrong";
+                                        if (selected && isCorrect) {
+                                            className += " show-correct";
                                         }
-                                    }
 
-                                    // hiện đáp án đúng
-                                    if (
-                                        selected &&
-                                        Number(ans.is_correct) === 1
-                                    ) {
-                                        className += " show-correct";
-                                    }
+                                        return (
+                                            <button
+                                                key={ans.answer_id}
+                                                className={className}
+                                                onClick={() =>
+                                                    handleSelectAnswer(
+                                                        q.question_id,
+                                                        ans.content
+                                                    )
+                                                }
+                                            >
+                                                {ans.content}
+                                            </button>
+                                        );
+                                    })}
 
-                                    return (
-
-                                        <button
-                                            key={ans.answer_id}
-                                            className={className}
-                                            // disabled={selected}
-                                            onClick={() =>
-                                                handleSelectAnswer(
-                                                    q.question_id,
-                                                    ans.content
-                                                )
-                                            }
-                                        >
-                                            {ans.content}
-                                        </button>
-
-                                    );
-
-                                })}
+                                </div>
 
                             </div>
-
-                        </div>
-
-                    ))}
-                    <div><h2></h2></div>
+                        );
+                    })}
 
                 </section>
 

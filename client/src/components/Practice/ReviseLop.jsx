@@ -8,124 +8,172 @@ import { getLesson } from '../../api/lessonApi';
 import { getSubjects } from '../../api/subjectApi';
 import Footer from '../Home/Footer';
 
-
-
 function ReviseLop() {
 
     const navigate = useNavigate();
 
-    //sửa reviseLop10 -> thành dynamic
-
-    const {subjectId} = useParams(); 
+    const { subjectId } = useParams();
 
     const [subjects, setSubjects] = useState([]);
     const [chapters, setChapters] = useState([]);
     const [lessons, setLessons] = useState([]);
 
+    const [doneLessons, setDoneLessons] = useState([]);
 
-
-
-    //load chapters + lessons
+    // ================= LOAD DATA =================
     useEffect(() => {
+
         getSubjects()
-        .then(res => setSubjects(res.data))
-        .catch(err => console.error(err));
+            .then(res => setSubjects(res.data))
+            .catch(err => console.error(err));
 
         getChapters()
-        .then(res => setChapters(res.data))
-        .catch(err => console.error(err));
+            .then(res => setChapters(res.data))
+            .catch(err => console.error(err));
 
         getLesson()
-        .then(res => setLessons(res.data))
-        .catch(err => console.error(err));
+            .then(res => setLessons(res.data))
+            .catch(err => console.error(err));
+
     }, []);
 
-    //tìm subject hiện tại 
+    // ================= LẤY USER =================
+    const user = JSON.parse(
+        localStorage.getItem("user") || "{}"
+    );
+
+    const userId = user?.user_id;
+
+    const storageKey = `doneLessons_${userId}`;
+
+    // ================= LOAD DONE LESSON =================
+    useEffect(() => {
+
+        const saved = JSON.parse(
+            localStorage.getItem(storageKey)
+        ) || [];
+
+        setDoneLessons(saved);
+
+    }, [storageKey]);
+
+    // ================= SUBJECT HIỆN TẠI =================
     const currentSubject = subjects.find(
         s => Number(s.subject_id) === Number(subjectId)
-    )
-    // lọc chương theo môn
+    );
+
+    // ================= FILTER CHAPTER =================
     const filteredChapters = chapters.filter(
         c => Number(c.subject_id) === Number(subjectId)
     );
 
     return (
-        <main className='main'>
-            <div className="home-ten">
+        <main className='main-ten'>
+
+            <div>
                 <Header />
             </div>
-            {/* Khung trên */}
+
+            {/* TOP */}
             <section className='hero-section-ten'>
+
                 <div className='container-ten'>
-                    {/* Phần chữ */}
-                    {/* <div className="back-revise">
-                        <a href="/practice">Quay lại</a>
-                    </div> */}
+
                     <div className='body-layout-ten'>
+
                         <div className='body-text-ten'>
                             <h1>{currentSubject?.subject_name}</h1>
                         </div>
 
-                        {/* Tìm kiiếm */}
-                        {/* <div className="revise-search">
-                            <input type="text" placeholder="Tìm kiếm..." />
-                        </div> */}
                     </div>
+
                 </div>
+
             </section>
 
-            {/* Khung dưới */}
+            {/* LIST */}
             <section className='feature-section-ten'>
+
                 <div className="feature-list-ten">
-                    {/* Chương  */}
-                   {filteredChapters.map((chapter) => (
-                         <div className="card-list" key={chapter.chapter_id}>
-                        <h2>Chương {chapter.chapter_number}: {chapter.chapter_name}</h2>
-                        <div className="card-list-ten">
-                           {lessons
-                            .filter(l => Number(l.chapter_id) === Number(chapter.chapter_id))
-                            .map((lesson) => (
-                                 <div className="card-ten-item" key={lesson.lesson_id}>
-                                <h3>Trắc nghiệm</h3>
-                                <h4> Bài {lesson.lesson_number} - {lesson.lesson_name}</h4>
-                                {/* trang làm đề */}
-                                <button className="btn-practice"
-                                //vì practice không lưu vào database nên không cần verifyToken BE
-                                    onClick={() => {
-                                        const user = JSON.parse(localStorage.getItem("user"));
 
-                                        if (!user) {
+                    {filteredChapters.map((chapter) => (
 
-                                            alert("Bạn chưa đăng nhập");
+                        <div
+                            className="card-list"
+                            key={chapter.chapter_id}
+                        >
 
-                                            navigate("/login");
+                            <h2>
+                                Chương {chapter.chapter_number}: {chapter.chapter_name}
+                            </h2>
 
-                                            return;
-                                        }
+                            <div className="card-list-ten">
 
-                                        navigate(`/practice/${subjectId}/${lesson.lesson_id}`);
-                                    }}
-                                >Làm đề</button>
+                                {lessons
+                                    .filter(
+                                        l => Number(l.chapter_id) === Number(chapter.chapter_id)
+                                    )
+                                    .map((lesson) => (
+
+                                        <div
+                                            key={lesson.lesson_id}
+                                            className={`card-ten-item ${
+                                                doneLessons.includes(Number(lesson.lesson_id))
+                                                    ? "done"
+                                                    : ""
+                                            }`}
+                                        >
+
+                                            <h3>Trắc nghiệm</h3>
+
+                                            <h4>
+                                                Bài {lesson.lesson_number} - {lesson.lesson_name}
+                                            </h4>
+
+                                            <button
+                                                className="btn-practice"
+                                                onClick={() => {
+
+                                                    const user = JSON.parse(
+                                                        localStorage.getItem("user")
+                                                    );
+
+                                                    if (!user) {
+
+                                                        alert("Bạn chưa đăng nhập");
+
+                                                        navigate("/login");
+
+                                                        return;
+                                                    }
+
+                                                    navigate(
+                                                        `/practice/${subjectId}/${lesson.lesson_id}`
+                                                    );
+
+                                                }}
+                                            >
+                                                Làm đề
+                                            </button>
+
+                                        </div>
+
+                                    ))}
+
                             </div>
-                            ))}
-                            
+
                         </div>
-                    </div>
-                   ))}
 
-                    {/* Chương 2 */}
-                    
-
-                    {/* Chương 3 */}
-                    
+                    ))}
 
                 </div>
-            </section>
-            <Footer/>
-            {/* </div> */}
-        </main>
 
-    )
+            </section>
+
+            {/* <Footer /> */}
+
+        </main>
+    );
 }
 
 export default ReviseLop;

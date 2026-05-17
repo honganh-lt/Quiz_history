@@ -30,6 +30,7 @@ export const startExam = (data) => {
 //         }
 //     )
 // };
+//nộp bài
 export const submitExam = (data) => {
     return axiosClient.post(`${BASE_URL}/submit`, data);
 };
@@ -49,20 +50,10 @@ export const submitExam = (data) => {
 export const getHistory = (userId) => {
     return axiosClient.get(`${BASE_URL}/history/${userId}`);
 };
-// export const reviewExam = (id) => {
-//     const token = localStorage.getItem("access_token")
 
-//     return axiosClient.get(`${BASE_URL}/review/${id}`,
-//         {
-//             headers: {
-//                 Authorization: `Bearer ${token}`
-//             }
-//         }
-//     )
-// };
 export const reviewExam = (id) => {
     return axiosClient.get(`${BASE_URL}/review/${id}`);
 };
-//lấy đề thi
+//lấy đề thi time bd-kt
 export const getAllUserExams = () => axiosClient.get(`${BASE_URL}`);
 // export const getExamAttempts = () => axios.get(`${BASE_URL}`);

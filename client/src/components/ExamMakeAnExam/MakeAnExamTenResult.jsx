@@ -22,7 +22,7 @@ function MakeAnExamTenResult() {
     }
 
     return (
-        <div className="result">
+        <div className="result"> 
             <div className="container-result">
                 {/* Khung trên */}
                 <Header/>

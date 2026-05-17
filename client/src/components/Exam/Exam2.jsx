@@ -17,9 +17,8 @@ export const Exam2 = () => {
         .catch (err => console.log(err));
     }, []);
 
-
   return (
-    <main className='main'>
+    <main className='main-exam'>
         {/* Khung trên */}
             <section className='hero-section-exam'>
                 <div className='container-exam'>

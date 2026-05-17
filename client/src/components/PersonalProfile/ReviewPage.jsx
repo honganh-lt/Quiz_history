@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { reviewExam, startExam } from "../../api/userExamApi";
+import { reviewExam } from "../../api/userExamApi";
 import Header from "../Home/Header";
 import "./css/Review.css"
 
@@ -65,14 +65,15 @@ function ReviewPage() {
             return;
         }
 
-        const res = await startExam({
-            user_id: user.user_id,
-            exam_id: examInfo.exam_id
-        });
+        // const res = await startExam({
+        //     user_id: user.user_id,
+        //     exam_id: examInfo.exam_id
+        // });
 
-        const newUserExamId = res.data.user_exam_id;
+        // const newUserExamId = res.data.user_exam_id;
 
-        navigate(`/exam/${examInfo.subject_id}/${examInfo.exam_id}/${newUserExamId}`);
+        // navigate(`/exam/${examInfo.subject_id}`); -> quay lại trang hãy chọn đề
+        navigate(`/exam/${examInfo.subject_id}/${examInfo.exam_id}`); //trang làm bài thi
     };
 
     return (

@@ -1,4 +1,8 @@
 /* Toàn bộ */
+.main-ten{
+    width: 100%;
+    background: #fff;
+}
 
 /* Khung trên */
 .hero-section-ten{
@@ -63,6 +67,7 @@
     transform: scale(1.03);
 }
 
+
 /* Khung dưới */
 .feature-section-ten {
     width: 80%;
@@ -106,4 +111,9 @@
     flex-direction: column;
     transition: all 0.25s ease;
     background: #fafafa;
+}
+
+.done{
+    background: #fff3e0;
+    border: 1px solid #ffcc80;
 }

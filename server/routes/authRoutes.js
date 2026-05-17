@@ -11,25 +11,25 @@ router.post("/login", authController.login);
 
 
 //==========USER (user + admin login cũng vào được)==========
-router.get("/profile", 
-        verifyToken, 
-        checkRoles(["user", "admin"]),
-        (req, res) => {
-    res.json({message: "OK", user: req.user});
-})
-//ví dụ API cho client
-router.get("/user-data",
-        verifyToken,
-        checkRoles(["user", "admin"]),
-        (req, res) => {
-        res.json({ message: "Dữ liệu user" });
-    }
-)
+// router.get("/profile", 
+//         verifyToken, 
+//         checkRoles(["USER", "ADMIN"]),
+//         (req, res) => {
+//     res.json({message: "OK", user: req.user});
+// })
+// //ví dụ API cho client
+// router.get("/user-data",
+//         verifyToken,
+//         checkRoles(["USER", "ADMIN"]),
+//         (req, res) => {
+//         res.json({ message: "Dữ liệu user" });
+//     }
+// )
 //========== ADMIN ONLY ==========
 router.get(
     "/admin",
     verifyToken,
-    checkRole("admin"),
+    checkRole("ADMIN"),
     (req, res) => {
         res.json({ message: "Chào admin " });
     }

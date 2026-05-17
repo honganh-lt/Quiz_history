@@ -3,7 +3,7 @@ import "./css/ManagementExam.css"
 import {  getExams } from '../../api/examApi';
 import { getSubjects } from '../../api/subjectApi';
 import AddExamModal from './AddExamModal';
-import EditExamModal from './EditExamModal';
+// import EditExamModal from './EditExamModal';
 
 export const ManagementExam = () => {
 

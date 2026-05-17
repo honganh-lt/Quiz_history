@@ -25,6 +25,9 @@ export const OnProfile = () => {
                 {/* <p><strong>Email: {user.email} </strong></p> */}
                 <p><strong>Vai trò: {user.role} </strong></p>
             </div>
+            <div className='change-password'>
+              
+            </div>
         </div>
     </div>
   )

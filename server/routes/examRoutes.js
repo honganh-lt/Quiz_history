@@ -10,6 +10,12 @@ const examController = require("../controllers/examController");
 //GET=========Lấy danh sách đề thi============
 router.get("/", examController.getExams);
 
+// thống kê độ khó
+router.get(
+    "/difficulty-count/:subject_id",
+    examController.getQuestionCountByDifficulty
+);
+
 //Lấy chi tiết đề == chưa hiểu.
 router.get("/:id", examController.getExamDetail);
 

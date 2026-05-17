@@ -1,0 +1,81 @@
+.register-page{
+    display: flex;
+    /* căn giữa ngang */
+    justify-content: center; 
+    /* căn giữa dọc */
+    align-items: center;
+    /* background-color: white; */
+}
+/* .auth-container-register {
+    width: 350px;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f7b731;
+} */
+.auth-container-register {
+    width: 350px;
+    margin: 100px auto;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #f7b731;
+}
+
+.auth-container-register h2 {
+    margin-bottom: 15px;
+}
+
+.auth-container-register input {
+    padding: 8px;
+
+}
+
+.auth-container-register button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.auth-container-register button:hover {
+    background-color: #ee5f0c;
+    color: #fff;
+}
+.auth-container-register label{
+    display: flex;
+    /* position: relative; */
+
+}
+.auth-container-register label p{
+    color: gray;
+    font-size: 13px;
+}
+.required{
+    color: red;
+    margin-left: 4px;
+}
+
+.password-wrapper{
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input{
+    width: 100%;
+    padding-right: 45px;
+}
+
+.eye-icon{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+}

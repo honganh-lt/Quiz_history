@@ -32,6 +32,7 @@ function Header() {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("user");
+        
 
         navigate("/");
     } catch (error) {
@@ -58,7 +59,9 @@ function Header() {
                 <div className="header-inner">
 
                     {/* Logo */}
-                    <div className="logo"></div>
+                    <div className="logo">
+                        {/* <h1>Lịch sử</h1> */}
+                    </div>
 
                     {/* Menu */}
                     <nav className="menu">
@@ -81,14 +84,14 @@ function Header() {
                                         // setOpenExamMenu(false); // tắt luyện thi
                                     }}
                                 >
-                                    <span>{user.username}</span>
+                                    <span>{user.full_name}</span>
                                     <i className="fa-solid fa-circle-user user-icon"></i>
                                 </div>
 
                                 {openUserMenu && (
                                     <div className="dropdown">
                                         <div onClick={() => navigate("/profile")}>
-                                            Hồ sơ
+                                            Thông tin cá nhân
                                         </div>
                                         <div onClick={handleLogout}>
                                             Đăng xuất

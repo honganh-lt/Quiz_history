@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import "./login.css";
+import "./css/login.css";
 import { login } from "../../api/authApi";
 import { useRef, useState } from "react";
 
@@ -39,6 +39,8 @@ const Login = () => {
 
             //  LƯU USER
             localStorage.setItem("user", JSON.stringify(res.user));
+
+            // const user = JSON.parse(localStorage.getItem("user"));
 
             //chuyển trang
             navigate("/");
@@ -83,6 +85,10 @@ const Login = () => {
                     }
                 }}
                  />
+
+                 <Link to="/forgot-password">
+                 Quên mật khẩu?
+                 </Link>
 
                 
                 <button className="btn-practice"

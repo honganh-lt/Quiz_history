@@ -7,6 +7,7 @@ import { updateUsers } from '../../api/userApi';
 export const EditUserModal = ({user, onClose, updateUser}) => {
 
     const [username, setUsername] = useState(user.username);
+    const [fullName, setFullName] = useState(user.full_name);
     const [email, setEmail] = useState(user.email);
     const [role, setRole] = useState(user.role);
 
@@ -16,6 +17,7 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
         try {
             await updateUsers(user.user_id, {
                 username,
+                full_name: fullName,
                 email,
                 role
             });
@@ -23,6 +25,7 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
             updateUser({
                 user_id: user.user_id,
                 username,
+                full_name: fullName,
                 email,
                 role
             });
@@ -48,6 +51,12 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <input 
+                    type='text'
+                    // placeholder='Username'
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                />
+                <input 
                     type='email'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -56,8 +65,8 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                 >
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
+                    <option value="USER">USER</option>
+                    <option value="ADMIN">ADMIN</option>
                 </select>
 
                 <div className="modal-actions">

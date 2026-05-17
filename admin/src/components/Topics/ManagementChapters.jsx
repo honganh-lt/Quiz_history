@@ -14,6 +14,10 @@ export const ManagementChapters = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [subjects, setSubjects] = useState([]);
 
+  //==========Search========
+  // const [search, setSearch] = useState("");
+
+
   //Edit 
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedChap, setSelectedChap] = useState(null); //lí do?
@@ -62,6 +66,18 @@ export const ManagementChapters = () => {
     return subject ? subject.subject_name : " "
   };
 
+  //==========Search + Subject + Chapter======
+  // const normalize = (str) => 
+  //   String(str || "")
+  //     ?.normalize("NFD") //tách chữ và dấu ra riêng: toán = t+o+a+n
+  //     .replace(/[\u0300-\u036f]/g, "") //xóa toàn bộ dấu tiếng việt
+  //     .toLowerCase(); //chuyển thành chữ thường 
+  //     //-> "Toán" -> "toan" nên khi tìm "toan, TOÁN, Toán" giống nhau
+
+  // const filteredChap = chapters.filter((c) => 
+  //   normalize(c.subject_id).includes(normalize(search)) ||
+  //   normalize(c.chapter_name).includes(normalize(search))
+  // );
   //Edit
   const updateChap = (updatedChapter) => {
     setChapters(prevChap => 
@@ -89,9 +105,13 @@ export const ManagementChapters = () => {
 
   //slice từ danh sách chapters
   const currentChapters =chapters.slice(indexOfFirstChap, indexOfLastChap);
+  // const currentChapters =filteredChap.slice(indexOfFirstChap, indexOfLastChap);
+
 
   //tính tổng số trang
   const totalPages = Math.ceil(chapters.length / chaptersPerPage);
+  // const totalPages = Math.ceil(filteredChap.length / chaptersPerPage);
+
 
 
   return (
@@ -99,10 +119,21 @@ export const ManagementChapters = () => {
         {/* Sidebar */}
       <div className='top-bar'>
             <h2 className='title'>Quản lý chương</h2>
-            <button 
-              className='add-btn'
-              onClick={() => setIsOpen(true)}
-            >+</button>
+            <div className="action-chap">
+                {/* <input 
+                  type="text" 
+                  className='search-chap'
+                  placeholder='Search...'
+                  value={search}
+                  onChange={(e) => {setSearch(e.target.value)
+                    setCurrentPage(1);
+                  }}
+                /> */}
+                <button 
+                  className='add-btn'
+                  onClick={() => setIsOpen(true)}
+                >+</button>
+            </div>
         </div>
 
       {/* Main content */}

@@ -19,6 +19,9 @@ export const ManageQuestions = () => {
   const [subjects, setSubjects] = useState([]);
   const [lessons, setLessons] = useState([]);
 
+  //=====Search=====
+  const [search, setSearch] = useState("");
+
   //==========Edit===============
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null); //Lí do?
@@ -65,7 +68,27 @@ const getCorrectAnswer = (answers) => {
   return i !== -1 ? String.fromCharCode(65 + i) : "";
 };
 
-  //ADD - chapter
+  //=========Search=========
+  const normalize = (str) => 
+    str 
+      ?.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase(); //chữ in thường
+      
+  const filteredQuestion = questions.filter((q) => 
+    normalize(q.subject_name).includes(normalize(search)) ||
+    normalize(q.content).includes(normalize(search))
+  );
+
+  //ADD - subject, Chapter, lesson
+  const fetchSubjects = async () => {
+    try {
+      const data = await getSubjects();
+      setSubjects(data);
+    } catch (error){
+      console.error(error);
+    }
+  }
   const fetchChapters = async () => {
     try {
       const data = await getChapters();
@@ -73,14 +96,6 @@ const getCorrectAnswer = (answers) => {
     } catch (error) {
       console.error(error);
       
-    }
-  }
-  const fetchSubjects = async () => {
-    try {
-      const data = await getSubjects();
-      setSubjects(data);
-    } catch (error){
-      console.error(error);
     }
   }
   const fetchLessons = async (chapterId) => {
@@ -158,8 +173,8 @@ const getCorrectAnswer = (answers) => {
     const indexOfFirstChap = indexOfLastChap - questionsPerPage;
 
     //slice từ danh sách chapters
-    const currentQuestion = questions.slice(indexOfFirstChap, indexOfLastChap);
-    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    const currentQuestion = filteredQuestion.slice(indexOfFirstChap, indexOfLastChap);
+    const totalPages = Math.ceil(filteredQuestion.length / questionsPerPage);
 
   return (
     <div className='admin-container'>
@@ -168,6 +183,16 @@ const getCorrectAnswer = (answers) => {
         <h2>Quản lý câu hỏi</h2>
 
         <div className="action-buttons">
+
+            <input 
+              type="text"
+              className='search-ques'
+              placeholder='Search...'
+              value={search}
+              onChange={(e) => {setSearch(e.target.value);
+                setCurrentPage(1); //tìm ở trang 1
+              }} 
+            />
             <button 
                 className='add-btn'
                 onClick={() => setIsOpen(true)}

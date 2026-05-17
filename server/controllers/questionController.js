@@ -113,6 +113,7 @@ exports.importQuestions = async (req, res) => {
 
         const sheet = workbook.Sheets[sheetName];
 
+        //excel->json
         const data = XLSX.utils.sheet_to_json(sheet);
 
         // loop từng dòng
@@ -157,7 +158,7 @@ exports.importQuestions = async (req, res) => {
             const difficulty = row.difficulty
                 ?.toString()
                 .trim()
-                .toLowerCase();
+                .toUpperCase();
 
             // insert question
             const questionResult = await query(

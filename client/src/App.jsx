@@ -14,6 +14,12 @@ import Profile from './components/PersonalProfile/Profile'
 import ExamTen from './components/Practice/ExamPractice/ExamTen'
 // import ExamTenAnswer from './components/Practice/ExamPractice/ExamTenAnswer'
 import ReviewPage from './components/PersonalProfile/ReviewPage'
+import DownProfile from './components/PersonalProfile/DownProfile'
+// import DetailDownProfile from './components/PersonalProfile/DetailDownProfile'
+import Progress from './components/PersonalProfile/Progress'
+import ForgotPassword from './components/RegisterLogin/ForgotPassword'
+import ResetPassword from './components/RegisterLogin/ResetPassword'
+import ChangePassword from './components/PersonalProfile/changePassword'
 
 function App() {
   return (
@@ -22,6 +28,12 @@ function App() {
       {/* <Route path="/" element={<Login />} /> */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
+
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/change-password" element={<ChangePassword />} />
+
+
       <Route path="/" element={<Homepage />} />
 
       {/* Hồ sơ */}
@@ -41,14 +53,18 @@ function App() {
       
       {/* ============================Luyện thi============================ */}
       <Route path="/exam" element={<Exam />} />
+      {/* hãy chọn đề */}
       <Route path="/exam/:subjectId" element={<ExamLop />} />
 
       {/* làm đề thi */}
-      <Route path="/exam/:subjectId/:examId/:userExamId" element={<MakeAnExamTen/>} />
+      <Route path="/exam/:subjectId/:examId/" element={<MakeAnExamTen/>} />
+      {/* trang kết quả */}
       <Route path="/result/:userExamId" element={<MakeAnExamTenResult />} />
 
         {/* Review */}
         <Route path="/review/:userExamId" element={<ReviewPage />} />
+        <Route path="/progress/:subjectId" element={<Progress />} />
+
 
     </Routes>
   )

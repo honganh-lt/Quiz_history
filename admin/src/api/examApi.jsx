@@ -51,26 +51,33 @@ export const createExamBySubject = async (data) => {
   }
 }
 
+//Thống kê độ khó
+export const getDifficultyCount = async (subjectId) => {
+    return axiosClient.get(
+        `${API_URL}/difficulty-count/${subjectId}`
+    );
+};
+
 
 
 // PUT cập nhật exam theo id
-export const updateExams = async (id, data) => {
-  try {
-    const res = await axiosClient.put(`${API_URL}/${id}`, data);
-    return res.data;
-  } catch (err) {
-    console.error("Lỗi PUT exam:", err);
-    throw err;
-  }
-};
+// export const updateExams = async (id, data) => {
+//   try {
+//     const res = await axiosClient.put(`${API_URL}/${id}`, data);
+//     return res.data;
+//   } catch (err) {
+//     console.error("Lỗi PUT exam:", err);
+//     throw err;
+//   }
+// };
 
 // DELETE exam theo id
-export const deleteExam = async (id) => {
-  try {
-    const res = await axiosClient.delete(`${API_URL}/${id}`);
-    return res.data;
-  } catch (err) {
-    console.error("Lỗi DELETE exam:", err);
-    throw err;
-  }
-};
+// export const deleteExam = async (id) => {
+//   try {
+//     const res = await axiosClient.delete(`${API_URL}/${id}`);
+//     return res.data;
+//   } catch (err) {
+//     console.error("Lỗi DELETE exam:", err);
+//     throw err;
+//   }
+// };
