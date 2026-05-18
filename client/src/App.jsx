@@ -18,7 +18,7 @@ import DownProfile from './components/PersonalProfile/DownProfile'
 // import DetailDownProfile from './components/PersonalProfile/DetailDownProfile'
 import Progress from './components/PersonalProfile/Progress'
 import ForgotPassword from './components/RegisterLogin/ForgotPassword'
-import ResetPassword from './components/RegisterLogin/ResetPassword'
+// import ResetPassword from './components/RegisterLogin/ResetPassword'
 import ChangePassword from './components/PersonalProfile/changePassword'
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
       <Route path="/register" element={<Signup />} />
 
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password/:token" element={<ResetPassword />} />
+      {/* <Route path="/reset-password/:token" element={<ResetPassword />} /> */}
       <Route path="/change-password" element={<ChangePassword />} />
 
 

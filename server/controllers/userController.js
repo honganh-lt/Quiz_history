@@ -256,7 +256,8 @@ exports.forgotPassword = (req, res) => {
 
     const { email } = req.body;
 
-    const sql = "SELECT * FROM users WHERE email = ?";
+    const sql =
+        "SELECT * FROM users WHERE email = ?";
 
     db.query(sql, [email], async (err, results) => {
 
@@ -272,97 +273,122 @@ exports.forgotPassword = (req, res) => {
 
         const user = results[0];
 
-        const resetToken = crypto.randomBytes(32).toString("hex");
-        const expire = Date.now() + 15 * 60 * 1000;
+        // tạo OTP 6 số
+        const otp =
+            Math.floor(
+                100000 + Math.random() * 900000
+            ).toString();
+
+        // hết hạn 5 phút
+        const expire =
+            Date.now() + 5 * 60 * 1000;
 
         const updateSql = `
             UPDATE users
-            SET reset_token = ?, reset_token_expire = ?
+            SET otp_code = ?, otp_expire = ?
             WHERE user_id = ?
         `;
 
-        db.query(updateSql, [resetToken, expire, user.user_id], async (err2) => {
+        db.query(
+            updateSql,
+            [otp, expire, user.user_id],
+            async (err2) => {
 
-            if (err2) {
-                return res.status(500).json(err2);
-            }
+                if (err2) {
+                    return res.status(500).json(err2);
+                }
 
-            const resetLink =
-                `http://localhost:5173/reset-password/${resetToken}`;
-
-            // 🔥 QUAN TRỌNG: CHẶN CRASH SERVER
-            try {
                 await sendMail(
                     email,
-                    "Reset Password",
+                    "Quên mật khẩu",
                     `
-                        <h2>Đổi mật khẩu</h2>
-                        <a href="${resetLink}">
-                            Reset Password
-                        </a>
+                        <h2>Mã OTP của bạn</h2>
+                        <h1>${otp}</h1>
                     `
                 );
-            } catch (mailErr) {
-                console.log("MAIL ERROR:", mailErr.message);
-            }
 
-            return res.json({
-                message: "Đã gửi email reset password (nếu SMTP OK)"
-            });
-        });
+                res.json({
+                    message: "Đã gửi OTP"
+                });
+            }
+        );
     });
 };
 
-exports.resetPassword = (req, res) => {
+exports.verifyOtp = (req, res) => {
 
-    const { token, newPassword } = req.body;
+    const {
+        email,
+        otp,
+        newPassword
+    } = req.body;
 
-    const sql = "SELECT * FROM users WHERE reset_token = ?";
+    const sql =
+        "SELECT * FROM users WHERE email = ?";
 
-    db.query(sql, [token], async (err, results) => {
+    db.query(sql, [email], async (err, results) => {
 
         if (err) {
             return res.status(500).json(err);
         }
 
         if (results.length === 0) {
-            return res.status(400).json({
-                message: "Token không hợp lệ"
+            return res.status(404).json({
+                message: "Email không tồn tại"
             });
         }
 
         const user = results[0];
 
-        if (Date.now() > user.reset_token_expire) {
+        // OTP sai
+        if (user.otp_code !== otp) {
+
             return res.status(400).json({
-                message: "Token đã hết hạn"
+                message: "OTP không đúng"
             });
         }
 
-        const hashPassword = await bcrypt.hash(newPassword, 10);
+        // OTP hết hạn
+        if (Date.now() > user.otp_expire) {
+
+            return res.status(400).json({
+                message: "OTP đã hết hạn"
+            });
+        }
+
+        // hash password mới
+        const hashPassword =
+            await bcrypt.hash(newPassword, 10);
 
         const updateSql = `
             UPDATE users
-            SET password = ?, reset_token = NULL, reset_token_expire = NULL
+            SET password = ?,
+                otp_code = NULL,
+                otp_expire = NULL
             WHERE user_id = ?
         `;
 
-        db.query(updateSql, [hashPassword, user.user_id], (err2) => {
+        db.query(
+            updateSql,
+            [hashPassword, user.user_id],
+            (err2) => {
 
-            if (err2) {
-                return res.status(500).json(err2);
+                if (err2) {
+                    return res.status(500).json(err2);
+                }
+
+                res.json({
+                    message:
+                        "Đổi mật khẩu thành công"
+                });
             }
-
-            res.json({
-                message: "Đổi mật khẩu thành công"
-            });
-        });
+        );
     });
 };
 
 exports.changePassword = (req, res) => {
 
-    const userId = req.user.id;
+    const userId = req.user.user_id;
 
     const { oldPassword, newPassword } = req.body;
 

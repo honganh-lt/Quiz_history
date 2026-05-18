@@ -86,9 +86,11 @@ const Login = () => {
                 }}
                  />
 
-                 <Link to="/forgot-password">
-                 Quên mật khẩu?
-                 </Link>
+                <p>
+                    <Link to="/forgot-password">
+                        Quên mật khẩu?
+                    </Link>
+                </p>
 
                 
                 <button className="btn-practice"

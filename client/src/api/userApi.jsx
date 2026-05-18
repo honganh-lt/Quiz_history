@@ -13,7 +13,7 @@ export const forgotPassword = (data) => {
     );
 };
 
-export const resetPassword = (data) => {
+export const verifyOtp = (data) => {
     return axiosClient.post(
         `${API_URL}/reset-password`,
         data

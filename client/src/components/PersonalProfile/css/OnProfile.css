@@ -49,3 +49,12 @@
 }
 
 /* Phần đổi mật khẩu nếu có */
+.change-password button{
+    border: 1px solid #fc9e40;
+    background: #fc9e40;
+}
+.change-password button:hover{
+    border: 1px solid #fc9e40;
+    color: #fff;
+    background: #fc9e40;
+}
