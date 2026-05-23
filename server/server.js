@@ -100,6 +100,8 @@ const lessonRoutes = require("./routes/lessonRoutes");
 const questionRoutes = require("./routes/questionRoutes");
 const examRoutes = require("./routes/examRoutes");
 const userExamRoutes = require("./routes/userExamRoutes");
+const documentRoute = require("./routes/documentRoutes");
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -110,6 +112,18 @@ app.use("/api/lessons", lessonRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/exams", examRoutes);
 app.use("/api/user-exam", userExamRoutes);
+
+// public folder uploads PDF
+app.use(
+    "/uploads",
+    express.static("uploads")
+);
+
+app.use(
+    "/api/documents",
+    documentRoute
+);
+
 
 // ===== HOME =====
 app.get("/", (req, res) => {

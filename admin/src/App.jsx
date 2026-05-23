@@ -23,6 +23,7 @@ import UserExamDetail from './components/UserExam/UserExamDetail'
 
 import AdminLayout from './LayoutAdmin/AdminLayout'
 import ProtectedRoute from './Login/ProtectedRoute'
+import ManagementDocument from './components/Document/ManagementDocument'
 // import ManageTopics from './components/Chapters/ManageTopics'
 
 function App() {
@@ -83,6 +84,15 @@ function App() {
             <ProtectedRoute>
                 <AdminLayout>
                   <ManageLessons />
+                </AdminLayout>
+            </ProtectedRoute>
+       
+      } />
+      <Route path="/document" element={
+        
+            <ProtectedRoute>
+                <AdminLayout>
+                  <ManagementDocument />
                 </AdminLayout>
             </ProtectedRoute>
        

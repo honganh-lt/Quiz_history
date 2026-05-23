@@ -8,6 +8,7 @@ export const OnProfile = () => {
   const [user, setUser] = useState(null);
   const [showChangePassword, setShowChangePassword] = useState(false);
 
+  //thông tin đang lấy ở CSDL? hay
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);

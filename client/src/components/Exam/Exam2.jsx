@@ -17,6 +17,7 @@ export const Exam2 = () => {
         .catch (err => console.log(err));
     }, []);
 
+
   return (
     <main className='main-exam'>
         {/* Khung trên */}
@@ -24,6 +25,7 @@ export const Exam2 = () => {
                 <div className='container-exam'>
                     {/* Phần chữ */}
                     <div className='body-layout-exam'>
+                        <img src="./public/imghome/đt-1.png" alt="" />
                         <div className='body-text-exam'>
                             <h1>Bộ đề thi trắc nghiệm online các lớp THPT</h1>
                             {/* <p>
@@ -32,6 +34,7 @@ export const Exam2 = () => {
                             </p> */}
 
                         </div>
+                        <img src="./public/imghome/đt-2.png" alt="" />
                     </div>
                 </div>
             </section>
@@ -39,36 +42,34 @@ export const Exam2 = () => {
         {/* Khung dưới */}
         <section className="feature-section-exam">
             <div className="feature-list-exam">
-                {/* Lớp 10 */}
                 
-                {subjects.map((item) => (
-                    <div className="feature-card-exam" key={item.subject_id}>
-                        <h3>{item.subject_name}</h3>
+                {subjects.map((item) => {
+                    // Khởi tạo biến chứa ảnh cho từng vòng lặp
+                    let currentImage = "";
+                    
+                    // Thay số 1, 2, 3 bằng đúng subject_id trong CSDL MySQL của bạn
+                    if (item.subject_id === 1) currentImage = "./public/imghome/đt-3.png";
+                    else if (item.subject_id === 2) currentImage = "./public/imghome/đt-4.png";
+                    else if (item.subject_id === 3) currentImage = "./public/imghome/đt-5.png";
 
-                        {/*Đường dẫn tới trang ../exam/1 -> khi ấn vào "Luyện tập"  */}
-                        <button className="btn-exam-btn"
-                            onClick={() => navigate(`/exam/${item.subject_id}`)}
-                        >
-                            Luyện đề
-                        </button>
-                    </div>
-                ))}
+                    return (
+                        <div className="feature-card-exam" key={item.subject_id}>
+                            
+                            <div className="card-image-wrapper">
+                                <img src={currentImage} alt={item.subject_name} className="subject-card-img" />
+                            </div>
 
-                {/* Lớp 11 */}
-                {/* <div className="feature-card-exam">
-                    <h3>Lớp11</h3>
-                    <button className="btn-exam-btn">
-                        Làm đề
-                    </button>
-                </div> */}
+                            <h3>{item.subject_name}</h3>
 
-                {/* Lớp 12 */}
-                {/* <div className="feature-card-exam">
-                    <h3>Lớp12</h3>
-                    <button className="btn-exam-btn">
-                        Làm đề
-                    </button>
-                </div> */}
+                            <button className="btn-exam-btn"
+                                onClick={() => navigate(`/exam/${item.subject_id}`)}
+                            >
+                                Luyện đề
+                            </button>
+                        </div>
+                    );
+                })}
+
             </div>
         </section>
     </main>

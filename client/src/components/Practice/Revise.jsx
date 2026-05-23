@@ -37,6 +37,7 @@ function Revise() {
                 <div className='container-revise'>
                     {/* Phần chữ */}
                     <div className='body-layout-revise'>
+                        <img src="./public/imghome/ot-1.png" alt="" />
                         <div className='body-text-revise'>
                             <h1>Bộ bài tập trắc nghiệm online các lớp THPT</h1>
                             {/* <p>
@@ -50,24 +51,76 @@ function Revise() {
             </section>
 
             {/* Khung dưới */}
-            <section className='feature-section-revise'>
-                {/* <h2>Luyện theo lớp học - Sách kết nối tri thức</h2> */}
-                <div className='feature-list-revise'>
-                    
-                    {subjects.map((item) => (
-                        <div className='feature-card-revise' key={item.subject_id}>
-                        {/* <img src="./imghome/1.png" alt="Lịch sử lớp 10" /> */}
-                        <h3>{item.subject_name}</h3> 
+           <section className='feature-section-revise'>
 
-                        {/*Đường dẫn tới trang ../practice/1 -> khi ấn vào "Luyện tập"  */}
-                        <button className="btn-practice"
-                            onClick={() => navigate(`/practice/${item.subject_id}`)}
-                        >Luyện tập</button>
+    <div className='feature-list-revise'>
+
+        {subjects.map((item) => {
+
+            let currentImage = "";
+
+            if (item.subject_id === 1)
+                currentImage = "/imghome/ot-2.png";
+
+            else if (item.subject_id === 2)
+                currentImage = "/imghome/ot-3.png";
+
+            else if (item.subject_id === 3)
+                currentImage = "/imghome/ot-4.png";
+
+            return (
+               <div
+                    className='feature-card-revise'
+                    key={item.subject_id}
+                >
+
+                    {/* Background mờ */}
+                    <div
+                        className='card-bg-revise'
+                        style={{
+                            backgroundImage: `url(${currentImage})`
+                        }}
+                    ></div>
+
+                    {/* Overlay trắng */}
+                    <div className='overlay-revise'></div>
+
+                    {/* Nội dung */}
+                    <div className='card-content-revise'>
+
+                        {/* Icon */}
+                        <img
+                            className='subject-icon-revise'
+                            src={
+                                item.subject_id === 1
+                                    ? "/imghome/đt-3.png"
+                                    : item.subject_id === 2
+                                    ? "/imghome/đt-4.png"
+                                    : "/imghome/đt-5.png"
+                            }
+                            alt=""
+                        />
+
+                        <h3>{item.subject_name}</h3>
+
+                        <button
+                            className="btn-practice"
+                            onClick={() =>
+                                navigate(`/practice/${item.subject_id}`)
+                            }
+                        >
+                            Vào Ôn Tập
+                        </button>
+
                     </div>
-                    ))}
-                    
+
                 </div>
-            </section>
+            );
+        })}
+
+    </div>
+
+</section>
         </main>
 
     )

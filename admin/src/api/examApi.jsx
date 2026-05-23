@@ -18,27 +18,27 @@ export const getExams = async () => {
 };
 
 //====Get Detail=======
-export const getExamDetail = async (id) => {
-  try {
-    const res = await axiosClient.get(`${API_URL}/${id}`);
-    return res.data;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
+// export const getExamDetail = async (id) => {
+//   try {
+//     const res = await axiosClient.get(`${API_URL}/${id}`);
+//     return res.data;
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// }
 
 
 // POST tạo exam thủ công
-export const createExam = async (data) => {
-  try {
-    const res = await axiosClient.post(API_URL, data);
-    return res.data;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
+// export const createExam = async (data) => {
+//   try {
+//     const res = await axiosClient.post(API_URL, data);
+//     return res.data;
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// };
 
 //POst CREATE RANDOM theo subject = BE
 export const createExamBySubject = async (data) => {

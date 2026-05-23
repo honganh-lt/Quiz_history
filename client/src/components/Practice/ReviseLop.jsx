@@ -131,7 +131,7 @@ function ReviseLop() {
                                             </h4>
 
                                             <button
-                                                className="btn-practice"
+                                                className="btn-practice-lop"
                                                 onClick={() => {
 
                                                     const user = JSON.parse(

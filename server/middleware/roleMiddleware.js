@@ -1,6 +1,6 @@
 //dễ mở rộng bỏ
 
-// check 1 role
+// check 1 role ? có cần ko admin
 exports.checkRole = (role) => {
     return (req, res, next) => {
         if (!req.user) {
@@ -19,19 +19,19 @@ exports.checkRole = (role) => {
 };
 
 // check nhiều role
-exports.checkRoles = (roles) => {
-    return (req, res, next) => {
-        if (!req.user) {
-            return res.status(401).json({ message: "Chưa xác thực" });
-        }
+// exports.checkRoles = (roles) => {
+//     return (req, res, next) => {
+//         if (!req.user) {
+//             return res.status(401).json({ message: "Chưa xác thực" });
+//         }
 
-        if (!roles.includes(req.user.role)) {
-            return res.status(403).json({ message: "Không có quyền" });
-        }
+//         if (!roles.includes(req.user.role)) {
+//             return res.status(403).json({ message: "Không có quyền" });
+//         }
 
-        next();
-    };
-};
+//         next();
+//     };
+// };
 
 
 // //check 1 role === phân quyền === admin only

@@ -1,7 +1,7 @@
 const db = require("../config/db");
  //Ramdom ở đây:
 
-// ================= GET ALL =================
+// ================= GET ALL ================= Lấy danh sách tất cả đề thi admin
 exports.getExams = (req, res) => {
     const sql = `
         SELECT 
@@ -23,7 +23,7 @@ exports.getExams = (req, res) => {
 };
 
 
-// ================= GET DETAIL =================
+// ================= GET DETAIL ================= lấy chi tiết thông tin đề user
 // exports.getExamDetail = (req, res) => {
 //     const { id } = req.params;
 
@@ -123,7 +123,7 @@ exports.getExamDetail = (req, res) => {
 
 
 
-// ================= DELETE =================
+// ================= DELETE ================= xóa đề
 exports.deleteExam = (req, res) => {
     const { id } = req.params;
 
@@ -138,7 +138,7 @@ exports.deleteExam = (req, res) => {
     });
 };
 
-//Ramdom
+//Random câu hỏi
 exports.createExamBySubject = (req, res) => {
 
     const {

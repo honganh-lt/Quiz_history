@@ -71,6 +71,12 @@ const handleLogout = async () => {
             Quản lý bài học
           </NavLink>
         </li>
+        <li className="sidebar-list-item">
+          <NavLink to="/document">
+            {/* <BsBook className="icon" /> */}
+            Quản lý tài liệu
+          </NavLink>
+        </li>
         
         <li className="sidebar-list-item">
           <NavLink to="/questions">

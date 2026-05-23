@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { changePassword } from '../../api/userApi';
+import { changePassword } from '../../api/authApi';
 import "./css/changePassword.css"
 const ChangePassword = ({ onClose }) => {
 

@@ -15,6 +15,8 @@ const BASE_URL = "/user-exam";
 //         }
 //     )
 // };
+//lấy đề thi time bd-kt lấy dữ liệu câu hỏi hiển thị cho người dùng
+export const getAllUserExams = () => axiosClient.get(`${BASE_URL}`); 
 export const startExam = (data) => {
     return axiosClient.post(`${BASE_URL}/start`, data);
 };
@@ -54,6 +56,5 @@ export const getHistory = (userId) => {
 export const reviewExam = (id) => {
     return axiosClient.get(`${BASE_URL}/review/${id}`);
 };
-//lấy đề thi time bd-kt
-export const getAllUserExams = () => axiosClient.get(`${BASE_URL}`);
+
 // export const getExamAttempts = () => axios.get(`${BASE_URL}`);

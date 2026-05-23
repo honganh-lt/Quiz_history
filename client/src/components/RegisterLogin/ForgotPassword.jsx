@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
     forgotPassword,
     verifyOtp
-} from "../../api/userApi";
+} from "../../api/authApi";
 import "./css/forgotPassword.css"
 import { useNavigate } from "react-router-dom";
 

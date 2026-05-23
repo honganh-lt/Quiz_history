@@ -4,6 +4,7 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const { verifyToken } = require("../middleware/authMiddleware");
 const { checkRoles, checkRole } = require("../middleware/roleMiddleware");
+const authMiddleware = require("../middleware/authMiddleware")
 
 //==============Public=========
 router.post("/register", authController.register);
@@ -33,6 +34,22 @@ router.get(
     (req, res) => {
         res.json({ message: "Chào admin " });
     }
+);
+//user
+router.post(
+    "/forgot-password",
+    authController.forgotPassword
+);
+
+router.post(
+    "/verify-otp",
+    authController.verifyOtp
+);
+
+router.post(
+    "/change-password",
+    authMiddleware.verifyToken,
+    authController.changePassword
 );
 
 //=============TOKEN============

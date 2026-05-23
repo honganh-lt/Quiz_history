@@ -6,117 +6,148 @@
     background: #fff;
 }
 
-/* Khung trên */
+/* Khung trên cùng (Hero Section) */
 .hero-section-exam {
-    /* background: #fff; */
-    /* padding: 80px 0; */
-    min-height: 30vh;
+    background: #ffffff; /* Nền trắng tinh tế để nổi bật chữ và ảnh */
+    padding: 60px 0; /* Tạo không gian thoáng đãng phía trên và dưới */
+    min-height: 25vh;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .hero-section-exam .container-exam {
     width: 100%;
+    max-width: 1200px; /* Giới hạn khung để không bị tràn màn hình lớn */
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-
-/* Layout 2 cột */
+/* Layout chứa 2 ảnh và chữ ở giữa */
 .body-layout-exam {
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px; */
-    /* align-items: center; */
     display: flex;
-    justify-content: center;
-
+    align-items: center;    /* Căn giữa ảnh và chữ theo chiều dọc thẳng hàng */
+    justify-content: center; /* Căn giữa toàn bộ cụm theo chiều ngang */
+    gap: 50px;              /* Tăng khoảng cách lên 50px để khi ảnh to ra không bị đè vào chữ */
 }
 
+/* Định dạng tối ưu lại cho 2 bức ảnh trang trí (đt-1 và đt-2) */
+.body-layout-exam img {
+    width: 150px;           /* Tăng kích thước từ 80px lên 150px để cân bằng với font 38px */
+    height: 150px;          /* Cố định khung vuông để tỷ lệ ảnh không bao giờ bị méo */
+    object-fit: contain;    /* Ép bức ảnh tự thu phóng vừa vặn bên trong khung vuông, giữ nguyên tỷ lệ gốc */
+    
+    /* Bộ lọc nâng cao của CSS giúp khử răng cưa và làm mịn viền ảnh khi phóng to */
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: smooth;
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.05)); /* Thêm đổ bóng cực nhẹ giúp ảnh trông nổi bật và đỡ bị lộ vết vỡ viền */
+}
+
+/* Khối text ở giữa */
 .body-text-exam {
+    max-width: 700px;       /* Nới rộng khung chữ một chút để tương xứng với ảnh mới */
     text-align: center;
-    max-width: 800px;
-
 }
 
-/* Phần chữ */
+/* Phần chữ Tiêu đề chính */
 .body-text-exam h1 {
-    font-size: 36px;
-    margin-bottom: 16px;
-    text-align: center;
+    font-size: 38px; /* Tăng nhẹ kích thước tạo điểm nhấn */
+    font-weight: 700;
+    color: #1a202c; /* Màu chữ xanh đen đậm cực sang thay vì đen xì */
+    line-height: 1.4; /* Khoảng cách giữa các dòng thoáng hơn */
+    margin: 0;
 }
 
+/* Phần chữ mô tả nếu sau này bạn mở comment <p> ra dùng */
 .body-text-exam p {
     font-size: 16px;
-    /* color: #; */
+    color: #718096; /* Màu xám hiện đại */
     font-weight: 400;
-    margin-bottom: 24px;
+    margin-top: 12px;
+    line-height: 1.6;
 }
-
 .btn-start {}
 
 
 
 /*============================= Khung dưới =================================*/
 .feature-section-exam {
-    /* margin: 30px; */
-    /* width: 0%; */
-    /* padding: 30px ; */
     margin-bottom: 60px;
-    /* background-color: rgb(251, 198, 130); */
 }
 
 .feature-section-exam h2 {
     text-align: left;
-    margin-left: 48px;
+    margin-left: 38px;
     font-size: 28px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
-/* Grid card  */
+/* Grid */
 .feature-list-exam {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    /*Khoảng cách giẵ các item*/
+    gap: 20px;
+    padding: 0 20px;
 }
 
+/* Card */
 .feature-card-exam {
-    margin-left: 20px;
-    margin-right: 20px;
     background: #f8d8ab;
-    padding: 54px;
+    padding: 20px;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     transition: 0.3s;
     cursor: pointer;
 }
 
-.feature-card-exam img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
 .feature-card-exam:hover {
     transform: translateY(-6px);
-    /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); */
 }
 
+/* Ảnh */
+.card-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 8px; /* giảm khoảng cách dưới ảnh */
+}
+
+.subject-card-img {
+    width: 150px;
+    height: 120px;
+    object-fit: contain;
+}
+
+/* Tên môn */
 .feature-card-exam h3 {
-    /* margin-bottom: 12px; */
-    padding: 16px;
+    margin: 6px 0; /* giảm khoảng cách */
+    padding: 0;
+    font-size: 20px;
     text-align: center;
 }
 
+/* Button */
 .btn-exam-btn {
-    margin-top: 10px;
+    margin-top: 6px; /* giảm khoảng cách nút */
     padding: 8px 16px;
+
     color: #fa7b21;
+    background: white;
+
     border-radius: 6px;
     border: 1px solid #fa7b21;
+
     cursor: pointer;
     font-size: 14px;
+
+    transition: 0.3s;
 }
 
 .btn-exam-btn:hover {
@@ -124,40 +155,25 @@
     color: #fff;
 }
 
-/* ===== RESPONSIVE ===== */
-/* @media (max-width: 1024px) {
-    .feature-list-revise {
+/* Responsive tablet */
+@media (max-width: 992px) {
+    .feature-list-exam {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 768px) {
-    .feature-list-revise {
+/* Responsive mobile */
+@media (max-width: 600px) {
+    .feature-list-exam {
         grid-template-columns: 1fr;
     }
 
-    .feature-section-revise {
-        padding: 40px 0;
-    }
-} */
-
-/* Responsive Mobile */
-/* @media (max-width: 768px) {
-    .body-layout-revise {
-        grid-template-columns: 1fr;
-        text-align: center;
+    .subject-card-img {
+        width: 90px;
+        height: 90px;
     }
 
-    .body-images {
-        justify-content: center;
-        margin-top: 24px;
+    .feature-card-exam h3 {
+        font-size: 18px;
     }
-
-    .body-images img {
-        max-width: 120px;
-    }
-
-    .body-text h1 {
-        font-size: 26px;
-    }
-} */
+}

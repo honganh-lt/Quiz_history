@@ -1,64 +1,63 @@
-// import { use } from "react";
-// import axios from "axios";
+// import axiosClient from "./axiosClient"a;
 
-// import axiosClient from "../../../api/axiosClient";
+import axiosClient from "../../../api/axiosClient";
 
-const API_URL = "http://localhost:5000/api/auth";
+const BASE_URL = "/auth";
 
 export const login = async (username, password) => {
 
-    const response = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify({
-            username,
-            password
-        })
+    const response = await axiosClient.post(`${BASE_URL}/login`, {
+        username,
+        password
     });
-    const data = await response.json();
 
-    if(!response.ok) {
-        throw data;
-    }
-
-    return data;
+    return response.data;
 };
 
-export const register = async (username,fulName, email, password) => {
-    const response = await fetch(`${API_URL}/register`, {
-        method: "POST",
-        headers: {
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify({
-            username,
-            full_name: fulName,
-            email,
-            password
-        })
+export const register = async (username, fullName, email, password) => {
+
+    const response = await axiosClient.post(`${BASE_URL}/register`, {
+        username,
+        full_name: fullName,
+        email,
+        password
     });
 
-    const data = await response.json();
+    return response.data;
+};
 
-    //  BẮT LỖI 400, 500
-    if (!response.ok) {
-        throw data; //  QUAN TRỌNG
-    }
+//authApi-userApi 
+export const forgotPassword = (data) => {
+    return axiosClient.post(
+        `${BASE_URL}/forgot-password`,
+        data
+    );
+};
 
-    return data;
+export const verifyOtp = (data) => {
+    return axiosClient.post(
+        `${BASE_URL}/verify-otp`,
+        data
+    );
+};
+
+export const changePassword = (data, token) => {
+    return axiosClient.post(
+        `${BASE_URL}/change-password`,
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
 };
 
 export const logout = async (refresh_token) => {
-    const response = await fetch(`${API_URL}/logout`, {
-        method: "POST",
-        headers: {
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify({ refresh_token })
+
+    const response = await axiosClient.post(`$${BASE_URL}/logout`, {
+        refresh_token
     });
 
-    return response.json();
+    return response.data;
 };
-
