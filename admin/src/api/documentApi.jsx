@@ -1,49 +1,68 @@
-// import axiosClient from "../utils/axiosClient";
-
 import axiosClient from "../../../api/axiosClient";
 
 
 
-// upload tài liệu
-export const createDocument = async (formData) => {
+// =========================
+// TẠO TÀI LIỆU (SGK TEXT)
+// =========================
+export const createDocument = async (data) => {
 
     try {
 
         const res = await axiosClient.post(
-            "/documents",
-            formData
+            "/documents/create",
+            data
         );
 
         return res.data;
 
     } catch (error) {
-
         console.log(error);
-
         throw error;
     }
 };
 
-// lấy tất cả tài liệu
-export const getAllDocuments = async () => {
 
+
+// =========================
+// LẤY THEO BÀI HỌC
+// =========================
+// export const getDocumentsByLesson = async (lessonId) => {
+
+//     try {
+
+//         const res = await axiosClient.get(
+//             `/documents/${lessonId}`
+//         );
+
+//         return res.data;
+
+//     } catch (error) {
+//         console.log(error);
+//         return [];
+//     }
+// };
+
+// =========================
+// CẬP NHẬT TÀI LIỆU (SỬA)
+// =========================
+export const updateDocument = async (id, data) => {
     try {
-
-        const res = await axiosClient.get(
-            "/documents"
+        const res = await axiosClient.put(
+            `/documents/update/${id}`, // Endpoint này phải trùng với route PUT bạn khai báo ở Backend
+            data
         );
 
         return res.data;
-
     } catch (error) {
-
         console.log(error);
-
-        return [];
+        throw error;
     }
 };
 
-// xoá tài liệu
+// =========================
+// XÓA TÀI LIỆU
+// =========================
 export const deleteDocument = async (id) => {
 
     try {
@@ -55,9 +74,28 @@ export const deleteDocument = async (id) => {
         return res.data;
 
     } catch (error) {
-
         console.log(error);
-
         throw error;
+    }
+};
+
+
+
+// =========================
+// LẤY TẤT CẢ (ADMIN)
+// =========================
+export const getAllDocuments = async () => {
+
+    try {
+
+        const res = await axiosClient.get(
+            "/documents"
+        );
+
+        return res.data;
+
+    } catch (error) {
+        console.log(error);
+        return [];
     }
 };

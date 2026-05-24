@@ -1,179 +1,493 @@
-/* Reset cơ bản */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =========================
+   RESET
+========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* Header full chiều ngang */
-.header {
-    width: 100%;
-    background-color: #f6cb8f;
-    /* background: #fff; */
-    /* border-bottom: 1px solid #f3e2d5; */
-    /* margin-bottom: 15px; */
+body{
+    font-family:"Inter",sans-serif;
+    background:#fffaf5;
 }
 
-/* Nếu không dùng bootstrap thì tự định nghĩa container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 16px;
-    /* đệm cho mobile*/
+/* =========================
+   HEADER
+========================= */
+.header{
+    width:100%;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd9a8 0%,
+            #ffc47a 100%
+        );
+
+    border-bottom:
+        1px solid #f0b36b;
+
+    box-shadow:
+        0 4px 18px rgba(250,123,33,0.12);
 }
 
-/* Header layout */
-.header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
+/* =========================
+   CONTAINER
+========================= */
+.container{
+    width:92%;
+    max-width:1280px;
+    margin:auto;
 }
 
-/* Logo */
-.logo {}
+/* =========================
+   INNER
+========================= */
+.header-inner{
+    height:78px;
 
-/* Menu */
-.menu {
-    display: flex;
-    /* Giảm lại cho gọn */
-    gap: 30px;
-    margin-left: auto;
-    /* margin-top: 14px; */
-    align-items: center;
-}
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-.menu a {
-    color: #000;
-    text-decoration: none;
-    font-size: 16px;
+    gap:30px;
 }
 
-.menu a:hover {
-    color: #fff;
-}
-/*  */
-/* Dropdown menu */
-.menu-item {
-    position: relative;
-    cursor: pointer;
-}
-
-.menu-item span {
-    font-size: 16px;
-    color: #000;
-    font-weight: 600;
+/* =========================
+   LOGO
+========================= */
+.logo{
+    display:flex;
+    align-items:center;
+    cursor:pointer;
 }
 
-/* Auth */
-.auth {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    /* Tạo khoảng cách với menu */
-    margin-left: 30px;
+.logo img{
+    width:185px;
+    height:auto;
+
+    object-fit:contain;
+
+    transition:0.3s ease;
 }
 
-.auth a {
-    text-decoration: none;
-    font-size: 14px;
-    padding: 6px 12px;
-    border-radius: 4px;
+.logo img:hover{
+    transform:scale(1.03);
 }
 
-/* Đăng ký */
-/* .register {
-    background-color: #00ffcc;
-    color: #000;
-} */
+/* =========================
+   MENU
+========================= */
+.menu{
+    display:flex;
+    align-items:center;
+    gap:34px;
 
-.user-menu{
-    position: relative;
-    color: #fff;
-    cursor: pointer;
-}
-.user-info{
-    padding: 8px 12px;
-    /* tạo chữ cái đầu viết hoa */
-    text-transform: capitalize;
-    color: #000; 
-    margin-left: 80px;
-    align-items: center;
-    /* Khoảng cách icon và chữ */
-    gap: 8px;
-    cursor: pointer;
-}
-.user-icon{
-    font-size: 18px;
-    color: #333;
-}
-/*  */
-.username{
-    text-transform: capitalize;
-}
-.dropdown{
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background: white;
-    color: black;
-    border-radius: 6px;
-    /* width: 140px; */
-    min-width: 120px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-.dropdown div{
-    padding: 10px;
-    cursor: pointer;
-}
-.dropdown div:hover{
-    background: #f2f2f2;
-    border-radius: 6px;
+    margin-left:auto;
 }
 
+/* menu link */
+.menu a{
+    position:relative;
+
+    text-decoration:none;
+
+    color:#5a3200;
+
+    font-size:15px;
+    font-weight:700;
+
+    transition:0.3s ease;
+}
+
+/* underline */
+.menu a::after{
+    content:"";
+
+    position:absolute;
+    left:0;
+    bottom:-8px;
+
+    width:0%;
+    height:3px;
+
+    border-radius:20px;
+
+    background:#fa7b21;
+
+    transition:0.3s ease;
+}
+
+.menu a:hover{
+    color:#b45309;
+}
+
+.menu a:hover::after{
+    width:100%;
+}
+
+/* =========================
+   DOCUMENT MENU
+========================= */
+.document-menu{
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    cursor:pointer;
+
+    padding:20px 0;
+}
+
+/* title */
+.document-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    position:relative;
+
+    color:#5a3200;
+
+    font-size:15px;
+    font-weight:700;
+
+    transition:0.3s ease;
+}
+
+/* underline */
+.document-title::after{
+    content:"";
+
+    position:absolute;
+    left:0;
+    bottom:-8px;
+
+    width:0%;
+    height:3px;
+
+    border-radius:20px;
+
+    background:#fa7b21;
+
+    transition:0.3s ease;
+}
+
+.document-title:hover{
+    color:#b45309;
+}
+
+.document-title:hover::after{
+    width:100%;
+}
+
+/* icon */
+.document-title i{
+    font-size:13px;
+
+    transition:0.3s ease;
+}
+
+/* rotate icon */
+.document-title i:hover{
+    /* transform:rotate(180deg); */
+}
+
+/* tạo vùng hover ảo */
+.document-menu::after{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:100%;
+
+    width:100%;
+    height:15px;
+}
+
+/* =========================
+   DOCUMENT DROPDOWN
+========================= */
+.document-dropdown{
+    position:absolute;
+
+    top:65px;
+    left:0;
+
+    width:220px;
+
+    background:white;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    border:1px solid #ffe0bf;
+
+    box-shadow:
+        0 12px 35px rgba(250,123,33,0.15);
+
+    animation:dropdownFade 0.25s ease;
+
+    z-index:999;
+}
+
+/* item */
+.document-item{
+    padding:15px 18px;
+
+    font-size:14px;
+    font-weight:600;
+
+    color:#444;
+
+    cursor:pointer;
+
+    transition:0.25s ease;
+
+    border-bottom:1px solid #f5f5f5;
+}
+
+.document-item:last-child{
+    border-bottom:none;
+}
+
+.document-item:hover{
+    background:#fff3e6;
+
+    color:#fa7b21;
+
+    padding-left:24px;
+}
+
+/* =========================
+   AUTH
+========================= */
+.auth{
+    display:flex;
+    align-items:center;
+}
+
+/* =========================
+   LOGIN
+========================= */
 .login{
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-weight: 600;
-}
-/* Đăng nhập */
-.login {
-    color: #000;
-    border: 2px solid #000;
-    margin-left: 52px;
+    padding:11px 22px;
+
+    border-radius:14px;
+
+    background:#fa7b21;
+
+    color:white;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+
+    box-shadow:
+        0 8px 20px rgba(250,123,33,0.25);
 }
 
-.login:hover {
-    border: 2px solid #fd9644;
-    background-color: #fd9644;
-    color: #000;
+.login:hover{
+    background:#e86d16;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 24px rgba(250,123,33,0.35);
 }
-/* ================Responsive==================== */
-/* Tablet & Desktop */
-@media (min-width: 768px) {
-    .header-inner {
-        height: 72px;
+
+/* =========================
+   USER MENU
+========================= */
+.user-menu{
+    position:relative;
+}
+
+.user-info{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:10px 16px;
+
+    border-radius:16px;
+
+    background:#fff5eb;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+}
+
+.user-info:hover{
+    background:#ffe8d1;
+}
+
+/* username */
+.username{
+    font-size:14px;
+    font-weight:700;
+
+    color:#5a3200;
+
+    text-transform:capitalize;
+}
+
+/* icon */
+.user-icon{
+    font-size:24px;
+    color:#fa7b21;
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+.dropdown{
+    position:absolute;
+
+    top:60px;
+    right:0;
+
+    width:190px;
+
+    background:white;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    border:1px solid #ffe0bf;
+
+    box-shadow:
+        0 12px 35px rgba(250,123,33,0.15);
+
+    animation:dropdownFade 0.25s ease;
+}
+
+/* animation */
+@keyframes dropdownFade{
+
+    from{
+        opacity:0;
+        transform:translateY(-10px);
     }
 
-    .logo {}
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-/* Mobile */
-@media (max-width: 767px) {
-    .header-inner {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 12px 0;
+/* dropdown item */
+.dropdown div{
+    padding:15px 18px;
+
+    font-size:14px;
+    font-weight:600;
+
+    color:#444;
+
+    cursor:pointer;
+
+    transition:0.25s ease;
+}
+
+.dropdown div:hover{
+    background:#fff3e6;
+    color:#fa7b21;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width:992px){
+
+    .menu{
+        gap:22px;
     }
 
-    .menu {
-        width: 100%;
-        justify-content: center;
-        margin: 12px 0;
+    .logo img{
+        width:155px;
     }
 
-    .auth {
-        width: 100%;
-        justify-content: center;
+    .document-dropdown{
+        width:200px;
+    }
+}
+
+@media (max-width:768px){
+
+    .header-inner{
+        height:auto;
+
+        flex-wrap:wrap;
+
+        padding:14px 0;
+    }
+
+    .logo{
+        width:100%;
+        justify-content:center;
+    }
+
+    .menu{
+        width:100%;
+
+        justify-content:center;
+
+        flex-wrap:wrap;
+
+        margin:12px 0;
+
+        gap:18px;
+    }
+
+    .auth{
+        width:100%;
+        justify-content:center;
+    }
+
+    .dropdown{
+        right:50%;
+        transform:translateX(50%);
+    }
+
+    .document-dropdown{
+        left:50%;
+        transform:translateX(-50%);
+    }
+}
+
+@media (max-width:480px){
+
+    .logo img{
+        width:130px;
+    }
+
+    .menu a{
+        font-size:14px;
+    }
+
+    .document-title{
+        font-size:14px;
+    }
+
+    .login{
+        padding:10px 18px;
+    }
+
+    .document-dropdown{
+        width:180px;
     }
 }

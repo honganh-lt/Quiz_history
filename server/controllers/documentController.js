@@ -1,208 +1,229 @@
 const db = require("../config/db");
 
-const fs = require("fs");
 
-
-
-
-// =========================
-// THÊM TÀI LIỆU
-// =========================
-
-exports.createDocument = (req, res) => {
-
-    const {
-        lesson_id,
-        title
-    } = req.body;
-
-
-
-    // lấy đường dẫn file
-    const file_url = req.file.path;
-
-
-
-    const sql = `
-        INSERT INTO documents
-        (lesson_id, title, file_url)
-        VALUES (?, ?, ?)
-    `;
-
-
-
-    db.query(
-        sql,
-        [lesson_id, title, file_url],
-        (err, result) => {
-
-            if (err) {
-
-                return res.status(500).json(err);
-            }
-
-
-
-            res.json({
-                message: "Upload tài liệu thành công"
-            });
-        }
-    );
-};
-
-
-
-
-// =========================
-// LẤY TẤT CẢ TÀI LIỆU
-// =========================
-
+//Lấy all
 exports.getAllDocuments = (req, res) => {
 
     const sql = `
-        SELECT
-            d.*,
-            l.title AS lesson_name
+        SELECT 
+            d.document_id,
+            d.title,
+            d.content,
+            d.lesson_id,        -- Thêm cái này để biết tài liệu thuộc bài học nào
+
+            s.subject_id,       -- Thêm cái này để phục vụ select Môn học ở ô sửa
+            s.subject_name,
+
+            c.chapter_id,       -- Thêm cái này để phục vụ select Chương ở ô sửa
+            c.chapter_number,
+            c.chapter_name,
+
+            l.lesson_number,
+            l.lesson_name
 
         FROM documents d
 
-        JOIN lessons l
-        ON d.lesson_id = l.lesson_id
+        JOIN lessons l ON d.lesson_id = l.lesson_id
+        JOIN chapters c ON l.chapter_id = c.chapter_id
+        JOIN subjects s ON c.subject_id = s.subject_id
 
-        ORDER BY d.created_at DESC
+        ORDER BY d.document_id ASC
     `;
-
-
 
     db.query(sql, (err, result) => {
-
-        if (err) {
-
-            return res.status(500).json(err);
-        }
-
-
-
+        if (err) return res.status(500).json(err);
         res.json(result);
     });
 };
+// THÊM TÀI LIỆU
+exports.createDocument = (req, res) => {
 
+    const { lesson_id, title, content } = req.body;
 
-
-
-// =========================
-// LẤY TÀI LIỆU THEO BÀI HỌC
-// =========================
-
-exports.getDocumentsByLesson = (req, res) => {
-
-    const lessonId = req.params.lessonId;
-
-
+    if (!lesson_id || !title || !content) {
+        return res.status(400).json({
+            message: "Thiếu dữ liệu"
+        });
+    }
 
     const sql = `
-        SELECT *
-        FROM documents
-        WHERE lesson_id = ?
+        INSERT INTO documents
+        (lesson_id, title, content)
+        VALUES (?, ?, ?)
     `;
 
-
-
-    db.query(sql, [lessonId], (err, result) => {
+    db.query(sql, [lesson_id, title, content], (err, result) => {
 
         if (err) {
-
             return res.status(500).json(err);
         }
 
-
-
-        res.json(result);
+        res.json({
+            message: "Thêm tài liệu thành công"
+        });
     });
 };
+// // LẤY THEO BÀI HỌC
+// exports.getDocumentsByLesson = (req, res) => {
 
+//     const lessonId = req.params.lessonId;
 
+//     const sql = `
+//         SELECT *
+//         FROM documents
+//         WHERE lesson_id = ?
+//     `;
 
+//     db.query(sql, [lessonId], (err, result) => {
 
-// =========================
-// XOÁ TÀI LIỆU
-// =========================
+//         if (err) {
+//             return res.status(500).json(err);
+//         }
+
+//         res.json(result);
+//     });
+// };
+
+// CẬP NHẬT TÀI LIỆU (SỬA)
+exports.updateDocument = (req, res) => {
+    const id = req.params.id;
+    const { lesson_id, title, content } = req.body;
+
+    // Kiểm tra dữ liệu đầu vào
+    if (!lesson_id || !title || !content) {
+        return res.status(400).json({
+            message: "Thiếu dữ liệu để cập nhật"
+        });
+    }
+
+    const sql = `
+        UPDATE documents 
+        SET lesson_id = ?, title = ?, content = ? 
+        WHERE document_id = ?
+    `;
+
+    db.query(sql, [lesson_id, title, content, id], (err, result) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        // Kiểm tra xem ID có tồn tại trong DB không
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "Không tìm thấy tài liệu cần sửa"
+            });
+        }
+
+        res.json({
+            message: "Cập nhật tài liệu thành công"
+        });
+    });
+};
 
 exports.deleteDocument = (req, res) => {
 
     const id = req.params.id;
 
-
-
-    // lấy file trước
-    const findSql = `
-        SELECT *
-        FROM documents
+    const sql = `
+        DELETE FROM documents
         WHERE document_id = ?
     `;
 
-
-
-    db.query(findSql, [id], (err, result) => {
+    db.query(sql, [id], (err, result) => {
 
         if (err) {
-
             return res.status(500).json(err);
         }
 
+        res.json({
+            message: "Xóa tài liệu thành công"
+        });
+    });
+};
 
+// LẤY TÀI LIỆU THEO MÔN HỌC chương bài User
+exports.getDocumentsBySubject = (req, res) => {
 
-        if (result.length === 0) {
+    const subjectId = req.params.subjectId;
 
-            return res.status(404).json({
-                message: "Không tìm thấy tài liệu"
-            });
+    const sql = `
+        SELECT
+            d.document_id,
+
+            s.subject_name,
+
+            c.chapter_id,
+            c.chapter_number,
+            c.chapter_name,
+
+            l.lesson_name,
+            l.lesson_number
+
+        FROM documents d
+
+        JOIN lessons l
+            ON d.lesson_id = l.lesson_id
+
+        JOIN chapters c
+            ON l.chapter_id = c.chapter_id
+
+        JOIN subjects s
+            ON c.subject_id = s.subject_id
+
+        WHERE s.subject_id = ?
+
+        ORDER BY
+            c.chapter_number ASC,
+            l.lesson_number ASC
+    `;
+
+    db.query(sql, [subjectId], (err, result) => {
+
+        if (err) {
+            return res.status(500).json(err);
         }
 
+        res.json(result);
+    });
+};
 
+//lấy chi tiết tài liệu theo bài học
+exports.getDocumentDetail = (req, res) => {
 
-        const document = result[0];
+    const documentId = req.params.documentId;
 
+    const sql = `
+        SELECT
+            d.*,
 
+            s.subject_name,
 
-        // xoá file pdf trong uploads
-        fs.unlink(
-            document.file_url,
-            (unlinkErr) => {
+            c.chapter_number,
+            c.chapter_name,
 
-                if (unlinkErr) {
+            l.lesson_number,
+            l.lesson_name
 
-                    console.log(unlinkErr);
-                }
-            }
-        );
+        FROM documents d
 
+        JOIN lessons l
+            ON d.lesson_id = l.lesson_id
 
+        JOIN chapters c
+            ON l.chapter_id = c.chapter_id
 
-        // xoá database
-        const deleteSql = `
-            DELETE FROM documents
-            WHERE document_id = ?
-        `;
+        JOIN subjects s
+            ON c.subject_id = s.subject_id
 
+        WHERE d.document_id = ?
+    `;
 
+    db.query(sql, [documentId], (err, result) => {
 
-        db.query(
-            deleteSql,
-            [id],
-            (deleteErr, deleteResult) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
 
-                if (deleteErr) {
-
-                    return res.status(500).json(deleteErr);
-                }
-
-
-
-                res.json({
-                    message: "Xoá thành công"
-                });
-            }
-        );
+        res.json(result[0]);
     });
 };

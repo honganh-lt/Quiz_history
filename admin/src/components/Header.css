@@ -32,3 +32,19 @@
 .user-icon {
     font-size: 20px;
 }
+/* Mặc định trên máy tính lớn (PC) thì ẩn nút 3 gạch */
+.menu-icon {
+    display: none !important; 
+}
+
+/* Khi màn hình thu nhỏ (dưới 992px) */
+@media screen and (max-width: 992px) {
+    .menu-icon {
+        display: block !important; /* Hiện nút lên */
+        font-size: 24px;          /* Tăng kích cỡ cho dễ bấm */
+        color: #000;             /* Màu trắng để nổi bật trên nền xanh của Header */
+        cursor: pointer;          /* Biến con trỏ chuột thành hình bàn tay */
+        margin-right: 15px;       /* Tạo khoảng cách với chữ bên cạnh */
+        z-index: 1000;            /* Đảm bảo nút nằm trên cùng, không bị thằng khác đè mất */
+    }
+}

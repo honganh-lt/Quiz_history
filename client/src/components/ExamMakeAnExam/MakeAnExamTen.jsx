@@ -228,7 +228,8 @@ function MakeAnExamTen() {
 
                 {/* LEFT */}
                 <aside className="exam-left-sidebar">
-                    <h3>Trắc nghiệm {currentSubject?.subject_name}</h3>
+                    <h2>Trắc nghiệm</h2>
+                    <h3>{currentSubject?.subject_name}</h3>
                     <h4>{title}</h4>
                     {/* <h5>{examId.description}</h5> */}
                     {/* <h5>Tổng số câu: {questions.length}</h5> */}

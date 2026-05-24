@@ -1,88 +1,151 @@
-.admin-container{
+.admin-container {
     grid-area: main;
     padding: 30px;
     background: #f5f7fb;
-}
-/* Sidebar */
-/* .sidebar {
-  width: 220px;
-  background: #1f3a5f;
-  color: white;
-  padding: 20px;
+    min-height: calc(100vh - 60px); /* Đảm bảo chiều cao tối thiểu bằng màn hình trừ header */
+    box-sizing: border-box;
 }
 
-.sidebar h2 {
-  margin-bottom: 20px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
-.sidebar li:hover,
-.sidebar .active {
-  background: #2e5c8a;
-} */
-
-/* Main */
-.main-content{
+/* Main Content */
+.main-content {
     flex: 1;
     padding: 20px;
     background: #f5f7fa;
 }
+
 /* Header */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 15px;
 }
-.add-btn{
+
+.header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #1e293b;
+}
+
+.add-btn {
     background: #4da3ff;
     border: none;
     padding: 10px 15px;
     color: white;
     border-radius: 6px;
     cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap; /* Giữ chữ trên một hàng, không cho rớt dòng */
+    transition: background 0.2s;
 }
+
+.add-btn:hover {
+    background: #258eff; /* Hiệu ứng hover cho nút thêm mới mượt hơn */
+}
+
+/* 🌟 BỌC TABLE TRÁNH VỠ KHUNG TRÊN MOBILE */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Tự động tạo thanh cuộn ngang khi bảng quá rộng */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
 /* Table */
-.subject-table{
+.subject-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
+    white-space: nowrap; /* Ép các hàng dữ liệu thẳng thớm, không tự ý xuống dòng lung tung */
 }
+
 .subject-table th,
 .subject-table td {
-    padding: 12px;
+    padding: 12px 15px;
     border-bottom: 1px solid #ddd;
     text-align: left;
+    font-size: 14px;
 }
+
 .subject-table th {
     background: #f0f0f0;
+    font-weight: 600;
+    color: #475569;
 }
-/* Button */
-.edit-btn{
+
+/* Container bọc các nút hành động */
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+/* Button Hành động */
+.edit-btn {
     background: #f3d73c;
     border: none;
-    padding: 6px 10px;
+    padding: 6px 12px;
     color: white;
-    margin-right: 5px;
     border-radius: 5px;
     cursor: pointer;
-
+    font-size: 13px;
+    transition: opacity 0.2s;
 }
+
 .delete-btn {
-  background: #ff4d4f;
-  border: none;
-  padding: 6px 10px;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+    background: #ff4d4f;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: opacity 0.2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 0.9; /* Hiệu ứng mờ nhẹ khi di chuột vào nút */
+}
+
+
+/* ======================================================== */
+/* 🌟 ĐOẠN CODE RESPONSIVE (MEDIA QUERIES) CHO CÁC MÀN HÌNH 🌟 */
+/* ======================================================== */
+
+/* 1. Màn hình Máy tính bảng & Laptop nhỏ (max-width: 992px) */
+@media screen and (max-width: 992px) {
+    .admin-container {
+        padding: 20px; /* Thu nhỏ khoảng trống viền bên ngoài */
+    }
+}
+
+/* 2. Màn hình Điện thoại di động (max-width: 576px) */
+@media screen and (max-width: 576px) {
+    .admin-container {
+        padding: 15px;
+    }
+
+    /* Đẩy Tiêu đề trang và Nút "Thêm mới" xếp chồng thành hàng dọc */
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header h2 {
+        font-size: 20px; /* Thu nhỏ chữ tiêu đề một chút trên mobile */
+    }
+
+    .add-btn {
+        width: 100%; /* Nút thêm mới dài full màn hình cho dễ bấm chạm ngón tay */
+        text-align: center;
+        padding: 12px;
+    }
+    
+    .subject-table th,
+    .subject-table td {
+        padding: 10px; /* Thu bớt đệm ô để hiển thị nhiều thông tin nhất có thể */
+        font-size: 13px;
+    }
 }

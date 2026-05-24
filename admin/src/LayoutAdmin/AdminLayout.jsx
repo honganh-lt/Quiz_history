@@ -5,18 +5,24 @@ import { useState } from "react";
 const AdminLayout = ({ children }) => {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
+  // Hàm xử lý đảo trạng thái đóng/mở sidebar
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
 
   return (
     <div className="grid-container">
-      <Header OpenSidebar={OpenSidebar} />
-      <Sidebar openSidebarToggle={openSidebarToggle} />
-      {children}
+      {/* 🌟 KIỂM TRA CHỖ NÀY: Phải truyền hàm OpenSidebar vào prop tên là toggleSidebar */}
+      <Header toggleSidebar={OpenSidebar} />
+      
+      {/* Truyền cả trạng thái openSidebarToggle và hàm OpenSidebar xuống cho Sidebar */}
+      <Sidebar openSidebarToggle={openSidebarToggle} toggleSidebar={OpenSidebar} />
+      
+      <main className="main-container">
+         {children}
+      </main>
     </div>
   );
 };
 
 export default AdminLayout;
-//tạo adminLayout để thu gọn App.jsx

@@ -1,126 +1,215 @@
-/* Main */
+/* =========================
+   GLOBAL
+========================= */
 .main-revise {
-    /* background: #f5bf75; */
-    /* padding: 180px 0; */
     width: 100%;
-    background: #fff;
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff8ef 0%,
+            #fff3e3 100%
+        );
 }
 
-/* Khung trên */
+/* =========================
+   HERO
+========================= */
 .hero-section-revise {
-    /* background: #fff; */
-    /* padding: 80px 0; */
-    min-height: 30vh;
-    display: flex;
-    align-items: center;
-}
-
-.hero-section-revise .container-revise {
     width: 100%;
+
+    padding: 90px 20px 70px;
+
+    position: relative;
+    overflow: hidden;
 }
 
+/* glow */
+.hero-section-revise::before {
+    content: "";
 
+    position: absolute;
+
+    width: 320px;
+    height: 320px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 196, 122, 0.18);
+
+    top: -120px;
+    right: -100px;
+}
+
+.hero-section-revise::after {
+    content: "";
+
+    position: absolute;
+
+    width: 240px;
+    height: 240px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 179, 71, 0.14);
+
+    bottom: -100px;
+    left: -70px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container-revise {
+    width: 92%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================
+   HERO BOX
+========================= */
 .body-layout-revise {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
 
-    max-width: 750px;
-    margin: 24px auto;
+    max-width: 760px;
 
-    padding: 16px 24px;
+    margin: auto;
 
-    border: 1px solid #f3c98b;
-    border-radius: 14px;
+    padding: 34px 42px;
 
-    background: #fff8f0;
+    border-radius: 28px;
 
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.96),
+            rgba(255,248,239,0.95)
+        );
+
+    border: 1px solid #ffd8a8;
+
+    box-shadow:
+        0 14px 35px rgba(250,123,33,0.08);
+
+    backdrop-filter: blur(10px);
+
+    text-align: center;
 }
 
-/* Ảnh */
-.body-layout-revise img {
-    width: 90px;
-    height: auto;
-
-    object-fit: contain;
-
-    /* Tăng độ nét và tương phản */
-    filter: contrast(120%) brightness(105%) saturate(110%);
-
-    image-rendering: -webkit-optimize-contrast;
-
-    flex-shrink: 0;
-}
-
-/* Text */
-.body-text-revise {
-    text-align: left;
-    max-width: 570px;
-}
-
+/* =========================
+   HERO TEXT
+========================= */
 .body-text-revise h1 {
-    font-size: 26px;
-    line-height: 1.4;
-    margin-bottom: 6px;
+    font-size: 40px;
+    line-height: 1.35;
 
-    color: #173b63;
+    font-weight: 800;
+
+    color: #8f4700;
+
+    margin-bottom: 14px;
+
+    letter-spacing: 0.3px;
 }
 
 .body-text-revise p {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 16px;
+    line-height: 1.7;
 
-    color: #555;
+    color: #7a6a58;
+
+    max-width: 620px;
+
+    margin: auto;
 }
 
-.btn-start {}
-
-
-
-/*============================= Khung dưới =================================*/
-/*================ CARD =================*/
+/* =========================
+   FEATURE SECTION
+========================= */
 .feature-section-revise {
-    margin-bottom: 60px;
+    width: 92%;
+    max-width: 1200px;
+
+    margin: 0 auto 70px;
 }
 
+/* =========================
+   GRID
+========================= */
 .feature-list-revise {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
 
-    gap: 18px;
-
-    padding: 0 20px;
+    gap: 26px;
 }
 
-/* Card */
+/* =========================
+   CARD
+========================= */
 .feature-card-revise {
     position: relative;
 
-    height: 240px;
+    min-height: 240px;
 
-    border-radius: 22px;
+    border-radius: 28px;
 
     overflow: hidden;
 
-    border: 2px solid #e7c78e;
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #fff7ef
+        );
 
-    background: #fffaf2;
+    border: 1px solid #ffd8ae;
+
+    box-shadow:
+        0 10px 26px rgba(250,123,33,0.07);
+
+    transition: all 0.28s ease;
 
     cursor: pointer;
-
-    transition: 0.3s ease;
-
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
+/* hover */
 .feature-card-revise:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 18px 40px rgba(250,123,33,0.14);
 }
 
-/* Background mờ */
+/* top glow */
+.feature-card-revise::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 6px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd9a8 0%,
+            #ffc47a 100%
+        );
+}
+
+/* =========================
+   BG IMAGE
+========================= */
 .card-bg-revise {
     position: absolute;
     inset: 0;
@@ -128,18 +217,25 @@
     background-size: cover;
     background-position: center;
 
-    opacity: 0.12;
+    opacity: 0.08;
 }
 
-/* Overlay */
+/* overlay */
 .overlay-revise {
     position: absolute;
     inset: 0;
 
-    background: rgba(255,255,255,0.5);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.15),
+            rgba(255,255,255,0.82)
+        );
 }
 
-/* Nội dung */
+/* =========================
+   CONTENT
+========================= */
 .card-content-revise {
     position: relative;
     z-index: 2;
@@ -154,122 +250,128 @@
 
     text-align: center;
 
-    padding: 20px;
+    padding: 28px;
 }
 
-/* Icon */
-.subject-icon-revise {
-    width: 90px;
-    height: 90px;
-
-    object-fit: contain;
-
-    margin-bottom: 14px;
-}
-
-/* Title */
+/* =========================
+   TITLE
+========================= */
 .card-content-revise h3 {
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 26px;
+    font-weight: 800;
 
-    color: #1e2b45;
+    color: #6b3500;
 
-    margin-bottom: 14px;
+    margin-bottom: 24px;
+
+    line-height: 1.4;
 }
 
-/* Button */
+/* =========================
+   BUTTON
+========================= */
 .btn-practice {
-    border: 2px solid #d89b4d;
 
-    background: white;
+    padding: 12px 24px;
 
-    color: #d08932;
+    border: none;
+    border-radius: 14px;
 
+    background:
+        linear-gradient(
+            90deg,
+            #ffd9a8 0%,
+            #ffc47a 100%
+        );
 
-    padding: 10px 20px;
-
-    border-radius: 10px;
+    color: #7a3b00;
 
     font-size: 15px;
     font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.3s;
+    transition: all 0.25s ease;
+
+    box-shadow:
+        0 10px 22px rgba(255,196,122,0.25);
 }
 
+/* hover */
 .btn-practice:hover {
-    background: #d89b4d;
-    border: 1px solid #d89b4d;
-    color: white;
+
+    transform: translateY(-3px);
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffc983 0%,
+            #ffb860 100%
+        );
+
+    box-shadow:
+        0 14px 28px rgba(255,196,122,0.35);
 }
-/* Tablet */
+
+/* active */
+.btn-practice:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 992px) {
 
-    .feature-list-revise {
-        grid-template-columns: repeat(2, 1fr);
+    .body-text-revise h1 {
+        font-size: 34px;
     }
 
+    .feature-list-revise {
+        gap: 20px;
+    }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
 
-    .feature-list-revise {
-        grid-template-columns: 1fr;
+    .hero-section-revise {
+        padding: 70px 16px 50px;
     }
 
-    .feature-card-revise {
-        height: 280px;
+    .body-layout-revise {
+        padding: 26px 22px;
+        border-radius: 22px;
+    }
+
+    .body-text-revise h1 {
+        font-size: 28px;
     }
 
     .card-content-revise h3 {
+        font-size: 22px;
+    }
+
+    .feature-card-revise {
+        min-height: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .body-text-revise h1 {
         font-size: 24px;
+        line-height: 1.5;
     }
 
-    .body-layout-revise {
-        flex-direction: column;
-        text-align: center;
+    .body-text-revise p {
+        font-size: 14px;
     }
 
-    .body-text-revise {
-        text-align: center;
+    .card-content-revise {
+        padding: 22px;
+    }
+
+    .btn-practice {
+        width: 100%;
     }
 }
-/* ===== RESPONSIVE ===== */
-/* @media (max-width: 1024px) {
-    .feature-list-revise {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .feature-list-revise {
-        grid-template-columns: 1fr;
-    }
-
-    .feature-section-revise {
-        padding: 40px 0;
-    }
-} */
-
-/* Responsive Mobile */
-/* @media (max-width: 768px) {
-    .body-layout-revise {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .body-images {
-        justify-content: center;
-        margin-top: 24px;
-    }
-
-    .body-images img {
-        max-width: 120px;
-    }
-
-    .body-text h1 {
-        font-size: 26px;
-    }
-} */

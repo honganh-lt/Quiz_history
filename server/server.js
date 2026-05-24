@@ -82,6 +82,7 @@ app.use(cors({
     credentials: true
 }));
 
+//middleware đọc json
 app.use(express.json()); 
 
 // log request (debug)

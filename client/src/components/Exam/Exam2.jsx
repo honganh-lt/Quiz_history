@@ -25,7 +25,7 @@ export const Exam2 = () => {
                 <div className='container-exam'>
                     {/* Phần chữ */}
                     <div className='body-layout-exam'>
-                        <img src="./public/imghome/đt-1.png" alt="" />
+                        {/* <img src="./public/imghome/đt-1.png" alt="" /> */}
                         <div className='body-text-exam'>
                             <h1>Bộ đề thi trắc nghiệm online các lớp THPT</h1>
                             {/* <p>
@@ -34,7 +34,7 @@ export const Exam2 = () => {
                             </p> */}
 
                         </div>
-                        <img src="./public/imghome/đt-2.png" alt="" />
+                        {/* <img src="./public/imghome/đt-2.png" alt="" /> */}
                     </div>
                 </div>
             </section>

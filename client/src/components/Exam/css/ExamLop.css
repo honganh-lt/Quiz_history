@@ -1,123 +1,433 @@
-.main-exam-ten{
-    /* *(header) */
-    
+/* =========================
+   GLOBAL
+========================= */
+.main-exam-ten {
+
+    width: 100%;
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff8ef 0%,
+            #fff3e2 100%
+        );
 }
 
-/* ==========Khung trên=========== */
-.section-exam{
+/* =========================
+   HERO SECTION
+========================= */
+.section-exam {
+
+    position: relative;
+
+    width: 100%;
+
+    padding: 90px 20px 60px;
+
+    overflow: hidden;
+}
+
+/* Glow */
+.section-exam::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 320px;
+    height: 320px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 196, 122, 0.18);
+
+    top: -120px;
+    right: -100px;
+}
+
+.section-exam::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 179, 71, 0.14);
+
+    bottom: -80px;
+    left: -70px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container-exam {
+
+    width: 92%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================
+   HERO TEXT
+========================= */
+.text-exam {
+
+    max-width: 850px;
+
+    margin: auto;
+
+    padding: 36px 42px;
+
+    border-radius: 28px;
+
     text-align: center;
-    /* margin-bottom: 30px;
-    padding: 55px; */
-    margin: 30px 0;
-    padding: 20px;
-}
-.text-exam h1{
-    font-size: 3.2em;
-    line-height: 1.1;
+
+    background:
+        rgba(255,255,255,0.85);
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid #f7dcc0;
+
+    box-shadow:
+        0 12px 30px rgba(250,123,33,0.08);
 }
 
-/* =================Khung dưới============= */
-.down-section-exam{
-    display: flex;
-    justify-content: center;
-    /* align-items: center;
-    width: 100%; */
-    width: 100%;
-    padding: 40px;
+.text-exam h1 {
+
+    font-size: 42px;
+    font-weight: 800;
+
+    line-height: 1.4;
+
+    color: #7a3b00;
+
+    margin: 0;
 }
+
+/* =========================
+   LIST SECTION
+========================= */
+.down-section-exam {
+
+    width: 92%;
+    max-width: 1300px;
+
+    margin: 0 auto 70px;
+}
+
+.down-list-exam {
+
+    background:
+        rgba(255,255,255,0.65);
+
+    border: 1px solid #f7e2ca;
+
+    border-radius: 28px;
+
+    padding: 28px;
+
+    backdrop-filter: blur(14px);
+}
+
+/* =========================
+   GRID
+========================= */
 .card-list-exam {
+
     display: grid;
-    gap: 40px;
-    grid-template-columns: repeat(2, 1fr);
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 24px;
+
     width: 100%;
-    max-width: 1000px;
-    background-color: #fff;
 }
-/* Đề đã làm */
-.card-item-exam.done-exam {
-    background: #fff3e0;
-    border: 1px solid #ffcc80;
-}
-/* .down-list-exam{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    flex-direction: column;
-    gap: 20px; */
-    /* max-width: 900px; */
-    /* Căn giữa */
-    /* margin: 0 auto; 
-    align-items: center;
-} */
-/* CARD */
+
+/* =========================
+   CARD
+========================= */
 .card-item-exam {
-    width: 500px;     /* cố định chiều rộng */
-    height: 150px;    /* cố định chiều cao */
 
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
+    position: relative;
+
+    width: 100%;
+
+    min-height: 160px;
+
+    padding: 24px;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #fff8ef
+        );
+
+    border: 1px solid #f3d7b2;
+
+    box-shadow:
+        0 8px 20px rgba(250,123,33,0.06);
+
+    transition: all 0.28s ease;
 
     display: flex;
     flex-direction: column;
-    /* justify-content: center;
-    align-items: center; */
-
-    padding: 30px;
-}
-
-.card-item-exam:hover {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-/* TITLE */
-.card-item-exam h3 {
-    text-align: left;
-    font-size: 20px;
-    margin-bottom: 15px;
-    color: #1f2937;
-}
-.card-item-exam h5{
-    color: #989696;
-    font-weight: 500;
-    margin-top: -5px;
-}
-.exam-bottom{
-    display: flex;
-    /* đẩy ra 2 bên */
     justify-content: space-between;
-    align-items: center;
+}
+
+/* Top line */
+.card-item-exam::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
     width: 100%;
-    margin-top: -5px;
-}
-/* BUTTON */
-/* .btn-exam {
-    padding: 10px 18px;
-    border: 1px solid #f97316;
-    background: transparent;
-    color: #f97316;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-    width: 20%; 
+    height: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd9a8 0%,
+            #ffc47a 100%
+        );
 }
 
-.btn-exam:hover {
-    background: #f97316;
-    color: #fff;
-} */
+/* Hover */
+.card-item-exam:hover {
 
+    transform: translateY(-5px);
+
+    border: 1px solid #ffc47a;
+
+    box-shadow:
+        0 14px 28px rgba(250,123,33,0.12);
+}
+
+/* =========================
+   DONE CARD
+========================= */
+.card-item-exam.done-exam {
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8ef,
+            #fff2df
+        );
+
+    border: 1px solid #ffd39d;
+}
+
+/* Badge */
+.card-item-exam.done-exam::after {
+
+    content: "✓ Đã làm";
+
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    background: #f59e0b;
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    box-shadow:
+        0 6px 14px rgba(245,158,11,0.22);
+}
+
+/* =========================
+   TEXT
+========================= */
+.card-item-exam h3 {
+
+    font-size: 28px;
+    font-weight: 800;
+
+    color: #6b3500;
+
+    line-height: 1.3;
+
+    margin-bottom: 12px;
+}
+
+.card-item-exam h5 {
+
+    font-size: 15px;
+    line-height: 1.7;
+
+    font-weight: 500;
+
+    color: #8b7355;
+
+    margin-bottom: 20px;
+}
+
+/* =========================
+   BOTTOM
+========================= */
+.exam-bottom {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    margin-top: auto;
+}
+
+.exam-bottom h4 {
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #7a3b00;
+}
+
+/* =========================
+   BUTTON
+========================= */
 .btn-exam {
-    margin-top: 10px;
-    padding: 8px 16px;
-    color: #fa7b21;
-    border-radius: 6px;
-    border: 1px solid #fa7b21;
-    cursor: pointer;
+
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffb45e,
+            #fa7b21
+        );
+
+    color: white;
+
     font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+
+    box-shadow:
+        0 6px 14px rgba(250,123,33,0.14);
 }
 
 .btn-exam:hover {
-    background-color: #c98021;
-    color: #fff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 22px rgba(250,123,33,0.2);
 }
 
+.btn-exam:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 992px) {
+
+    .text-exam h1 {
+        font-size: 34px;
+    }
+
+    .card-item-exam h3 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .section-exam {
+        padding: 70px 16px 50px;
+    }
+
+    .text-exam {
+
+        padding: 28px 22px;
+
+        border-radius: 24px;
+    }
+
+    .text-exam h1 {
+
+        font-size: 28px;
+        line-height: 1.5;
+    }
+
+    .down-list-exam {
+        padding: 18px;
+    }
+
+    .card-list-exam {
+        gap: 18px;
+    }
+
+    .card-item-exam {
+
+        min-height: auto;
+
+        padding: 22px;
+    }
+
+    .exam-bottom {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .btn-exam {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .text-exam h1 {
+        font-size: 24px;
+    }
+
+    .card-item-exam h3 {
+        font-size: 22px;
+    }
+
+    .card-item-exam h5 {
+        font-size: 14px;
+    }
+}

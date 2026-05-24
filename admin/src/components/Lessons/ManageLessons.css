@@ -1,73 +1,190 @@
-.admin-container{
+.admin-container {
     grid-area: main;
     padding: 30px;
     background: #f5f7fb;
+    min-height: calc(100vh - 60px); 
+    box-sizing: border-box;
 }
+
 /* Top-bar */
-.top-bar{
+.top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 15px;
 }
-.add-btn{
+
+.top-bar h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #1e293b;
+}
+
+.add-btn {
     background: #4da3ff;
     border: none;
     padding: 10px 15px;
     color: white;
     border-radius: 6px;
     cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap; 
+    transition: background 0.2s;
+}
+
+.add-btn:hover {
+    background: #258eff;
+}
+
+/* 🌟 BỌC TABLE TRÁNH VỠ KHUNG TRÊN MOBILE */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; 
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Lesson */
-.lesson-table{
+.lesson-table {
     width: 100%;
-    /*  */
     border-collapse: collapse;
     background: white;
 }
+
 .lesson-table th,
 .lesson-table td {
-    padding: 12px;
+    padding: 12px 15px;
     border-bottom: 1px solid #ddd;
     text-align: left;
+    font-size: 14px;
 }
-.lesson-table th{
+
+.lesson-table th {
     background: #f5f5f5;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap; 
 }
+
+/* 🌟 ÉP RIÊNG CỘT CUỐI CÙNG (CỘT CHỨA NÚT) KHÔNG BỊ CO QUÁ NHỎ */
+.lesson-table th:last-child,
+.lesson-table td:last-child {
+    width: 1%;            /* Mẹo nhỏ để cột vừa khít nội dung */
+    white-space: nowrap;  /* Tuyệt đối không cho nội dung cột này xuống hàng */
+}
+
+/* Xử lý thu gọn text bằng dấu 3 chấm trên PC */
 .lesson-table td:not(:first-child):not(:last-child) {
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.2s ease;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease;
 }
 
-/* Hover → hiện full text */
-.lesson-table td:not(:first-child):not(:last-child):hover {
-  white-space: normal;     /* xuống dòng */
-  overflow: visible;
-  background: #f9f9f9;
-  z-index: 10;
-  position: relative;
+/* Hover → hiện full text trên PC */
+@media screen and (min-width: 993px) {
+    .lesson-table td:not(:first-child):not(:last-child):hover {
+        white-space: normal; 
+        overflow: visible;
+        background: #f9f9f9;
+        z-index: 10;
+        position: relative;
+    }
 }
 
-/* Button */
-.edit-btn{
+/* 🌟 CẬP NHẬT: Container bọc nút hành động luôn nằm ngang */
+.action-buttons {
+    display: flex;
+    flex-direction: row; /* Đảm bảo luôn xếp theo hàng ngang */
+    flex-wrap: nowrap;   /* Tuyệt đối không cho phép tự xuống hàng */
+    align-items: center;
+    gap: 8px;            /* Khoảng cách giữa nút Sửa và Xóa */
+}
+
+/* Button Hành động */
+.edit-btn {
     background: #f3d73c;
     border: none;
-    padding: 6px 10px;
+    padding: 6px 12px;
     color: white;
-    margin-right: 5px;
     border-radius: 5px;
     cursor: pointer;
-
+    font-size: 13px;
+    white-space: nowrap; /* Chữ "Sửa" không bị rớt */
+    transition: opacity 0.2s;
 }
+
 .delete-btn {
-  background: #ff4d4f;
-  border: none;
-  padding: 6px 10px;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+    background: #ff4d4f;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap; /* Chữ "Xóa" không bị rớt */
+    transition: opacity 0.2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 0.9;
+}
+
+
+/* ======================================================== */
+/* 🌟 ĐOẠN CODE RESPONSIVE (MEDIA QUERIES) CHO CÁC MÀN HÌNH 🌟 */
+/* ======================================================== */
+
+/* 1. Màn hình Máy tính bảng (max-width: 992px) */
+@media screen and (max-width: 992px) {
+    .admin-container {
+        padding: 20px; 
+    }
+    
+    .lesson-table td:not(:first-child):not(:last-child) {
+        max-width: 150px; 
+    }
+}
+
+/* 2. Màn hình Điện thoại di động (max-width: 576px) */
+@media screen and (max-width: 576px) {
+    .admin-container {
+        padding: 15px;
+    }
+
+    /* Đẩy Tiêu đề và Nút "Thêm mới" thành 2 hàng dọc */
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .top-bar h2 {
+        font-size: 20px; 
+    }
+
+    .add-btn {
+        width: 100%; 
+        text-align: center;
+        padding: 12px;
+    }
+    
+    .lesson-table th,
+    .lesson-table td {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .lesson-table td:not(:first-child):not(:last-child) {
+        max-width: 120px; 
+    }
+    
+    /* 🌟 Bổ sung để nút bấm vừa vặn ngón tay hơn trên mobile mà vẫn thẳng hàng */
+    .edit-btn, .delete-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
 }

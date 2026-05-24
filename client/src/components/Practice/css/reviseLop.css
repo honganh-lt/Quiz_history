@@ -1,130 +1,445 @@
-/* Toàn bộ */
-.main-ten{
+/* =========================
+   GLOBAL
+========================= */
+.main-ten {
     width: 100%;
-    background: #fff;
+    min-height: 100vh;
+    background: #fffaf5;
 }
 
-/* Khung trên */
-.hero-section-ten{
-    /* display: flex;
-    margin-top: 70px;
-    margin-bottom: 20px; */
-    /* background: linear-gradient(135deg, #4facfe, #00f2fe); */
-    padding: 60px 0;
-    /* color: #fa7b21; */
+/* =========================
+   HERO SECTION
+========================= */
+.hero-section-ten {
+    width: 100%;
+
+    padding: 80px 0 60px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd9a8 0%,
+            #ffc47a 100%
+        );
+
+    position: relative;
+    overflow: hidden;
 }
-.container-ten{
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+
+/* Glow background */
+.hero-section-ten::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.18);
+
+    top: -180px;
+    right: -120px;
 }
-/* Layout */
-.body-layout-ten{
+
+.hero-section-ten::after {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.12);
+
+    bottom: -120px;
+    left: -100px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container-ten {
+    width: 92%;
+    max-width: 1250px;
+
+    margin: auto;
+
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================
+   HERO LAYOUT
+========================= */
+.body-layout-ten {
     display: flex;
-    /* Đẩy 2 bên */
-    justify-content: space-between; 
-    /* Căn giữa theo chiều dọc */
+
     align-items: center;
-    /* text-align: center; */
+    justify-content: center;
+
+    text-align: center;
 }
-.body-text-ten h1{
-    /* text-align: center; */
-    font-size: 44px;
-    font-weight: bold;
-    /* bỏ margin dưới của h1 để không lệch */
+
+/* =========================
+   HERO TEXT
+========================= */
+.body-text-ten h1 {
+    font-size: 46px;
+    font-weight: 800;
+
+    color: #7a3e00;
+
     margin: 0;
-    /* color: #fa7b21; */
-}
-.hero-section-ten .revise-search{
-    /* width: 30%;
-    margin-top: 35px;
-    border: 1px solid #fa7b21;
-    border-radius: 6px;
-    padding: 6px; */
-    /* background: #eee; */
-    /* box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); */
-    display: flex;
-    justify-content: right;
-    /* margin-left: 40px; */
-}
-.revise-search input{
-    width: 450px;
-    /* margin-left: 40px; */
-    padding: 12px 16px;
-    border-radius: 6px;
-    border: 1px solid #fa7b21;
-    outline: none;
-    font-size: 16px;
-    transition: 0.3s;
-}
-/* Hiệu ứng focus */
-.revise-search input:focus{
-    width: 450px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-/* Optional: hover  */
-.revise-search input:hover{
-    transform: scale(1.03);
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 4px 12px rgba(255,255,255,0.3);
 }
 
-
-/* Khung dưới */
+/* =========================
+   FEATURE SECTION
+========================= */
 .feature-section-ten {
-    width: 80%;
-    margin: 0 auto;
+    width: 92%;
+    max-width: 1250px;
+
+    margin: -25px auto 60px;
+
+    position: relative;
+    z-index: 10;
 }
 
+/* =========================
+   LIST
+========================= */
 .feature-list-ten {
-    /* display: flex;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 24px; */
+    display: flex;
+    flex-direction: column;
 
+    gap: 18px;
 }
 
+/* =========================
+   CHAPTER CARD
+========================= */
 .card-list {
-    /* background: #fff; */
-    border-radius: 14px;
-    padding: 20px;
-    /* box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); */
+    /* background: #fffdf9; */
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    /* border: 1px solid #f7dcc0; */
+    background: #fff8f1;
+    border: 1px solid #ffd9b0;
+
+    box-shadow:
+        0 4px 14px rgba(250,123,33,0.05);
+
+    transition: 0.25s ease;
+}
+.card-list:hover {
+    transform: translateY(-3px);
 }
 
+/* Chapter title */
 .card-list h2 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    color: #fa7b21;
-    text-align: left;
+    font-size: 22px;
+    font-weight: 800;
+
+    margin-bottom: 24px;
+
+    color: #5a3200;
+
+    position: relative;
+
+    padding-left: 18px;
 }
 
+/* Left line */
+.card-list h2::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 4px;
+
+    width: 6px;
+    height: 32px;
+
+    border-radius: 20px;
+
+    background:
+    linear-gradient(
+        to bottom,
+        #ffbf73,
+        #f59e42
+    );
+}
+
+/* =========================
+   LESSON GRID
+========================= */
 .card-list-ten {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(260px, 1fr));
+
+    gap: 22px;
 }
 
-/* Ô item */
+/* =========================
+   LESSON CARD
+========================= */
 .card-ten-item {
-    border: 1px solid #eee;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 14px;
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    border: 1px solid #f3e3cf;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: all 0.28s ease;
+
+    display: flex;
     flex-direction: column;
-    transition: all 0.25s ease;
-    background: #fafafa;
+    justify-content: space-between;
+
+    min-height: 160px;
+
+    box-shadow:
+        0 4px 14px rgba(250,123,33,0.05);
 }
 
-.done{
-    background: #fff3e0;
-    border: 1px solid #ffcc80;
+/* Top gradient */
+.card-ten-item::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ffc47a,
+        #f59e42
+    );
 }
-.btn-practice-lop {     
-    margin-top: 10px;     
-    padding: 8px 16px;     
-    color: #fa7b21;     
-    border-radius: 6px;     
-    border: 1px solid #fa7b21;     
-    cursor: pointer;     
-    font-size: 14px; } 
-.btn-practice-lop:hover {     
-    background-color: #c98021;     
-    color: #fff; }
+
+/* Hover */
+.card-ten-item:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 14px 30px rgba(250,123,33,0.12);
+}
+
+/* =========================
+   DONE CARD
+========================= */
+.card-ten-item.done {
+    background:
+        linear-gradient(
+            135deg,
+            #fff8ef,
+            #fff2df
+        );
+
+    border: 1px solid #ffd39d;
+}
+
+/* Badge */
+.card-ten-item.done::after {
+    content: "✓ Hoàn thành";
+
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    background: #f59e0b;
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    padding: 6px 10px;
+
+    border-radius: 30px;
+}
+
+/* =========================
+   TEXT
+========================= */
+.card-ten-item h3 {
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #fa7b21;
+
+    margin-bottom: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.card-ten-item h4 {
+    font-size: 17px;
+    line-height: 1.4;
+
+    color: #3b2a1a;
+
+    font-weight: 700;
+
+    margin-bottom: 24px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.btn-practice-lop {
+
+    width: fit-content;
+
+    padding: 10px 22px;
+
+    border: none;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffbf73,
+            #f5a142
+        );
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+
+    align-self: flex-end;
+
+    box-shadow:
+        0 8px 18px rgba(245,161,66,0.22);
+}
+
+/* Hover */
+.btn-practice-lop:hover {
+
+    transform: translateY(-2px);
+
+    background:
+        linear-gradient(
+            90deg,
+            #f5a142,
+            #eb8d24
+        );
+
+    box-shadow:
+        0 12px 22px rgba(235,141,36,0.28);
+}
+
+/* Active */
+.btn-practice-lop:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 992px) {
+
+    .body-text-ten h1 {
+        font-size: 40px;
+    }
+
+    .card-list {
+        padding: 22px;
+    }
+
+    .card-list h2 {
+        font-size: 22px;
+    }
+
+    .card-ten-item h4 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .hero-section-ten {
+        padding: 65px 0 50px;
+    }
+
+    .body-text-ten h1 {
+        font-size: 32px;
+    }
+
+    .feature-section-ten {
+        width: 94%;
+    }
+
+    .card-list {
+        border-radius: 18px;
+        padding: 18px;
+    }
+
+    .card-list h2 {
+        font-size: 20px;
+    }
+
+    .card-list-ten {
+        grid-template-columns: 1fr;
+    }
+
+    .card-ten-item {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .body-text-ten h1 {
+        font-size: 26px;
+    }
+
+    .card-ten-item {
+        padding: 18px;
+    }
+
+    .card-ten-item h4 {
+        font-size: 17px;
+    }
+
+    .btn-practice-lop {
+        width: 100%;
+        justify-content: center;
+    }
+}

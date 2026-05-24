@@ -1,118 +1,237 @@
-.admin-container{
+.admin-container {
     grid-area: main;
     padding: 30px;
     background: #f5f7fb;
+    min-height: calc(100vh - 60px); 
+    box-sizing: border-box;
 }
-/* Top-bar */
+
+/* ======================================================== */
+/* 1. TOP BAR & CÁC NÚT HÀNH ĐỘNG PHÍA TRÊN                   */
+/* ======================================================== */
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 16px 20px;
-    /* background: #dcdcdc; */
     border-radius: 12px;
+    margin-bottom: 20px;
+    gap: 15px;
 }
 
+.top-bar h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #1e293b;
+}
+
+/* Khối chức năng chứa Tìm kiếm, Thêm, Import */
 .action-buttons {
     display: flex;
     align-items: center;
     gap: 10px;
 }
-.search-ques{
-    padding: 7px;
+
+.search-ques {
+    padding: 7px 12px;
     border-radius: 6px;
     border: 1px solid #4da3ff;
+    width: 200px;
+    box-sizing: border-box;
+    transition: all 0.2s;
 }
-.search-ques:focus{
+
+.search-ques:focus {
     outline: 1px solid #0c7ef8;
 }
-.add-btn{
+
+.add-btn, .import-btn {
     background: #4da3ff;
     border: none;
     padding: 10px 15px;
     color: white;
     border-radius: 6px;
     cursor: pointer;
-}
-.import-btn{
-     background: #4da3ff;
-    border: none;
-    padding: 10px 15px;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap; 
+    transition: background 0.2s;
 }
 
-/* Question table */
-.question-table{
+.add-btn:hover, .import-btn:hover {
+    background: #258eff;
+}
+
+
+/* ======================================================== */
+/* 2. CẤU TRÚC BẢNG CÂU HỎI & NÚT SỬA/XÓA TRONG BẢNG        */
+/* ======================================================== */
+
+/* Khung bọc chống tràn bảng */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; 
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.question-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
-    table-layout: fixed;
-}
-.question-table th{
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-.question-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
- /* .question-table td {
-  max-width: 180px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-} */
-.question-table td:not(:first-child):not(:last-child) {
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.2s ease;
+    table-layout: fixed; /* Giữ tỷ lệ chia cột */
 }
 
-/* Hover → hiện full text */
-.question-table td:not(:first-child):not(:last-child):hover {
-  white-space: normal;     /* xuống dòng */
-  overflow: visible;
-  background: #f9f9f9;
-  z-index: 10;
-  position: relative;
-}
-
-
-.question-table th{
+.question-table th {
     background: #f5f5f5;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap;
 }
-/* Xử lý text dài */
-/* .question-text{
-    max-width: 400px;
+
+.question-table th,
+.question-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+}
+
+/* 🌟 KHÓA CỨNG CỘT THAO TÁC: Đảm bảo cột cuối đủ rộng cho các nút bấm nằm ngang */
+.question-table th:last-child,
+.question-table td:last-child {
+    width: 140px !important; /* Đặt chiều rộng cố định vừa khít 2 nút */
+    white-space: nowrap;      /* Tuyệt đối không cho cột này rớt dòng */
+}
+
+/* Thu gọn nội dung câu hỏi dài thành dấu 3 chấm trên PC */
+.question-table td:not(:first-child):not(:last-child) {
+    max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-} */
+    transition: all 0.2s ease;
+}
 
-/* Button */
-.edit-btn{
+/* Hover hiện full chữ trên máy tính */
+@media screen and (min-width: 993px) {
+    .question-table td:not(:first-child):not(:last-child):hover {
+        white-space: normal; 
+        overflow: visible;
+        background: #f9f9f9;
+        z-index: 10;
+        position: relative;
+    }
+}
+
+/* 🌟 ÉP CỤM NÚT SỬA/XÓA LUÔN NẰM NGANG NHAU */
+.row-actions {
+    display: flex !important;
+    flex-direction: row !important; /* Xếp hàng ngang */
+    flex-wrap: nowrap !important;   /* Cấm xuống hàng dưới mọi hình thức */
+    align-items: center;
+    gap: 6px;                       /* Khoảng cách giữa nút sửa và xóa */
+}
+
+/* CSS cho nút trong bảng */
+.edit-btn {
     background: #f3d73c;
     border: none;
-    padding: 6px 10px;
+    padding: 6px 12px;
     color: white;
-    margin-right: 5px;
     border-radius: 5px;
     cursor: pointer;
-
+    font-size: 13px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
 }
 
 .delete-btn {
-  background: #ff4d4f;
-  border: none;
-  padding: 6px 10px;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+    background: #ff4d4f;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 0.9;
+}
+
+
+/* ======================================================== */
+/* 3. ĐOẠN CODE RESPONSIVE (MEDIA QUERIES)                   */
+/* ======================================================== */
+
+/* Màn hình Máy tính bảng (max-width: 992px) */
+@media screen and (max-width: 992px) {
+    .admin-container {
+        padding: 20px;
+    }
+
+    .top-bar {
+        padding: 12px 15px;
+    }
+
+    .question-table td:not(:first-child):not(:last-child) {
+        max-width: 150px;
+    }
+}
+
+/* Màn hình Điện thoại di động (max-width: 576px) */
+@media screen and (max-width: 576px) {
+    .admin-container {
+        padding: 15px;
+    }
+
+    /* Đẩy tiêu đề và khối chức năng trên cùng thành hàng dọc */
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0; 
+        gap: 12px;
+    }
+
+    .top-bar h2 {
+        font-size: 20px;
+    }
+
+    /* Đẩy các nút tìm kiếm, thêm, import thành hàng dọc full chiều rộng */
+    .action-buttons {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .search-ques {
+        width: 100%; 
+        padding: 10px;
+    }
+
+    .add-btn, .import-btn {
+        width: 100%; 
+        text-align: center;
+        padding: 11px;
+    }
+    
+    .question-table th,
+    .question-table td {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .question-table td:not(:first-child):not(:last-child) {
+        max-width: 110px; 
+    }
+    
+    /* Thu nhỏ nút một chút trên mobile để lọt thỏm hàng ngang */
+    .edit-btn, .delete-btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
 }

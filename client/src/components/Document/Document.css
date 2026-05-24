@@ -1,0 +1,95 @@
+.document-page{
+
+    width:95%;
+    max-width:1400px;
+
+    margin:40px auto;
+}
+
+/* tên môn */
+.subject-title{
+
+    text-align:center;
+
+    font-size:42px;
+
+    color:#ff8800;
+
+    margin-bottom:40px;
+
+    font-weight:800;
+}
+
+/* grid */
+.chapter-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(500px, 1fr));
+
+    gap:30px;
+}
+
+/* card */
+.chapter-card{
+
+    background:#f7f7f7;
+
+    border:4px solid #ff8800;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    transition:0.3s;
+}
+
+.chapter-card:hover{
+
+    transform:translateY(-4px);
+}
+
+/* title */
+.chapter-card h2{
+
+    color:#001b8e;
+
+    font-size:30px;
+
+    margin-bottom:28px;
+
+    font-weight:800;
+}
+
+/* bài */
+.lesson-item{
+
+    margin-bottom:24px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.lesson-item:hover{
+
+    transform:translateX(6px);
+}
+
+/* tên bài */
+.lesson-item h3{
+
+    color:#001b8e;
+
+    font-size:20px;
+
+    line-height:1.5;
+
+    font-weight:600;
+}
+
+.lesson-item:hover h3{
+
+    color:#ff6600;
+}

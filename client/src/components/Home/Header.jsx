@@ -1,113 +1,190 @@
 import { useNavigate } from 'react-router-dom'
 import './css/Header.css'
-import {  useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import { logout } from '../../../../admin/src/api/authApiAdmin';
-// import { getSubjects } from '../../api/subjectApi';
+
+// import API
+import { getSubjects } from '../../api/subjectApi';
 
 function Header() {
+
     const navigate = useNavigate();
-    //Subject: lấy dữ liệu theo môn học
-    // const [subjects, setSubjects] = useState([]);
 
-
-    // Tách riêng 2 state
     const [openUserMenu, setOpenUserMenu] = useState(false);
-    // const [openExamMenu, setOpenExamMenu] = useState(false);
+
+    const [openDocumentMenu, setOpenDocumentMenu] = useState(false);
+
+    // state môn học
+    const [subjects, setSubjects] = useState([]);
 
     const user = JSON.parse(localStorage.getItem("user"));
 
-    // const handleLogout = () => {
-    //     localStorage.removeItem("user");
-    //     navigate("/");
-    // }
+    // Gọi API
+    useEffect(() => {
+
+        getSubjects()
+            .then(res => {
+                setSubjects(res.data);
+            })
+
+            .catch(err => console.error(err));
+
+    }, []);
 
     const handleLogout = async () => {
-    try {
-        const refresh_token = localStorage.getItem("refresh_token");
 
-        // gọi BE để revoke token
-        await logout(refresh_token);
+        try {
 
-        // xoá toàn bộ
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        localStorage.removeItem("user");
-        
+            const refresh_token = localStorage.getItem("refresh_token");
 
-        navigate("/");
-    } catch (error) {
-        console.log(error);
+            await logout(refresh_token);
 
-        // fallback nếu lỗi
-        localStorage.clear();
-        navigate("/login");
-    }
-};
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("user");
 
-    //Gọi API khi load trang
-    // useEffect(() => {
-    //     getSubjects()
-    //     .then(res => {
-    //         setSubjects(res.data);
-    //     })
-    //     .catch(err => console.error(err));
-    // }, []);
+            navigate("/");
+
+        } catch (error) {
+
+            console.log(error);
+
+            localStorage.clear();
+
+            navigate("/login");
+        }
+    };
 
     return (
+
         <header className="header">
+
             <div className="container">
+
                 <div className="header-inner">
 
                     {/* Logo */}
                     <div className="logo">
-                        {/* <h1>Lịch sử</h1> */}
+                        <img src="/imghome/logo1.png" alt="" />
                     </div>
 
                     {/* Menu */}
                     <nav className="menu">
+
                         <a href="/">Trang chủ</a>
-                        {/* Ấn vào Ôn tập sẽ hiện ra môn lịch sử theo lớp */}
-                        {/* Vào file: Revise: <h3>{item.subject_name}</h3> chính là lấy đc môn học */}
-                        <a href="/practice">Ôn tập</a> 
-                        <a href="/exam">Luyện thi</a>
-                        
+
+                        <a href="/practice">
+                            Ôn tập
+                        </a>
+
+                        <a href="/exam">
+                            Luyện thi
+                        </a>
+
+                        {/* MENU TÀI LIỆU */}
+                        <div
+                            className="document-menu"
+                            onMouseEnter={() => setOpenDocumentMenu(true)}
+                            onMouseLeave={() => setOpenDocumentMenu(false)}
+                        >
+
+                            <span
+                                className="document-title"
+
+                                onClick={() =>
+                                    navigate("/document/1")
+                                }
+                            >
+                                Tài liệu
+                                {" "}
+                                <i className="fa-solid fa-caret-down"></i>
+                            </span>
+
+                            {openDocumentMenu && (
+
+                                <div className="document-dropdown">
+
+                                    {subjects.map((item) => (
+
+                                        <div
+                                            key={item.subject_id}
+                                            className="document-item"
+
+                                            onClick={() =>
+                                                navigate(`/document/${item.subject_id}`)
+                                            }
+                                        >
+                                            {item.subject_name}
+                                        </div>
+
+                                    ))}
+
+                                </div>
+
+                            )}
+
+                        </div>
+
                     </nav>
 
                     {/* Auth */}
                     <div className='auth'>
+
                         {user ? (
+
                             <div className='user-menu'>
+
                                 <div
                                     className='user-info'
                                     onClick={() => {
                                         setOpenUserMenu(!openUserMenu);
-                                        // setOpenExamMenu(false); // tắt luyện thi
                                     }}
                                 >
-                                    <span>{user.full_name}</span>
+
+                                    <span className='username'>
+                                        {user.full_name}
+                                    </span>
+
                                     <i className="fa-solid fa-circle-user user-icon"></i>
+
                                 </div>
 
                                 {openUserMenu && (
+
                                     <div className="dropdown">
+
                                         <div onClick={() => navigate("/profile")}>
-                                            Thông tin cá nhân
+                                            Hồ sơ
                                         </div>
+
                                         <div onClick={handleLogout}>
                                             Đăng xuất
                                         </div>
+
                                     </div>
+
                                 )}
+
                             </div>
+
                         ) : (
-                            <span onClick={() => navigate("/login")} className="login">
-                            Đăng nhập
-                            </span>  
+
+                            <span
+                                onClick={() => navigate("/login")}
+                                className="login"
+                            >
+                                Đăng nhập
+                            </span>
+
                         )}
+
                     </div>
 
                 </div>
+
             </div>
+
         </header>
     )
 }

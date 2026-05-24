@@ -1,0 +1,137 @@
+/* ===== OVERLAY ===== */
+.document-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+/* ===== MODAL BOX ===== */
+.document-content {
+    width: 520px;
+    max-width: 95%;
+
+    background: #ffffff;
+    border-radius: 16px;
+
+    padding: 22px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/* ===== TITLE ===== */
+.document-content h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* ===== CLOSE BUTTON ===== */
+.document-content button:first-child {
+    position: absolute;
+    margin-top: -10px;
+    margin-left: -10px;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    border: none;
+    background: #f1f5f9;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+/* ===== GROUP ===== */
+.document-content select,
+.document-content input,
+.document-content textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #dbe1ea;
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: all 0.2s ease;
+
+    box-sizing: border-box;
+
+    background: #f8fafc;
+
+    margin-bottom: 12px;
+}
+
+/* TEXTAREA */
+.document-content textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* FOCUS EFFECT */
+.document-content input:focus,
+.document-content select:focus,
+.document-content textarea:focus {
+    border-color: #2563eb;
+    background: #fff;
+
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* ===== BUTTON GROUP ===== */
+.document-content button {
+    padding: 10px 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 500;
+}
+
+/* SAVE BUTTON */
+.document-content button:nth-last-child(2) {
+    background: #2563eb;
+    color: white;
+
+    margin-right: 10px;
+}
+
+/* CANCEL BUTTON */
+.document-content button:last-child {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+/* HOVER */
+.document-content button:hover {
+    opacity: 0.9;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

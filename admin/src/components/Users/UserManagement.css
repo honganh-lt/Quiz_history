@@ -1,53 +1,56 @@
-.main-conatiner{
+.main-container { /* 🌟 ĐÃ SỬA: Sửa lỗi chính tả từ .main-conatiner thành .main-container */
     grid-area: main;
-    /* margin-top: 20px; */
-    /*khoảng cách  trên */
     padding: 30px;
     background: #f5f7fb;
+    min-height: calc(100vh - 60px); /* Đảm bảo chiều cao tối thiểu trừ đi header */
+    box-sizing: border-box;
 }
 
 /* TOP */
 .top-bar {
     display: flex;
-    /*  */
     justify-content: space-between; 
-    /* căn dọc */
     align-items: center;
     margin-bottom: 20px;
 }
-.title{
 
-}
-
-.add-btn{
+.add-btn {
     background: #2f80ed;
     color: white;
     border: none;
-    /*  */
     padding: 8px 14px;
-    /*  */
     border-radius: 5px;
     cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap; /* Không cho chữ nút Bị rớt dòng */
 }
 
 /* filter */
-.filter-bar{
+.filter-bar {
     display: flex;
-    /* căn ngang  */
     justify-content: space-between;
-    /* khoảng cách với chữ dưới */
+    align-items: center;
     margin-bottom: 15px;
-
+    gap: 15px;
 }
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap; /* Hỗ trợ tự xuống hàng nếu quá nhiều nút lọc trên mobile */
+    gap: 5px;
+}
+
 .filter {
     border: none;
-    /*  */
     padding: 6px 12px;
-    margin-right: 5px;
     background: #e9ecef;
     border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
 }
-.filter.active:hover {
+
+.filter.active, .filter:hover {
     background: #2f80ed;
     color: white;
 }
@@ -57,27 +60,42 @@
     padding: 6px 10px;
     border: 1px solid #4994f6;
     border-radius: 5px;
+    width: 220px; /* Độ rộng cố định trên màn hình lớn */
+    box-sizing: border-box;
 }
-.search:focus{
+.search:focus {
     outline: 1px solid #1073f6;
+}
+
+/* 🌟 BỌC TABLE TRÁNH VỠ KHUNG (Xử lý Responsive cho Table) */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Tạo thanh cuộn ngang riêng cho bảng khi màn hình quá nhỏ */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
 }
 
 /* Table */
 .user-table {
     width: 100%;
-    /*  */
     border-collapse: collapse;
     background: white;
+    white-space: nowrap; /* Giữ chữ trên một hàng để bảng không bị méo mó */
 }
 
 .user-table th,
 .user-table td {
-    padding: 10px;
+    padding: 12px 15px; /* Tăng nhẹ không gian click */
     border-bottom: 1px solid #eee;
     text-align: center;
+    font-size: 14px;
 }
 .user-table th {
     background: #f1f3f5;
+    font-weight: 600;
+    color: #495057;
 }
 
 /* Role */
@@ -86,71 +104,135 @@
     border-radius: 4px;
     color: white;
     font-size: 13px;
+    display: inline-block;
+}
+.role.user { background: #2f80ed; }
+.role.admin { background: #6c757d; }
 
-}
-.role.user{
-    background: #2f80ed;
-}
-.role.admin{
-    background: #6c757d;
+/* Button Actions */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 5px; /* Tạo khoảng cách đều giữa các nút bấm hành động */
 }
 
-/* Button */
 .edit {
     background: #f2c94c;
     border: none;
     padding: 5px 10px;
-    /* khoảng cách với nút bên cạnh */
-    margin-right: 5px;
     border-radius: 4px;
     cursor: pointer;
     color: #fff;
+    margin-right: 5px;
 }
 
-.block{
+.block {
     background: #f0f0f0;
     color: #ff9800;
     border: none;
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
+    margin-left: 5px;
 }
-.block:hover{
+.block:hover {
     background: #ff9800;
     color: white;
 }
+
 .delete {
     background: #eb5757;
     color: white;
     border: none;
     padding: 5px 10px;
-    margin-right: 5px;
     border-radius: 4px;
     cursor: pointer;
 }
 
 /* Pagination */
-.pagination{
+.pagination {
     margin-top: 20px;
     display: flex;
-    /* gap: 10px; */
     justify-content: center;
     align-items: center;
-
 }
 .pagination button {
     margin-right: 5px;
-    padding: 5px 10px;
+    padding: 6px 12px;
     border: 1px solid #ddd;
     background: white;
     cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
 }
 .pagination button.active {
     background: #2f80ed;
     color: white;
+    border-color: #2f80ed;
 }
-.pagination button.disabled{
-    /*  */
+.pagination button.disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+
+/* ======================================================== */
+/* 🌟 ĐOẠN CODE RESPONSIVE (MEDIA QUERIES) CHO CÁC MÀN HÌNH 🌟 */
+/* ======================================================== */
+
+/* 1. Màn hình Máy tính bảng & Laptop nhỏ (max-width: 992px) */
+@media screen and (max-width: 992px) {
+    .main-container {
+        padding: 20px; /* Thu nhỏ bớt không gian trống */
+    }
+}
+
+/* 2. Màn hình Điện thoại di động (max-width: 576px) */
+@media screen and (max-width: 576px) {
+    .main-container {
+        padding: 15px;
+    }
+
+    /* Đẩy tiêu đề và nút Thêm mới xếp chồng theo hàng dọc */
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .add-btn {
+        width: 100%; /* Nút Thêm mới chiếm trọn màn hình cho dễ bấm */
+        text-align: center;
+        padding: 10px;
+    }
+
+    /* Đẩy Thanh lọc và Thanh tìm kiếm xếp chồng dọc */
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .filter-group {
+        justify-content: flex-start; /* Trải đều các nút lọc trên điện thoại */
+    }
+
+    .filter {
+        flex: 1; /* Các button lọc tự giãn đều nhau */
+        text-align: center;
+        padding: 8px 5px;
+        font-size: 13px;
+    }
+
+    .search {
+        width: 100%; /* Ô tìm kiếm dài full màn hình di động */
+        padding: 8px 12px;
+    }
+    
+    /* Thu nhỏ kích thước phân trang trên mobile */
+    .pagination button {
+        padding: 5px 8px;
+        font-size: 12px;
+        margin-right: 3px;
+    }
 }

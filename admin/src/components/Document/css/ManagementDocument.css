@@ -1,0 +1,226 @@
+.document {
+    grid-area: main;
+    padding: 30px;
+    background: #f5f7fb;
+
+    /* width: 100%; */ /* ❌ XOÁ HOẶC COMMENT DÒNG NÀY ĐI */
+    min-height: 100vh;
+    
+    /* Thay vì hidden mỗi trục X, hãy dùng bao quát hoặc kiểm tra lại Grid chứa nó */
+    overflow: hidden; 
+}
+
+
+/* CONTAINER */
+.document-admin-container {
+    width: 100%;
+}
+
+/* TOP */
+.document-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.document-top-bar h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+/* TABLE WRAPPER */
+.document-main-content {
+    width: 100%;
+    overflow-x: auto; /*  ĐỔI TỪ hidden THÀNH auto ĐỂ BẢNG TỰ CUỘN NẾU QUÁ TRÀN */
+    background: white; /* Đảm bảo nền đồng bộ nếu bảng bị cuộn */
+    border-radius: 8px; /* Thêm bo góc cho đẹp */
+}
+
+/* TABLE */
+.document-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    background: white;
+}
+
+/* HEADER */
+/* CELL */
+.document-table th{
+    text-align: left;
+}
+.document-table th,
+.document-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e5e7eb;
+
+    overflow: hidden;
+    word-break: break-word;
+}
+/* .document-table td {
+    position: relative;
+} */
+/* ============================= */
+/* TEXT ELLIPSIS + TOOLTIP      */
+/* ============================= */
+
+/* TEXT BỊ RÚT GỌN */
+.text-ellipsis {
+    width: 100%;
+    display: block;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    cursor: pointer;
+}
+/* tooltip */
+/* .text-ellipsis:hover::after {
+    content: attr(data-full);
+
+    position: absolute;
+    top: 120%;
+    left: 0;
+
+    background: rgba(17, 24, 39, 0.95);
+    color: #fff;
+
+    padding: 10px 12px;
+    border-radius: 8px;
+
+    max-width: 350px;
+    width: max-content;
+
+    white-space: normal;
+
+    z-index: 99999;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+
+    pointer-events: none; /* tránh bị mất hover 
+} */
+
+/* hover xem full */
+.document-table td:hover .text-ellipsis {
+    white-space: normal;
+    overflow: visible;
+    word-break: break-all; /* Giúp bẻ đôi chữ nếu text quá sát lề */
+
+    /* background: #f9f9f9; */
+    /* padding: 6px; */
+    border-radius: 6px;
+
+    position: relative;
+    z-index: 10;
+
+    display: inline-block;
+}
+.doc-content {
+  max-width: 300px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  cursor: pointer;
+}
+/* TITLE WRAPPER */
+.doc-title {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* EMPTY */
+.empty-text {
+    text-align: center;
+    padding: 20px;
+    color: #9ca3af;
+}
+
+/* BUTTON DELETE (nếu bạn dùng class này) */
+.document-delete-btn {
+    width: 40px;
+    height: 40px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #ef4444;
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+
+    transition: 0.25s ease;
+}
+
+.document-delete-btn:hover {
+    background: #dc2626;
+    transform: scale(1.05);
+}
+
+/* SCROLLBAR */
+.document-main-content::-webkit-scrollbar {
+    height: 8px;
+}
+
+.document-main-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* ============================= */
+/* TABLET                       */
+/* ============================= */
+@media screen and (max-width: 992px) {
+    .document {
+        padding: 20px;
+    }
+
+    .document-main-content {
+        padding: 18px;
+    }
+
+    .document-top-bar h2 {
+        font-size: 26px;
+    }
+}
+
+/* ============================= */
+/* MOBILE                       */
+/* ============================= */
+@media screen and (max-width: 768px) {
+    .document {
+        padding: 15px;
+    }
+
+    .document-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .document-top-bar h2 {
+        font-size: 22px;
+    }
+
+    .document-main-content {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .document-table thead th,
+    .document-table tbody td {
+        padding: 12px;
+        font-size: 14px;
+    }
+}

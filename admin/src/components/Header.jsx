@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
-// import { useSearchParams } from 'react-router-dom';
-// import { getUser } from '../api/userApi';
 import "./Header.css"
 
-export const Header = () => {
+export const Header = ({ toggleSidebar }) => { // 🌟 Thêm prop toggleSidebar vào đây
 
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState(null);
 
-    //vì phải đăng nhập trước mới vào mà dữ liệu đã đc lưu user ở localStorage
-    //nên dùng code dưới đây  (======đã đc lưu user ở localStorage=========)
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("user"));
         if(userData) {
@@ -16,41 +12,23 @@ export const Header = () => {
         }
     }, [])
 
-  return (
-    <div className="header">
-        <div className='header-left'>
-            <h2></h2>
+    return (
+        <div className="header">
+            <div className='header-left'>
+                {/* 🌟 Nút Hamburger xuất hiện ở đây để mở Sidebar khi thu nhỏ */}
+                <i className="fa-solid fa-bars menu-icon" onClick={toggleSidebar}></i>
+                {/* <h2>VNUA Education Manager</h2> */}
+            </div>
+            <div className="header-right">
+                {users && (
+                    <h4>
+                        {users.username}
+                        <i className="fa-solid fa-circle-user user-icon"></i>
+                    </h4>
+                )}
+            </div>
         </div>
-        <div className="header-right">
-            {users && (
-                <h4>
-                    {users.username}
-                    <i className="fa-solid fa-circle-user user-icon"></i>
-                </h4>
-            )}
-        </div>
-    </div>
-  )
+    )
 }
 
- export default Header;
-
-
-//  import React from 'react'
-// import {  BsPersonCircle } from 'react-icons/bs'
-
-
-// function Header() {
-//     return (
-//         <header className="header">
-//             <div className="header-right">
-//                 <a href="/login">
-//                     <BsPersonCircle className='icon' />
-//                 </a>
-//             </div>
-//         </header>
-//     )
-// }
-
-
-// export default Header
+export default Header;

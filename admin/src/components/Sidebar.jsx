@@ -1,106 +1,107 @@
 import React from 'react'
-// import {
-//   BsPerson,
-//   BsBook,
-//   BsBookshelf,
-//   BsHouse,
-//   BsQuestion
-// } from 'react-icons/bs'
 import './sidebar.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../api/authApiAdmin';
 
-function Sidebar({ openSidebarToggle }) {
+function Sidebar({ openSidebarToggle, toggleSidebar }) { // 🌟 Nhận thêm toggleSidebar để bấm đóng khi ở màn hình nhỏ
 
   const navigate = useNavigate();
 
-const handleLogout = async () => {
-  try {
-    const refresh_token = localStorage.getItem("refresh_token");
+  const handleLogout = async () => {
+    try {
+      const refresh_token = localStorage.getItem("refresh_token");
+      await logout(refresh_token);
 
-    await logout(refresh_token);
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
 
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("user");
-
-    navigate("/login");
-  } catch (error) {
-    console.log(error);
-
-    localStorage.clear();
-    navigate("/login");
-  }
-};
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      localStorage.clear();
+      navigate("/login");
+    }
+  };
 
   return (
+    // 🌟 Nếu openSidebarToggle = true thì thêm class sidebar-responsive
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
+     <div className="sidebar-mobile-header">
+         {/* Nút X này giúp người dùng đóng menu lại khi ở mobile */}
+         <i className="fa-solid fa-xmark close-icon" onClick={toggleSidebar}></i>
+     </div>
+
       <ul className="sidebar-list">
 
         <li className="sidebar-list-item">
           <NavLink to="/admin">
-            {/* <BsHouse className="icon" /> */}
-            Home
+            <i className="fa-solid fa-house icon"></i>
+            <span>Home</span>
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/users">
-            {/* <BsPerson className="icon" /> */}
-            Quản lý User
+            <i className="fa-solid fa-user icon"></i>
+            <span>Quản lý User</span>
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/subjects">
-            {/* <BsBookshelf className="icon" /> */}
-            Quản lý môn học
+            <i className="fa-solid fa-book icon"></i>
+            <span>Quản lý môn học</span>
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/chapters">
-            {/* <BsBookshelf className="icon" /> */}
-            Quản lý chương
+            <i className="fa-solid fa-folder-open icon"></i>
+            <span>Quản lý chương</span>
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/lessons">
-            {/* <BsBook className="icon" /> */}
-            Quản lý bài học
+            <i className="fa-solid fa-chalkboard-user icon"></i>
+            <span>Quản lý bài học</span>
           </NavLink>
         </li>
+        
         <li className="sidebar-list-item">
           <NavLink to="/document">
-            {/* <BsBook className="icon" /> */}
-            Quản lý tài liệu
+            <i className="fa-solid fa-file-lines icon"></i>
+            <span>Quản lý tài liệu</span>
           </NavLink>
         </li>
         
         <li className="sidebar-list-item">
           <NavLink to="/questions">
-            {/* <BsQuestion className="icon" /> */}
-            Quản lý câu hỏi
+            <i className="fa-solid fa-circle-question icon"></i>
+            <span>Quản lý câu hỏi</span>
           </NavLink>
         </li>
+        
         <li className="sidebar-list-item">
           <NavLink to="/exam">
-            {/* <BsBook className="icon" /> */}
-            Quản lý đề thi
+            <i className="fa-solid fa-file-signature icon"></i>
+            <span>Quản lý đề thi</span>
           </NavLink>
         </li>
 
         <li className="sidebar-list-item">
           <NavLink to="/user-exam">
-            {/* <BsBook className="icon" /> */}
-            Quản lý bài thi User
+            <i className="fa-solid fa-graduation-cap icon"></i>
+            <span>Quản lý bài thi User</span>
           </NavLink>
         </li>
+
         <li className="sidebar-list-item-login">
-         <span onClick={handleLogout} style={{cursor: "pointer"}}>
-          Đăng xuất
-         </span>
+          <span onClick={handleLogout} className="logout-button">
+            <i className="fa-solid fa-right-from-bracket icon"></i>
+            <span>Đăng xuất</span>
+          </span>
         </li>
 
       </ul>

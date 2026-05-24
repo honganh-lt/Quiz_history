@@ -1,61 +1,29 @@
 const express = require("express");
-
 const router = express.Router();
 
-const uploadPdf =
-require("../middleware/uploadPDF");
-
-
-
 const {
-
     createDocument,
-
-    getDocumentsByLesson,
-
+    getAllDocuments,
     deleteDocument,
-
-    getAllDocuments
-
+    updateDocument,
+    getDocumentsBySubject,
+    getDocumentDetail
 } = require("../controllers/documentController");
 
+// create
+router.post("/create", createDocument);
 
+// get all
+router.get("/", getAllDocuments);
 
+// GET THEO MÔN HỌC
+router.get("/subject/:subjectId", getDocumentsBySubject);
 
-// upload
-router.post(
-    "/",
-    uploadPdf.single("file"),
-    createDocument
-);
+router.get("/detail/:documentId", getDocumentDetail);
+// update
+router.put("/update/:id", updateDocument);
 
-
-
-
-// admin lấy tất cả
-router.get(
-    "/",
-    getAllDocuments
-);
-
-
-
-
-// user lấy theo lesson
-router.get(
-    "/:lessonId",
-    getDocumentsByLesson
-);
-
-
-
-
-// xoá
-router.delete(
-    "/:id",
-    deleteDocument
-);
-
-
+// delete
+router.delete("/:id", deleteDocument);
 
 module.exports = router;

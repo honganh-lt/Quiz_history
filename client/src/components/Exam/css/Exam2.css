@@ -1,179 +1,412 @@
-/* Main */
+/* =========================
+   GLOBAL
+========================= */
 .main-exam {
-    /* background: #f5bf75; */
-    /* padding: 180px 0; */
     width: 100%;
-    background: #fff;
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff8ef 0%,
+            #fff3e2 100%
+        );
 }
 
-/* Khung trên cùng (Hero Section) */
+/* =========================
+   HERO SECTION
+========================= */
 .hero-section-exam {
-    background: #ffffff; /* Nền trắng tinh tế để nổi bật chữ và ảnh */
-    padding: 60px 0; /* Tạo không gian thoáng đãng phía trên và dưới */
-    min-height: 25vh;
+    position: relative;
+
+    width: 100%;
+
+    padding: 90px 20px 70px;
+
+    overflow: hidden;
+}
+
+/* glow */
+.hero-section-exam::before {
+    content: "";
+
+    position: absolute;
+
+    width: 340px;
+    height: 340px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 196, 122, 0.18);
+
+    top: -120px;
+    right: -100px;
+}
+
+.hero-section-exam::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 179, 71, 0.14);
+
+    bottom: -90px;
+    left: -70px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container-exam {
+    width: 92%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================
+   HERO LAYOUT
+========================= */
+.body-layout-exam {
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
+    gap: 38px;
+
+    padding: 36px 44px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.96),
+            rgba(255,248,239,0.95)
+        );
+
+    border: 1px solid #ffd9ab;
+
+    box-shadow:
+        0 14px 35px rgba(250,123,33,0.08);
+
+    backdrop-filter: blur(10px);
 }
 
-.hero-section-exam .container-exam {
-    width: 100%;
-    max-width: 1200px; /* Giới hạn khung để không bị tràn màn hình lớn */
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Layout chứa 2 ảnh và chữ ở giữa */
-.body-layout-exam {
-    display: flex;
-    align-items: center;    /* Căn giữa ảnh và chữ theo chiều dọc thẳng hàng */
-    justify-content: center; /* Căn giữa toàn bộ cụm theo chiều ngang */
-    gap: 50px;              /* Tăng khoảng cách lên 50px để khi ảnh to ra không bị đè vào chữ */
-}
-
-/* Định dạng tối ưu lại cho 2 bức ảnh trang trí (đt-1 và đt-2) */
+/* =========================
+   SIDE IMAGE
+========================= */
 .body-layout-exam img {
-    width: 150px;           /* Tăng kích thước từ 80px lên 150px để cân bằng với font 38px */
-    height: 150px;          /* Cố định khung vuông để tỷ lệ ảnh không bao giờ bị méo */
-    object-fit: contain;    /* Ép bức ảnh tự thu phóng vừa vặn bên trong khung vuông, giữ nguyên tỷ lệ gốc */
-    
-    /* Bộ lọc nâng cao của CSS giúp khử răng cưa và làm mịn viền ảnh khi phóng to */
-    image-rendering: -webkit-optimize-contrast; 
-    image-rendering: smooth;
-    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.05)); /* Thêm đổ bóng cực nhẹ giúp ảnh trông nổi bật và đỡ bị lộ vết vỡ viền */
+
+    width: 120px;
+    height: 120px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 8px 18px rgba(250,123,33,0.15)
+        );
+
+    transition: 0.3s ease;
 }
 
-/* Khối text ở giữa */
+.body-layout-exam img:hover {
+    transform: translateY(-4px);
+}
+
+/* =========================
+   TEXT
+========================= */
 .body-text-exam {
-    max-width: 700px;       /* Nới rộng khung chữ một chút để tương xứng với ảnh mới */
+    max-width: 700px;
+
     text-align: center;
 }
 
-/* Phần chữ Tiêu đề chính */
 .body-text-exam h1 {
-    font-size: 38px; /* Tăng nhẹ kích thước tạo điểm nhấn */
-    font-weight: 700;
-    color: #1a202c; /* Màu chữ xanh đen đậm cực sang thay vì đen xì */
-    line-height: 1.4; /* Khoảng cách giữa các dòng thoáng hơn */
+
+    font-size: 42px;
+    line-height: 1.4;
+
+    font-weight: 800;
+
+    color: #7a3b00;
+
     margin: 0;
+
+    letter-spacing: 0.4px;
 }
 
-/* Phần chữ mô tả nếu sau này bạn mở comment <p> ra dùng */
 .body-text-exam p {
+
     font-size: 16px;
-    color: #718096; /* Màu xám hiện đại */
-    font-weight: 400;
-    margin-top: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
+
+    color: #7a6a58;
+
+    margin-top: 14px;
 }
-.btn-start {}
 
-
-
-/*============================= Khung dưới =================================*/
+/* =========================
+   FEATURE SECTION
+========================= */
 .feature-section-exam {
-    margin-bottom: 60px;
+
+    width: 92%;
+    max-width: 1200px;
+
+    margin: 0 auto 70px;
 }
 
-.feature-section-exam h2 {
-    text-align: left;
-    margin-left: 38px;
-    font-size: 28px;
-    margin-bottom: 30px;
-}
-
-/* Grid */
+/* =========================
+   GRID
+========================= */
 .feature-list-exam {
+
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 0 20px;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 26px;
 }
 
-/* Card */
+/* =========================
+   CARD
+========================= */
 .feature-card-exam {
-    background: #f8d8ab;
-    padding: 20px;
-    border-radius: 12px;
+
+    position: relative;
+
+    padding: 34px 26px;
+
+    border-radius: 28px;
+
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #fff7ef
+        );
+
+    border: 1px solid #ffd9ab;
+
+    box-shadow:
+        0 10px 28px rgba(250,123,33,0.07);
 
     display: flex;
     flex-direction: column;
-    align-items: center;
 
-    transition: 0.3s;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.3s ease;
+
     cursor: pointer;
 }
 
-.feature-card-exam:hover {
-    transform: translateY(-6px);
+/* top gradient */
+.feature-card-exam::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 6px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd9a8 0%,
+            #ffc47a 100%
+        );
 }
 
-/* Ảnh */
-.card-image-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* hover */
+.feature-card-exam:hover {
 
-    margin-bottom: 8px; /* giảm khoảng cách dưới ảnh */
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 20px 40px rgba(250,123,33,0.14);
+}
+
+/* =========================
+   IMAGE
+========================= */
+.card-image-wrapper {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 20px;
 }
 
 .subject-card-img {
-    width: 150px;
+
+    width: 140px;
     height: 120px;
+
     object-fit: contain;
+
+    transition: 0.3s ease;
 }
 
-/* Tên môn */
+.feature-card-exam:hover .subject-card-img {
+    transform: scale(1.05);
+}
+
+/* =========================
+   TITLE
+========================= */
 .feature-card-exam h3 {
-    margin: 6px 0; /* giảm khoảng cách */
-    padding: 0;
-    font-size: 20px;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    color: #6b3500;
+
+    margin-bottom: 22px;
+
     text-align: center;
 }
 
-/* Button */
+/* =========================
+   BUTTON
+========================= */
 .btn-exam-btn {
-    margin-top: 6px; /* giảm khoảng cách nút */
-    padding: 8px 16px;
 
-    color: #fa7b21;
-    background: white;
+    padding: 12px 24px;
 
-    border-radius: 6px;
-    border: 1px solid #fa7b21;
+    border: none;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd9a8 0%,
+            #ffc47a 100%
+        );
+
+    color: #7a3b00;
+
+    font-size: 15px;
+    font-weight: 700;
 
     cursor: pointer;
-    font-size: 14px;
 
-    transition: 0.3s;
+    transition: all 0.25s ease;
+
+    box-shadow:
+        0 10px 22px rgba(255,196,122,0.28);
 }
 
+/* hover */
 .btn-exam-btn:hover {
-    background-color: #c98021;
-    color: #fff;
+
+    transform: translateY(-3px);
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffc983 0%,
+            #ffb860 100%
+        );
+
+    box-shadow:
+        0 14px 28px rgba(255,196,122,0.35);
 }
 
-/* Responsive tablet */
+/* active */
+.btn-exam-btn:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 992px) {
-    .feature-list-exam {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 
-/* Responsive mobile */
-@media (max-width: 600px) {
-    .feature-list-exam {
-        grid-template-columns: 1fr;
+    .body-layout-exam {
+        gap: 20px;
+        padding: 30px;
     }
 
-    .subject-card-img {
+    .body-text-exam h1 {
+        font-size: 34px;
+    }
+
+    .body-layout-exam img {
         width: 90px;
         height: 90px;
     }
+}
+
+@media (max-width: 768px) {
+
+    .hero-section-exam {
+        padding: 70px 16px 50px;
+    }
+
+    .body-layout-exam {
+
+        flex-direction: column;
+
+        gap: 22px;
+
+        padding: 28px 22px;
+    }
+
+    .body-text-exam h1 {
+        font-size: 28px;
+    }
+
+    .feature-card-exam {
+        padding: 28px 20px;
+    }
 
     .feature-card-exam h3 {
-        font-size: 18px;
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .body-layout-exam img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .body-text-exam h1 {
+
+        font-size: 24px;
+        line-height: 1.5;
+    }
+
+    .subject-card-img {
+        width: 110px;
+        height: 90px;
+    }
+
+    .btn-exam-btn {
+        width: 100%;
     }
 }

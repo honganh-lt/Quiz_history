@@ -1,61 +1,244 @@
-.review{
-    display: flex;
-    /* padding: 20px 30px; */
-    justify-content: center;
-    align-items: flex-start;
+/* ===== PAGE ===== */
+.review {
+    min-height: 100vh;
+    background: linear-gradient(
+        180deg,
+        #fff8f1 0%,
+        #fffdf9 100%
+    );
 
+    padding: 30px 20px 60px;
+    display: flex;
+    justify-content: center;
 }
-.review-page{
+
+/* ===== CONTAINER ===== */
+.review-page {
+    width: 100%;
+    max-width: 1100px;
+
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 1200px;
 }
-.review-page h2{
+
+/* ===== TITLE ===== */
+.review-page h2 {
     text-align: center;
-    margin-bottom: 20px;
-    padding: 20px;
+
+    font-size: 40px;
     font-weight: 800;
-    font-size: 30px;
+
+    margin-bottom: 34px;
+
+    color: #7c3f00;
+
+    position: relative;
 }
-.review-page-list{
-    margin-bottom: 25px;
+
+.review-page h2::after {
+    content: "";
+
+    width: 90px;
+    height: 4px;
+
+    background: linear-gradient(
+        90deg,
+        #fa7b21,
+        #ffb36b
+    );
+
+    border-radius: 999px;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -12px;
 }
-.review-page .review-page-ans{
-    border-radius: 7px;
-    /* border: 1px solid #adf394; */
+
+/* ===== QUESTION CARD ===== */
+.review-page-list {
+    background: #ffffff;
+
+    border: 1px solid #f4dfc8;
+    border-radius: 22px;
+
+    padding: 24px 26px;
+
+    margin-bottom: 24px;
+
+    box-shadow: 0 8px 24px rgba(250, 123, 33, 0.08);
+
+    transition: 0.25s ease;
 }
-/* Trả lời */
+
+.review-page-list:hover {
+    /* transform: translateY(-3px); */
+
+    box-shadow: 0 12px 28px rgba(250, 123, 33, 0.14);
+}
+
+/* ===== QUESTION ===== */
+.review-page-list h4 {
+    font-size: 20px;
+    font-weight: 700;
+
+    line-height: 1.5;
+
+    margin-bottom: 18px;
+
+    color: #2d3748;
+}
+
+/* ===== ANSWERS ===== */
 .review-page-ans {
-    margin: 6px 0;
-    padding: 10px;
-    border-radius: 8px;
-    background: #f1f1f1;
+    padding: 14px 16px;
+
+    margin: 10px 0;
+
+    border-radius: 14px;
+
+    border: 1px solid #ececec;
+
+    background: #fafafa;
+
+    color: #374151;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: 0.2s ease;
 }
 
+/* ===== CORRECT ===== */
 .review-page-ans.correct {
-    background: #d4edda;
-    color: #155724;
-    border: 2px solid #22c55e;
+    background: #ecfdf3;
+
+    border: 1px solid #86efac;
+
+    color: #166534;
+
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.08);
 }
 
+/* ===== WRONG ===== */
 .review-page-ans.wrong {
-    background: #f99898;
-    color: #5c0c03;
-    border: 2px solid #ef4444;
+    background: #fff1f2;
+
+    border: 1px solid #fda4af;
+
+    color: #be123c;
+
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08);
 }
 
-/* Làm lại bài */
-.review button{
-    margin: 20px auto 0 auto;  /* auto giúp căn giữa ngang */
-    display: block;
-    padding: 10px 18px;
-    border-radius: 6px;
-    border: 1px solid #000;
+/* ===== CORRECT ANSWER TEXT ===== */
+.review-page-list p {
+    margin-top: 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #16a34a;
+}
+
+/* ===== BUTTON ===== */
+.review button {
+    margin: 36px auto 0;
+
+    padding: 13px 30px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #fa7b21,
+        #ff9d4d
+    );
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+
+    box-shadow: 0 8px 18px rgba(250, 123, 33, 0.22);
+}
+
+.review button:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 12px 24px rgba(250, 123, 33, 0.3);
+}
+
+/* ===== LOADING / EMPTY ===== */
+.review-loading,
+.review-empty {
+    min-height: 60vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 16px;
+
+    color: #7c3f00;
+}
+
+.review-empty button {
+    padding: 12px 22px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #fa7b21;
+    color: white;
+
     cursor: pointer;
 }
-.review button:hover{
-    border: 1px solid #fa7b21;
-    color: #fff;
-    background: #fc8835;
+
+/* ===== TABLET ===== */
+@media (max-width: 992px) {
+
+    .review-page h2 {
+        font-size: 34px;
+    }
+
+    .review-page-list {
+        padding: 22px;
+    }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
+    .review {
+        padding: 20px 14px 40px;
+    }
+
+    .review-page h2 {
+        font-size: 28px;
+    }
+
+    .review-page-list {
+        padding: 18px;
+        border-radius: 18px;
+    }
+
+    .review-page-list h4 {
+        font-size: 17px;
+    }
+
+    .review-page-ans {
+        font-size: 14px;
+        padding: 12px 14px;
+    }
+
+    .review button {
+        width: 100%;
+    }
 }

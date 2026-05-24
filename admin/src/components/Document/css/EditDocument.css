@@ -1,0 +1,139 @@
+/* ===== OVERLAY ===== */
+.document-edit-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* ===== MODAL BOX ===== */
+.document-edit-content {
+    width: 520px;
+    max-width: 95%;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    animation: editFadeIn 0.2s ease-in-out;
+}
+
+/* ===== TITLE ===== */
+.document-edit-content h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* ===== COMPONENT FORM ===== */
+.document-edit-content select,
+.document-edit-content input,
+.document-edit-content textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dbe1ea;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    background: #f8fafc;
+    margin-bottom: 12px;
+}
+
+.document-edit-content textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* FOCUS EFFECT */
+.document-edit-content input:focus,
+.document-edit-content select:focus,
+.document-edit-content textarea:focus {
+    border-color: #2563eb;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* ===== BUTTON GROUP ===== */
+.document-edit-content button {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.document-edit-content .btn-save {
+    background: #2563eb;
+    color: white;
+    margin-right: 10px;
+}
+
+.document-edit-content .btn-cancel {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.document-edit-content button:hover {
+    opacity: 0.9;
+}
+.btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* Nút chung */
+.btn-group button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Nút Cập nhật (primary) */
+.btn-group button:first-child {
+    background: #2563eb; /* xanh dương */
+    color: white;
+}
+
+.btn-group button:first-child:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* Nút Hủy (secondary) */
+.btn-group button:last-child {
+    background: #e5e7eb; /* xám nhạt */
+    color: #374151;
+}
+
+.btn-group button:last-child:hover {
+    background: #d1d5db;
+    transform: translateY(-1px);
+}
+
+/* Click effect */
+.btn-group button:active {
+    transform: scale(0.96);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes editFadeIn {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

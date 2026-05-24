@@ -36,9 +36,19 @@
   align-items: center;
   gap: 5px;
 }
-.subject-card-item img{
-  border-radius: 8px;
+.subject-image{
+    width: 160px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 14px;
 }
+
+.subject-card-item{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
 
 /* Button */
 .profile-nav {
@@ -64,4 +74,16 @@
 .profile-nav button:hover{
   background: #fc9e40;
   color: #000;
+}
+
+@media (max-width: 768px){
+    .subject-card-item{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .subject-image{
+        width: 100%;
+        max-width: 260px;
+    }
 }

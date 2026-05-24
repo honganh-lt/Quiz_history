@@ -20,6 +20,8 @@ import Progress from './components/PersonalProfile/Progress'
 import ForgotPassword from './components/RegisterLogin/ForgotPassword'
 // import ResetPassword from './components/RegisterLogin/ResetPassword'
 import ChangePassword from './components/PersonalProfile/changePassword'
+import Document from './components/Document/Document'
+import DocumentDetail from './components/Document/DocumentDetail'
 
 function App() {
   return (
@@ -66,6 +68,8 @@ function App() {
         <Route path="/progress/:subjectId" element={<Progress />} />
 
 
+        <Route path="/document/:subjectId" element={<Document />} />
+        <Route path="/document-detail/:documentId" element={<DocumentDetail />}/>
     </Routes>
   )
 }

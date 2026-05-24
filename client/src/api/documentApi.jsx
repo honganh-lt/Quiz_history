@@ -1,12 +1,12 @@
 import axiosClient from "../../../api/axiosClient";
 
-// lấy tài liệu theo lesson
-export const getDocumentsByLesson = async (lessonId) => {
+// danh sách tài liệu môn chương bài
+export const getDocumentsBySubject = async (subjectId) => {
 
     try {
 
         const res = await axiosClient.get(
-            `/documents/${lessonId}`
+            `/documents/subject/${subjectId}`
         );
 
         return res.data;
@@ -19,4 +19,21 @@ export const getDocumentsByLesson = async (lessonId) => {
     }
 };
 
+// chi tiết tài liệu theo bài học
+export const getDocumentDetail = async (documentId) => {
 
+    try {
+
+        const res = await axiosClient.get(
+            `/documents/detail/${documentId}`
+        );
+
+        return res.data;
+
+    } catch (error) {
+
+        console.log(error);
+
+        return null;
+    }
+};

@@ -1,12 +1,279 @@
-.footer {
-  height: 22vh;
-  background: #e7b97c; 
-  text-align: center;
-  padding: 12px;
-  /* margin-top: 19px; */
-  color: #333;
+/* ================= FOOTER HIỆN ĐẠI ================= */
+
+.site-footer {
+    background: linear-gradient(
+        180deg,
+        #f8d4a4 0%,
+        #efbb78 100%
+    );
+
+    padding: 70px 0 0;
+    color: #5b3514;
+
+    position: relative;
+    overflow: hidden;
+
+    border-top: 1px solid rgba(140, 83, 29, 0.12);
 }
-.footer p{
-    padding: 46px;
-    font-size: 24px;
+
+/* hiệu ứng nền nhẹ */
+.site-footer::before {
+    content: "";
+    position: absolute;
+
+    top: -120px;
+    right: -120px;
+
+    width: 280px;
+    height: 280px;
+
+    background: rgba(255,255,255,0.18);
+    border-radius: 50%;
+}
+
+.site-footer::after {
+    content: "";
+    position: absolute;
+
+    bottom: -100px;
+    left: -80px;
+
+    width: 240px;
+    height: 240px;
+
+    background: rgba(255,255,255,0.12);
+    border-radius: 50%;
+}
+
+/* ================= CONTAINER ================= */
+
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+
+    padding: 0 40px 50px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 45px;
+
+    position: relative;
+    z-index: 2;
+}
+
+/* ================= CỘT ================= */
+
+.footer-column {
+    /* background: rgba(255,255,255,0.42); */
+
+    backdrop-filter: blur(10px);
+
+    padding: 30px 28px;
+
+    border-radius: 22px;
+
+    /* border: 1px solid rgba(255,255,255,0.5); */
+
+    transition: all 0.35s ease;
+}
+
+.footer-column:hover {
+    /* transform: translateY(-6px); */
+
+    /* box-shadow:0 14px 32px rgba(140, 83, 29, 0.12); */
+}
+
+/* ================= TITLE ================= */
+
+.footer-column h3 {
+    font-size: 22px;
+    font-weight: 800;
+
+    margin-bottom: 22px;
+
+    color: #7a3f12;
+
+    position: relative;
+
+    display: inline-block;
+}
+
+.footer-column h3::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+
+    width: 60%;
+    height: 4px;
+
+    border-radius: 20px;
+
+    background: linear-gradient(
+        90deg,
+        #fa8c2b,
+        #ffbd73
+    );
+}
+
+/* ================= TEXT ================= */
+
+.footer-column p {
+    font-size: 15px;
+    line-height: 1.8;
+
+    color: #6a4b2e;
+
+    margin-bottom: 12px;
+}
+
+/* ================= MENU ================= */
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 14px;
+}
+
+.footer-column ul li a {
+    text-decoration: none;
+
+    color: #5f3d1f;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    position: relative;
+
+    transition: all 0.3s ease;
+}
+
+.footer-column ul li a::before {
+    content: "›";
+
+    margin-right: 8px;
+
+    color: #fa7b21;
+
+    transition: 0.3s;
+}
+
+.footer-column ul li a:hover {
+    color: #fa7b21;
+    padding-left: 6px;
+}
+
+/* ================= SOCIAL ================= */
+
+.footer-socials {
+    margin-top: 18px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.social-icon {
+    padding: 10px 18px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.7);
+
+    border: 1px solid rgba(255,255,255,0.6);
+
+    color: #7a3f12 !important;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: #fa7b21;
+
+    color: #fff !important;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(250, 123, 33, 0.25);
+}
+
+/* ================= BOTTOM ================= */
+
+.footer-bottom {
+    position: relative;
+    z-index: 2;
+
+    text-align: center;
+
+    padding: 22px;
+
+    border-top: 1px solid rgba(122, 63, 18, 0.12);
+
+    background: rgba(255,255,255,0.18);
+
+    backdrop-filter: blur(8px);
+}
+
+.footer-bottom p {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #6b4c30;
+
+    letter-spacing: 0.3px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .site-footer {
+        padding-top: 55px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+
+        padding: 0 20px 40px;
+    }
+
+    .footer-column {
+        padding: 24px;
+    }
+
+    .footer-column h3 {
+        font-size: 20px;
+    }
+
+    .footer-column p,
+    .footer-column ul li a {
+        font-size: 14px;
+    }
+
+    .footer-bottom {
+        padding: 18px;
+    }
+
+    .footer-bottom p {
+        font-size: 13px;
+    }
 }

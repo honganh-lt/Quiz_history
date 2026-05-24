@@ -1,225 +1,379 @@
-/* tránh scroll toàn trang */
-.main-examTen {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    /* chẵn scroll toàn trang */
-    overflow: hidden;
-    background: #f5f6f8;
+/* =========================
+   GLOBAL
+========================= */
+.main-examTen{
+    min-height:100vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff8f1 0%,
+            #fff3e3 100%
+        );
+
+    display:flex;
+    flex-direction:column;
 }
 
-/* .content {
-    flex: 1;
-    overflow-y: auto;
-} */
+/* =========================
+   LAYOUT
+========================= */
+.exam-layout{
+    flex:1;
 
-/* chia 2 cột chuẩn không tràn */
-.exam-layout {
-    flex: 1;
-    display: flex;
-    gap: 20px;
-    padding: 20px;
+    display:flex;
 
-    overflow: hidden; /* khóa scroll ngoài */
-    min-height: 0;
+    gap:24px;
+
+    padding:24px;
+
+    width:95%;
+    max-width:1400px;
+
+    margin:auto;
 }
 
-/* Khung trái + ko tràn*/
-.exam-left {
-    width: 280px;          /* FIX: không cho dài theo content */
-    flex-shrink: 0;        /* không bị co */
+/* =========================
+   LEFT SIDEBAR
+========================= */
+.exam-left{
 
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
+    width:320px;
 
-    overflow-y: auto;      /* nếu nhiều câu thì scroll riêng */
-    max-height: 100%;
-    border: 1px solid #e5e7eb;
+    flex-shrink:0;
 
-    color: #111;           /* FIX chữ đen rõ */
+    background:#fffdf9;
+
+    border-radius:24px;
+
+    padding:24px;
+
+    border:1px solid #ffe1bd;
+
+    box-shadow:
+        0 8px 24px rgba(245,158,66,0.08);
+
+    height:fit-content;
+
+    position:sticky;
+    top:100px;
 }
+
+/* title */
 .exam-left h3{
-    margin-bottom: 10px;
-    font-size: 19px;
-    color: #fa7b21;
-    /* padding: 5px; */
+    font-size:24px;
+    font-weight:800;
+
+    color:#7a3e00;
+
+    margin-bottom:18px;
+
+    line-height:1.4;
 }
+
+/* chapter */
 .exam-left h4{
-    margin-bottom: 7px;
-    color: #fa7b21;
+    font-size:16px;
+    font-weight:700;
+
+    color:#c97316;
+
+    margin-bottom:10px;
+
+    line-height:1.5;
 }
+
+/* lesson */
 .exam-left h5{
-    margin-bottom: 15px;
-    color: #fa7b21;
+    font-size:15px;
+    font-weight:600;
+
+    color:#8b5a2b;
+
+    margin-bottom:22px;
+
+    line-height:1.5;
 }
+
+/* score */
 .exam-left p{
-    font-size: 17px;
-    font-weight: 600;
-    color: #000;
-    /* color: #fa7b21; */
+    font-size:15px;
+    font-weight:700;
+
+    color:#444;
+
+    margin-bottom:16px;
 }
 
+/* =========================
+   QUESTION STATUS
+========================= */
+.question-status{
+    display:flex;
 
-.question-status {
-    margin-top: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-content: flex-start;
+    flex-wrap:wrap;
+
+    gap:10px;
 }
 
-.question-number {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
+.question-number{
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width:42px;
+    height:42px;
 
-    border: 1px solid #ccc;
-    background: white;
-    color: #111;
-    font-size: 14px;
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:white;
+
+    border:1px solid #ffd7ab;
+
+    color:#9a5a18;
+
+    font-weight:700;
+
+    transition:0.25s ease;
 }
 
-.question-number.answered {
-    background: #22c55e;
-    color: white;
-    border-color: #22c55e;
+.question-number:hover{
+    transform:translateY(-2px);
+
+    background:#fff3e2;
 }
 
-/* ===========Khung phải + scroll chính============= */
-.exam-right {
-    flex: 1;
-    background: #ffffff;
-    padding: 16px;
-    border-radius: 10px;
-    /* sidebar ko quá dài */
-    max-height: calc(100vh - 40px);
-    overflow-y: auto;   /* scroll chính */
-    max-height: 100%;
+/* answered */
+.question-number.answered{
 
-    border: 1px solid #e5e7eb;
+    background:
+        linear-gradient(
+            135deg,
+            #ffc47a,
+            #f5a142
+        );
+
+    color:white;
+
+    border:none;
+
+    box-shadow:
+        0 8px 18px rgba(245,161,66,0.25);
 }
 
-.exam-right h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.question-status {
-    margin-top: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-.question-number {
-    width: 34px;
-    height: 34px;
+/* =========================
+   RIGHT CONTENT
+========================= */
+.exam-right{
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex:1;
 
-    border-radius: 50%;
-    background: #fff;
-    color: #111;
+    background:#fffdf9;
 
-    border: 1px solid #d1d5db;
-    font-size: 14px;
+    border-radius:28px;
+
+    padding:30px;
+
+    border:1px solid #ffe1bd;
+
+    box-shadow:
+        0 8px 24px rgba(245,158,66,0.08);
 }
 
-.question-number.answered {
-    background: #22c55e;
-    color: #fff;
-    border-color: #22c55e;
-}
-.question-card {
-    background: white;
-    padding: 16px;
-    margin-bottom: 26px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-}
+/* title */
+.exam-right h1{
+    text-align:center;
 
+    font-size:34px;
+    font-weight:800;
 
-/* Trả lời */
-.answers-practice {
-    display: flex;
-    margin-top: 8px;
-    /* Xếp dọc */
-    flex-direction: column;
-    /* Khoảng cách giữa các đáp án */
-     gap: 10px;
-}
-.answer-practice-btn {
-    width: 100%;
-    text-align: left;
+    color:#7a3e00;
 
-    padding: 10px 12px;
-    border-radius: 6px;
-
-    background: #ffffff;
-    color: #111827;   /* FIX CHỮ ĐEN */
-
-    border: 1px solid #d1d5db;
-
-    cursor: pointer;
-    transition: 0.2s;
-}
-.answer-practice-btn:hover {
-    background: #fa7b21;
-    color: #fff;
-    border: 1px solid #fa7b21;
+    margin-bottom:36px;
 }
 
-.answer-practice-btn.correct {
-    background: #d1fae5;
-    color: #065f46;
-    border: 2px solid #22c55e;
+/* =========================
+   QUESTION CARD
+========================= */
+.question-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:24px;
+
+    margin-bottom:28px;
+
+    border:1px solid #ffe6c8;
+
+    box-shadow:
+        0 6px 18px rgba(245,158,66,0.06);
+
+    transition:0.25s ease;
 }
 
-.answer-practice-btn.wrong {
-    background: #fee2e2;
-    color: #991b1b;
-    border: 2px solid #ef4444;
+.question-card:hover{
+    /* transform:translateY(-3px); */
+
+    box-shadow:
+        0 12px 24px rgba(245,158,66,0.12);
 }
 
-.answer-practice-btn.show-correct {
-    background: #d1fae5;
-    color: #065f46;
-    border: 2px solid #22c55e;
-}
-/* Submit */
-/* .submit-exam {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* question title */
+.question-card h4{
 
-} */
-/* KHUNG NÚT NỘP */
-/* .submit-exam {
-    height: 20%;
+    font-size:20px;
+
+    line-height:1.6;
+
+    color:#000;
+
+    margin-bottom:22px;
 }
 
-.btn-practice-examTen {
-    display: block;
-    margin: 24px auto;
-    
+/* =========================
+   ANSWERS
+========================= */
+.answers-practice{
 
-} */
+    display:flex;
 
+    flex-direction:column;
 
+    gap:14px;
+}
 
-/* selectedAnswers là object
-Khi click đáp án bên phải:
+/* button */
+.answer-practice-btn{
 
-Lưu vào selectedAnswers
+    width:100%;
 
-React re-render
+    text-align:left;
 
-Khung trái tự động:
+    padding:16px 18px;
 
-Đổi màu số câu đã làm
-*/
+    border-radius:16px;
+
+    background:#fff;
+
+    border:1px solid #000;
+
+    color:#000;
+
+    font-size:15px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:all 0.25s ease;
+}
+
+/* hover */
+.answer-practice-btn:hover{
+
+    background:#fff1df;
+
+    border-color:#f5a142;
+
+    /* transform:translateX(3px); */
+}
+
+/* correct */
+.answer-practice-btn.correct{
+
+    background:#ecfdf3;
+
+    border:2px solid #22c55e;
+
+    color:#166534;
+
+    font-weight:700;
+}
+
+/* wrong */
+.answer-practice-btn.wrong{
+
+    background:#fef2f2;
+
+    border:2px solid #ef4444;
+
+    color:#991b1b;
+
+    font-weight:700;
+}
+
+/* show correct */
+.answer-practice-btn.show-correct{
+
+    background:#ecfdf3;
+
+    border:2px solid #22c55e;
+
+    color:#166534;
+
+    font-weight:700;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width:1100px){
+
+    .exam-layout{
+        flex-direction:column;
+    }
+
+    .exam-left{
+        width:100%;
+
+        position:static;
+    }
+}
+
+@media (max-width:768px){
+
+    .exam-layout{
+        width:100%;
+
+        padding:14px;
+    }
+
+    .exam-right{
+        padding:20px;
+    }
+
+    .exam-right h1{
+        font-size:28px;
+    }
+
+    .question-card{
+        padding:18px;
+    }
+
+    .question-card h4{
+        font-size:17px;
+    }
+
+    .answer-practice-btn{
+        padding:14px;
+        font-size:14px;
+    }
+}
+
+@media (max-width:480px){
+
+    .exam-left{
+        padding:18px;
+    }
+
+    .question-number{
+        width:38px;
+        height:38px;
+    }
+
+    .exam-right h1{
+        font-size:24px;
+    }
+}

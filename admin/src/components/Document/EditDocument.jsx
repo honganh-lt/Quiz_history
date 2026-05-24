@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { createDocument } from "../../api/documentApi";
+import React, { useState, useEffect } from "react";
+import { updateDocument } from "../../api/documentApi";
+import "./css/EditDocument.css";
 
-import "./css/AddDocument.css";
-
-const AddDocument = ({
+const EditDocument = ({
+    editData,
     onClose,
     onSuccess,
     subjects,
@@ -15,38 +15,49 @@ const AddDocument = ({
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-
     const [subjectId, setSubjectId] = useState("");
     const [chapterId, setChapterId] = useState("");
     const [lessonId, setLessonId] = useState("");
 
-    // ================= SUBMIT =================
+    // load data
+    useEffect(() => {
+        if (!editData) return;
 
-    const handleUpload = async () => {
+        setTitle(editData.title || "");
+        setContent(editData.content || "");
+        setSubjectId(editData.subject_id || "");
+        setChapterId(editData.chapter_id || "");
 
-        if (!lessonId) return alert("Chọn bài học");
-        if (!title) return alert("Nhập tiêu đề");
-        if (!content) return alert("Nhập nội dung");
+        if (editData.chapter_id) {
+            fetchLessons(editData.chapter_id);
+        }
+    }, [editData]);
 
-        await createDocument({
-            lesson_id: lessonId,
-            title,
-            content
-        });
+    useEffect(() => {
+        if (editData && lessons.length > 0) {
+            setLessonId(editData.lesson_id || "");
+        }
+    }, [lessons, editData]);
 
-        alert("Thêm tài liệu thành công");
+    const handleUpdate = async () => {
+        if (!lessonId || !title || !content) {
+            return alert("Thiếu dữ liệu");
+        }
 
-        // reset
-        setTitle("");
-        setContent("");
-        setSubjectId("");
-        setChapterId("");
-        setLessonId("");
+        try {
+            await updateDocument(editData.document_id, {
+                lesson_id: Number(lessonId),
+                title,
+                content
+            });
 
-        onSuccess();
+            alert("Cập nhật thành công");
+            onSuccess();
+        } catch (err) {
+            console.log(err);
+            alert("Lỗi cập nhật");
+        }
     };
-
-    // ================= CHANGE =================
 
     const handleChangeSubject = (value) => {
         setSubjectId(value);
@@ -63,8 +74,6 @@ const AddDocument = ({
         else setLessons([]);
     };
 
-    // ================= FILTER =================
-
     const filteredChapters = chapters.filter(
         c => c.subject_id === Number(subjectId)
     );
@@ -74,39 +83,32 @@ const AddDocument = ({
     );
 
     return (
-        <div className="document-modal">
+        <div className="document-edit-modal">
+            <div className="document-edit-content">
 
-            <div className="document-content">
+                <h2>Chỉnh sửa tài liệu</h2>
 
-                {/* <button onClick={onClose}>×</button> */}
-
-                <h2>Thêm tài liệu SGK</h2>
-
-                {/* TITLE */}
                 <input
                     value={title}
-                    placeholder="Tiêu đề"
                     onChange={(e) => setTitle(e.target.value)}
                 />
 
-                {/* SUBJECT */}
                 <select
                     value={subjectId}
                     onChange={(e) => handleChangeSubject(e.target.value)}
                 >
                     <option value="">Chọn môn</option>
-                    {subjects.map(sub => (
-                        <option key={sub.subject_id} value={sub.subject_id}>
-                            {sub.subject_name}
+                    {subjects.map(s => (
+                        <option key={s.subject_id} value={s.subject_id}>
+                            {s.subject_name}
                         </option>
                     ))}
                 </select>
 
-                {/* CHAPTER */}
                 <select
                     value={chapterId}
-                    disabled={!subjectId}
                     onChange={(e) => handleChangeChapter(e.target.value)}
+                    disabled={!subjectId}
                 >
                     <option value="">Chọn chương</option>
                     {filteredChapters.map(c => (
@@ -116,11 +118,10 @@ const AddDocument = ({
                     ))}
                 </select>
 
-                {/* LESSON */}
                 <select
                     value={lessonId}
-                    disabled={!chapterId}
                     onChange={(e) => setLessonId(e.target.value)}
+                    disabled={!chapterId}
                 >
                     <option value="">Chọn bài học</option>
                     {filteredLessons.map(l => (
@@ -130,27 +131,20 @@ const AddDocument = ({
                     ))}
                 </select>
 
-                {/* CONTENT */}
                 <textarea
-                    rows="12"
+                    rows="10"
                     value={content}
-                    placeholder="Nhập nội dung SGK..."
                     onChange={(e) => setContent(e.target.value)}
                 />
 
-                {/* ACTION */}
-                <button onClick={handleUpload}>
-                    Lưu tài liệu
-                </button>
-
-                <button onClick={onClose}>
-                    Hủy
-                </button>
+                <div className="btn-group">
+                    <button onClick={handleUpdate}>Cập nhật</button>
+                    <button onClick={onClose}>Hủy</button>
+                </div>
 
             </div>
-
         </div>
     );
 };
 
-export default AddDocument;
+export default EditDocument;
