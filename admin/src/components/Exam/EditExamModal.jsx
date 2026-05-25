@@ -1,158 +1,126 @@
-import React, { useEffect, useState } from 'react'
-import "./css/EditExamModal.css"
-import {  updateExams } from '../../api/examApi';
-// import axios from 'axios';
-// import { updateExam } from '../../api/examApi';
+// import React, { useEffect, useState } from "react";
+// import "./css/EditExamModal.css";
+// import { updateExam } from "../../api/examApi";
 
-export const EditExamModal = ({exam, onClose, subjects, updateExam}) => {
+// export const EditExamModal = ({
+//   exam,
+//   onClose,
+//   onSuccess,
+//   subjects,
+//   updateExam: updateExamUI
+// }) => {
 
-  
+//   const [subjectId, setSubjectId] = useState("");
+//   const [title, setTitle] = useState("");
+//   const [description, setDescription] = useState("");
+//   const [duration, setDuration] = useState(20);
 
-  const [subjectId, setSubjectId] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState("");
+//   const [easy, setEasy] = useState("");
+//   const [medium, setMedium] = useState("");
+//   const [hard, setHard] = useState("");
 
-  // const [easy, setEasy] = useState(0);
-  // const [medium, setMedium] = useState(0);
-  // const [hard, setHard] = useState(0);
+//   const [hasAttempt, setHasAttempt] = useState(false);
 
-  // const totalQuestions = Number(easy) + Number(medium) + Number(hard);
+//   useEffect(() => {
+//     if (!exam) return;
 
-  //Đổ dữ liệu đã có để sửa
-  useEffect(() => {
-    if (exam) {
-      setSubjectId(String(exam.subject_id)); //để không bị string
-      setTitle(exam.title);
-      setDescription(exam.description);
-      setDuration(exam.duration);
-      // setEasy(0);
-      // setMedium(0);
-      // setHard(0);
-      //dùng difficulty của bảng question hay vẫn dùng easy, medium, hard
-    }
-  }, [exam]);
-  
+//     setSubjectId(String(exam.subject_id));
+//     setTitle(exam.title);
+//     setDescription(exam.description);
+//     setDuration(exam.duration);
 
-  //Luồng Click - modal mở -> sửa dữ liệu -> click sửa - put API ->
-  const handleSubmit = async () => {
-    //console.log("") //Kiểm tra
-    try {
-      await updateExams(exam.exam_id, {
-        subject_id: Number(subjectId),
-        title, 
-        description, 
-        duration: Number(duration),
-        // total_questions: easy + medium + hard
-      });
-      //sau khi DB được update ở trên -> phải truyền updateExam ở management
-      //để gọi dữ liệu đã cập nhật lại -> sau ccos mới onClose
-    // cập nhật UI ngay
-    updateExam({
-      exam_id: exam.exam_id,
-      subject_id: Number(subjectId),
-      title,
-      description,
-      duration: Number(duration),
-    });
+//     setEasy(exam.easy_count || 0);
+//     setMedium(exam.medium_count || 0);
+//     setHard(exam.hard_count || 0);
 
-    onClose();
-    } catch (err) {
-      console.error(err);
-      alert("Lỗi khi cập nhật!");
-    }
-  }
-  
-  return (
-    <div className="modal-overlay-edit">
-      <div className="modal-exam-edit">
-        <h3>Sửa đề thi</h3>
+//     setHasAttempt(exam.has_attempt === 1);
+//   }, [exam]);
 
+//   if (!exam) return null;
 
-        {/* Môn học từ chức năng môn học */}
-        <h4>Môn học</h4>
-        {/* <input 
-          type="text" 
-          value={subjectId}
-          onChange={(e) => setSubjectId(e.target.value)}
-        /> */}
-        <select 
-        value={subjectId}
-        onChange={(e) => setSubjectId(e.target.value)}
-        >
-          <option value="">Chọn môn học</option>
-          {subjects && subjects.map((sub) => (
-            <option key={sub.subject_id} value={sub.subject_id}>
-              {sub.subject_name}
-            </option>
-          ))}
-        </select>
+//   const handleUpdate = async () => {
+//     try {
+//       const res = await updateExam(exam.exam_id, {
+//         subject_id: subjectId,
+//         title,
+//         description,
+//         duration,
+//         easy_count: easy,
+//         medium_count: medium,
+//         hard_count: hard
+//       });
 
-        {/* Tên bài thi */}
-        <h4>Tên bài thi</h4>
-        <input 
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)} 
-        
-        />
+//       updateExamUI(res.data);
+//       onClose();
+//       onSuccess(); 
 
-        {/* Mô tả */}
-        <h4>Mô tả</h4>
-        <textarea 
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+//     } catch (err) {
+//       if (err?.response?.status === 403) {
+//         alert("Đề thi đã có người làm, không thể chỉnh sửa");
+//         return;
+//       }
 
-        {/* Thời gian */}
-        <h4>Thời gian (phút)</h4>
-        <input 
-          type="number" 
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-        />
+//       alert(err?.response?.data?.error || "Lỗi cập nhật");
+//     }
+//   };
 
-        {/* Số câu hỏi theo độ khó */}
-        {/* <h4>Số câu hỏi theo độ khó</h4>
-                <div className="difficulty-inputs">
-                    <label>
-                        Dễ:
-                        <input 
-                            type="number"
-                            value={easy}
-                            onChange={(e) => setEasy(e.target.value)}
-                        />
-                    </label>
-                    <label>
-                        Trung bình:
-                        <input
-                            type="number"
-                            value={medium}
-                            onChange={(e) => setMedium(e.target.value)}
-                        />
-                    </label>
+//   return (
+//     <div className="modal-overlay-edit">
+//       <div className="modal-exam-edit">
+//         <h3>Sửa đề thi</h3>
 
-                    <label>
-                        Khó:
-                        <input
-                            type="number"
-                            value={hard}
-                            onChange={(e) => setHard(e.target.value)}
-                        />
-                    </label>
-                </div> */}
-                {/* tổng số câu hỏi */}
-                {/* <div className="mb-3">
-                  <strong>Tổng số câu hỏi: {totalQuestions}</strong>
-                </div> */}
+//         {hasAttempt && (
+//           <p style={{ color: "red" }}>
+//             ⚠ Đề thi đã có người làm, không thể chỉnh sửa
+//           </p>
+//         )}
 
-        <div className="modal-actions-exam">
-          <button className='save-btn-exam' onClick={handleSubmit}>Cập nhật</button>
-          <button className='close-btn' onClick={onClose}>Đóng</button>
-        </div>
-      </div>
-    </div>
-  )
-}
+//         <select
+//           value={subjectId}
+//           onChange={(e) => setSubjectId(e.target.value)}
+//           disabled={hasAttempt}
+//         >
+//           <option value="">Chọn môn</option>
+//           {subjects.map((s) => (
+//             <option key={s.subject_id} value={s.subject_id}>
+//               {s.subject_name}
+//             </option>
+//           ))}
+//         </select>
 
-export default EditExamModal;
+//         <input
+//           value={title}
+//           onChange={(e) => setTitle(e.target.value)}
+//           disabled={hasAttempt}
+//         />
+
+//         <textarea
+//           value={description}
+//           onChange={(e) => setDescription(e.target.value)}
+//           disabled={hasAttempt}
+//         />
+
+//         <input
+//           type="number"
+//           value={duration}
+//           onChange={(e) => setDuration(e.target.value)}
+//           disabled={hasAttempt}
+//         />
+
+//         <div>
+//           <input value={easy} onChange={(e) => setEasy(e.target.value)} />
+//           <input value={medium} onChange={(e) => setMedium(e.target.value)} />
+//           <input value={hard} onChange={(e) => setHard(e.target.value)} />
+//         </div>
+
+//         <button onClick={handleUpdate} disabled={hasAttempt}>
+//           Cập nhật
+//         </button>
+
+//         <button onClick={onClose}>Đóng</button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default EditExamModal;

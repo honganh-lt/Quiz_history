@@ -129,7 +129,7 @@ function ExamLop() {
                             >
 
                                 <h3>{exam.title}</h3>
-                                {/* <h5>{exam.description}</h5> */}
+                                <h5>{exam.duration} phút - {exam.question_count} câu</h5>
 
                                 <div className="exam-bottom">
                                     {/* <h4>Lần thi: {getAttemptCount(exam.exam_id)}</h4> */}

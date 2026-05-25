@@ -122,6 +122,178 @@ exports.getExamDetail = (req, res) => {
 };
 
 
+// ================= UPDATE EXAM =================
+// exports.updateExam = (req, res) => {
+//     const { id } = req.params;
+
+//     const {
+//         subject_id,
+//         title,
+//         description,
+//         duration,
+//         easy_count,
+//         medium_count,
+//         hard_count
+//     } = req.body;
+
+//     // 🔥 CHECK đã có ai làm bài chưa (DÙNG user_exam)
+//     const sqlCheck = `
+//         SELECT COUNT(*) AS total
+//         FROM user_exam
+//         WHERE exam_id = ?
+//     `;
+
+//     db.query(sqlCheck, [id], (err, result) => {
+//         if (err) return res.status(500).json(err);
+
+//         const hasAttempts = result[0].total > 0;
+
+//         // ❌ đã có người làm → chặn update
+//         if (hasAttempts) {
+//             return res.status(403).json({
+//                 error: "Đề thi đã có người làm, không thể chỉnh sửa"
+//             });
+//         }
+
+//         // ✅ chưa ai làm → update tiếp
+//         continueUpdateExam();
+//     });
+
+//     // =====================
+//     function continueUpdateExam() {
+
+//         const easyCount = Number(easy_count || 0);
+//         const mediumCount = Number(medium_count || 0);
+//         const hardCount = Number(hard_count || 0);
+
+//         const total_questions =
+//             easyCount + mediumCount + hardCount;
+
+//         if (!subject_id || !title || !duration) {
+//             return res.status(400).json({
+//                 error: "Thiếu dữ liệu"
+//             });
+//         }
+
+//         if (total_questions <= 0) {
+//             return res.status(400).json({
+//                 error: "Tổng số câu phải lớn hơn 0"
+//             });
+//         }
+
+//         // update exam
+//         const sqlUpdateExam = `
+//             UPDATE exam
+//             SET subject_id = ?,
+//                 title = ?,
+//                 description = ?,
+//                 duration = ?
+//             WHERE exam_id = ?
+//         `;
+
+//         db.query(sqlUpdateExam, [
+//             subject_id,
+//             title,
+//             description,
+//             duration,
+//             id
+//         ], (err) => {
+//             if (err) return res.status(500).json(err);
+
+//             // xoá câu cũ
+//             db.query(
+//                 "DELETE FROM exam_questions WHERE exam_id=?",
+//                 [id],
+//                 (err2) => {
+//                     if (err2) return res.status(500).json(err2);
+
+//                     // lấy câu hỏi theo subject
+//                     const sql = `
+//                         SELECT 
+//                             q.question_id,
+//                             q.difficulty
+//                         FROM questions q
+//                         JOIN lessons l ON q.lesson_id = l.lesson_id
+//                         JOIN chapters c ON l.chapter_id = c.chapter_id
+//                         WHERE c.subject_id = ?
+//                     `;
+
+//                     db.query(sql, [subject_id], (err3, questions) => {
+//                         if (err3) return res.status(500).json(err3);
+
+//                         const shuffle = arr =>
+//                             arr.sort(() => Math.random() - 0.5);
+
+//                         const easyList = questions.filter(
+//                             q => q.difficulty?.trim().toUpperCase() === "EASY"
+//                         );
+
+//                         const mediumList = questions.filter(
+//                             q => q.difficulty?.trim().toUpperCase() === "MEDIUM"
+//                         );
+
+//                         const hardList = questions.filter(
+//                             q => q.difficulty?.trim().toUpperCase() === "HARD"
+//                         );
+
+//                         if (
+//                             easyList.length < easyCount ||
+//                             mediumList.length < mediumCount ||
+//                             hardList.length < hardCount
+//                         ) {
+//                             return res.status(400).json({
+//                                 error: "Không đủ câu hỏi theo độ khó"
+//                             });
+//                         }
+
+//                         const finalSelected = [
+//                             ...shuffle(easyList).slice(0, easyCount),
+//                             ...shuffle(mediumList).slice(0, mediumCount),
+//                             ...shuffle(hardList).slice(0, hardCount)
+//                         ];
+
+//                         const shuffledFinal = shuffle(finalSelected);
+
+//                         const values = shuffledFinal.map(q => [
+//                             id,
+//                             q.question_id
+//                         ]);
+
+//                         db.query(
+//                             `INSERT INTO exam_questions (exam_id, question_id) VALUES ?`,
+//                             [values],
+//                             (err4) => {
+//                                 if (err4) return res.status(500).json(err4);
+
+//                                 res.json({
+//                                     message: "Cập nhật đề thi thành công",
+//                                     examId: id
+//                                 });
+//                             }
+//                         );
+//                     });
+//                 }
+//             );
+//         });
+//     }
+// };
+// exports.checkExamLock = (req, res) => {
+//     const { id } = req.params;
+
+//     const sql = `
+//         SELECT COUNT(*) AS total
+//         FROM user_exam
+//         WHERE exam_id = ?
+//     `;
+
+//     db.query(sql, [id], (err, result) => {
+//         if (err) return res.status(500).json(err);
+
+//         res.json({
+//             hasAttempt: result[0].total > 0
+//         });
+//     });
+// };
 
 // ================= DELETE ================= xóa đề
 exports.deleteExam = (req, res) => {

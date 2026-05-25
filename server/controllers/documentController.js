@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 
-//Lấy all
+//Lấy all admin
 exports.getAllDocuments = (req, res) => {
 
     const sql = `

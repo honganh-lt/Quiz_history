@@ -10,6 +10,7 @@ import './css/revise.css'
 
 import { useNavigate } from 'react-router-dom';
 import { getSubjects } from '../../api/subjectApi';
+import Footer from '../Home/Footer';
 
 
 
@@ -121,6 +122,7 @@ function Revise() {
     </div>
 
 </section>
+        <Footer/>
         </main>
 
     )

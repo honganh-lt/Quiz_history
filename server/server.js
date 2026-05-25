@@ -147,7 +147,7 @@ app.use((err, req, res, next) => {
 console.log("EMAIL:", process.env.EMAIL_USER);
 console.log("PASS:", process.env.EMAIL_PASS);
 // ===== START =====
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server chạy tại http://localhost:${PORT}`);

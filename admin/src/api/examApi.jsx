@@ -17,7 +17,7 @@ export const getExams = async () => {
   }
 };
 
-//====Get Detail=======
+//====Get Detail======= user
 // export const getExamDetail = async (id) => {
 //   try {
 //     const res = await axiosClient.get(`${API_URL}/${id}`);
@@ -27,6 +27,7 @@ export const getExams = async () => {
 //     throw err;
 //   }
 // }
+
 
 
 // POST tạo exam thủ công
@@ -61,7 +62,7 @@ export const getDifficultyCount = async (subjectId) => {
 
 
 // PUT cập nhật exam theo id
-// export const updateExams = async (id, data) => {
+// export const updateExam = async (id, data) => {
 //   try {
 //     const res = await axiosClient.put(`${API_URL}/${id}`, data);
 //     return res.data;
@@ -69,6 +70,9 @@ export const getDifficultyCount = async (subjectId) => {
 //     console.error("Lỗi PUT exam:", err);
 //     throw err;
 //   }
+// };
+// export const checkExamLock = (id) => {
+//   return axiosClient.get(`${API_URL}/check-lock/${id}`);
 // };
 
 // DELETE exam theo id

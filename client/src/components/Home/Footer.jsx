@@ -16,7 +16,7 @@ export const Footer = () => {
             <h3>Liên Kết Nhanh</h3>
             <ul>
                 <li><a href="/">Trang chủ</a></li>
-                <li><a href="/exam">Đề thi hot</a></li>
+                <li><a href="/exam">Đề thi</a></li>
                 <li><a href="profile">Thông tin</a></li>
                 {/* <li><a href="/document">Tài liệu</a></li> */}
             </ul>
@@ -26,7 +26,7 @@ export const Footer = () => {
         <div class="footer-column">
             <h3>Liên Hệ & Hỗ Trợ</h3>
             <p> Email: support@tracnghiemlichsu.com</p>
-            {/* <p>📞 Hotline: 0123 456 789</p> */}
+            {/* <p>Hotline: 0123 456 789</p> */}
             {/* <div class="footer-socials">
                 {/* <!-- Thay # bằng link mạng xã hội của bạn nếu có --> */}
                 {/* <a href="#" class="social-icon">Facebook</a>
