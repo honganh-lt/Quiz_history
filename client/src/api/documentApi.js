@@ -1,4 +1,6 @@
-import axiosClient from "../../../api/axiosClient";
+// import axiosClient from "../../../api/axiosClient";
+
+import axiosClient from "./axiosClient";
 
 // danh sách tài liệu môn chương bài
 export const getDocumentsBySubject = async (subjectId) => {

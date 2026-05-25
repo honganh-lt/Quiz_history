@@ -1,6 +1,8 @@
 // import axiosClient from "./axiosClient"a;
 
-import axiosClient from "../../../api/axiosClient";
+import axiosClient from "./axiosClient";
+
+// import axiosClient from "../../../api/axiosClient";
 
 const BASE_URL = "/auth";
 

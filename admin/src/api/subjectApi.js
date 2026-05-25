@@ -1,7 +1,4 @@
-// import axios from "axios";
-import axiosClient from "../../../api/axiosClient";
-// import { data } from "react-router-dom";
-// import App from "../App";
+import axiosClient from "./axiosAdmin";
 
 // Đây là đường dẫn tới API BE trùng với route bạn đã tạo ở BE
 // app.use("/api/subjects", subjectRoutes);

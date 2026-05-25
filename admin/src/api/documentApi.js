@@ -1,6 +1,4 @@
-import axiosClient from "../../../api/axiosClient";
-
-
+import axiosClient from "./axiosAdmin";
 
 // =========================
 // TẠO TÀI LIỆU (SGK TEXT)

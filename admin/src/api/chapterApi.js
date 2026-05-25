@@ -1,5 +1,4 @@
-// import axios from "axios";
-import axiosClient from "../../../api/axiosClient";
+import axiosClient from "./axiosAdmin";
 
 // import { data } from "react-router-dom";
 
