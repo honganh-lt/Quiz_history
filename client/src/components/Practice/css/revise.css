@@ -270,7 +270,7 @@
 /* =========================
    BUTTON
 ========================= */
-.btn-practice {
+.btn-practice-p {
 
     padding: 12px 24px;
 
@@ -298,7 +298,7 @@
 }
 
 /* hover */
-.btn-practice:hover {
+.btn-practice-p:hover {
 
     transform: translateY(-3px);
 
@@ -314,7 +314,7 @@
 }
 
 /* active */
-.btn-practice:active {
+.btn-practice-p:active {
     transform: scale(0.97);
 }
 

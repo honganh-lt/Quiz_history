@@ -60,96 +60,89 @@ const Signup = () => {
     // };
 
     return (
-        <div className="register-page">
-            <div className="auth-container-register">
-                <h2>Đăng ký</h2>
+    <div className="register-page">
+        <div className="auth-container-register">
+            <h2>Đăng ký</h2>
 
-                {/* ô nhập username */}
-                <label className="a">
-                    Tên người dùng <span className="required">*</span>
-                </label>
-                <input 
+            {/* ô nhập username */}
+            <label>
+                Tên tài khoản <span className="required">*</span>
+            </label>
+            <input 
                 type="text" 
                 placeholder="Nhập username" 
                 onChange={(e) => setUsername(e.target.value)}
-
-                // nếu nhấn Enter -> nhảy xuống ô email
                 onKeyDown={(e) => {
                     if(e.key === "Enter"){
                         fullNameRef.current.focus();
                     }
                 }}
-                />
-                {/* ô nhập full_name */}
-                <label className="a">
-                    Họ và tên <span className="required">*</span>
-                </label>
-                <input 
-                ref={fullNameRef} //gắn ref để focus
+            />
+
+            {/* ô nhập full_name */}
+            <label>
+                Họ và tên <span className="required">*</span>
+            </label>
+            <input 
+                ref={fullNameRef}
                 type="text" 
                 placeholder="Nhập họ và tên" 
                 onChange={(e) => setFullName(e.target.value)}
-
-                // nếu nhấn Enter -> nhảy xuống ô email
                 onKeyDown={(e) => {
                     if(e.key === "Enter"){
                         emailRef.current.focus();
                     }
                 }}
-                />
+            />
 
-                {/* Ô email */}
-                <label>
-                    Email <span className="required">*</span>
-                    <br />
-                    <p>(abc123@gmail.com)</p>
-                </label>
-                <input 
-                ref={emailRef} //gắn ref để focus
+            {/* Ô email */}
+            <label>
+                Email <span className="required">*</span>
+                <p>(abc123@gmail.com)</p> {/* Đã được cấu trúc chuẩn hóa flex trong CSS */}
+            </label>
+            <input 
+                ref={emailRef}
                 type="email" 
                 placeholder="Nhập email" 
                 onChange={(e) => setEmail(e.target.value)}
-
-                // nếu nhấn Enter -> nhảy xg ô password
                 onKeyDown={(e) => {
                     if(e.key === "Enter"){
                         passwordRef.current.focus();
                     }
                 }}
+            />
+
+            {/* Ô password */}
+            <label>
+                Mật khẩu <span className="required">*</span>
+            </label>
+            <div className="password-wrapper">
+                <input
+                    ref={passwordRef}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Nhập mật khẩu"
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            handleSignup();
+                        }
+                    }}
                 />
-
-                {/* Ô password */}
-                <label>
-                    Mật khẩu <span className="required">*</span>
-                </label>
-                <div className="password-wrapper">
-                    <input
-                        ref={passwordRef}
-                        type={showPassword ? "text" : "password"} //quyết định hiện gì
-                        placeholder="Nhập mật khẩu"
-                        onChange={(e) => setPassword(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                handleSignup();
-                            }
-                        }}
-                    />
-
-                    <span
-                        className="eye-icon"
-                        onClick={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? <FaEye /> : <FaEyeSlash />} 
-                        {/* bị ngược */}
-                    </span>
-                </div>
-
-                <button onClick={handleSignup}>Đăng ký</button>
-
-                <p>Đã có tài khoản?<Link to="/login">Đăng nhập</Link></p>
+                <span
+                    className="eye-icon"
+                    onClick={() => setShowPassword(!showPassword)}
+                >
+                    {/* Đã sửa logic: Đang hiện (true) thì icon tắt mắt, đang ẩn (false) thì icon mở mắt */}
+                    {showPassword ? <FaEyeSlash /> : <FaEye />} 
+                </span>
             </div>
+
+            <button onClick={handleSignup}>Đăng ký</button>
+
+            <p>Đã có tài khoản? <Link to="/login">Đăng nhập</Link></p>
         </div>
-    )
+    </div>
+);
 }
 
 export default Signup;

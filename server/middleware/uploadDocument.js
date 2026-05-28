@@ -1,37 +1,24 @@
-// const multer = require("multer");
-// const path = require("path");
+// middleware/uploadDocument.js
+const multer = require("multer");
 
-// const storage = multer.diskStorage({
+// Lưu file tạm thời vào RAM dưới dạng Buffer
+const storage = multer.memoryStorage();
 
-//     destination: (req, file, cb) => {
-//         cb(null, "uploads/documents");
-//     },
-
-//     filename: (req, file, cb) => {
-
-//         const ext = path.extname(file.originalname);
-
-//         cb(null, Date.now() + ext);
-//     }
-// });
-
-// const fileFilter = (req, file, cb) => {
-
-//     const allowedTypes = [
-//         "application/msword",
-//         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-//     ];
-
-//     if (allowedTypes.includes(file.mimetype)) {
-//         cb(null, true);
-//     } else {
-//         cb(new Error("Chỉ cho phép file DOC hoặc DOCX"));
-//     }
-// };
-
-// const upload = multer({
-//     storage,
-//     fileFilter
-// });
-
-// module.exports = upload;
+// Bộ lọc chỉ chấp nhận các định dạng file Word
+const fileFilter = (req, file, cb) => {
+    const allowedTypes = [
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ];
+    if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error("Chỉ chấp nhận file Word .doc hoặc .docx"), false);
+    }
+};
+const uploadWord = multer({ 
+    storage, 
+    fileFilter, 
+    limits: { fileSize: 10 * 1024 * 1024 } 
+});
+module.exports = uploadWord;

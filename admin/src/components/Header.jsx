@@ -17,7 +17,7 @@ export const Header = ({ toggleSidebar }) => { // 🌟 Thêm prop toggleSidebar 
             <div className='header-left'>
                 {/* 🌟 Nút Hamburger xuất hiện ở đây để mở Sidebar khi thu nhỏ */}
                 <i className="fa-solid fa-bars menu-icon" onClick={toggleSidebar}></i>
-                {/* <h2>VNUA Education Manager</h2> */}
+                <h2>History Manager</h2>
             </div>
             <div className="header-right">
                 {users && (

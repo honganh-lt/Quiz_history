@@ -1,21 +1,22 @@
-//Import thư viện express dùng để tạo server và API
+// Import thư viện express dùng để tạo server và API
 const express = require("express");
 // Tạo 1 router riêng định tuyến quản lý API
 const router = express.Router();
-//Import file Controller 
-const chapterControler = require("../controllers/chapterController");
+// Import file Controller (Đã sửa chính tả)
+const chapterController = require("../controllers/chapterController");
 
-// Tạo API method 
-// GET
-router.get("/", chapterControler.getChapters);
+// ================= Định tuyến API quản lý Chương học =================
 
-// POST
-router.post("/", chapterControler.postChapter);
+// Lấy danh sách tất cả các chương
+router.get("/", chapterController.getChapters);
 
-// PUT
-router.put("/:id", chapterControler.putChapter);
+// Tạo mới một chương học
+router.post("/", chapterController.postChapter);
 
-// DELETE
-router.delete("/:id", chapterControler.deleteChapter);
+// Cập nhật thông tin chương học theo ID
+router.put("/:id", chapterController.putChapter);
+
+// Xóa chương học theo ID
+router.delete("/:id", chapterController.deleteChapter);
 
 module.exports = router;

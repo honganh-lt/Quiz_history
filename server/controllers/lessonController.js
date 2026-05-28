@@ -1,8 +1,7 @@
-const {json} = require("express");
-const db = require("../config/db")
+const db = require("../config/db");
 
-//GET
-exports.getLesson = (req, res) => {
+// ================= GET LESSONS =================
+exports.getLesson = async (req, res, next) => {
     const { chapter_id } = req.query;
 
     let sql = `
@@ -20,51 +19,52 @@ exports.getLesson = (req, res) => {
         sql += " WHERE l.chapter_id = ?";
     }
 
-    sql += " ORDER BY l.lesson_id ASC"; //chuyển xuống dưới
+    sql += " ORDER BY l.lesson_id ASC";
 
-    db.query(sql, chapter_id ? [chapter_id] : [], (err, result) => {
-        if(err) return res.status(500).json({error: "Database error"});
-        res.json(result);
-    });
+    try {
+        // Chạy câu lệnh truy vấn và bóc tách lấy mảng rows kết quả
+        const [rows] = await db.query(sql, chapter_id ? [chapter_id] : []);
+        res.json(rows);
+    } catch (err) {
+        next(err); // Đẩy lỗi database qua errorHandler tập trung
+    }
 };
 
-//POST
-exports.postLesson = (req, res) => {
-    //Lấy từng cột
-    const {lesson_name, chapter_id, lesson_number} = req.body;
+// ================= POST NEW LESSON =================
+exports.postLesson = async (req, res, next) => {
+    const { lesson_name, chapter_id, lesson_number } = req.body;
     const sql = "INSERT INTO lessons (lesson_name, chapter_id, lesson_number) VALUES (?,?,?)";
 
-    db.query(sql, [lesson_name, chapter_id, lesson_number], (err, result) => {
-        if(err) {
-            return res.status(500).json(err);
-        }
-        res.json({message: "Creates"});
-    })
-}
+    try {
+        await db.query(sql, [lesson_name, chapter_id, lesson_number]);
+        res.json({ message: "Creates" });
+    } catch (err) {
+        next(err);
+    }
+};
 
-//PUT
-exports.putLesson = (req, res) => {
-    const {lesson_name, chapter_id, lesson_number} = req.body;
+// ================= PUT (UPDATE) LESSON =================
+exports.putLesson = async (req, res, next) => {
+    const { lesson_name, chapter_id, lesson_number } = req.body;
     const sql = "UPDATE lessons SET lesson_name=?, chapter_id=?, lesson_number=? WHERE lesson_id=?";
 
-    db.query(sql, [lesson_name, chapter_id, lesson_number, req.params.id], (err) => {
-        if(err) {
-            return res.status(500).json(err);
-        }
-        res.json({message: "Update"})
-    })
-}
+    try {
+        await db.query(sql, [lesson_name, chapter_id, lesson_number, req.params.id]);
+        res.json({ message: "Update" });
+    } catch (err) {
+        next(err);
+    }
+};
 
-//DELETE
-exports.deleteLesson = (req,res) => {
-    const {id} = req.params; //?????
+// ================= DELETE LESSON =================
+exports.deleteLesson = async (req, res, next) => {
+    const { id } = req.params; // Lấy id từ URL động (params)
     const sql = "DELETE FROM lessons WHERE lesson_id=?";
 
-    db.query(sql, [id], (err) => {
-        if(err) {
-            return res.status(500).json(err);
-        }
-        res.json({message: "Xóa thành công"});
-    })
-
-}
+    try {
+        await db.query(sql, [id]);
+        res.json({ message: "Xóa thành công" });
+    } catch (err) {
+        next(err);
+    }
+};

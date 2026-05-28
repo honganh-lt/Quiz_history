@@ -1,33 +1,17 @@
-//chỉ có import file sử dụng mysql2/promise
-const util = require("util");
 const db = require("../config/db");
-const query = util.promisify(db.query).bind(db);
-const XLSX = require("xlsx")
+const XLSX = require("xlsx");
 
-// ================= GET =================
-exports.getQuestion = (req, res) => {
+// ================= GET QUESTIONS =================
+exports.getQuestion = async (req, res, next) => {
     const { lessonId } = req.query;
 
     let sql = `
     SELECT 
-        q.question_id,
-        q.content,
-        q.difficulty,
-        q.lesson_id,
-
-        c.chapter_id,      -- thêm lí do nút sửa ở quản lý câu hỏi bị sai
-        c.subject_id,      
-
-        s.subject_name,
-        c.chapter_number,
-        c.chapter_name,
-        l.lesson_number,
-        l.lesson_name,
-
-        a.answer_id,
-        a.content AS answer_content,
-        a.is_correct
-
+        q.question_id, q.content, q.difficulty, q.lesson_id,
+        c.chapter_id, c.subject_id,      
+        s.subject_name, c.chapter_number, c.chapter_name,
+        l.lesson_number, l.lesson_name,
+        a.answer_id, a.content AS answer_content, a.is_correct
     FROM questions q
     JOIN lessons l ON q.lesson_id = l.lesson_id
     JOIN chapters c ON l.chapter_id = c.chapter_id
@@ -36,8 +20,6 @@ exports.getQuestion = (req, res) => {
     `;
 
     let params = [];
-
-    
     if (lessonId) {
         sql += " WHERE q.lesson_id = ?";
         params.push(lessonId);
@@ -45,28 +27,24 @@ exports.getQuestion = (req, res) => {
 
     sql += " ORDER BY q.question_id ASC, a.answer_id ASC";
 
-    db.query(sql, params, (err, result) => {
-        if (err) return res.status(500).json(err);
-
+    try {
+        const [rows] = await db.query(sql, params);
         const map = {};
 
-        result.forEach(row => {
+        rows.forEach(row => {
             if (!map[row.question_id]) {
                 map[row.question_id] = {
                     question_id: row.question_id,
                     content: row.content,
                     difficulty: row.difficulty,
                     lesson_id: row.lesson_id,
-
                     chapter_id: row.chapter_id,   
                     subject_id: row.subject_id,   
-
                     subject_name: row.subject_name,
                     chapter_number: row.chapter_number,
                     chapter_name: row.chapter_name,
                     lesson_number: row.lesson_number,
                     lesson_name: row.lesson_name,
-
                     answers: []
                 };
             }
@@ -79,362 +57,191 @@ exports.getQuestion = (req, res) => {
         });
 
         res.json(Object.values(map));
-    });
+    } catch (err) {
+        next(err);
+    }
 };
 
-//============ Import ===========
-// ================= IMPORT QUESTIONS =================
-exports.importQuestions = async (req, res) => {
-
+// ================= IMPORT QUESTIONS FROM EXCEL =================
+exports.importQuestions = async (req, res, next) => {
     try {
-
         const file = req.file;
-
         const lesson_id = req.body.lesson_id;
 
-        if (!file) {
-            return res.status(400).json({
-                message: "Không có file"
-            });
-        }
+        if (!file) return res.status(400).json({ message: "Không có file" });
+        if (!lesson_id) return res.status(400).json({ message: "Thiếu lesson_id" });
 
-        if (!lesson_id) {
-            return res.status(400).json({
-                message: "Thiếu lesson_id"
-            });
-        }
-
-        // đọc excel
-        const workbook = XLSX.read(file.buffer, {
-            type: "buffer"
-        });
-
+        // Đọc dữ liệu Excel
+        const workbook = XLSX.read(file.buffer, { type: "buffer" });
         const sheetName = workbook.SheetNames[0];
-
         const sheet = workbook.Sheets[sheetName];
-
-        //excel->json
         const data = XLSX.utils.sheet_to_json(sheet);
 
-        // loop từng dòng
         for (const row of data) {
-
-            // validate
-            if (
-                !row.content ||
-                !row.A ||
-                !row.B ||
-                !row.C ||
-                !row.D ||
-                !row.correct ||
-                !row.difficulty
-            ) {
+            // Validate từng cột dữ liệu
+            if (!row.content || !row.A || !row.B || !row.C || !row.D || !row.correct || !row.difficulty) {
                 continue;
             }
 
-            // ===== CHECK TRÙNG =====
-            const existing = await query(
-                `
-                SELECT question_id 
-                FROM questions
-                WHERE LOWER(TRIM(content)) = LOWER(TRIM(?))
-                AND lesson_id = ?
-                `,
-                [
-                    row.content.trim(),
-                    lesson_id
-                ]
+            // CHECK TRÙNG trong bài học bằng cú pháp db.query mới
+            const [existing] = await db.query(
+                `SELECT question_id FROM questions WHERE LOWER(TRIM(content)) = LOWER(TRIM(?)) AND lesson_id = ?`,
+                [row.content.trim(), lesson_id]
             );
 
-            if (existing.length > 0) {
-                continue;
-            }
+            if (existing.length > 0) continue;
 
-            const correct = row.correct
-                ?.toString()
-                .trim()
-                .toUpperCase();
+            const correct = row.correct?.toString().trim().toUpperCase();
+            const difficulty = row.difficulty?.toString().trim().toUpperCase();
 
-            const difficulty = row.difficulty
-                ?.toString()
-                .trim()
-                .toUpperCase();
-
-            // insert question
-            const questionResult = await query(
-                `
-                INSERT INTO questions
-                (content, difficulty, lesson_id)
-                VALUES (?, ?, ?)
-                `,
-                [
-                    row.content.trim(),
-                    difficulty,
-                    lesson_id
-                ]
+            // Insert câu hỏi mới
+            const [questionResult] = await db.query(
+                `INSERT INTO questions (content, difficulty, lesson_id) VALUES (?, ?, ?)`,
+                [row.content.trim(), difficulty, lesson_id]
             );
 
             const questionId = questionResult.insertId;
 
-            // answers
-            const answers = [
-                {
-                    content: row.A,
-                    is_correct: correct === "A"
-                },
-                {
-                    content: row.B,
-                    is_correct: correct === "B"
-                },
-                {
-                    content: row.C,
-                    is_correct: correct === "C"
-                },
-                {
-                    content: row.D,
-                    is_correct: correct === "D"
-                }
+            // Gom cụm mảng answers để chèn bulk insert (Nhanh hơn chạy vòng lặp đơn lẻ)
+            const answerValues = [
+                [questionId, row.A, correct === "A" ? 1 : 0],
+                [questionId, row.B, correct === "B" ? 1 : 0],
+                [questionId, row.C, correct === "C" ? 1 : 0],
+                [questionId, row.D, correct === "D" ? 1 : 0]
             ];
 
-            // insert answers
-            for (const ans of answers) {
-
-                await query(
-                    `
-                    INSERT INTO answers
-                    (question_id, content, is_correct)
-                    VALUES (?, ?, ?)
-                    `,
-                    [
-                        questionId,
-                        ans.content.trim(),
-                        ans.is_correct ? 1 : 0
-                    ]
-                );
-            }
+            await db.query(
+                `INSERT INTO answers (question_id, content, is_correct) VALUES ?`,
+                [answerValues]
+            );
         }
 
-        res.json({
-            message: "Import thành công"
-        });
-
-    } catch (error) {
-
-        console.log(error);
-
-        res.status(500).json({
-            message: error.message
-        });
+        res.json({ message: "Import thành công" });
+    } catch (err) {
+        next(err);
     }
 };
-// ================= Create =================
-exports.postQuestion = (req, res) => {
+
+// ================= POST (CREATE) QUESTION =================
+exports.postQuestion = async (req, res, next) => {
     const { content, difficulty, lesson_id, answers } = req.body;
 
     if (!content || !difficulty || !lesson_id || !answers?.length) {
         return res.status(400).json({ message: "Thiếu dữ liệu" });
     }
 
-    //  CHECK TRÙNG CÂU HỎI
-    const checkSql = `
-        SELECT * FROM questions 
-        WHERE content = ? AND lesson_id = ?
-    `;
-
-    db.query(checkSql, [content.trim(), lesson_id], (err, existing) => {
-        if (err) return res.status(500).json(err);
+    try {
+        // CHECK TRÙNG CÂU HỎI
+        const [existing] = await db.query(
+            `SELECT * FROM questions WHERE content = ? AND lesson_id = ?`,
+            [content.trim(), lesson_id]
+        );
 
         if (existing.length > 0) {
-            return res.status(400).json({
-                message: "Câu hỏi đã tồn tại trong bài học này!"
-            });
+            return res.status(400).json({ message: "Câu hỏi đã tồn tại trong bài học này!" });
         }
 
-        // Nếu không trùng thì mới insert
-        const sqlQuestion = `
-            INSERT INTO questions (content, difficulty, lesson_id)
-            VALUES (?, ?, ?)
-        `;
+        // Insert chân trang câu hỏi
+        const [questionResult] = await db.query(
+            `INSERT INTO questions (content, difficulty, lesson_id) VALUES (?, ?, ?)`,
+            [content, difficulty, lesson_id]
+        );
 
-        db.query(sqlQuestion, [content, difficulty, lesson_id], (err, result) => {
-            if (err) return res.status(500).json(err);
+        const questionId = questionResult.insertId;
 
-            const questionId = result.insertId;
+        // Bulk insert mảng câu trả lời
+        const answerValues = answers.map(a => [questionId, a.content, a.is_correct ? 1 : 0]);
+        await db.query(`INSERT INTO answers (question_id, content, is_correct) VALUES ?`, [answerValues]);
 
-            const sqlAnswer = `
-                INSERT INTO answers (question_id, content, is_correct)
-                VALUES ?
-            `;
-
-            const answerValues = answers.map(a => [
-                questionId,
-                a.content,
-                a.is_correct
-            ]);
-
-            db.query(sqlAnswer, [answerValues], (err2) => {
-                if (err2) return res.status(500).json(err2);
-
-                res.json({ message: "Thêm thành công" });
-            });
-        });
-    });
+        res.json({ message: "Thêm thành công" });
+    } catch (err) {
+        next(err);
+    }
 };
 
-// ================= PUT =================
-exports.putQuestion = (req, res) => {
+// ================= PUT (UPDATE) QUESTION & ANSWERS =================
+exports.putQuestion = async (req, res, next) => {
     const { id } = req.params;
     const { content, difficulty, lesson_id, answers } = req.body;
 
-    // ================= VALIDATE =================
     if (!content || !difficulty || !lesson_id) {
         return res.status(400).json({ message: "Thiếu dữ liệu" });
     }
-
     if (!Array.isArray(answers) || answers.length === 0) {
         return res.status(400).json({ message: "Answers lỗi" });
     }
 
     const isValidAnswers = answers.every(a => a.content?.trim() !== "");
-    const hasCorrect = answers.some(a => a.is_correct == 1);
+    const hasCorrect = answers.some(a => Number(a.is_correct) === 1);
 
     if (!isValidAnswers || !hasCorrect) {
-        return res.status(400).json({
-            message: "Đáp án phải có nội dung và ít nhất 1 đáp án đúng"
-        });
+        return res.status(400).json({ message: "Đáp án phải có nội dung và ít nhất 1 đáp án đúng" });
     }
 
-    // ================= CHECK TRÙNG =================
-    const checkSql = `
-        SELECT question_id FROM questions 
-        WHERE LOWER(TRIM(content)) = LOWER(TRIM(?)) 
-        AND lesson_id = ? 
-        AND question_id != ?
-    `;
-
-    db.query(checkSql, [content, lesson_id, id], (err, existing) => {
-        if (err) return res.status(500).json(err);
+    try {
+        // CHECK TRÙNG (Loại trừ ID hiện tại)
+        const [existing] = await db.query(
+            `SELECT question_id FROM questions WHERE LOWER(TRIM(content)) = LOWER(TRIM(?)) AND lesson_id = ? AND question_id != ?`,
+            [content, lesson_id, id]
+        );
 
         if (existing.length > 0) {
-            return res.status(400).json({
-                message: "Câu hỏi đã tồn tại!"
-            });
+            return res.status(400).json({ message: "Câu hỏi đã tồn tại!" });
         }
 
-        // ================= TRANSACTION =================
-        db.beginTransaction(err => {
-            if (err) return res.status(500).json(err);
+        // ================= KHỞI ĐỘNG TRANSACTION MỚI =================
+        await db.beginTransaction();
 
-            // ===== 1. UPDATE QUESTION =====
-            db.query(
-                "UPDATE questions SET content=?, difficulty=?, lesson_id=? WHERE question_id=?",
-                [content.trim(), difficulty, lesson_id, id],
-                (err) => {
-                    if (err) {
-                        return db.rollback(() => res.status(500).json(err));
-                    }
+        // 1. Cập nhật bảng cha (questions)
+        await db.query(
+            "UPDATE questions SET content=?, difficulty=?, lesson_id=? WHERE question_id=?",
+            [content.trim(), difficulty, lesson_id, id]
+        );
 
-                    // ===== 2. LẤY ANSWERS CŨ =====
-                    db.query(
-                        "SELECT answer_id FROM answers WHERE question_id=? ORDER BY answer_id ASC",
-                        [id],
-                        async (err, oldAnswers) => {
-                            if (err) {
-                                return db.rollback(() => res.status(500).json(err));
-                            }
+        // 2. Lấy danh sách answers cũ để so sánh số lượng
+        const [oldAnswers] = await db.query(
+            "SELECT answer_id FROM answers WHERE question_id=? ORDER BY answer_id ASC",
+            [id]
+        );
 
-                            // nếu số lượng đáp án thay đổi → xử lý lại toàn bộ
-                            if (oldAnswers.length !== answers.length) {
+        if (oldAnswers.length !== answers.length) {
+            // Nếu số lượng đáp án thay đổi: Xóa hết cũ, insert mới hoàn toàn
+            await db.query("DELETE FROM answers WHERE question_id=?", [id]);
 
-                                // Xóa hết answer cũ
-                                db.query(
-                                    "DELETE FROM answers WHERE question_id=?",
-                                    [id],
-                                    (err) => {
-                                        if (err) {
-                                            return db.rollback(() => res.status(500).json(err));
-                                        }
+            const newValues = answers.map(a => [id, a.content.trim(), a.is_correct ? 1 : 0]);
+            await db.query("INSERT INTO answers (question_id, content, is_correct) VALUES ?", [newValues]);
+        } else {
+            // Nếu số lượng bằng nhau: Duyệt mảng đồng bộ cập nhật theo vị trí tương ứng (Không cần dùng new Promise thủ công)
+            for (let i = 0; i < answers.length; i++) {
+                await db.query(
+                    "UPDATE answers SET content=?, is_correct=? WHERE answer_id=?",
+                    [answers[i].content.trim(), answers[i].is_correct ? 1 : 0, oldAnswers[i].answer_id]
+                );
+            }
+        }
 
-                                        // Insert lại
-                                        const sqlInsert = `
-                                            INSERT INTO answers (question_id, content, is_correct)
-                                            VALUES ?
-                                        `;
+        // Hoàn tất Transaction
+        await db.commit();
+        res.json({ message: "Cập nhật thành công" });
 
-                                        const newValues = answers.map(a => [
-                                            id,
-                                            a.content.trim(),
-                                            a.is_correct ? 1 : 0
-                                        ]);
-
-                                        db.query(sqlInsert, [newValues], (err) => {
-                                            if (err) {
-                                                return db.rollback(() => res.status(500).json(err));
-                                            }
-
-                                            db.commit(err => {
-                                                if (err) {
-                                                    return db.rollback(() => res.status(500).json(err));
-                                                }
-
-                                                res.json({ message: "Cập nhật thành công" });
-                                            });
-                                        });
-                                    }
-                                );
-
-                            } else {
-                                // ===== 3. UPDATE TỪNG ANSWER =====
-                                try {
-                                    for (let i = 0; i < answers.length; i++) {
-                                        await new Promise((resolve, reject) => {
-                                            db.query(
-                                                "UPDATE answers SET content=?, is_correct=? WHERE answer_id=?",
-                                                [
-                                                    answers[i].content.trim(),
-                                                    answers[i].is_correct ? 1 : 0,
-                                                    oldAnswers[i].answer_id
-                                                ],
-                                                (err) => {
-                                                    if (err) reject(err);
-                                                    else resolve();
-                                                }
-                                            );
-                                        });
-                                    }
-
-                                    // ===== 4. COMMIT =====
-                                    db.commit(err => {
-                                        if (err) {
-                                            return db.rollback(() => res.status(500).json(err));
-                                        }
-
-                                        res.json({ message: "Cập nhật thành công" });
-                                    });
-
-                                } catch (error) {
-                                    db.rollback(() => res.status(500).json(error));
-                                }
-                            }
-                        }
-                    );
-                }
-            );
-        });
-    });
+    } catch (err) {
+        // Nếu có bất kỳ lỗi nào xảy ra trong khối try, thực hiện Rollback lập tức khôi phục DB
+        await db.rollback();
+        next(err);
+    }
 };
 
-// ================= DELETE =================
-exports.deleteQuestion = (req, res) => {
+// ================= DELETE QUESTION =================
+exports.deleteQuestion = async (req, res, next) => {
     const { id } = req.params;
 
-    db.query("DELETE FROM answers WHERE question_id=?", [id], (err) => {
-        if (err) return res.status(500).json(err);
+    try {
+        // Xóa các đáp án của câu hỏi trước để tránh lỗi ràng buộc FK
+        await db.query("DELETE FROM answers WHERE question_id=?", [id]);
+        await db.query("DELETE FROM questions WHERE question_id=?", [id]);
 
-        db.query("DELETE FROM questions WHERE question_id=?", [id], (err2) => {
-            if (err2) return res.status(500).json(err2);
-
-            res.json({ message: "Xóa thành công" });
-        });
-    });
+        res.json({ message: "Xóa thành công" });
+    } catch (err) {
+        next(err);
+    }
 };

@@ -89,9 +89,7 @@ const Document = () => {
 
             {/* tên môn */}
             <h1 className="subject-title">
-
-                {subjectName}
-
+                {subjectName || "Tài liệu học tập"}
             </h1>
 
             <div className="chapter-grid">

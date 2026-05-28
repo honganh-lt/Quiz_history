@@ -6,8 +6,7 @@ const router = express.Router();
 
 //import file
 const questionController = require("../controllers/questionController");
-const upload = require("../middleware/upload");
-
+const uploadExcel = require("../middleware/uploadExcel");
 //Tạo API method
 //GET (getQuestionByLesson: câu hỏi theo bài ad+us)
 router.get("/", questionController.getQuestion);
@@ -24,7 +23,7 @@ router.delete("/:id", questionController.deleteQuestion);
 //API import (router)
 router.post(
     "/import",
-    upload.single("file"),
+    uploadExcel.single("file"),
     questionController.importQuestions
 )
 

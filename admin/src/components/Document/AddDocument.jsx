@@ -1,52 +1,44 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { createDocument } from "../../api/documentApi";
-
 import "./css/AddDocument.css";
 
-const AddDocument = ({
-    onClose,
-    onSuccess,
-    subjects,
-    chapters,
-    lessons,
-    setLessons,
-    fetchLessons
-}) => {
-
+const AddDocument = ({ onClose, onSuccess, subjects, chapters, lessons, setLessons, fetchLessons }) => {
     const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const [wordFile, setWordFile] = useState(null);
 
     const [subjectId, setSubjectId] = useState("");
     const [chapterId, setChapterId] = useState("");
     const [lessonId, setLessonId] = useState("");
 
-    // ================= SUBMIT =================
+    const [fileInputKey, setFileInputKey] = useState(Date.now());
 
     const handleUpload = async () => {
+        if (!lessonId || !title || !wordFile) {
+            return alert("Vui lòng điền đầy đủ thông tin và chọn file Word!");
+        }
 
-        if (!lessonId) return alert("Chọn bài học");
-        if (!title) return alert("Nhập tiêu đề");
-        if (!content) return alert("Nhập nội dung");
+        const formData = new FormData();
+        formData.append("lesson_id", Number(lessonId));
+        formData.append("title", title);
+        formData.append("file", wordFile);
 
-        await createDocument({
-            lesson_id: lessonId,
-            title,
-            content
-        });
-
-        alert("Thêm tài liệu thành công");
-
-        // reset
-        setTitle("");
-        setContent("");
-        setSubjectId("");
-        setChapterId("");
-        setLessonId("");
-
-        onSuccess();
+        try {
+            await createDocument(formData);
+            alert("Thêm tài liệu thành công");
+            
+            // Reset form hoàn toàn
+            setTitle("");
+            setWordFile(null);
+            setSubjectId("");
+            setChapterId("");
+            setLessonId("");
+            setFileInputKey(Date.now());
+            onSuccess();
+        } catch (error) {
+            console.log("Chi tiết lỗi cụ thể từ Backend:", error);
+            alert("Thêm tài liệu thất bại");
+        }
     };
-
-    // ================= CHANGE =================
 
     const handleChangeSubject = (value) => {
         setSubjectId(value);
@@ -58,97 +50,62 @@ const AddDocument = ({
     const handleChangeChapter = (value) => {
         setChapterId(value);
         setLessonId("");
-
         if (value) fetchLessons(value);
         else setLessons([]);
     };
 
-    // ================= FILTER =================
-
-    const filteredChapters = chapters.filter(
-        c => c.subject_id === Number(subjectId)
-    );
-
-    const filteredLessons = lessons.filter(
-        l => l.chapter_id === Number(chapterId)
-    );
+    const filteredChapters = chapters.filter(c => c.subject_id === Number(subjectId));
+    const filteredLessons = lessons.filter(l => l.chapter_id === Number(chapterId));
 
     return (
-        <div className="document-modal">
+        <div className="document-add-modal">
+            <div className="document-add-content">
+                <h2>Thêm tài liệu học tập</h2>
 
-            <div className="document-content">
-
-                {/* <button onClick={onClose}>×</button> */}
-
-                <h2>Thêm tài liệu SGK</h2>
-
-                {/* TITLE */}
-                <input
-                    value={title}
-                    placeholder="Tiêu đề"
-                    onChange={(e) => setTitle(e.target.value)}
+                <input 
+                    type="text"
+                    placeholder="Tiêu đề tài liệu..."
+                    value={title} 
+                    onChange={(e) => setTitle(e.target.value)} 
                 />
 
-                {/* SUBJECT */}
-                <select
-                    value={subjectId}
-                    onChange={(e) => handleChangeSubject(e.target.value)}
-                >
-                    <option value="">Chọn môn</option>
-                    {subjects.map(sub => (
-                        <option key={sub.subject_id} value={sub.subject_id}>
-                            {sub.subject_name}
-                        </option>
+                <select value={subjectId} onChange={(e) => handleChangeSubject(e.target.value)}>
+                    <option value="">Chọn môn học</option>
+                    {subjects.map(s => (
+                        <option key={s.subject_id} value={s.subject_id}>{s.subject_name}</option>
                     ))}
                 </select>
 
-                {/* CHAPTER */}
-                <select
-                    value={chapterId}
-                    disabled={!subjectId}
-                    onChange={(e) => handleChangeChapter(e.target.value)}
-                >
+                <select value={chapterId} onChange={(e) => handleChangeChapter(e.target.value)} disabled={!subjectId}>
                     <option value="">Chọn chương</option>
                     {filteredChapters.map(c => (
-                        <option key={c.chapter_id} value={c.chapter_id}>
-                            Chương {c.chapter_number}: {c.chapter_name}
-                        </option>
+                        <option key={c.chapter_id} value={c.chapter_id}>Chương {c.chapter_number}: {c.chapter_name}</option>
                     ))}
                 </select>
 
-                {/* LESSON */}
-                <select
-                    value={lessonId}
-                    disabled={!chapterId}
-                    onChange={(e) => setLessonId(e.target.value)}
-                >
+                <select value={lessonId} onChange={(e) => setLessonId(e.target.value)} disabled={!chapterId}>
                     <option value="">Chọn bài học</option>
                     {filteredLessons.map(l => (
-                        <option key={l.lesson_id} value={l.lesson_id}>
-                            Bài {l.lesson_number}: {l.lesson_name}
-                        </option>
+                        <option key={l.lesson_id} value={l.lesson_id}>Bài {l.lesson_number}: {l.lesson_name}</option>
                     ))}
                 </select>
 
-                {/* CONTENT */}
-                <textarea
-                    rows="12"
-                    value={content}
-                    placeholder="Nhập nội dung SGK..."
-                    onChange={(e) => setContent(e.target.value)}
-                />
+                {/* KHU VỰC CHỌN FILE ĐÃ ĐƯỢC ĐƯA VÀO CLASS CSS SẠCH SẼ */}
+                <div className="upload-file-group">
+                    <label>Chọn tài liệu từ file Word (.docx):</label>
+                    <input 
+                        key={fileInputKey}
+                        type="file" 
+                        accept=".doc,.docx" 
+                        onChange={(e) => setWordFile(e.target.files[0])} 
+                    />
+                </div>
 
-                {/* ACTION */}
-                <button onClick={handleUpload}>
-                    Lưu tài liệu
-                </button>
-
-                <button onClick={onClose}>
-                    Hủy
-                </button>
-
+                <div className="btn-group">
+                    <button onClick={handleUpload}>Lưu tài liệu</button>
+                    <button onClick={onClose}>Hủy</button>
+                </div>
             </div>
-
         </div>
     );
 };

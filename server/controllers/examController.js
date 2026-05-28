@@ -1,8 +1,17 @@
 const db = require("../config/db");
- //Ramdom ở đây:
+
+// Thuật toán trộn mảng ngẫu nhiên chuẩn hóa (Fisher-Yates Shuffle)
+const shuffle = (array) => {
+    const arr = [...array]; // Tạo bản sao tránh làm thay đổi mảng gốc
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+};
 
 // ================= GET ALL ================= Lấy danh sách tất cả đề thi admin
-exports.getExams = (req, res) => {
+exports.getExams = async (req, res, next) => {
     const sql = `
         SELECT 
             e.*,
@@ -14,66 +23,24 @@ exports.getExams = (req, res) => {
         GROUP BY e.exam_id
         ORDER BY e.created_time ASC
     `;
-    //DESC
 
-    db.query(sql, (err, rows) => {
-        if (err) return res.status(500).json(err);
+    try {
+        const [rows] = await db.query(sql);
         res.json(rows);
-    });
+    } catch (err) {
+        next(err);
+    }
 };
 
-
 // ================= GET DETAIL ================= lấy chi tiết thông tin đề user
-// exports.getExamDetail = (req, res) => {
-//     const { id } = req.params;
-
-//     const sql = `
-//         SELECT q.*
-//         FROM exam_questions eq
-//         JOIN questions q ON eq.question_id = q.question_id
-//         WHERE eq.exam_id = ?
-//     `;
-//     //  const sql = `
-//     //     SELECT 
-//     //         q.us
-//     //     FROM exam_questions eq
-//     //     JOIN questions q ON eq.question_id = q.question_id
-//     //     WHERE eq.exam_id = ?
-//     // `;
-
-// db.query(sql, [id], (err) => {        
-//     //subject_id, title, description, duration, req.params.id
-//     if (err) return res.status(500).json(err); 
-//     if (err) {
-//             return res.status(500).json(err);
-//         }
-
-//         // trả data mới về FE
-//         res.json({
-//             exam_id: req.params.id,
-//             subject_id,
-//             title,
-//             description,
-//             duration
-//         });
-//     });
-// };
-
-//Lấy đề thi
-exports.getExamDetail = (req, res) => {
+exports.getExamDetail = async (req, res, next) => {
     const { id } = req.params;
 
     const sql = `
         SELECT 
-            e.exam_id,
-            e.title,
-            e.description,
-            e.duration,
-            q.question_id,
-            q.content,
-            a.answer_id,
-            a.content AS answer_content,
-            a.is_correct
+            e.exam_id, e.title, e.description, e.duration,
+            q.question_id, q.content,
+            a.answer_id, a.content AS answer_content, a.is_correct
         FROM exam e
         JOIN exam_questions eq ON e.exam_id = eq.exam_id
         JOIN questions q ON eq.question_id = q.question_id
@@ -81,11 +48,11 @@ exports.getExamDetail = (req, res) => {
         WHERE e.exam_id = ?
     `;
 
-    db.query(sql, [id], (err, rows) => {
-        if (err) return res.status(500).json(err);
+    try {
+        const [rows] = await db.query(sql, [id]);
 
         if (!rows.length) {
-            return res.status(404).json({ message: "Không tìm thấy exam" });
+            return res.status(404).json({ message: "Không tìm thấy đề thi này" });
         }
 
         const result = {
@@ -97,9 +64,7 @@ exports.getExamDetail = (req, res) => {
         };
 
         rows.forEach(row => {
-            let question = result.questions.find(
-                q => q.question_id === row.question_id
-            );
+            let question = result.questions.find(q => q.question_id === row.question_id);
 
             if (!question) {
                 question = {
@@ -118,425 +83,151 @@ exports.getExamDetail = (req, res) => {
         });
 
         res.json(result);
-    });
+    } catch (err) {
+        next(err);
+    }
 };
 
-
-// ================= UPDATE EXAM =================
-// exports.updateExam = (req, res) => {
+// ================= DELETE ================= Xóa đề thi (Đã mở khóa)
+// exports.deleteExam = async (req, res, next) => {
 //     const { id } = req.params;
 
-//     const {
-//         subject_id,
-//         title,
-//         description,
-//         duration,
-//         easy_count,
-//         medium_count,
-//         hard_count
-//     } = req.body;
+//     try {
+//         await db.beginTransaction();
 
-//     // 🔥 CHECK đã có ai làm bài chưa (DÙNG user_exam)
-//     const sqlCheck = `
-//         SELECT COUNT(*) AS total
-//         FROM user_exam
-//         WHERE exam_id = ?
-//     `;
+//         // Xóa liên kết ở bảng trung gian trước để tránh dính lỗi ràng buộc khóa ngoại (Foreign Key)
+//         await db.query("DELETE FROM exam_questions WHERE exam_id = ?", [id]);
+//         await db.query("DELETE FROM exam WHERE exam_id = ?", [id]);
 
-//     db.query(sqlCheck, [id], (err, result) => {
-//         if (err) return res.status(500).json(err);
-
-//         const hasAttempts = result[0].total > 0;
-
-//         // ❌ đã có người làm → chặn update
-//         if (hasAttempts) {
-//             return res.status(403).json({
-//                 error: "Đề thi đã có người làm, không thể chỉnh sửa"
-//             });
-//         }
-
-//         // ✅ chưa ai làm → update tiếp
-//         continueUpdateExam();
-//     });
-
-//     // =====================
-//     function continueUpdateExam() {
-
-//         const easyCount = Number(easy_count || 0);
-//         const mediumCount = Number(medium_count || 0);
-//         const hardCount = Number(hard_count || 0);
-
-//         const total_questions =
-//             easyCount + mediumCount + hardCount;
-
-//         if (!subject_id || !title || !duration) {
-//             return res.status(400).json({
-//                 error: "Thiếu dữ liệu"
-//             });
-//         }
-
-//         if (total_questions <= 0) {
-//             return res.status(400).json({
-//                 error: "Tổng số câu phải lớn hơn 0"
-//             });
-//         }
-
-//         // update exam
-//         const sqlUpdateExam = `
-//             UPDATE exam
-//             SET subject_id = ?,
-//                 title = ?,
-//                 description = ?,
-//                 duration = ?
-//             WHERE exam_id = ?
-//         `;
-
-//         db.query(sqlUpdateExam, [
-//             subject_id,
-//             title,
-//             description,
-//             duration,
-//             id
-//         ], (err) => {
-//             if (err) return res.status(500).json(err);
-
-//             // xoá câu cũ
-//             db.query(
-//                 "DELETE FROM exam_questions WHERE exam_id=?",
-//                 [id],
-//                 (err2) => {
-//                     if (err2) return res.status(500).json(err2);
-
-//                     // lấy câu hỏi theo subject
-//                     const sql = `
-//                         SELECT 
-//                             q.question_id,
-//                             q.difficulty
-//                         FROM questions q
-//                         JOIN lessons l ON q.lesson_id = l.lesson_id
-//                         JOIN chapters c ON l.chapter_id = c.chapter_id
-//                         WHERE c.subject_id = ?
-//                     `;
-
-//                     db.query(sql, [subject_id], (err3, questions) => {
-//                         if (err3) return res.status(500).json(err3);
-
-//                         const shuffle = arr =>
-//                             arr.sort(() => Math.random() - 0.5);
-
-//                         const easyList = questions.filter(
-//                             q => q.difficulty?.trim().toUpperCase() === "EASY"
-//                         );
-
-//                         const mediumList = questions.filter(
-//                             q => q.difficulty?.trim().toUpperCase() === "MEDIUM"
-//                         );
-
-//                         const hardList = questions.filter(
-//                             q => q.difficulty?.trim().toUpperCase() === "HARD"
-//                         );
-
-//                         if (
-//                             easyList.length < easyCount ||
-//                             mediumList.length < mediumCount ||
-//                             hardList.length < hardCount
-//                         ) {
-//                             return res.status(400).json({
-//                                 error: "Không đủ câu hỏi theo độ khó"
-//                             });
-//                         }
-
-//                         const finalSelected = [
-//                             ...shuffle(easyList).slice(0, easyCount),
-//                             ...shuffle(mediumList).slice(0, mediumCount),
-//                             ...shuffle(hardList).slice(0, hardCount)
-//                         ];
-
-//                         const shuffledFinal = shuffle(finalSelected);
-
-//                         const values = shuffledFinal.map(q => [
-//                             id,
-//                             q.question_id
-//                         ]);
-
-//                         db.query(
-//                             `INSERT INTO exam_questions (exam_id, question_id) VALUES ?`,
-//                             [values],
-//                             (err4) => {
-//                                 if (err4) return res.status(500).json(err4);
-
-//                                 res.json({
-//                                     message: "Cập nhật đề thi thành công",
-//                                     examId: id
-//                                 });
-//                             }
-//                         );
-//                     });
-//                 }
-//             );
-//         });
+//         await db.commit();
+//         res.json({ message: "Xóa đề thi thành công" });
+//     } catch (err) {
+//         await db.rollback();
+//         next(err);
 //     }
 // };
-// exports.checkExamLock = (req, res) => {
-//     const { id } = req.params;
 
-//     const sql = `
-//         SELECT COUNT(*) AS total
-//         FROM user_exam
-//         WHERE exam_id = ?
-//     `;
-
-//     db.query(sql, [id], (err, result) => {
-//         if (err) return res.status(500).json(err);
-
-//         res.json({
-//             hasAttempt: result[0].total > 0
-//         });
-//     });
-// };
-
-// ================= DELETE ================= xóa đề
-exports.deleteExam = (req, res) => {
-    const { id } = req.params;
-
-    db.query("DELETE FROM exam_questions WHERE exam_id=?", [id], (err) => {
-        if (err) return res.status(500).json(err);
-
-        db.query("DELETE FROM exam WHERE exam_id=?", [id], (err2) => {
-            if (err2) return res.status(500).json(err2);
-
-            res.json({ message: "Xóa thành công" });
-        });
-    });
-};
-
-//Random câu hỏi
-exports.createExamBySubject = (req, res) => {
-
+// ================= RANDOM CÂU HỎI & TẠO ĐỀ (Bản Sửa Lỗi Logic) =================
+exports.createExamBySubject = async (req, res, next) => {
     const {
-        subject_id,
-        title,
-        description,
-        duration,
-        easy_count,
-        medium_count,
-        hard_count
+        subject_id, title, description, duration,
+        easy_count, medium_count, hard_count
     } = req.body;
 
-    // ép kiểu number
-    const easyCount = Number(easy_count);
-    const mediumCount = Number(medium_count);
-    const hardCount = Number(hard_count);
+    const easyCount = Number(easy_count) || 0;
+    const mediumCount = Number(medium_count) || 0;
+    const hardCount = Number(hard_count) || 0;
+    const total_questions = easyCount + mediumCount + hardCount;
 
-    const total_questions =
-        easyCount +
-        mediumCount +
-        hardCount;
-
-    // validate
-    if (
-        !subject_id ||
-        !title ||
-        !duration
-    ) {
-        return res.status(400).json({
-            error: "Thiếu dữ liệu"
-        });
+    if (!subject_id || !title || !duration) {
+        return res.status(400).json({ error: "Thiếu dữ liệu bắt buộc (subject_id, title, duration)" });
     }
 
     if (total_questions <= 0) {
-        return res.status(400).json({
-            error: "Tổng số câu phải lớn hơn 0"
-        });
+        return res.status(400).json({ error: "Tổng số câu hỏi trong đề phải lớn hơn 0" });
     }
 
-    // lấy câu hỏi theo môn
-    const sql = `
-        SELECT 
-            q.question_id,
-            q.difficulty,
-            c.chapter_id
-        FROM questions q
-        JOIN lessons l 
-            ON q.lesson_id = l.lesson_id
-        JOIN chapters c 
-            ON l.chapter_id = c.chapter_id
-        WHERE c.subject_id = ?
-    `;
+    try {
+        // 1. Lấy tất cả câu hỏi thuộc môn học
+        const sql = `
+            SELECT q.question_id, q.difficulty
+            FROM questions q
+            JOIN lessons l ON q.lesson_id = l.lesson_id
+            JOIN chapters c ON l.chapter_id = c.chapter_id
+            WHERE c.subject_id = ?
+        `;
+        const [questions] = await db.query(sql, [subject_id]);
 
-    db.query(sql, [subject_id], (err, questions) => {
-
-        if (err) {
-            return res.status(500).json(err);
-        }
-
-        // kiểm tra đủ tổng số câu
         if (questions.length < total_questions) {
-            return res.status(400).json({
-                error: `Không đủ ${total_questions} câu hỏi`
+            return res.status(400).json({ error: `Ngân hàng chỉ có ${questions.length} câu, không đủ cung cấp ${total_questions} câu theo yêu cầu` });
+        }
+
+        // Lọc danh sách theo độ khó chuẩn (Loại bỏ khoảng trắng dư thừa)
+        const easyList = questions.filter(q => q.difficulty?.trim().toUpperCase() === "EASY");
+        const mediumList = questions.filter(q => q.difficulty?.trim().toUpperCase() === "MEDIUM");
+        const hardList = questions.filter(q => q.difficulty?.trim().toUpperCase() === "HARD");
+
+        // Kiểm tra xem số lượng trong từng kho câu hỏi có đáp ứng nổi nhu cầu không
+        if (easyList.length < easyCount || mediumList.length < mediumCount || hardList.length < hardCount) {
+            return res.status(400).json({ 
+                error: `Không đủ số lượng câu hỏi theo từng độ khó. Hiện có: Easy(${easyList.length}), Medium(${mediumList.length}), Hard(${hardList.length})` 
             });
         }
 
-        // =========random=============
-        const shuffle = arr =>
-            arr.sort(() => Math.random() - 0.5);
-
-        // chia theo độ khó
-        const easyList = questions.filter(
-            q =>
-                q.difficulty
-                    ?.trim()
-                    .toUpperCase() === "EASY"
-        );
-
-        const mediumList = questions.filter(
-            q =>
-                q.difficulty
-                    ?.trim()
-                    .toUpperCase() === "MEDIUM"
-        );
-
-        const hardList = questions.filter(
-            q =>
-                q.difficulty
-                    ?.trim()
-                    .toUpperCase() === "HARD"
-        );
-
-        // debug
-        console.log("Easy:", easyList.length);
-        console.log("Medium:", mediumList.length);
-        console.log("Hard:", hardList.length);
-
-        // kiểm tra đủ từng độ khó
-        if (
-            easyList.length < easyCount ||
-            mediumList.length < mediumCount ||
-            hardList.length < hardCount
-        ) {
-            return res.status(400).json({
-                error: "Không đủ câu hỏi theo độ khó yêu cầu"
-            });
-        }
-
-        // random từng nhóm
+        // Tiến hành xáo trộn và bốc câu hỏi ngẫu nhiên
         const finalSelected = [
             ...shuffle(easyList).slice(0, easyCount),
-
             ...shuffle(mediumList).slice(0, mediumCount),
-
             ...shuffle(hardList).slice(0, hardCount)
         ];
 
-        // random lại toàn đề
+        // Xáo trộn một lần nữa để phân tán vị trí các câu Dễ - Trung bình - Khó
         const shuffledFinal = shuffle(finalSelected);
 
-        // tạo exam
+        // KÍCH HOẠT TRANSACTION - Đảm bảo an toàn dữ liệu
+        await db.beginTransaction();
+
+        // 2. Chèn dữ liệu vào bảng exam trước
         const sqlExam = `
-            INSERT INTO exam (
-                title,
-                description,
-                duration,
-                subject_id,
-                created_time
-            )
+            INSERT INTO exam (title, description, duration, subject_id, created_time)
             VALUES (?, ?, ?, ?, NOW())
         `;
+        const [examResult] = await db.query(sqlExam, [title, description, duration, subject_id]);
+        const examId = examResult.insertId;
 
-        db.query(
-            sqlExam,
-            [
-                title,
-                description,
-                duration,
-                subject_id
-            ],
-            (err2, result) => {
+        // 3. Chuẩn bị mảng 2 chiều cho Bulk Insert [[examId, qId1], [examId, qId2], ...]
+        const values = shuffledFinal.map(q => [examId, q.question_id]);
 
-                if (err2) {
-                    return res.status(500).json(err2);
-                }
+        const sqlInsertQuestions = `
+            INSERT INTO exam_questions (exam_id, question_id)
+            VALUES ?
+        `;
+        await db.query(sqlInsertQuestions, [values]);
 
-                const examId = result.insertId;
+        // Nếu mọi thứ chạy mượt mà, đồng ý chốt hạ lưu vào Database
+        await db.commit();
 
-                // insert exam_questions
-                const values = shuffledFinal.map(q => [
-                    examId,
-                    q.question_id
-                ]);
+        res.json({
+            message: "Tạo đề thi ngẫu nhiên thành công",
+            examId,
+            total: shuffledFinal.length,
+            difficulty: { easy: easyCount, medium: mediumCount, hard: hardCount }
+        });
 
-                const sqlInsert = `
-                    INSERT INTO exam_questions (
-                        exam_id,
-                        question_id
-                    )
-                    VALUES ?
-                `;
-
-                db.query(sqlInsert, [values], (err3) => {
-
-                    if (err3) {
-                        return res.status(500).json(err3);
-                    }
-
-                    res.json({
-                        message: "Tạo đề thành công",
-                        examId,
-                        total: shuffledFinal.length,
-
-                        difficulty: {
-                            easy: easyCount,
-                            medium: mediumCount,
-                            hard: hardCount
-                        }
-                    });
-                });
-            }
-        );
-    });
+    } catch (err) {
+        // Có bất kỳ lỗi gì phát sinh (Lỗi ghi DB, mất mạng,...) lập tức hủy bỏ lệnh tạo đề rác
+        await db.rollback();
+        next(err);
+    }
 };
 
-//Thống kê độ khó
-exports.getQuestionCountByDifficulty = (req, res) => {
-
+// ================= THỐNG KÊ ĐỘ KHÓ CỦA MÔN HỌC =================
+exports.getQuestionCountByDifficulty = async (req, res, next) => {
     const { subject_id } = req.params;
 
     const sql = `
-        SELECT 
-            q.difficulty,
-            COUNT(*) AS total
+        SELECT q.difficulty, COUNT(*) AS total
         FROM questions q
-        JOIN lessons l 
-            ON q.lesson_id = l.lesson_id
-        JOIN chapters c 
-            ON l.chapter_id = c.chapter_id
+        JOIN lessons l ON q.lesson_id = l.lesson_id
+        JOIN chapters c ON l.chapter_id = c.chapter_id
         WHERE c.subject_id = ?
         GROUP BY q.difficulty
     `;
 
-    db.query(sql, [subject_id], (err, result) => {
+    try {
+        const [result] = await db.query(sql, [subject_id]);
 
-        if (err) {
-            console.log("SQL ERROR:", err);
-            return res.status(500).json(err);
-        }
-
-        console.log("RESULT:", result);
-
-        let data = {
-            EASY: 0,
-            MEDIUM: 0,
-            HARD: 0
-        };
+        let data = { EASY: 0, MEDIUM: 0, HARD: 0 };
 
         result.forEach(item => {
-
-            const difficulty =
-                item.difficulty?.trim().toUpperCase();
-
-            data[difficulty] = item.total;
+            const difficulty = item.difficulty?.trim().toUpperCase();
+            if (data.hasOwnProperty(difficulty)) {
+                data[difficulty] = item.total;
+            }
         });
 
         res.json(data);
-    });
+    } catch (err) {
+        next(err);
+    }
 };

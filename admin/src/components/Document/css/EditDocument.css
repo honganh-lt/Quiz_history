@@ -28,10 +28,23 @@
     color: #1f2937;
 }
 
+/* ===== FORM GROUP & LABELS ===== */
+.form-group {
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #374151;
+    font-size: 14px;
+}
+
 /* ===== COMPONENT FORM ===== */
 .document-edit-content select,
-.document-edit-content input,
-.document-edit-content textarea {
+.document-edit-content input {
     width: 100%;
     padding: 12px 14px;
     border: 1px solid #dbe1ea;
@@ -41,46 +54,41 @@
     transition: all 0.2s ease;
     box-sizing: border-box;
     background: #f8fafc;
-    margin-bottom: 12px;
-}
-
-.document-edit-content textarea {
-    min-height: 120px;
-    resize: vertical;
 }
 
 /* FOCUS EFFECT */
 .document-edit-content input:focus,
-.document-edit-content select:focus,
-.document-edit-content textarea:focus {
+.document-edit-content select:focus {
     border-color: #2563eb;
     background: #fff;
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
+/* ===== KHU VỰC THAY THẾ FILE WORD (MỚI THÊM) ===== */
+.upload-word-section {
+    margin: 18px 0;
+    text-align: left;
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 15px;
+}
+
+.upload-word-section .upload-label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #000; /* Màu xanh lá dịu mắt */
+    font-size: 14px;
+}
+
+.upload-word-section .upload-note {
+    color: #6b7280;
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    font-style: italic;
+}
+
 /* ===== BUTTON GROUP ===== */
-.document-edit-content button {
-    padding: 10px 14px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.document-edit-content .btn-save {
-    background: #2563eb;
-    color: white;
-    margin-right: 10px;
-}
-
-.document-edit-content .btn-cancel {
-    background: #e5e7eb;
-    color: #111827;
-}
-
-.document-edit-content button:hover {
-    opacity: 0.9;
-}
 .btn-group {
     display: flex;
     justify-content: flex-end;
@@ -88,7 +96,6 @@
     margin-top: 20px;
 }
 
-/* Nút chung */
 .btn-group button {
     padding: 10px 18px;
     border: none;
@@ -101,7 +108,7 @@
 
 /* Nút Cập nhật (primary) */
 .btn-group button:first-child {
-    background: #2563eb; /* xanh dương */
+    background: #2563eb;
     color: white;
 }
 
@@ -111,12 +118,12 @@
 }
 
 /* Nút Hủy (secondary) */
-.btn-group button:last-child {
-    background: #e5e7eb; /* xám nhạt */
+.btn-group .btn-cancel {
+    background: #e5e7eb;
     color: #374151;
 }
 
-.btn-group button:last-child:hover {
+.btn-group .btn-cancel:hover {
     background: #d1d5db;
     transform: translateY(-1px);
 }

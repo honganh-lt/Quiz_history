@@ -27,7 +27,8 @@ export const OnProfile = () => {
             <h2>Thông tin người dùng</h2>
             <div className='list-personal'>
                 <p><strong>Tên người dùng: {user.username} </strong></p>
-                {/* <p><strong>Email: {user.email} </strong></p> */}
+                <p><strong>Họ và tên: {user.full_name} </strong></p>
+                <p><strong>Email: {user.email} </strong></p>
                 <p><strong>Vai trò: {user.role} </strong></p>
             </div>
             <div className='change-password' >

@@ -58,3 +58,48 @@
     color: #fff;
     background: #fc9e40;
 }
+
+
+
+/* Khi màn hình nhỏ hơn 550px (cho các dòng điện thoại) */
+@media (max-width: 550px) {
+    .main-onProfile {
+        padding-top: 30px; /* Giảm bớt khoảng cách phía trên cho đỡ trống */
+        padding-bottom: 30px;
+        padding-left: 15px;  /* Thêm padding 2 bên tránh card bị dính sát mép màn hình */
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
+
+    .container-onProfile {
+        width: 100%; /* Cho phép card co giãn theo chiều rộng màn hình */
+        max-width: 100%; 
+        padding: 25px 20px; /* Thu gọn padding bên trong card một chút cho gọn */
+        box-sizing: border-box;
+    }
+
+    .container-onProfile h2 {
+        font-size: 20px; /* Giảm size chữ tiêu đề một chút cho vừa mắt */
+        margin-bottom: 15px;
+    }
+
+    .container-onProfile img {
+        width: 90px;  /* Thu nhỏ avatar một chút để cân đối */
+        height: 90px;
+    }
+
+    .list-personal p {
+        font-size: 14px; /* Chữ thông tin nhỏ lại một chút để không bị xuống dòng lỗi */
+    }
+}
+
+/* Tối ưu thêm cho màn hình cực nhỏ (dưới 360px) */
+@media (max-width: 360px) {
+    .container-onProfile {
+        padding: 20px 15px;
+    }
+    
+    .list-personal p {
+        font-size: 13px;
+    }
+}

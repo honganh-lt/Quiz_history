@@ -2,8 +2,6 @@
     grid-area: main;
     padding: 30px;
     background: #f5f7fb;
-
-    /* width: 100%; */ /* ❌ XOÁ HOẶC COMMENT DÒNG NÀY ĐI */
     min-height: 100vh;
     
     /* Thay vì hidden mỗi trục X, hãy dùng bao quát hoặc kiểm tra lại Grid chứa nó */

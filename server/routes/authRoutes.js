@@ -3,60 +3,55 @@ const router = express.Router();
 
 const authController = require("../controllers/authController");
 const { verifyToken } = require("../middleware/authMiddleware");
-const { checkRoles, checkRole } = require("../middleware/roleMiddleware");
-const authMiddleware = require("../middleware/authMiddleware")
+const { checkRole } = require("../middleware/roleMiddleware"); // Chỉ cần dùng 1 hàm checkRole duy nhất
 
-//==============Public=========
+// ==================== 1. PUBLIC ROUTES ====================
+// Ai cũng có thể truy cập (Không cần token, không cần role)
 router.post("/register", authController.register);
 router.post("/login", authController.login);
+router.post("/forgot-password", authController.forgotPassword);
+router.post("/verify-otp", authController.verifyOtp);
+router.post("/refresh-token", authController.refreshToken);
+router.post("/logout", authController.logout);
 
 
-//==========USER (user + admin login cũng vào được)==========
-// router.get("/profile", 
-//         verifyToken, 
-//         checkRoles(["USER", "ADMIN"]),
-//         (req, res) => {
-//     res.json({message: "OK", user: req.user});
-// })
-// //ví dụ API cho client
-// router.get("/user-data",
-//         verifyToken,
-//         checkRoles(["USER", "ADMIN"]),
-//         (req, res) => {
-//         res.json({ message: "Dữ liệu user" });
-//     }
-// )
-//========== ADMIN ONLY ==========
+// ==================== 2. USER & ADMIN ROUTES ====================
+// Yêu cầu: Phải đăng nhập VÀ tài khoản phải là USER hoặc ADMIN
 router.get(
-    "/admin",
-    verifyToken,
-    checkRole("ADMIN"),
+    "/profile", 
+    verifyToken, 
+    checkRole("USER", "ADMIN"), // Truyền bao nhiêu role vào cũng được
     (req, res) => {
-        res.json({ message: "Chào admin " });
+        res.json({ message: "OK", user: req.user });
     }
 );
-//user
-router.post(
-    "/forgot-password",
-    authController.forgotPassword
+
+router.get(
+    "/user-data",
+    verifyToken,
+    checkRole("USER", "ADMIN"),
+    (req, res) => {
+        res.json({ message: "Dữ liệu user" });
+    }
 );
 
-router.post(
-    "/verify-otp",
-    authController.verifyOtp
-);
-
+// Đổi mật khẩu thì chỉ cần đăng nhập là được (Bất kể role nào)
 router.post(
     "/change-password",
-    authMiddleware.verifyToken,
+    verifyToken,
     authController.changePassword
 );
 
-//=============TOKEN============
-router.post("/refresh-token", authController.refreshToken);
 
-router.post("/logout", authController.logout)
-
-//========Admin only=======
+// ==================== 3. ADMIN ONLY ROUTES ====================
+// Yêu cầu tối cao: Phải là ADMIN mới được sờ vào
+router.get(
+    "/admin",
+    verifyToken,
+    checkRole("ADMIN"), // Chỉ cho duy nhất ADMIN qua cửa
+    (req, res) => {
+        res.json({ message: "Chào admin" });
+    }
+);
 
 module.exports = router;

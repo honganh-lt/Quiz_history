@@ -66,32 +66,115 @@
 //     // console.log("==================================");
 // });
 
+// const express = require("express");
+// const cors = require("cors");
+
+// const app = express();
+
+// app.use(cors());
+// app.use(express.json());
+
+// //Đăng ký đang nhập Admin
+// const authRoutes = require("./routes/authRoutes");
+// app.use("/api/auth", authRoutes);
+// const db = require("./config/db");   // phải có dòng này
+// //thêm đẻ lấy dữ liệu users
+// // const authRoutes = require("./routes/authRoutes");
+// const userRoutes = require("./routes/userRoutes");
+// //dữ liệu users
+// // const userRoutes = require("./routes/userRouters");
+// app.use("/api/users", userRoutes);
+
+
+// //Home
+// const dashboardRoutes = require("./routes/dashboardRoutes")
+// app.use("/api/dashboard", dashboardRoutes)
+
+
+// //Thêm lấy dữ liệu quản lý môn học
+// const subjectRoutes = require("./routes/subjectRoutes");
+// app.use("/api/subjects", subjectRoutes);
+
+// //Thêm lấy dữ liệu quản lý chương
+// const chapterRoutes = require("./routes/chapterRoutes");
+// app.use("/api/chapters", chapterRoutes);
+
+// // Thêm lấy dữ liệu quản lý bài học theo chương
+// const lessonRoutes = require("./routes/lessonRoutes");
+// app.use("/api/lessons", lessonRoutes);
+
+// //Thêm lấy dữ liệu quản lý câu hỏi
+// const questionRoutes = require("./routes/questionRoutes")
+// app.use("/api/questions", questionRoutes);
+
+// //Thêm lấy dữ liệu quản lý đề thi
+// const examRoutes = require("./routes/examRoutes");
+// app.use("/api/exams", examRoutes);
+
+// //Thêm lấy dữ liệu quản lý đề thi user
+// const userExamRoutes = require("./routes/userExamRoutes");
+// app.use("/api/user-exam", userExamRoutes);
+
+// // TEST HOME
+// app.get("/", (req, res) => {
+//     res.send("SERVER RUNNING OK");
+// });
+
+// // ERROR HANDLER
+// app.use((err, req, res, next) => {
+//     console.error(" SERVER ERROR:", err);
+//     res.status(500).json({ error: "Server error" });
+// });
+
+// // START SERVER
+// app.listen(3000, () => {
+//     // console.log("==================================");
+//     console.log("SERVER START SUCCESSFULLY");
+//     // console.log("http://localhost:3000");
+//     // console.log("==================================");
+// });
+
 require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-
+const errorHandler = require('./middleware/errorMiddleware');
 const app = express();
 
-// ===== MIDDLEWARE =====
+// ===== 1. MIDDLEWARE HỆ THỐNG =====
+// app.use(cors({
+//     origin: [
+//         "http://localhost:5173", // user Portal
+//         "http://localhost:5174"  // admin Portal
+//     ],
+//     credentials: true
+// }));
 app.use(cors({
-    origin: [
-        "http://localhost:5173", // user
-        "http://localhost:5174"  // admin
-    ],
-    credentials: true
+  origin: function (origin, callback) {
+    // Chấp nhận mọi request đến từ localhost với bất kỳ cổng nào
+    if (!origin || origin.startsWith('http://localhost:')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Bị chặn bởi cấu hình CORS!'));
+    }
+  },
+  credentials: true // Trang Admin hoạt động hoàn hảo
 }));
 
-//middleware đọc json
+// Middleware đọc dữ liệu JSON từ body request
 app.use(express.json()); 
 
-// log request (debug)
+// Log request ra terminal để theo dõi (Debug)
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
 
-// ===== ROUTES =====
+// Cấu hình thư mục chứa file tĩnh (PDF, hình ảnh upload)
+app.use("/uploads", express.static("uploads"));
+
+
+// ===== 2. KHAI BÁO CÁC ROUTERS =====
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
@@ -103,7 +186,7 @@ const examRoutes = require("./routes/examRoutes");
 const userExamRoutes = require("./routes/userExamRoutes");
 const documentRoute = require("./routes/documentRoutes");
 
-
+// ===== 3. ĐỊNH TUYẾN API (ROUTES) =====
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/dashboard", dashboardRoutes);
@@ -113,42 +196,30 @@ app.use("/api/lessons", lessonRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/exams", examRoutes);
 app.use("/api/user-exam", userExamRoutes);
+app.use("/api/documents", documentRoute);
 
-// public folder uploads PDF
-app.use(
-    "/uploads",
-    express.static("uploads")
-);
-
-app.use(
-    "/api/documents",
-    documentRoute
-);
-
-
-// ===== HOME =====
+// API kiểm tra tình trạng server
 app.get("/", (req, res) => {
     res.send("SERVER RUNNING OK");
 });
 
-// ===== 404 =====
+
+// ===== 4. XỬ LÝ LỖI (BẮT BUỘC PHẢI THEO THỨ TỰ NÀY) =====
+
+// Bước 1: Lưới hứng lỗi toàn cục - Bắt toàn bộ lỗi từ các controller đẩy ra bằng next(err)
+app.use(errorHandler);
+
+// Bước 2: Middleware 404 - Nếu không trùng bất kỳ route nào ở trên VÀ cũng không có lỗi phát sinh
 app.use((req, res) => {
     res.status(404).json({ message: "API không tồn tại" });
 });
 
-// ===== ERROR HANDLER =====
-app.use((err, req, res, next) => {
-    console.error("SERVER ERROR:", err);
-    res.status(err.status || 500).json({
-        message: err.message || "Server error"
-    });
-});
 
+// ===== 5. KHỞI CHẠY SERVER =====
 console.log("EMAIL:", process.env.EMAIL_USER);
 console.log("PASS:", process.env.EMAIL_PASS);
-// ===== START =====
-const PORT = process.env.PORT || 3000;
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server chạy tại http://localhost:${PORT}`);
+    console.log(`Server chạy thành công tại http://localhost:${PORT}`);
 });

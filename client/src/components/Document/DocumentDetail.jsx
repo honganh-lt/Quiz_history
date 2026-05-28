@@ -1,15 +1,8 @@
-import {
-    useEffect,
-    useState
-} from "react";
+import { useEffect, useState } from "react";
 
-import {
-    useParams
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import {
-    getDocumentDetail
-} from "../../api/documentApi";
+import { getDocumentDetail } from "../../api/documentApi";
 
 import "./DocumentDetail.css";
 import Header from "../Home/Header";
@@ -53,11 +46,11 @@ const DocumentDetail = () => {
 
                 </div>
 
-                <h1>
+                {/* <h1>
 
                     {document.title}
 
-                </h1>
+                </h1> */}
 
                 <div
                     className="detail-content"

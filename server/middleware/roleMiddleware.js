@@ -1,19 +1,25 @@
 //dễ mở rộng bỏ
 
 // check 1 role ? có cần ko admin
-exports.checkRole = (role) => {
+exports.checkRole = (...allowedRoles) => {
     return (req, res, next) => {
+        // 1. Phải đi qua verifyToken trước để có req.user
         if (!req.user) {
             return res.status(401).json({ message: "Chưa xác thực" });
         }
-         // DEBUG
-        console.log("TOKEN ROLE:", req.user.role);
-        console.log("ROLE CAN CHECK:", role);
 
-        if (req.user.role !== role) {
-            return res.status(403).json({ message: "Không có quyền" });
+        // DEBUG cho bạn dễ nhìn khi test bằng Postman
+        console.log("ROLE CỦA USER:", req.user.role);
+        console.log("CÁC ROLE ĐƯỢC PHÉP VÀO:", allowedRoles);
+
+        // 2. Kiểm tra xem role của user có nằm trong danh sách được cho phép không
+        const hasPermission = allowedRoles.includes(req.user.role);
+
+        if (!hasPermission) {
+            return res.status(403).json({ message: "Không có quyền truy cập" });
         }
 
+        // Hợp lệ thì cho đi tiếp vào Controller
         next();
     };
 };

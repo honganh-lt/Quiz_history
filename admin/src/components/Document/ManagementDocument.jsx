@@ -138,7 +138,8 @@ const ManagementDocument = () => {
 
                                         <td>
                                             <div className="text-ellipsis">
-                                                {item.content}
+                                                {/* Lọc bỏ toàn bộ thẻ html để hiển thị text sạch dạng preview ngắn trên table */}
+                                                {item.content ? item.content.replace(/<[^>]*>/g, '') : "Chưa có nội dung"}
                                             </div>
                                         </td>
 

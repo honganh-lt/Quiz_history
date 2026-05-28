@@ -105,7 +105,7 @@ function Revise() {
                         <h3>{item.subject_name}</h3>
 
                         <button
-                            className="btn-practice"
+                            className="btn-practice-p"
                             onClick={() =>
                                 navigate(`/practice/${item.subject_id}`)
                             }

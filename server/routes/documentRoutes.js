@@ -1,29 +1,16 @@
+// routes/documentRoutes.js
 const express = require("express");
 const router = express.Router();
+const documentController = require("../controllers/documentController");
+const uploadWord = require("../middleware/uploadDocument");
+router.get("/", documentController.getAllDocuments);
+router.get("/subject/:subjectId", documentController.getDocumentsBySubject);
+router.get("/detail/:documentId", documentController.getDocumentDetail);
 
-const {
-    createDocument,
-    getAllDocuments,
-    deleteDocument,
-    updateDocument,
-    getDocumentsBySubject,
-    getDocumentDetail
-} = require("../controllers/documentController");
+// Ép đường dẫn truyền file Word thông qua thuộc tính key là "file"
+router.post("/", uploadWord.single("file"), documentController.createDocument);
+router.put("/:id", uploadWord.single("file"), documentController.updateDocument);
 
-// create
-router.post("/create", createDocument);
-
-// get all
-router.get("/", getAllDocuments);
-
-// GET THEO MÔN HỌC
-router.get("/subject/:subjectId", getDocumentsBySubject);
-
-router.get("/detail/:documentId", getDocumentDetail);
-// update
-router.put("/update/:id", updateDocument);
-
-// delete
-router.delete("/:id", deleteDocument);
+router.delete("/:id", documentController.deleteDocument);
 
 module.exports = router;

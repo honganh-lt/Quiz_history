@@ -2,171 +2,83 @@ const db = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-// const crypto = require("crypto");
 const sendMail = require("../config/sendMail");
-// const bcrypt = require("bcrypt");
 
 // ================= REGISTER =================
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
+    const { username, email, password, full_name } = req.body;
 
-    const {
-        username,
-        email,
-        password,
-        full_name
-    } = req.body;
-
-    if (
-        !username ||
-        !email ||
-        !password ||
-        !full_name
-    ) {
-        return res.status(400).json({
-            message: "Thiếu dữ liệu"
-        });
+    if (!username || !email || !password || !full_name) {
+        return res.status(400).json({ message: "Thiếu dữ liệu" });
     }
 
-    // username:
-    // - không dấu
-    // - không khoảng trắng
-    // - chỉ chữ thường, số, _
     const usernameRegex = /^[a-zA-Z0-9_]+$/;
-
     if (!usernameRegex.test(username)) {
         return res.status(400).json({
-            message:
-                "Username chỉ được chứa chữ, số và dấu _ , không dấu và không khoảng trắng"
+            message: "Username chỉ được chứa chữ, số và dấu _ , không dấu và không khoảng trắng"
         });
     }
 
     try {
+        // Kiểm tra username tồn tại (Cú pháp bóc tách mảng kết quả của Promise)
+        const [rows] = await db.query(`SELECT user_id FROM users WHERE username = ?`, [username]);
 
-        // kiểm tra username tồn tại
-        const checkSql = `
-            SELECT user_id
-            FROM users
-            WHERE username = ?
+        if (rows.length > 0) {
+            return res.status(400).json({ message: "Username đã tồn tại" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        const sql = `
+            INSERT INTO users (username, email, password, role, full_name)
+            VALUES (?, ?, ?, ?, ?)
         `;
+        await db.query(sql, [username, email, hashedPassword, "USER", full_name]);
 
-        db.query(checkSql, [username], async (err, result) => {
-
-            if (err) {
-                return res.status(500).json({
-                    message: "Server error"
-                });
-            }
-
-            if (result.length > 0) {
-                return res.status(400).json({
-                    message: "Username đã tồn tại"
-                });
-            }
-
-            const hashedPassword =
-                await bcrypt.hash(password, 10);
-
-            const sql = `
-                INSERT INTO users
-                (
-                    username,
-                    email,
-                    password,
-                    role,
-                    full_name
-                )
-                VALUES (?, ?, ?, ?, ?)
-            `;
-
-            db.query(
-                sql,
-                [
-                    username,
-                    email,
-                    hashedPassword,
-                    "USER",
-                    full_name
-                ],
-                (err) => {
-
-                    if (err) {
-
-                        if (err.code === "ER_DUP_ENTRY") {
-                            return res.status(400).json({
-                                message:
-                                    "Username hoặc email đã tồn tại"
-                            });
-                        }
-
-                        return res.status(500).json({
-                            message: "Lỗi server"
-                        });
-                    }
-
-                    res.status(201).json({
-                        message: "Đăng ký thành công"
-                    });
-
-                }
-            );
-
-        });
+        return res.status(201).json({ message: "Đăng ký thành công" });
 
     } catch (error) {
-
-        res.status(500).json({
-            message: "Lỗi server"
-        });
-
+        // Xử lý lỗi trùng unique key (ER_DUP_ENTRY) của MySQL dạng Promise
+        if (error.code === "ER_DUP_ENTRY") {
+            return res.status(400).json({ message: "Username hoặc email đã tồn tại" });
+        }
+        next(error); // Các lỗi hệ thống khác đẩy sang Error Middleware
     }
 };
 
 // ================= LOGIN =================
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
         return res.status(400).json({ message: "Thiếu username hoặc password" });
     }
 
-    const sql = "SELECT * FROM users WHERE username = ?";
+    try {
+        const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
 
-    db.query(sql, [username], async (err, result) => {
-        if (err) return res.status(500).json({ message: "Server error" });
-
-        //Không tìm thấy User
-        if (result.length === 0) {
+        if (users.length === 0) {
             return res.status(401).json({ message: "Sai tài khoản hoặc mật khẩu" });
         }
 
-        // const user = result[0];
-         const user = result[0];
+        const user = users[0];
 
-        // CHECK BLOCK
-        if(user.status === "blocked"){
-            return res.status(403).json({
-                message: "Tài khoản đã bị khóa"
-            });
+        if (user.status === "blocked") {
+            return res.status(403).json({ message: "Tài khoản đã bị khóa" });
         }
 
-        //Kiểm tra password
         const isMatch = await bcrypt.compare(password, user.password);
-
         if (!isMatch) {
             return res.status(401).json({ message: "Sai tài khoản hoặc mật khẩu" });
         }
 
-        //Login success....
-        //  ACCESS TOKEN(tạo)
         const accessToken = jwt.sign(
             { user_id: user.user_id, role: user.role },
-            process.env.JWT_SECRET, //Middleware 
-            { expiresIn: "7d" } //hết hạn token
+            process.env.JWT_SECRET, 
+            { expiresIn: "7d" }
         );
 
-        // REFRESH TOKEN
         const refreshToken = crypto.randomBytes(64).toString("hex");
-
         const expiryDate = new Date();
         expiryDate.setDate(expiryDate.getDate() + 7);
 
@@ -174,282 +86,181 @@ exports.login = async (req, res) => {
             INSERT INTO refresh_tokens (token, user_id, expiry_date)
             VALUES (?, ?, ?)
         `;
+        await db.query(insertSql, [refreshToken, user.user_id, expiryDate]);
 
-        db.query(insertSql, [refreshToken, user.user_id, expiryDate], (err) => {
-            if (err) {
-                return res.status(500).json({ message: "Lỗi lưu refresh token" });
+        // Thêm dòng này để debug
+        console.log("Dữ liệu user từ DB:", user);      
+         
+        return res.json({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+            user: {
+                user_id: user.user_id,
+                username: user.username,
+                role: user.role,
+                full_name: user.full_name,
+                email: user.email
             }
-
-            //BE trả token về FE
-            res.json({
-                access_token: accessToken,
-                refresh_token: refreshToken,
-                user: {
-                    user_id: user.user_id,
-                    username: user.username,
-                    role: user.role,
-                    full_name: user.full_name
-                }
-            });
         });
-    });
+
+    } catch (error) {
+        next(error);
+    }
 };
 
-//User:
-exports.forgotPassword = (req, res) => {
-
+// ================= FORGOT PASSWORD =================
+exports.forgotPassword = async (req, res, next) => {
     const { email } = req.body;
 
-    const sql =
-        "SELECT * FROM users WHERE email = ?";
+    try {
+        const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
 
-    db.query(sql, [email], async (err, results) => {
-
-        if (err) {
-            return res.status(500).json(err);
+        if (users.length === 0) {
+            return res.status(404).json({ message: "Email không tồn tại" });
         }
 
-        if (results.length === 0) {
-            return res.status(404).json({
-                message: "Email không tồn tại"
-            });
-        }
+        const user = users[0];
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();        
+        
+        // CHỌN CÁCH 1: Lấy số Timestamp mili-giây (Ví dụ: 1716712700000)
+        // Số này sẽ khớp hoàn toàn với kiểu dữ liệu `bigint` trong DB của bạn
+        const expire = Date.now() + 5 * 60 * 1000; 
 
-        const user = results[0];
+        const updateSql = `UPDATE users SET otp_code = ?, otp_expire = ? WHERE user_id = ?`;
+        await db.query(updateSql, [otp, expire, user.user_id]);
 
-        // tạo OTP 6 số
-        const otp =
-            Math.floor(
-                100000 + Math.random() * 900000
-            ).toString();
-
-        // hết hạn 5 phút
-        const expire = new Date(
-            Date.now() + 5 * 60 * 1000
+        // Đợi gửi mail xong mới phản hồi
+        await sendMail(
+            email,
+            "Quên mật khẩu",
+            `<h2>Mã OTP của bạn</h2><h1>${otp}</h1>`
         );
 
-        const updateSql = `
-            UPDATE users
-            SET otp_code = ?, otp_expire = ?
-            WHERE user_id = ?
-        `;
+        return res.json({ message: "Đã gửi OTP" });
 
-        db.query(
-            updateSql,
-            [otp, expire, user.user_id],
-            async (err2) => {
-
-                if (err2) {
-                    return res.status(500).json(err2);
-                }
-
-                await sendMail(
-                    email,
-                    "Quên mật khẩu",
-                    `
-                        <h2>Mã OTP của bạn</h2>
-                        <h1>${otp}</h1>
-                    `
-                );
-
-                res.json({
-                    message: "Đã gửi OTP"
-                });
-            }
-        );
-    });
+    } catch (error) {
+        next(error);
+    }
 };
 
-exports.verifyOtp = (req, res) => {
+// ================= VERIFY OTP =================
+exports.verifyOtp = async (req, res, next) => {
+    const { email, otp, newPassword } = req.body;
 
-    const {
-        email,
-        otp,
-        newPassword
-    } = req.body;
+    try {
+        const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
 
-    const sql =
-        "SELECT * FROM users WHERE email = ?";
-
-    db.query(sql, [email], async (err, results) => {
-
-        if (err) {
-            return res.status(500).json(err);
+        if (users.length === 0) {
+            return res.status(404).json({ message: "Email không tồn tại" });
         }
 
-        if (results.length === 0) {
-            return res.status(404).json({
-                message: "Email không tồn tại"
-            });
-        }
+        const user = users[0];
 
-        const user = results[0];
-
-        // OTP sai
         if (user.otp_code !== otp) {
-
-            return res.status(400).json({
-                message: "OTP không đúng"
-            });
+            return res.status(400).json({ message: "OTP không đúng" });
         }
 
-        // OTP hết hạn
-        if (Date.now() > user.otp_expire) {
-
-            return res.status(400).json({
-                message: "OTP đã hết hạn"
-            });
-        }
-
-        // hash password mới
-        const hashPassword =
-            await bcrypt.hash(newPassword, 10);
-
-        const updateSql = `
-            UPDATE users
-            SET password = ?,
-                otp_code = NULL,
-                otp_expire = NULL
-            WHERE user_id = ?
-        `;
-
-        db.query(
-            updateSql,
-            [hashPassword, user.user_id],
-            (err2) => {
-
-                if (err2) {
-                    return res.status(500).json(err2);
-                }
-
-                res.json({
-                    message:
-                        "Đổi mật khẩu thành công"
-                });
-            }
-        );
-    });
-};
-
-exports.changePassword = (req, res) => {
-
-    const userId = req.user.user_id;
-
-    const { oldPassword, newPassword } = req.body;
-
-    const sql = "SELECT * FROM users WHERE user_id = ?";
-
-    db.query(sql, [userId], async (err, results) => {
-
-        if (err) {
-            return res.status(500).json(err);
-        }
-
-        if (results.length === 0) {
-            return res.status(404).json({
-                message: "User không tồn tại"
-            });
-        }
-
-        const user = results[0];
-
-        const isMatch = await bcrypt.compare(
-            oldPassword,
-            user.password
-        );
-
-        if (!isMatch) {
-            return res.status(400).json({
-                message: "Mật khẩu cũ không đúng"
-            });
+        // TỐI ƯU THÊM: Khi lấy dữ liệu 'otp_expire' từ MySQL lên, nó có thể là chuỗi hoặc đối tượng Date.
+        // Ép nó về timestamp (miligiây) bằng `new Date(...).getTime()` để so sánh với Date.now() chính xác 100%.
+        const expireTime = new Date(user.otp_expire).getTime();
+        if (Date.now() > expireTime) {
+            return res.status(400).json({ message: "OTP đã hết hạn" });
         }
 
         const hashPassword = await bcrypt.hash(newPassword, 10);
-
         const updateSql = `
-            UPDATE users
-            SET password = ?
-            WHERE user_id = ?
+            UPDATE users SET password = ?, otp_code = NULL, otp_expire = NULL WHERE user_id = ?
         `;
+        await db.query(updateSql, [hashPassword, user.user_id]);
 
-        db.query(updateSql, [hashPassword, userId], (err2) => {
+        return res.json({ message: "Đổi mật khẩu thành công" });
 
-            if (err2) {
-                return res.status(500).json(err2);
-            }
-
-            res.json({
-                message: "Đổi mật khẩu thành công"
-            });
-        });
-    });
+    } catch (error) {
+        next(error);
+    }
 };
 
+// ================= CHANGE PASSWORD =================
+exports.changePassword = async (req, res, next) => {
+    const userId = req.user.user_id;
+    const { oldPassword, newPassword } = req.body;
+
+    try {
+        const [users] = await db.query("SELECT * FROM users WHERE user_id = ?", [userId]);
+
+        if (users.length === 0) {
+            return res.status(404).json({ message: "User không tồn tại" });
+        }
+
+        const user = users[0];
+
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Mật khẩu cũ không đúng" });
+        }
+
+        const hashPassword = await bcrypt.hash(newPassword, 10);
+        await db.query(`UPDATE users SET password = ? WHERE user_id = ?`, [hashPassword, userId]);
+
+        return res.json({ message: "Đổi mật khẩu thành công" });
+
+    } catch (error) {
+        next(error);
+    }
+};
 
 // ================= REFRESH TOKEN =================
-exports.refreshToken = (req, res) => {
+exports.refreshToken = async (req, res, next) => {
     const { refresh_token } = req.body;
 
     if (!refresh_token) {
         return res.status(401).json({ message: "Không có refresh token" });
     }
 
-    const sql = `
-        SELECT * FROM refresh_tokens
-        WHERE token = ? AND revoked = FALSE
-    `;
+    try {
+        const [tokens] = await db.query(
+            `SELECT * FROM refresh_tokens WHERE token = ? AND revoked = FALSE`, 
+            [refresh_token]
+        );
 
-    db.query(sql, [refresh_token], (err, result) => {
-        if (err) return res.status(500).json({ message: "Server error" });
-
-        if (result.length === 0) {
+        if (tokens.length === 0) {
             return res.status(403).json({ message: "Token không hợp lệ" });
         }
 
-        const tokenData = result[0];
+        const tokenData = tokens[0];
 
         if (new Date(tokenData.expiry_date) < new Date()) {
             return res.status(403).json({ message: "Token đã hết hạn" });
         }
 
-        //  Lấy role từ users
-        const userSql = "SELECT role FROM users WHERE user_id = ?";
+        const [users] = await db.query("SELECT role FROM users WHERE user_id = ?", [tokenData.user_id]);
+        const user = users[0];
 
-        db.query(userSql, [tokenData.user_id], (err, userResult) => {
-            if (err) return res.status(500).json({ message: "Server error" });
+        const newAccessToken = jwt.sign(
+            { user_id: tokenData.user_id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
 
-            const user = userResult[0];
+        return res.json({ access_token: newAccessToken });
 
-            const newAccessToken = jwt.sign(
-                { user_id: tokenData.user_id, role: user.role },
-                process.env.JWT_SECRET,
-                { expiresIn: "7d" }
-                //Access token sốn 15 phút -> sau 15p sẽ hết hạn
-                //hết hạn -> trong middleware sẽ trả về "403: TokenExpiredError"
-            );
-
-            res.json({ access_token: newAccessToken });
-        });
-    });
+    } catch (error) {
+        next(error);
+    }
 };
 
 // ================= LOGOUT =================
-exports.logout = (req, res) => {
+exports.logout = async (req, res, next) => {
     const { refresh_token } = req.body;
 
     if (!refresh_token) {
         return res.status(400).json({ message: "Thiếu refresh token" });
     }
 
-    const sql = `
-        UPDATE refresh_tokens
-        SET revoked = TRUE
-        WHERE token = ?
-    `;
-
-    db.query(sql, [refresh_token], (err) => {
-        if (err) return res.status(500).json({ message: "Server error" });
-
-        res.json({ message: "Logout thành công" });
-    });
+    try {
+        await db.query(`UPDATE refresh_tokens SET revoked = TRUE WHERE token = ?`, [refresh_token]);
+        return res.json({ message: "Logout thành công" });
+    } catch (error) {
+        next(error);
+    }
 };

@@ -127,3 +127,47 @@
 .exam-box .pagination {
   width: 100%;
 }
+/* Khi màn hình nhỏ hơn 768px (Máy tính bảng và điện thoại lớn) */
+@media (max-width: 768px) {
+  .progress-container {
+    padding: 20px; /* Giảm padding từ 50px xuống 20px cho đỡ chiếm diện tích */
+  }
+
+  .progress {
+    margin: 16px 0 -10px; /* Bỏ bớt margin 2 bên của thanh tiến độ */
+  }
+}
+
+/* Khi màn hình nhỏ hơn 480px (Điện thoại di động thông thường) */
+@media (max-width: 480px) {
+  .progress-container {
+    padding: 15px 10px; /* Ép chặt không gian hơn trên màn hình nhỏ */
+  }
+
+  /* Chuyển card lịch sử làm bài từ hàng ngang thành hàng dọc để tránh tràn chữ */
+  .attempt-card {
+    flex-direction: column;
+    align-items: flex-start; /* Căn lề trái toàn bộ nội dung */
+    gap: 12px;
+    position: relative;
+  }
+
+  /* Cho nút Xem chi tiết rộng toàn bộ chiều ngang để dễ bấm trên màn hình cảm ứng */
+  .attempt-card button {
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+  }
+
+  /* Đưa các nút phân trang ra giữa màn hình thay vì dạt sang góc phải */
+  .pagination {
+    justify-content: center;
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  .pagination button {
+    padding: 6px 10px; /* Điều chỉnh lại kích thước nút phân trang trên mobile */
+    font-size: 13px;
+  }
+}

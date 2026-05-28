@@ -2,36 +2,69 @@
     display: flex;
     width: 500px;
 } */
+
 .loginAdmin {
-    width: 300px;
-    /* height: 30vh; */
-    margin: 100px auto;
+    /* Thay đổi: Giảm chiều rộng tối đa xuống 260px để hộp trông nhỏ gọn hơn */
+    width: 100%;
+    max-width: 360px; 
+    
+    /* Thay đổi: Tăng padding trên/dưới lên 40px để tạo độ cao, thanh thoát */
+    box-sizing: border-box;
+    margin: 100px auto; 
     background: white;
-    padding: 25px;
+    padding: 40px 25px; 
+    
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    
+    /* Thay đổi: Tăng khoảng cách giữa các phần tử inside để form cao hơn tự nhiên */
+    gap: 15px; 
     background-color: #f7b731;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
-.loginAdmin h2{
+
+.loginAdmin h2 {
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 700;
+    margin-bottom: 15px; /* Tăng khoảng cách dưới tiêu đề */
 }
-.loginAdmin input{
-    margin: 10px;
-    padding: 8px;
+
+.loginAdmin input {
+    width: 100%;
+    box-sizing: border-box;
+    /* Thay đổi: Tăng padding để ô nhập liệu cao và dễ bấm hơn */
+    padding: 12px; 
     border: none;
+    border-radius: 4px;
 }
-.loginAdmin button{
-    margin: 10px;
-    padding: 8px;
+
+.loginAdmin button {
+    width: 100%;
+    box-sizing: border-box;
+    /* Thay đổi: Tăng padding để nút bấm cao và cân đối với input */
+    padding: 12px; 
     border: none;
     font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
-.loginAdmin button:hover{
+
+.loginAdmin button:hover {
     background-color: #f66e13;
     color: #fff;
+}
+
+/* ==========================================
+   MEDIA QUERIES (Giữ tính responsive trên di động)
+   ========================================== */
+@media (max-width: 320px) {
+    .loginAdmin {
+        margin: 50px auto;
+        padding: 30px 15px; /* Giảm nhẹ một chút trên màn hình quá bé để không bị lỗi hiển thị */
+    }
 }

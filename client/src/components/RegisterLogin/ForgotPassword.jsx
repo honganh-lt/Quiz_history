@@ -1,11 +1,8 @@
 import { useState } from "react";
 
-import {
-    forgotPassword,
-    verifyOtp
-} from "../../api/authApi";
+import { forgotPassword, verifyOtp } from "../../api/authApi";
 import "./css/forgotPassword.css"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ForgotPassword() {
     const navigate = useNavigate()
@@ -61,75 +58,48 @@ function ForgotPassword() {
 };
 
     return (
+        <div className="forgot-container">
+            <div className="forgot-box">
+                <h2>Quên mật khẩu</h2>
 
-    <div className="forgot-container">
-
-        <div className="forgot-box">
-
-            <h2>Quên mật khẩu</h2>
-
-            {
-                step === 1 && (
-
+                {step === 1 && (
                     <>
-
                         <input
                             type="email"
                             placeholder="Nhập email"
-                            onChange={(e) =>
-                                setEmail(e.target.value)
-                            }
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-
-                        <button
-                            onClick={handleSendOtp}
-                        >
+                        <button onClick={handleSendOtp}>
                             Gửi OTP
                         </button>
-
                     </>
+                )}
 
-                )
-            }
-
-            {
-                step === 2 && (
-
+                {step === 2 && (
                     <>
-
                         <input
                             type="text"
                             placeholder="Nhập OTP"
-                            onChange={(e) =>
-                                setOtp(e.target.value)
-                            }
+                            onChange={(e) => setOtp(e.target.value)}
                         />
-
                         <input
                             type="password"
                             placeholder="Mật khẩu mới"
-                            onChange={(e) =>
-                                setNewPassword(
-                                    e.target.value
-                                )
-                            }
+                            onChange={(e) => setNewPassword(e.target.value)}
                         />
-
-                        <button
-                            onClick={handleVerifyOtp}
-                        >
+                        <button onClick={handleVerifyOtp}>
                             Xác nhận
                         </button>
-
                     </>
+                )}
 
-                )
-            }
-
+                {/* Thêm dòng này để form cân đối và tiện cho người dùng quay lại */}
+                <p className="back-to-login">
+                    <Link to="/login">Quay lại Đăng nhập</Link>
+                </p>
+            </div>
         </div>
-
-    </div>
-);
+    );
 }
 
 export default ForgotPassword;

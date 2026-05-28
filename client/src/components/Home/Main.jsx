@@ -1,6 +1,6 @@
 import './css/Main.css'
 // import banner from "../../assets/images/banner-ls.png";
-import banner1 from "../../assets/images/banner-ls.png";
+// import banner1 from "../../assets/images/banner-ls.png";
 
 // import banner2 from "../../assets/images/banner-ls2.jpg";
 // import banner3 from "../../assets/images/banner-ls2.jpg";
@@ -29,7 +29,7 @@ function Main() {
                         </div>
                         {/* Phần ảnh chuyển động */}
                         <div className='body-images'>
-                            <img src={banner1} alt="slide 1" />
+                            <img src="./imghome/banner-ls.png" alt="slide 1" />
                             {/* <img src={banner1} alt="slide 2" /> */}
                             {/* <img src={banner2} alt="slide 3" /> */}
                             {/* <img src={banner1} alt="slide 4" /> */}

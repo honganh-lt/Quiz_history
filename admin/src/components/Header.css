@@ -9,6 +9,7 @@
 .header {
   grid-area: header;
   height: 60px;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: flex-end; /* 👈 đổi dòng này */
