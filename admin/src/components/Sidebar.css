@@ -16,7 +16,8 @@
 
 .sidebar-list {
     list-style: none;
-    padding: 10px 0;
+    /* 🌟 Đổi từ padding: 10px 0; thành thế này để đẩy phía trên xuống 40px */
+    padding: 45px 0 10px 0;
     margin: 0;
 }
 

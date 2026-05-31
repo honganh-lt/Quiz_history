@@ -21,20 +21,27 @@ function ReviseLop() {
     const [doneLessons, setDoneLessons] = useState([]);
 
     // ================= LOAD DATA =================
+    //Gom 3 API rời rạc thành Promise.all bọc trong try-catch giúp load cực nhanh
     useEffect(() => {
+        const fetchInitialData = async () => {
+            try {
+                // Bắn cả 3 API đi cùng một lúc
+                const [subjectsRes, chaptersRes, lessonsRes] = await Promise.all([
+                    getSubjects(),
+                    getChapters(),
+                    getLesson()
+                ]);
 
-        getSubjects()
-            .then(res => setSubjects(res.data))
-            .catch(err => console.error(err));
+                // Đổ dữ liệu vào state sau khi tất cả đã tải xong
+                setSubjects(subjectsRes.data);
+                setChapters(chaptersRes.data);
+                setLessons(lessonsRes.data);
+            } catch (err) {
+                console.error("Lỗi khi tải dữ liệu học tập:", err);
+            }
+        };
 
-        getChapters()
-            .then(res => setChapters(res.data))
-            .catch(err => console.error(err));
-
-        getLesson()
-            .then(res => setLessons(res.data))
-            .catch(err => console.error(err));
-
+        fetchInitialData();
     }, []);
 
     // ================= LẤY USER =================

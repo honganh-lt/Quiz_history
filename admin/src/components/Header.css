@@ -1,51 +1,62 @@
-/* .header {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #fff;
-} */
-/* Header */
-.header {
+/* Header chính */
+.header-admin {
   grid-area: header;
+  max-width: 1200px;
   height: 60px;
-  background: #fff;
+  background: #4058f3;
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* 👈 đổi dòng này */
-  padding: 0 30px 0 30px;
+  /* 🌟 Đổi từ flex-end thành space-between để đẩy 2 khối về 2 đầu biệt lập */
+  justify-content: space-between; 
+  padding: 0 30px;
   box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
 }
 
-/* 👇 dòng này là mấu chốt */
-.header-right {
-  margin: 0; /* 👈 bỏ auto đi */
-  grid-area: 3;
+
+/* Khối bên trái (Nút menu + chữ Education) */
+.header-admin .header-left {
+  /* 🌟 Xóa align-self: start để chữ căn giữa chuẩn theo chiều dọc của header */
+  display: flex;
+  align-items: center;
 }
 
-.header-right h4 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
+.header-admin .header-left h2 {
+  color: #fff;
+  margin: 0; /* Xóa margin mặc định của thẻ h2 để không bị lệch */
+}
+
+/* Khối bên phải (Tên người dùng + Icon) */
+.header-right {
+  margin: 0;
+  /* 🌟 Xóa thuộc tính grid-area không cần thiết ở đây */
+}
+
+.header-admin .header-right h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  text-transform: capitalize;
+  color: #fff;
 }
 
 .user-icon {
-    font-size: 20px;
+  font-size: 20px;
 }
+
 /* Mặc định trên máy tính lớn (PC) thì ẩn nút 3 gạch */
 .menu-icon {
-    display: none !important; 
+  display: none !important; 
 }
 
 /* Khi màn hình thu nhỏ (dưới 992px) */
 @media screen and (max-width: 992px) {
-    .menu-icon {
-        display: block !important; /* Hiện nút lên */
-        font-size: 24px;          /* Tăng kích cỡ cho dễ bấm */
-        color: #000;             /* Màu trắng để nổi bật trên nền xanh của Header */
-        cursor: pointer;          /* Biến con trỏ chuột thành hình bàn tay */
-        margin-right: 15px;       /* Tạo khoảng cách với chữ bên cạnh */
-        z-index: 1000;            /* Đảm bảo nút nằm trên cùng, không bị thằng khác đè mất */
-    }
+  .menu-icon {
+    display: block !important; /* Hiện nút lên */
+    font-size: 24px;          /* Tăng kích cỡ cho dễ bấm */
+    color: #fff;              /* 🌟 Đổi sang màu trắng để nổi bật trên nền xanh của Header nhé! */
+    cursor: pointer;          /* Biến con trỏ chuột thành hình bàn tay */
+    margin-right: 15px;       /* Tạo khoảng cách với chữ bên cạnh */
+    z-index: 1000;            /* Đảm bảo nút nằm trên cùng */
+  }
 }

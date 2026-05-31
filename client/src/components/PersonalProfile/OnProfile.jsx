@@ -1,52 +1,50 @@
 import React, { useEffect, useState } from 'react'
 import "./css/OnProfile.css"
 import ChangePassword from './ChangePassword';
-// import ChangePassword from "./ChangePassword";
 
 export const OnProfile = () => {
-
   const [user, setUser] = useState(null);
   const [showChangePassword, setShowChangePassword] = useState(false);
 
-  //thông tin đang lấy ở CSDL? hay
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
+    // Bọc try-catch để phòng trường hợp dữ liệu JSON trong localStorage bị lỗi chuỗi
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    } catch (err) {
+      console.error("Lỗi parse dữ liệu user từ localStorage:", err);
+    }
   }, []);
 
-  if(!user) {
-    return <p>Bạn chưa đăng nhập</p>
+  if (!user) {
+    return <p>Bạn chưa đăng nhập</p>;
   }
-  //localStorage.getItem("access_token") : loginfile
 
   return (
     <div className="main-onProfile">
         <div className="container-onProfile">
-            {/* Ảnh */}
-            {/* <img src="" alt="" /> */}
             <h2>Thông tin người dùng</h2>
             <div className='list-personal'>
-                <p><strong>Tên người dùng: {user.username} </strong></p>
-                <p><strong>Họ và tên: {user.full_name} </strong></p>
-                <p><strong>Email: {user.email} </strong></p>
-                <p><strong>Vai trò: {user.role} </strong></p>
+                <p><strong>Tên người dùng:</strong> {user.username}</p>
+                <p><strong>Họ và tên:</strong> {user.full_name}</p>
+                <p><strong>Email:</strong> {user.email}</p>
+                <p><strong>Vai trò:</strong> {user.role}</p>
             </div>
-            <div className='change-password' >
+            
+            <div className='change-password'>
               <button onClick={() => setShowChangePassword(!showChangePassword)}>
-                Đổi mật khẩu
+                {showChangePassword ? "Hủy đổi mật khẩu" : "Đổi mật khẩu"}
               </button>
-              {
-                  showChangePassword &&
-                  <ChangePassword
-                      onClose={() =>
-                          setShowChangePassword(false)
-                      }
-                  />
-              }
+              
+              {showChangePassword && (
+                  <ChangePassword onClose={() => setShowChangePassword(false)} />
+              )}
             </div>
         </div>
     </div>
   )
 }
 
-export default OnProfile
+export default OnProfile;

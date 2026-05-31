@@ -37,7 +37,7 @@
 ========================= */
 .result-card {
     width: 100%;
-    max-width: 460px;
+    max-width: 400px;
 
     padding: 42px 36px;
 
@@ -107,7 +107,7 @@
    TITLE
 ========================= */
 .result-card h2 {
-    font-size: 40px;
+    font-size: 37px;
     font-weight: 800;
 
     color: #8a4b08;
@@ -166,7 +166,7 @@
 
     border: none;
 
-    padding: 14px 28px;
+    padding: 14px 20px;
 
     border-radius: 16px;
 

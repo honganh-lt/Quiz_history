@@ -5,7 +5,6 @@ import Header from "../Home/Header";
 import "./css/Review.css"
 
 function ReviewPage() {
-
     const navigate = useNavigate();
     const { userExamId } = useParams();
 
@@ -13,11 +12,13 @@ function ReviewPage() {
     const [examInfo, setExamInfo] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    //Chuyển đổi sang cấu trúc async/await try-catch cho hàm load kết quả thi
     useEffect(() => {
-        reviewExam(userExamId)
-            .then(res => {
+        const fetchReviewData = async () => {
+            setLoading(true);
+            try {
+                const res = await reviewExam(userExamId);
                 const result = res.data || [];
-
                 setData(result);
 
                 if (result.length > 0) {
@@ -26,9 +27,16 @@ function ReviewPage() {
                         subject_id: result[0].subject_id
                     });
                 }
-            })
-            .catch(err => console.log(err))
-            .finally(() => setLoading(false));
+            } catch (err) {
+                console.error("Lỗi khi tải dữ liệu xem lại bài thi:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (userExamId) {
+            fetchReviewData();
+        }
     }, [userExamId]);
 
     // LOADING
@@ -41,13 +49,12 @@ function ReviewPage() {
         );
     }
 
-    //  CHƯA NỘP
+    // CHƯA NỘP
     if (!data.length) {
         return (
             <div>
                 <Header />
                 <h3>Bài này chưa nộp nên không có dữ liệu review</h3>
-
                 <button onClick={() => navigate(-1)}>
                     Quay lại
                 </button>
@@ -55,25 +62,18 @@ function ReviewPage() {
         );
     }
 
-    //  LÀM LẠI
-    const handleRetry = async () => {
-        const user = JSON.parse(localStorage.getItem("user"));
+    // LÀM LẠI
+    const handleRetry = () => {
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-        if (!user) {
+        if (!user || !user.user_id) {
             alert("Bạn chưa đăng nhập");
             navigate("/login");
             return;
         }
 
-        // const res = await startExam({
-        //     user_id: user.user_id,
-        //     exam_id: examInfo.exam_id
-        // });
-
-        // const newUserExamId = res.data.user_exam_id;
-
-        // navigate(`/exam/${examInfo.subject_id}`); -> quay lại trang hãy chọn đề
-        navigate(`/exam/${examInfo.subject_id}/${examInfo.exam_id}`); //trang làm bài thi
+        // Chuyển hướng người dùng về trang làm bài thi chính thức
+        navigate(`/exam/${examInfo?.subject_id}/${examInfo?.exam_id}`);
     };
 
     return (
@@ -82,46 +82,47 @@ function ReviewPage() {
 
             <div className="review">
                 <div className="review-page" style={{ padding: "20px" }}>
-                <h2>Kết quả bài làm</h2>
+                    <h2>Kết quả bài làm</h2>
 
-                {data.map((q, index) => {
-                    const correctAnswer = q.answers.find(ans => ans.is_correct);
-                return (
-                    <div key={q.question_id} className="review-page-list">
-                        <h4>Câu {index + 1}: {q.question}</h4>
+                    {data.map((q, index) => {
+                        const correctAnswer = q.answers?.find(ans => ans.is_correct);
+                        
+                        return (
+                            <div key={q.question_id} className="review-page-list">
+                                <h4>Câu {index + 1}: {q.question}</h4>
 
-                        {q.answers.map(ans => {
-                            const isUser = ans.answer_id === ans.user_answer_id;
-                            const isCorrect = ans.is_correct;
+                                {q.answers?.map(ans => {
+                                    const isUser = ans.answer_id === ans.user_answer_id;
+                                    const isCorrect = ans.is_correct;
 
-                            return (
-                                <div
-                                    key={ans.answer_id}
-                                    className={
-                                        isCorrect
-                                            ? "review-page-ans correct"
-                                            : isUser
-                                            ? "review-page-ans wrong"
-                                            : "review-page-ans"
-                                    }
-                                >
-                                    {ans.answer}
-                                </div>
-                            );
-                        })}
-                        {/* Hiển thị đáp án đúng */}
-                        <p style={{marginTop: 8, color:"green"}}>
-                            Đáp án đúng: {correctAnswer?.answer}
-                            {/*{ans.answer} = {correctAnswer?.answer}  */}
-                        </p>
-                    </div>
-                );
-            })}
+                                    return (
+                                        <div
+                                            key={ans.answer_id}
+                                            className={
+                                                isCorrect
+                                                    ? "review-page-ans correct"
+                                                    : isUser
+                                                    ? "review-page-ans wrong"
+                                                    : "review-page-ans"
+                                            }
+                                        >
+                                            {ans.answer}
+                                        </div>
+                                    );
+                                })}
+                                
+                                {/* Hiển thị đáp án đúng */}
+                                <p style={{ marginTop: 8, color: "green" }}>
+                                    Đáp án đúng: {correctAnswer?.answer}
+                                </p>
+                            </div>
+                        );
+                    })}
 
-                <button onClick={handleRetry}>
-                    Làm lại bài
-                </button>
-            </div>
+                    <button onClick={handleRetry}>
+                        Làm lại bài
+                    </button>
+                </div>
             </div>
         </div>
     );

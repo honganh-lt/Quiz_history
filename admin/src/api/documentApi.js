@@ -12,10 +12,15 @@ export const createDocument = async (formData) => {
 
 export const updateDocument = async (id, formData) => {
     try {
+        // TRUYỀN THẲNG formData VÀO ĐÂY
+        // Trình duyệt và file axiosClient của bạn sẽ tự xử lý đính kèm file
         const res = await axiosClient.put(`/documents/${id}`, formData);
-        return res.data; // <--- CHÚ Ý: Chấm .data ở đây
+        
+        // Vì trong interceptor của bạn đang viết `return response;` (giữ nguyên cấu trúc cũ)
+        // nên ở đây bạn vẫn cần `.data` để lấy dữ liệu trả về từ Server.
+        return res.data; 
     } catch (error) {
-        console.error(error);
+        console.error("Lỗi tại API updateDocument:", error);
         throw error;
     }
 };

@@ -109,7 +109,7 @@ const ManagementDocument = () => {
 
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                {/* <th>ID</th> */}
                                 <th>Tên tài liệu</th>
                                 <th>Phân loại</th>
                                 <th>Nội dung</th>
@@ -122,7 +122,7 @@ const ManagementDocument = () => {
                                 currentDocument.map(item => (
                                     <tr key={item.document_id}>
 
-                                        <td>{item.document_id}</td>
+                                        {/* <td>{item.document_id}</td> */}
 
                                         <td>
                                             <div className="text-ellipsis">

@@ -84,7 +84,7 @@
 ========================= */
 .text-exam {
 
-    max-width: 850px;
+    max-width: 600px;
 
     margin: auto;
 
@@ -107,7 +107,7 @@
 
 .text-exam h1 {
 
-    font-size: 42px;
+    font-size: 32px;
     font-weight: 800;
 
     line-height: 1.4;
@@ -270,7 +270,7 @@
 ========================= */
 .card-item-exam h3 {
 
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 800;
 
     color: #6b3500;

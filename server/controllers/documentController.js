@@ -62,29 +62,34 @@ exports.createDocument = async (req, res, next) => {
 exports.updateDocument = async (req, res, next) => {
     const { id } = req.params;
     const { lesson_id, title } = req.body;
-    let content = req.body.content;
 
     if (!lesson_id || !title) {
         return res.status(400).json({ message: "Thiếu dữ liệu để cập nhật" });
     }
 
     try {
-        // Nếu ở ô chỉnh sửa, người dùng đăng tải một file Word mới đè lên file cũ
+        // 1. Kiểm tra tài liệu cũ có tồn tại trong DB không
+        const [existingDoc] = await db.query("SELECT content FROM documents WHERE document_id = ?", [id]);
+        if (existingDoc.length === 0) {
+            return res.status(404).json({ message: "Không tìm thấy tài liệu cần sửa" });
+        }
+
+        let content = existingDoc[0].content; // Mặc định lấy lại nội dung cũ trong database
+
+        // 2. Nếu người dùng đăng tải một file Word mới, tiến hành ghi đè nội dung mới
         if (req.file) {
             const conversionResult = await mammoth.convertToHtml({ buffer: req.file.buffer });
             content = conversionResult.value;
+
+            // Kiểm tra xem file word convert ra có bị rỗng không
+            if (!content || content.trim() === "") {
+                return res.status(400).json({ message: "File Word mới không có nội dung hợp lệ" });
+            }
         }
 
-        if (!content) {
-            return res.status(400).json({ message: "Nội dung tài liệu không được rỗng" });
-        }
-
+        // 3. Tiến hành cập nhật vào Database (Nội dung chắc chắn không bị mất hay rỗng)
         const sql = "UPDATE documents SET lesson_id = ?, title = ?, content = ? WHERE document_id = ?";
-        const [result] = await db.query(sql, [lesson_id, title, content, id]);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: "Không tìm thấy tài liệu cần sửa" });
-        }
+        await db.query(sql, [lesson_id, title, content, id]);
 
         res.json({ message: "Cập nhật tài liệu thành công" });
     } catch (err) {

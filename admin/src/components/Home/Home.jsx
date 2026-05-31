@@ -19,23 +19,23 @@ export const Home = () => {
     }, []);
 
     //biểu đồ
-    const barData = {
-        labels: ["Câu hỏi", "Đề thi", "Người dùng", "Môn học"],
-        datasets: [
-            {
-                label: "Số lượng",
-                data: stats 
-                ? [
-                    stats.questions,
-                    stats.exams,
-                    stats.users,
-                    stats.subjects
-                ]
-                :[],
-                backgroundColor: "#4e73df"
-            }
-        ]
-    };
+    // const barData = {
+    //     labels: ["Câu hỏi", "Đề thi", "Người dùng", "Môn học"],
+    //     datasets: [
+    //         {
+    //             label: "Số lượng",
+    //             data: stats 
+    //             ? [
+    //                 stats.questions,
+    //                 stats.exams,
+    //                 stats.users,
+    //                 stats.subjects
+    //             ]
+    //             :[],
+    //             backgroundColor: "#4e73df"
+    //         }
+    //     ]
+    // };
 
     // const pieData = {
     //     labels: ["Easy", "Medium", "Hard"],
@@ -58,24 +58,25 @@ export const Home = () => {
         <div className="dashboard">
         {/* Box */}
         <div className="top-box">
-            <div>{stats?.subjects} <p>Số môn học</p></div>
             <div>{stats?.questions} <p>Số câu hỏi</p></div>
             <div>{stats?.exams} <p>Số đề thi</p></div>
             <div>{stats?.users} <p>Số người dùng</p></div>
+            <div>{stats?.subjects} <p>Số môn học</p></div>
+            {/* <div>{stats?.questions} <p>Số câu hỏi</p></div> */}
         </div>
 
         {/* Chart */}
-        <div className="chart-row">
+        {/* <div className="chart-row">
             <div style={{ width: "60%" }}>
                 <Bar data={barData} />
                 </div>
-            {/* <div style={{ width: "40%" }}>
-                <Pie data={pieData} />
-            </div> */}
-        </div>
+        </div> */}
     </div>
     </div>
   )
 }
+{/* <div style={{ width: "40%" }}>
+                <Pie data={pieData} />
+            </div> */}
 
 export default Home;

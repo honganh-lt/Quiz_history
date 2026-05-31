@@ -25,37 +25,48 @@ function ExamTen() {
     const [selectedAnswers, setSelectedAnswers] = useState({});
 
     // ================= LOAD SUBJECTS + CHAPTER + LESSON =================
+    //Gom 3 API hệ thống chạy song song bằng Promise.all bọc trong try-catch
     useEffect(() => {
-        getSubjects()
-            .then(res => setSubjects(res.data))
-            .catch(err => console.log(err));
-        
-        getChapters()
-        .then(res => setChapters(res.data))
-        .catch(err => console.log(err))
+        const fetchMetadata = async () => {
+            try {
+                const [subjectsRes, chaptersRes, lessonsRes] = await Promise.all([
+                    getSubjects(),
+                    getChapters(),
+                    getLesson()
+                ]);
 
-        getLesson()
-        .then(res => setLessons(res.data))
-        .catch(err => console.log(err))
+                setSubjects(subjectsRes.data);
+                setChapters(chaptersRes.data);
+                setLessons(lessonsRes.data);
+            } catch (err) {
+                console.error("Lỗi khi tải thông tin cấu trúc môn học:", err);
+            }
+        };
+
+        fetchMetadata();
     }, []);
 
     //=========LOAD Chapter + Lesson=====
 
 
     // ================= LOAD QUESTIONS =================
+    //async/await try-catch cho API lấy câu hỏi theo bài học
     useEffect(() => {
-        setLoading(true);
-
-        getQuestionsByLesson(lessonId)
-            .then(res => {
+        const fetchQuestions = async () => {
+            setLoading(true);
+            try {
+                const res = await getQuestionsByLesson(lessonId);
                 setQuestions(res.data || []);
+            } catch (err) {
+                console.error("Lỗi khi tải danh sách câu hỏi:", err);
+            } finally {
                 setLoading(false);
-            })
-            .catch(err => {
-                console.error(err);
-                setLoading(false);
-            });
+            }
+        };
 
+        if (lessonId) {
+            fetchQuestions();
+        }
     }, [lessonId]);
 
     //lưu vào localStorage theo user_id

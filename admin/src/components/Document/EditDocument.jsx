@@ -10,17 +10,25 @@ const EditDocument = ({ editData, onClose, onSuccess, subjects, chapters, lesson
     const [subjectId, setSubjectId] = useState("");
     const [chapterId, setChapterId] = useState("");
     const [lessonId, setLessonId] = useState("");
+    
+    // Lưu tên file hiện tại từ server để hiển thị cho người dùng biết
+    const [currentFileName, setCurrentFileName] = useState(""); 
 
     useEffect(() => {
         if (!editData) return;
 
         setTitle(editData.title || "");
-        setSubjectId(editData.subject_id || "");
-        setChapterId(editData.chapter_id || "");
-        setLessonId(editData.lesson_id || "");
+        setSubjectId(editData.subject_id ? String(editData.subject_id) : "");
+        setChapterId(editData.chapter_id ? String(editData.chapter_id) : "");
+        setLessonId(editData.lesson_id ? String(editData.lesson_id) : "");
+        
+        // Hiển thị tên file hiện tại (nếu backend của bạn có trả về trường này, ví dụ: file_name hoặc file_url)
+        setCurrentFileName(editData.file_name || editData.file_url || "Đã có file cũ trên hệ thống");
+        
         setWordFile(null);
         setFileInputKey(Date.now());
 
+        // Kích hoạt việc tải danh sách bài học dựa trên chương cũ của tài liệu
         if (editData.chapter_id) {
             fetchLessons(editData.chapter_id);
         }
@@ -33,6 +41,7 @@ const EditDocument = ({ editData, onClose, onSuccess, subjects, chapters, lesson
         formData.append("lesson_id", Number(lessonId));
         formData.append("title", title);
         
+        // Chỉ gửi file lên SERVER nếu người dùng có chọn file mới
         if (wordFile) {
             formData.append("file", wordFile);
         }
@@ -55,18 +64,22 @@ const EditDocument = ({ editData, onClose, onSuccess, subjects, chapters, lesson
         setSubjectId(value);
         setChapterId("");
         setLessonId("");
-        setLessons([]);
+        if (typeof setLessons === "function") setLessons([]);
     };
 
     const handleChangeChapter = (value) => {
         setChapterId(value);
         setLessonId("");
-        if (value) fetchLessons(value);
-        else setLessons([]);
+        if (value) {
+            fetchLessons(value);
+        } else {
+            if (typeof setLessons === "function") setLessons([]);
+        }
     };
 
-    const filteredChapters = chapters.filter(c => c.subject_id === Number(subjectId));
-    const filteredLessons = lessons.filter(l => l.chapter_id === Number(chapterId));
+    // Ép kiểu về String hoặc Number đồng bộ để tránh lỗi so sánh (mismatch type) làm trắng bộ chọn
+    const filteredChapters = chapters.filter(c => String(c.subject_id) === String(subjectId));
+    const filteredLessons = lessons.filter(l => String(l.chapter_id) === String(chapterId));
 
     return (
         <div className="document-edit-modal">
@@ -108,10 +121,13 @@ const EditDocument = ({ editData, onClose, onSuccess, subjects, chapters, lesson
                     </select>
                 </div>
 
-                {/* KHU VỰC THAY THẾ FILE WORD ĐÃ ĐƯỢC CHUYỂN CLASS CSS */}
                 <div className="upload-word-section">
                     <label className="upload-label">
-                        Tải lên file Word mới (Nếu muốn ghi đè nội dung):
+                        File hiện tại: <span style={{ color: "#007bff", fontWeight: "bold" }}>{currentFileName}</span>
+                    </label>
+                    
+                    <label className="upload-label" style={{ marginTop: "10px" }}>
+                        Tải lên file Word mới (Nếu muốn thay thế file cũ):
                     </label>
                     <input 
                         key={fileInputKey}
@@ -120,7 +136,7 @@ const EditDocument = ({ editData, onClose, onSuccess, subjects, chapters, lesson
                         onChange={(e) => setWordFile(e.target.files[0])} 
                     />
                     <small className="upload-note">
-                        *Nếu giữ nguyên nội dung cũ, vui lòng không chọn file tại đây.
+                        *Nếu giữ nguyên nội dung file cũ, bạn không cần chọn gì ở ô này.
                     </small>
                 </div>
 

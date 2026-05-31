@@ -8,13 +8,19 @@ export const Exam2 = () => {
     const navigate = useNavigate();
     const [subjects, setSubjects] = useState([]);
 
-    //Gọi API khi load trang lấy ra tên môn học theo lớp
+    //Gọi API khi load trang lấy ra tên môn học theo lớp: async/await và try-catch
     useEffect(() => {
-        getSubjects()
-        .then(res => {
-            setSubjects(res.data);
-        })
-        .catch (err => console.log(err));
+        const fetchSubjectsData = async () => {
+            try {
+                const res = await getSubjects();
+                setSubjects(res.data);
+            } catch (err) {
+                console.error("Lỗi khi tải danh sách môn học: ", err);
+                
+            }
+        }
+
+        fetchSubjectsData();
     }, []);
 
 
@@ -64,7 +70,7 @@ export const Exam2 = () => {
                             <button className="btn-exam-btn"
                                 onClick={() => navigate(`/exam/${item.subject_id}`)}
                             >
-                                Luyện đề
+                                Chọn đề
                             </button>
                         </div>
                     );

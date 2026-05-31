@@ -1,208 +1,148 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Header from '../Home/Header';
-// import question from "../../aData/question";
 import "./css/MakeAnExamTen.css"
 import { getExamDetail } from '../../api/examApi';
 import { submitExam, startExam } from '../../api/userExamApi';
 import { getSubjects } from '../../api/subjectApi';
 
 function MakeAnExamTen() {
-
     const navigate = useNavigate();
+    const { subjectId, examId } = useParams();
 
-    //Làm đề theo kiểu đã ramdom hết tất cả câu hỏi của các bài
-    const { subjectId, examId} = useParams();
-
-    const [subjects, setSubjects]  = useState([]);
+    const [subjects, setSubjects] = useState([]);
     const [questions, setQuestions] = useState([]);
-    const [title ,setTitle] = useState("");
-    //  HOOK LUÔN Ở TRÊN
+    const [title, setTitle] = useState("");
     const [selectedAnswers, setSelectedAnswers] = useState({});
-    const [userExamId, setUserExamId] = useState(null)
-
-    // const TOTAL_TIME = 15 * 60;
-    // const [timeLeft, setTimeLeft] = useState(TOTAL_TIME); -> BỎ
-
-    //thay 
+    const [userExamId, setUserExamId] = useState(null);
     const [timeLeft, setTimeLeft] = useState(null);
 
-
-    //=====LOAD SUBJECTS +
+    // ===== LOAD SUBJECTS =====
     useEffect(() => {
-        getSubjects()
-        .then(res => setSubjects(res.data))
-        .catch(err => console.log(err))
-    }, []);
-    // Load Data chi tiết câu hỏi
-    useEffect(() => {
-        // getRandomExam(subje)
-        getExamDetail(examId) //chi tiết từng câu hỏi đề thi examApi
-        .then(res => {
-             console.log("DATA:", res.data); // DEBUG
-            setQuestions(res.data.questions)
-            setTitle(res.data.title || "Đề thi");
+        const fetchExamAndSubjects = async () => {
+            try {
+                //kích hoạt load cả thông tin môn học và chi tiết đề thi 
+                const [subjectsRes, examDetailRes] = await Promise.all([
+                    getSubjects(),
+                    getExamDetail(examId)
+                ]);
 
-            //lấy duration từ DB
-            setTimeLeft(Number(res.data.duration || 15 )* 60);
-        })
-        .catch(err => console.log(err));
+                //Set data cho môn học
+                setSubjects(subjectsRes.data);
+
+                //Set data cho chi tiết đề thi
+                console.log("Data đề thi: ", examDetailRes.data);
+                setQuestions(examDetailRes.data.questions);
+                setTitle(examDetailRes.data.title || "Đề thi");
+                setTimeLeft(Number(examDetailRes.data.duration || 15) * 60);
+
+            } catch (err) {
+                console.error("Lỗi khi tải dữ liệu để thi hoặc môn học: ", err);
+                
+            }
+        }
+
+        if (examId) {
+            fetchExamAndSubjects();
+        }
     }, [examId]);
 
-    //=============Subject Find===========
-    // const 
-     // ví dụ trong nút nộp bài (sửa submit trong trang làm bài)
-   const handleSubmit = async (isAutoSubmit = false) => {
 
+    // ===== SUBMIT HANDLER =====
+    const handleSubmit = async (isAutoSubmit = false) => {
         try {
-
-            // CONFIRM KHI BẤM NỘP
             if (!isAutoSubmit) {
-
-                const confirmSubmit = window.confirm(
-                    "Bạn có chắc muốn nộp bài không?"
-                );
-
+                const confirmSubmit = window.confirm("Bạn có chắc muốn nộp bài không?");
                 if (!confirmSubmit) return;
             }
 
-            // CHƯA LÀM CÂU NÀO
             if (!userExamId) {
-
                 alert("Bạn chưa làm câu nào");
-
                 return;
             }
 
-            // FORMAT ANSWERS
             const answers = Object.keys(selectedAnswers).map(qid => ({
                 question_id: Number(qid),
                 answer_id: selectedAnswers[qid]
             }));
 
-            // SUBMIT
             const res = await submitExam({
                 user_exam_id: userExamId,
                 answers
             });
 
-            // CHUYỂN TRANG KẾT QUẢ
             navigate(`/result/${userExamId}`, {
                 state: res.data
             });
-
         } catch (err) {
-
             console.log(err);
-
             alert("Có lỗi khi nộp bài");
         }
     };
 
-    // TIMER //khi thời gian về 0 thì true tự động nộp bài(isAutoSubmit = true)
+    // ===== TIMER =====
     useEffect(() => {
-
-        // chưa load thời gian
         if (timeLeft === null) return;
-
-        // hết giờ
         if (timeLeft <= 0) {
-
             if (userExamId) {
                 handleSubmit(true);
             }
-
             return;
         }
 
-        // đếm ngược
         const timer = setTimeout(() => {
             setTimeLeft(prev => prev - 1);
         }, 1000);
 
         return () => clearTimeout(timer);
-
     }, [timeLeft, userExamId]);
 
-    // cảnh báo thoát trang -> reload, đóng tab, thoát web
+    // ===== PREVENT UNLOAD =====
     useEffect(() => {
-
         const handleBeforeUnload = (e) => {
-
-            // ĐÃ BẮT ĐẦU LÀM BÀI
             if (userExamId) {
-
                 e.preventDefault();
-
                 e.returnValue = "";
             }
         };
 
-        window.addEventListener(
-            "beforeunload",
-            handleBeforeUnload
-        );
-
+        window.addEventListener("beforeunload", handleBeforeUnload);
         return () => {
-
-            window.removeEventListener(
-                "beforeunload",
-                handleBeforeUnload
-            );
+            window.removeEventListener("beforeunload", handleBeforeUnload);
         };
-
     }, [userExamId]);
-    
-    // LẤY DATA SAU HOOK
-    // const lessonData = question[String(examId)];
 
-    // if (!lessonData) {
-    //     return <p>Không tìm thấy đề</p>;
-    // }
-
-    // const { title, questionExam } = lessonData;
-
-    //  HANDLE Chon đáp án
+    // ===== SELECT ANSWER =====
     const handleSelectAnswer = async (questionId, answerId) => {
+        try {
+            let currentUserExamId = userExamId;
 
-    try {
+            if (!currentUserExamId) {
+                const user = JSON.parse(localStorage.getItem("user"));
+                const res = await startExam({
+                    user_id: user.user_id,
+                    exam_id: examId
+                });
+                currentUserExamId = res.data.user_exam_id;
+                setUserExamId(currentUserExamId);
+            }
 
-        let currentUserExamId = userExamId;
-
-        // Chưa có bài thi -> tạo lần đầu
-        if (!currentUserExamId) {
-
-            const user = JSON.parse(localStorage.getItem("user"));
-
-            const res = await startExam({
-                user_id: user.user_id,
-                exam_id: examId
-            });
-
-            currentUserExamId = res.data.user_exam_id;
-
-            setUserExamId(currentUserExamId);
+            setSelectedAnswers((prev) => ({
+                ...prev,
+                [questionId]: answerId
+            }));
+        } catch (err) {
+            console.log(err);
         }
+    };
 
-        // lưu đáp án
-        setSelectedAnswers((prev) => ({
-            ...prev,
-            [questionId]: answerId
-        }));
-
-    } catch (err) {
-        console.log(err);
-    }
-};
-  
-
-    //Nộp bài
-    // const handleSubmit = () => {
-    //     localStorage.setItem("selectedAnswers", JSON.stringify(selectedAnswers));
-    //     localStorage.setItem("timeUsed", (TOTAL_TIME - timeLeft).toString());
-
-    //     navigate(`/exam/${subjectId}/${examId}/result`);
-    // };
+    // ===== HÀM CUỘN ĐẾN CÂU HỎI =====
+    const scrollToQuestion = (index) => {
+        const element = document.getElementById(`question-${index}`);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
 
     const formatTime = (s) => {
         const m = Math.floor(s / 60);
@@ -210,32 +150,28 @@ function MakeAnExamTen() {
         return `${m.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
     };
 
-
-    //Tìm subject hiện tại
     const currentSubject = subjects.find(
         s => Number(s.subject_id) === Number(subjectId)
-    )
-    //  FIX: loading
+    );
+
+    // Đặt điều kiện loading ở cuối cùng, sau khi tất cả các Hook đã được khởi tạo
     if (!questions.length) {
         return <p>Đang tải đề...</p>;
     }
-   
+
     return (
         <main className="main-examMake">
             <Header />
 
             <div className="exam-layout-make">
-
-                {/* LEFT */}
+                {/* LEFT SIDEBAR */}
                 <aside className="exam-left-sidebar">
                     <h2>Trắc nghiệm</h2>
                     <h3>{currentSubject?.subject_name}</h3>
                     <h4>{title}</h4>
-                    {/* <h5>{examId.description}</h5> */}
-                    {/* <h5>Tổng số câu: {questions.length}</h5> */}
 
                     <p>
-                        Thời gian:
+                        Thời gian: 
                         <strong style={{ color: timeLeft <= 60 ? "red" : "" }}>
                             {timeLeft !== null ? formatTime(timeLeft) : "00:00"}
                         </strong>
@@ -245,6 +181,9 @@ function MakeAnExamTen() {
                         {questions.map((q, index) => (
                             <span
                                 key={q.question_id}
+                                // Kích hoạt hàm và truyền vào vị trí index của câu hỏi
+                                onClick={() => scrollToQuestion(index)}
+                                style={{ cursor: 'pointer' }}
                                 className={
                                     selectedAnswers[q.question_id]
                                         ? "question-number answered"
@@ -257,12 +196,13 @@ function MakeAnExamTen() {
                     </div>
                 </aside>
 
-                {/* RIGHT */}
+                {/* RIGHT CONTENT */}
                 <section className="exam-right-content">
                     <h1>Bài làm</h1>
 
                     {questions.map((q, index) => (
-                        <div key={q.question_id} className="question-card-exam">
+                        // THÊM ID CHO TỪNG THẺ CÂU HỎI ĐỂ ĐỊNH VỊ
+                        <div key={q.question_id} id={`question-${index}`} className="question-card-exam">
                             <h4>Câu {index + 1}: {q.content}</h4>
 
                             <div className="answers-exam">
@@ -276,7 +216,7 @@ function MakeAnExamTen() {
                                         }
                                         onClick={() => handleSelectAnswer(q.question_id, ans.answer_id)}
                                     >
-                                        {ans.content} 
+                                        {ans.content}
                                     </button>
                                 ))}
                             </div>
@@ -284,31 +224,15 @@ function MakeAnExamTen() {
                     ))}
 
                     <div className="submit-exam">
-
-                        {/* <button
-                            className="btn-exit-exam"
-                            onClick={handleExit}
-                        >
-                            Thoát
-                        </button> */}
                         <button 
                             type='button'
                             className="btn-practice-examTen" 
                             onClick={() => handleSubmit(false)}
-                            // onClick={() => {
-                            //     localStorage.setItem(
-                            //         "selectedAnswers",
-                            //         JSON.stringify(selectedAnswers)
-                            //     );
-
-                            //     navigate(`/exam/${subjectId}/${examId}/result`)
-                            // }}
                         >
-                        Nộp bài
-                    </button>
+                            Nộp bài
+                        </button>
                     </div>
                 </section>
-
             </div>
         </main>
     );

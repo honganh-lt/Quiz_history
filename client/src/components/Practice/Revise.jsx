@@ -21,13 +21,17 @@ function Revise() {
 
     //GỌi API khi load trang
     useEffect(() => {
-        getSubjects()
-        .then(res => {
-            setSubjects(res.data);
-        })
+        const fetchSubjectsData = async () => {
+            try {
+                const res = await getSubjects();
+                setSubjects(res.data);
+            } catch (err) {
+                console.error("Lỗi khi tải danh sách môn học ôn tập", err);
+                
+            }
+        }
 
-        .catch (err => console.error(err));
-        
+        fetchSubjectsData();
     }, []);
     
     return (

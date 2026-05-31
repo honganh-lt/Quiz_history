@@ -1,17 +1,6 @@
 import './css/Main.css'
-// import banner from "../../assets/images/banner-ls.png";
-// import banner1 from "../../assets/images/banner-ls.png";
 
-// import banner2 from "../../assets/images/banner-ls2.jpg";
-// import banner3 from "../../assets/images/banner-ls2.jpg";
-// import banner4 from "../../assets/images/banner-ls4.png";
-// import img10 from "../../assets/images/lop10.jpg";
-// import img11 from "../../assets/images/lop11.jpg";
-// import img12 from "../../assets/images/lop12.jpg";
-
-
-
-function Main() {
+export const Main = () => {
     return (
         <main className='main'>
             {/* <div className='container'> */}
@@ -22,11 +11,12 @@ function Main() {
                     <div className='body-layout'>
                         <div className='body-text'>
                             <h1>Trắc nghiệm lịch sử kết nối tri thức</h1>
-                            <p>Nền tảng hỗ trợ ôn luyện, kiểm tra và nâng cao kiến thức với hệ thống
+                            <p>
+                                Nền tảng hỗ trợ ôn luyện, kiểm tra và nâng cao kiến thức với hệ thống
                                 bài học trực quan, sinh động.
                             </p>
-
                         </div>
+                        
                         {/* Phần ảnh chuyển động */}
                         <div className='body-images'>
                             <img src="./imghome/banner-ls.png" alt="slide 1" />
@@ -58,7 +48,7 @@ function Main() {
             </section>
             {/* </div> */}
         </main>
-    )
-}
+    );
+};
 
-export default Main
+export default Main;

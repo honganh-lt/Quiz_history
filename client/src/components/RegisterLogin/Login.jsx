@@ -2,7 +2,6 @@ import { useNavigate, Link } from "react-router-dom";
 import "./css/login.css";
 import { login } from "../../api/authApi";
 import { useRef, useState } from "react";
-// Thêm import các icon từ react-icons
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
@@ -10,25 +9,24 @@ const Login = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    
-    // Thêm state xử lý ẩn/hiện mật khẩu
     const [showPassword, setShowPassword] = useState(false);
+    
+    //Thêm trạng thái loading để chống việc người dùng spam click nút Đăng nhập
+    const [loading, setLoading] = useState(false);
 
-    // Tạo ref
     const passwordRef = useRef(null);
 
-    // Làm lại vì có access + refresh-token
     const handleLogin = async () => {
-        if (!username || !password) {
-            alert("Vui lòng nhập thông tin");
+        if (!username.trim() || !password) {
+            alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu");
             return;
         }
 
+        setLoading(true);
         try {
             const res = await login(username, password);
-            console.log(res);
 
-            if (res.user) {
+            if (res && res.user) {
                 // LƯU TOKEN
                 localStorage.setItem("access_token", res.access_token);
                 localStorage.setItem("refresh_token", res.refresh_token);
@@ -36,14 +34,18 @@ const Login = () => {
                 // LƯU USER
                 localStorage.setItem("user", JSON.stringify(res.user));
 
-                // Chuyển trang
+                // Chuyển trang về Home
                 navigate("/");
             } else {
                 alert("Sai tài khoản hoặc mật khẩu");
             }
         } catch (error) {
-            console.error(error);
-            alert(error.message || "Đăng nhập thất bại");
+            console.error("Lỗi đăng nhập:", error);
+            // Lấy thông điệp lỗi chuẩn xác trả về từ Backend hoặc xử lý fallback thông minh hơn
+            const errorMsg = error.response?.data?.message || "Đăng nhập thất bại. Vui lòng kiểm tra lại đường truyền mạng!";
+            alert(errorMsg);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -56,16 +58,16 @@ const Login = () => {
                 <input 
                     type="text" 
                     placeholder="Tên đăng nhập"
+                    value={username} // Ràng buộc value để đồng bộ dữ liệu chuẩn React
                     onChange={(e) => setUsername(e.target.value)}
-                    // Enter -> xuống password
                     onKeyDown={(e) => {
                         if (e.key === "Enter") {
                             passwordRef.current.focus();
                         }
                     }}
+                    disabled={loading}
                 />
 
-                {/* Ô password (Đã bọc wrapper và thêm icon mắt giống Đăng ký) */}
                 {/* Ô password */}
                 <div className="password-wrapper">
                     <input 
@@ -73,14 +75,16 @@ const Login = () => {
                         type={showPassword ? "text" : "password"} 
                         placeholder="Mật khẩu"
                         className="password-input"
+                        value={password} //  Ràng buộc value
                         onChange={(e) => setPassword(e.target.value)}
                         onKeyDown={(e) => {
-                            if(e.key === "Enter") {
+                            if (e.key === "Enter" && !loading) {
                                 handleLogin();
                             }
                         }}
+                        disabled={loading}
                     />
-                    <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+                    <span className="eye-icon" onClick={() => !loading && setShowPassword(!showPassword)}>
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
                 </div>
@@ -94,8 +98,9 @@ const Login = () => {
                 <button 
                     className="btn-practice"
                     onClick={handleLogin}
+                    disabled={loading} // Khóa nút khi đang gửi yêu cầu đăng nhập
                 >
-                    Đăng nhập
+                    {loading ? "Đang xử lý..." : "Đăng nhập"}
                 </button>
 
                 <p>Chưa có tài khoản? <Link to="/register">Đăng ký</Link></p>

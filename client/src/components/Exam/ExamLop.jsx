@@ -27,46 +27,45 @@ function ExamLop() {
     const user =JSON.parse(localStorage.getItem("user"))
     const userId = user?.user_id
 
-    //LOAD SUBJECT + EXAM
+
+    //Vị trí 1: Tối ưu tải danh sách Môn học và đề thi chạy song song (Promise.all)
     useEffect(() => {
-        //môn học
-        getSubjects()
-        .then(res => setSubjects(res.data))
-        .catch(err => console.log(err));
+        const fetchInitialData = async () => {
+            try {
+                //Gọi cả 2 API cùng lúc giúp tăng tốc độ load trang
+                const [subjectsRes, examsRes] = await Promise.all([
+                    getSubjects(),
+                    getExams()
+                ]);
 
-        //Exam
-        getExams()
-        .then(res => setExams(res.data))
-        .catch(err => console.log(err))
+                setSubjects(subjectsRes.data);
+                setExams(examsRes.data);
+            } catch (err) {
+                console.error("Lỗi khi tải dữ liệu ban đầu", err);
+                
+            }
+        }
 
-        //Lần thi
-        // if(userId) {
-        //     getExamAttempts(userId)
-        //     .then(res => setAttempts(res.data))
-        //     .catch(err => console.log(err));
-        // }
+        fetchInitialData();
     }, []);
 
     //Lần thi load history
     useEffect(() => {
         if(!userId) return;
 
-        getHistory(userId)
-        .then(res => {
-            console.log("History", res.data);
-            setHistory(res.data);
-        })
-        .catch(err => console.log(err));
+        const fetchHistoryData = async () => {
+            try {
+                const res = await getHistory(userId);
+                console.log("History", res.data);
+                setHistory(res.data);
+            } catch (err) {
+                console.error("Lỗi khi tải lịch sử thi: ", err);
+                
+            }
+        }
+
+        fetchHistoryData();
     }, [userId]);
-
-
-    //Hàm lấy số lần thi
-    // const getAttemptCount = (examId) => {
-    //     // const item = attempts.find(a => a.exam_id === examId);
-    //     return history.filter(
-    //         h => Number(h.exam_id) === Number(examId)
-    //     ).length;
-    // };
 
     //số lần FE tự tính
     const attemptMap = useMemo(() => {
