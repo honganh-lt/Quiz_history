@@ -162,6 +162,29 @@
         0 8px 18px rgba(245,161,66,0.25);
 }
 
+.reset-btn {
+    /* Màu sắc theo yêu cầu */
+    background-color: #c97316;
+    color: white;
+    
+    /* Căn giữa */
+    display: block;      /* Biến nút thành block để căn lề */
+    margin: 20px auto;   /* auto sẽ căn giữa theo chiều ngang */
+    
+    /* Định dạng nút */
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.reset-btn:hover {
+    background-color: #f3840d; /* Màu cam đậm hơn khi di chuột vào */
+}
+
 /* =========================
    RIGHT CONTENT
 ========================= */

@@ -1,133 +1,239 @@
-/* ===== TỔNG THỂ TRANG CHI TIẾT ===== */
-.detail-page {
-    width: 90%;
-    max-width: 900px; /* Bóp gọn lại một chút giúp mắt người đọc không bị mỏi khi nhìn màn hình ngang */
+/* =========================
+   TRANG CHI TIẾT TÀI LIỆU
+========================= */
+
+.detail-page{
+    width: 92%;
+    max-width: 1100px;
     margin: 40px auto;
 }
 
-.detail-card {
-    background: #ffffff;
-    padding: 50px 40px; /* Tăng padding để tạo khoảng không thở cho văn bản */
-    border-radius: 24px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04); /* Đổ bóng mịn màng, cao cấp hơn */
-    overflow-x: hidden;
+.detail-card{
+    background: #fff;
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+
+    overflow-x: auto;
 }
 
-.detail-subject {
-    color: #ff7b00;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 1.5px;
-    margin-bottom: 12px;
+/* =========================
+   NỘI DUNG TÀI LIỆU
+========================= */
+
+.detail-content{
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 17px;
+
+    line-height: 1.9;
+
+    color: #333;
+
+    word-wrap: break-word;
+
+    overflow-wrap: break-word;
 }
 
-.detail-card h1 {
+/* Đoạn văn */
+
+.detail-content p{
+    margin: 0 0 16px;
+}
+
+/* =========================
+   TIÊU ĐỀ
+========================= */
+
+.detail-content h1{
     font-size: 32px;
+    color: #001b8e;
+    margin: 30px 0 15px;
     font-weight: 800;
-    line-height: 1.4;
-    margin-bottom: 35px;
-    color: #1e293b; /* Màu đen xanh lịch sự thay cho màu đen tuyền cổ điển */
-    border-bottom: 2px solid #f1f5f9;
-    padding-bottom: 20px;
 }
 
-/* ===== ĐỊNH DẠNG NỘI DUNG TỪ FILE WORD ===== */
-.detail-content {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif; /* Font chữ hiện đại, dày dặn dễ đọc */
-    line-height: 1.85;
-    color: #334155; /* Giảm độ chói của chữ đen */
-    font-size: 16.5px;
-    text-align: justify;
-}
-
-/* Các đoạn văn bản */
-.detail-content p {
-    margin-bottom: 18px;
-}
-
-/* Xử lý các tiêu đề phân cấp trong tài liệu (Chương, Bài, Mục) */
-.detail-content h1, 
-.detail-content h2, 
-.detail-content h3,
-.detail-content h4 {
-    color: #0f172a;
+.detail-content h2{
+    font-size: 26px;
+    color: #003bb3;
+    margin: 25px 0 12px;
     font-weight: 700;
-    line-height: 1.4;
-    margin-top: 35px;
-    margin-bottom: 16px;
 }
 
-.detail-content h1 { font-size: 24px; color: #1d4ed8; }
-.detail-content h2 { font-size: 21px; color: #2563eb; }
-.detail-content h3 { font-size: 18px; color: #1e3a8a; }
-
-/* Làm đẹp cho các danh sách (Dấu chấm đầu dòng) */
-.detail-content ul, 
-.detail-content ol {
-    margin-bottom: 20px;
-    padding-left: 24px;
-}
-
-.detail-content li {
-    margin-bottom: 10px;
-    position: relative;
-    list-style-type: square; /* Biến dấu chấm tròn thô thành hình vuông hiện đại hoặc đĩa */
-    color: #475569;
-}
-
-/* ĐỊNH DẠNG BẢNG BIỂU (TABLE) SIÊU ĐẸP */
-.detail-content table {
-    width: 100%;
-    border-collapse: separate; /* Thay vì collapse để làm được bo góc */
-    border-spacing: 0;
-    margin: 30px 0;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-}
-
-/* Header của bảng */
-.detail-content table th {
-    background-color: #f8fafc; /* Màu nền nhẹ nhàng tinh tế */
-    color: #1e293b;
+.detail-content h3{
+    font-size: 22px;
+    color: #0f3ea8;
+    margin: 20px 0 10px;
     font-weight: 700;
-    padding: 14px 18px;
-    font-size: 15px;
-    border-bottom: 2px solid #e2e8f0;
-    text-align: left;
 }
 
-/* Các ô dữ liệu */
-.detail-content table td {
-    padding: 14px 18px;
-    font-size: 15px;
-    color: #475569;
-    border-bottom: 1px solid #f1f5f9;
-    background-color: #ffffff;
-    line-height: 1.6;
-}
-
-/* Hiệu ứng di chuột qua các dòng trong bảng */
-.detail-content table tr:hover td {
-    background-color: #f8fafc;
-}
-
-/* Loại bỏ đường kẻ ở dòng cuối cùng tránh lỗi bo góc */
-.detail-content table tr:last-child td {
-    border-bottom: none;
-}
-
-/* Các thành phần nhấn mạnh */
-.detail-content strong {
-    color: #0f172a;
+.detail-content h4{
+    font-size: 18px;
+    color: #1e40af;
+    margin: 18px 0 8px;
     font-weight: 700;
-    /* background: linear-gradient(180deg, rgba(255,255,255,0) 70%, #fef08a 30%); Tạo hiệu ứng highlight bút dạ vàng dưới chân chữ cực chất */
-    padding: 0 2px;
 }
 
-.detail-content em {
+/* =========================
+   DANH SÁCH
+========================= */
+
+.detail-content ul,
+.detail-content ol{
+    padding-left: 30px;
+    margin: 15px 0;
+}
+
+.detail-content li{
+    margin-bottom: 8px;
+}
+
+/* =========================
+   CHỮ NHẤN MẠNH
+========================= */
+
+.detail-content strong{
+    font-weight: 700;
+    color: #111827;
+}
+
+.detail-content em{
     font-style: italic;
-    color: #64748b;
+}
+
+/* =========================
+   BLOCKQUOTE
+========================= */
+
+.detail-content blockquote{
+    border-left: 4px solid #ff8800;
+
+    background: #fff8f0;
+
+    padding: 15px 20px;
+
+    margin: 20px 0;
+
+    border-radius: 8px;
+}
+
+/* =========================
+   HÌNH ẢNH
+========================= */
+
+.detail-content img{
+    max-width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    margin: 25px auto;
+
+    border-radius: 12px;
+}
+
+/* =========================
+   BẢNG
+========================= */
+
+.detail-content table{
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin: 25px 0;
+
+    font-size: 15px;
+}
+
+.detail-content th{
+    background: #f4f6f8;
+
+    color: #001b8e;
+
+    font-weight: 700;
+
+    border: 1px solid #ddd;
+
+    padding: 12px;
+}
+
+.detail-content td{
+    border: 1px solid #ddd;
+
+    padding: 12px;
+
+    vertical-align: top;
+}
+
+.detail-content tr:nth-child(even){
+    background: #fafafa;
+}
+
+/* =========================
+   LINK
+========================= */
+
+.detail-content a{
+    color: #2563eb;
+
+    text-decoration: none;
+}
+
+.detail-content a:hover{
+    text-decoration: underline;
+}
+
+/* =========================
+   CODE
+========================= */
+
+.detail-content pre{
+    background: #f8f9fa;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    overflow-x: auto;
+
+    margin: 20px 0;
+}
+
+.detail-content code{
+    font-family: Consolas, monospace;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+    .detail-page{
+        width:95%;
+    }
+
+    .detail-card{
+        padding:25px 18px;
+    }
+
+    .detail-content{
+        font-size:16px;
+    }
+
+    .detail-content h1{
+        font-size:26px;
+    }
+
+    .detail-content h2{
+        font-size:22px;
+    }
+
+    .detail-content h3{
+        font-size:19px;
+    }
 }

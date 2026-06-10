@@ -6,13 +6,16 @@ import AddExamModal from "./AddExamModal";
 // import EditExamModal from "./EditExamModal";
 
 export const ManagementExam = () => {
-  const [exam, setExam] = useState([]);
 
+  const [exam, setExam] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [subjects, setSubjects] = useState([]);
 
   // const [showEditModal, setShowEditModal] = useState(false);
   // const [selectedExam, setSelectedExam] = useState(null);
+
+  // =======Search=========
+  const [search,setSearch] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const examPerPage = 7;
@@ -52,12 +55,24 @@ export const ManagementExam = () => {
   //     )
   //   );
   // };
+  
+
+  //=======Search========
+  const normalize = (str) => 
+      str 
+        ?.normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase(); //chữ in thường
+        
+    const filteredExam = exam.filter((q) => 
+      normalize(q.subject_name).includes(normalize(search)) ||
+      normalize(q.title).includes(normalize(search))
+    );
 
   const indexOfLastExam = currentPage * examPerPage;
   const indexOfFirstExam = indexOfLastExam - examPerPage;
 
-  const currentExam =
-    exam?.slice(indexOfFirstExam, indexOfLastExam) || [];
+  const currentExam =filteredExam.slice(indexOfFirstExam, indexOfLastExam) || [];
 
   const totalPages = Math.ceil((exam?.length || 0) / examPerPage);
 
@@ -65,9 +80,20 @@ export const ManagementExam = () => {
     <div className="admin-container">
       <div className="top-bar">
         <h2>Quản lý đề thi</h2>
-        <button className="add-btn" onClick={() => setIsOpen(true)}>
-          +
-        </button>
+        <div className="action-buttons-exam">
+          <input 
+              type="text"
+              className='search-ques'
+              placeholder='Tìm kiếm môn học, đề thi'
+              value={search}
+              onChange={(e) => {setSearch(e.target.value);
+                setCurrentPage(1); //tìm ở trang 1
+              }} 
+            />
+             <button className="add-btn" onClick={() => setIsOpen(true)}>
+            +
+            </button>
+        </div>
       </div>
 
       <div className="main-content">
@@ -126,7 +152,7 @@ export const ManagementExam = () => {
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
           >
-            Prev
+            <i className="fa-solid fa-angle-left"></i> 
           </button>
 
           {Array.from({ length: totalPages }, (_, i) => (
@@ -143,7 +169,7 @@ export const ManagementExam = () => {
             disabled={currentPage === totalPages || totalPages === 0}
             onClick={() => setCurrentPage((p) => p + 1)}
           >
-            Next
+            <i className="fa-solid fa-angle-right"></i>
           </button>
         </div>
 

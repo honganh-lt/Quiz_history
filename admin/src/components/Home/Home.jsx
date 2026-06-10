@@ -19,23 +19,23 @@ export const Home = () => {
     }, []);
 
     //biểu đồ
-    // const barData = {
-    //     labels: ["Câu hỏi", "Đề thi", "Người dùng", "Môn học"],
-    //     datasets: [
-    //         {
-    //             label: "Số lượng",
-    //             data: stats 
-    //             ? [
-    //                 stats.questions,
-    //                 stats.exams,
-    //                 stats.users,
-    //                 stats.subjects
-    //             ]
-    //             :[],
-    //             backgroundColor: "#4e73df"
-    //         }
-    //     ]
-    // };
+    const barData = {
+        labels: ["Câu hỏi", "Đề thi", "Người dùng", "Môn học"],
+        datasets: [
+            {
+                label: "Số lượng",
+                data: stats 
+                ? [
+                    stats.questions,
+                    stats.exams,
+                    stats.users,
+                    stats.subjects
+                ]
+                :[],
+                backgroundColor: "#4e73df"
+            }
+        ]
+    };
 
     // const pieData = {
     //     labels: ["Easy", "Medium", "Hard"],
@@ -66,11 +66,11 @@ export const Home = () => {
         </div>
 
         {/* Chart */}
-        {/* <div className="chart-row">
+         <div className="chart-row">
             <div style={{ width: "60%" }}>
                 <Bar data={barData} />
                 </div>
-        </div> */}
+        </div> 
     </div>
     </div>
   )

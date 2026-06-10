@@ -87,8 +87,6 @@ export const UserManagement = () => {
         str
             ?.normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
-            // .replace(/đ/g, "d")
-            // .replace(/Đ/g, "D")
             .toLowerCase();
 
     const filteredUsers = roleFilteredUsers.filter((user) => { //tìm kiếm trên dữ liệu đã filter
@@ -204,18 +202,12 @@ export const UserManagement = () => {
             
             <input 
                 className='search' 
-                placeholder='Search...' 
+                placeholder='Tìm kiếm tên tài khoản, email,...' 
                 value={search}
                 onChange={(e) => {setSearch(e.target.value);
                 setCurrentPage(1); // search nên reset về trang 1
                 }}
-                // setCurrentPage(1)
             />
-            {/* {currentUsers.length === 0 && (
-                <tr>
-                <td colSpan="5">Không tìm thấy người dùng</td>
-                </tr>
-                )} */}
         </div>
         {/* <div className='table-container'> */}
             <table className='user-table'>

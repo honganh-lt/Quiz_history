@@ -30,8 +30,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     gap: 15px;
+}
+.filter-bar button{
+    margin-left: 5px;
 }
 
 .filter-group {
@@ -57,11 +60,13 @@
 
 /* Search */
 .search {
-    padding: 6px 10px;
-    border: 1px solid #4994f6;
-    border-radius: 5px;
-    width: 220px; /* Độ rộng cố định trên màn hình lớn */
-    box-sizing: border-box;
+    width: 250px;
+    padding: 10px 14px;
+    border: 1px solid #4da3ff;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    transition: all 0.2s ease;
 }
 .search:focus {
     outline: 1px solid #1073f6;

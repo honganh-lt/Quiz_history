@@ -67,7 +67,7 @@ function ExamLop() {
         fetchHistoryData();
     }, [userId]);
 
-    //số lần FE tự tính
+    //số lần thi
     const attemptMap = useMemo(() => {
         const map = {};
 

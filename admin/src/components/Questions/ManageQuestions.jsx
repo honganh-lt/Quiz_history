@@ -30,7 +30,7 @@ export const ManageQuestions = () => {
   const [showImportModal, setShowImportModal] = useState(false);
   //============Phân trang===========
   const [currentPage, setCurrentPage] = useState(1);
-  const questionsPerPage = 8;
+  const questionsPerPage = 10;
 
   useEffect(() => {
     fetchData();
@@ -77,8 +77,21 @@ const getCorrectAnswer = (answers) => {
       
   const filteredQuestion = questions.filter((q) => 
     normalize(q.subject_name).includes(normalize(search)) ||
-    normalize(q.content).includes(normalize(search))
+    normalize(q.content).includes(normalize(search)) ||
+    normalize(q.difficulty).includes(normalize(search))
   );
+//   // TÍNH TOÁN THỐNG KÊ (Dựa trên danh sách đã lọc)
+//   const stats = filteredQuestion.reduce((acc, q) => {
+// // Thống kê độ khó
+//     const diff = q.difficulty || "Khác";
+//     acc.difficulty[diff] = (acc.difficulty[diff] || 0) + 1;
+
+//     // Thống kê môn học
+//     const sub = q.subject_name || "Chưa có môn";
+//     acc.subjects[sub] = (acc.subjects[sub] || 0) + 1;
+
+//     return acc;
+//   }, {difficulty: {}, subjects: {}}); 
 
   //ADD - subject, Chapter, lesson
   const fetchSubjects = async () => {
@@ -139,35 +152,6 @@ const getCorrectAnswer = (answers) => {
           }
       }
 
-    //Import file
-//     const handleImport = async () => {
-
-//     if (!selectedFile) {
-//         alert("Vui lòng chọn file");
-//         return;
-//     }
-
-//     const formData = new FormData();
-
-//     formData.append("file", selectedFile);
-
-//     try {
-
-//         await importQuestions(formData);
-
-//         alert("Import thành công");
-
-//         fetchData();
-
-//     } catch (error) {
-
-//         console.log(error);
-
-//         alert("Import thất bại");
-//     }
-// };
-
-
   //Phân trang
     const indexOfLastChap = currentPage * questionsPerPage;
     const indexOfFirstChap = indexOfLastChap - questionsPerPage;
@@ -183,8 +167,7 @@ const getCorrectAnswer = (answers) => {
         <h2>Quản lý câu hỏi</h2>
 
         <div className="action-buttons">
-
-            <input 
+            {/* <input 
               type="text"
               className='search-ques'
               placeholder='Search...'
@@ -192,7 +175,7 @@ const getCorrectAnswer = (answers) => {
               onChange={(e) => {setSearch(e.target.value);
                 setCurrentPage(1); //tìm ở trang 1
               }} 
-            />
+            /> */}
             <button 
                 className='add-btn'
                 onClick={() => setIsOpen(true)}
@@ -207,7 +190,48 @@ const getCorrectAnswer = (answers) => {
                 Import
             </button>
         </div>
-    </div>
+      </div>
+
+      {/* Phần thống kê mới thêm */}
+      {/* ===== Thông tin câu hỏi ===== */}
+      <div className="question-info-bar">
+
+        <div className="info-card">
+          <span className="info-label">
+            Tổng số câu hỏi
+          </span>
+
+          <span className="info-value">
+            {questions.length}
+          </span>
+        </div>
+
+        {search.trim() !== "" && (
+          <div className="info-card search-result-card">
+            <span className="info-label">
+              Kết quả tìm kiếm
+            </span>
+
+            <span className="info-value">
+              {filteredQuestion.length}
+            </span>
+
+            {/* <small>
+              Từ khóa: "{search}"
+            </small> */}
+          </div>
+        )}
+        <input 
+          type="text"
+          className='search-ques'
+          placeholder='Tìm kiếm môn, độ khó,...'
+          value={search}
+          onChange={(e) => {setSearch(e.target.value);
+            setCurrentPage(1); //tìm ở trang 1
+          }} 
+        /> 
+
+      </div>
 
       {/* Table */}
       <div className="main-content">
@@ -257,7 +281,6 @@ const getCorrectAnswer = (answers) => {
                 <td>{getAnswer(q.answers, 2)}</td>
                 <td>{getAnswer(q.answers, 3)}</td>
                 <td>{getCorrectAnswer(q.answers)}</td>
-  {/* Cột cuối → KHÔNG hover */}
 
                 <td>
                   <button 

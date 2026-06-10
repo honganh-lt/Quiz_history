@@ -141,7 +141,7 @@
     justify-content: flex-end;
     gap: 10px;
 }
-.save-btn {
+.modal-actions-ques .save-btn {
   background: #0553d0;
    /* margin-left: 20px; */
   color: white;

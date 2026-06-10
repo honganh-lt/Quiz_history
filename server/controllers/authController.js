@@ -76,16 +76,16 @@ exports.login = async (req, res, next) => {
             return res.status(401).json({ message: "Sai tài khoản hoặc mật khẩu" });
         }
 
-        // 🔥 ĐÃ SỬA: Access Token chỉ nên sống ngắn hạn (ví dụ: 15 phút hoặc 1 ngày) để đảm bảo tính an toàn
+        //Access Token chỉ nên sống ngắn hạn để đảm bảo tính an toàn
         const accessToken = jwt.sign(
             { user_id: user.user_id, role: user.role },
             process.env.JWT_SECRET, 
-            { expiresIn: "1d" } 
+            { expiresIn: "45m" } 
         );
 
         const refreshToken = crypto.randomBytes(64).toString("hex");
         const expiryDate = new Date();
-        expiryDate.setDate(expiryDate.getDate() + 7); // Refresh token sống 7 ngày
+        expiryDate.setDate(expiryDate.getDate() + 1); // Refresh token sống
 
         const insertSql = `
             INSERT INTO refresh_tokens (token, user_id, expiry_date)
@@ -110,7 +110,6 @@ exports.login = async (req, res, next) => {
     }
 };
 
-// ================= FORGOT PASSWORD =================
 // ================= FORGOT PASSWORD =================
 exports.forgotPassword = async (req, res, next) => {
     const { email } = req.body;
@@ -146,7 +145,6 @@ exports.forgotPassword = async (req, res, next) => {
     }
 };
 
-// ================= VERIFY OTP =================
 // ================= VERIFY OTP =================
 exports.verifyOtp = async (req, res, next) => {
     const { email, otp, newPassword } = req.body;
@@ -250,11 +248,11 @@ exports.refreshToken = async (req, res, next) => {
         }
         const user = users[0];
 
-        // 🔥 ĐÃ SỬA: Đồng bộ thời gian sống ngắn hạn tương đồng với hàm login (1 ngày)
+        //Đồng bộ thời gian sống ngắn hạn tương đồng với hàm login (1 ngày)
         const newAccessToken = jwt.sign(
             { user_id: tokenData.user_id, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: "1d" }
+            { expiresIn: "45m" }
         );
 
         return res.json({ access_token: newAccessToken });

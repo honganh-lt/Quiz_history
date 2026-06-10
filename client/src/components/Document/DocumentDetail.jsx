@@ -60,11 +60,11 @@ const DocumentDetail = () => {
                 <div className="detail-card">
                     
                     {/* Hiển thị tiêu đề bài học nếu có dữ liệu */}
-                    {document.lesson_name && (
+                    {/* {document.lesson_name && (
                         <h1 className="detail-title" style={{ marginBottom: "20px" }}>
                             Bài {document.lesson_number}: {document.lesson_name}
                         </h1>
-                    )}
+                    )} */}
 
                     {/*Thêm điều kiện fallback || "" để an toàn, không bị crash ứng dụng nếu nội dung trống */}
                     <div

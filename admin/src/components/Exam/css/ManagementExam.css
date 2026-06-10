@@ -10,6 +10,32 @@
     align-items: center;
     margin-bottom: 20px;
 }
+.action-buttons-exam{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-ques{
+    width: 250px;
+    padding: 10px 14px;
+    border: 1px solid #4da3ff;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.search-ques:focus{
+    outline: none;
+    border-color: #4da3ff;
+    /* box-shadow: 0 0 0 3px rgba(77,163,255,0.15); */
+}
+
+.search-ques::placeholder{
+    color: #94a3b8;
+}
+
 .add-btn{
     background: #4da3ff;
     border: none;
@@ -53,5 +79,5 @@
   padding: 6px 10px;
   color: white;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: pointer; 
 }

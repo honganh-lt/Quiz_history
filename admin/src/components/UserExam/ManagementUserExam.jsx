@@ -11,7 +11,7 @@ export const ManagementUserExam = () => {
 
     //==========Phân trang=========
     const [currentPage, setCurrentPage] = useState(1);
-    const userExamPerPage = 5;
+    const userExamPerPage = 8;
 
 
     //khác với code khác Giống phía GD user

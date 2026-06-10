@@ -96,15 +96,15 @@ const Progress = () => {
   }, [grouped]);
 
   // PROGRESS
-  const doneExams = new Set(filteredData.map(i => i.exam_id)).size;
+  // const doneExams = new Set(filteredData.map(i => i.exam_id)).size;
 
-  const totalExams = exams.filter(
-    e => Number(e.subject_id) === Number(subjectId)
-  ).length;
+  // const totalExams = exams.filter(
+  //   e => Number(e.subject_id) === Number(subjectId)
+  // ).length;
 
-  const progress = totalExams === 0
-    ? 0
-    : Math.round((doneExams / totalExams) * 100);
+  // const progress = totalExams === 0
+  //   ? 0
+  //   : Math.round((doneExams / totalExams) * 100);
 
   const changePage = (examTitle, page) => {
     setPageMap(prev => ({
@@ -124,7 +124,7 @@ const Progress = () => {
         <h2>Tiến độ môn {subjectName}</h2>
 
         {/* PROGRESS BAR */}
-        <div className="progress">
+        {/*<div className="progress">
           <h3>{progress}%</h3>
           <div className="progress-bar">
             <div
@@ -132,7 +132,7 @@ const Progress = () => {
               style={{ width: `${progress}%` }}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* Thông báo chưa làm đề nào */}
         {filteredData.length === 0 && (
