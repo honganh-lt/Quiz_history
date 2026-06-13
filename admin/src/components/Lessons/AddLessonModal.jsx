@@ -45,7 +45,7 @@ export const AddLessonModal = ({ isOpen, onClose, onSuccess, chapters, subjects 
     };
 
     return (
-        <div className="modal-overlay-les">
+        <div className="modal-overlay-addles">
             <div className="modal-les">
 
                 <h3>Thêm bài học</h3>

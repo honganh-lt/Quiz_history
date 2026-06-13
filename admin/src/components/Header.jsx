@@ -15,7 +15,7 @@ export const Header = ({ toggleSidebar }) => { // 🌟 Thêm prop toggleSidebar 
     return (
         <div className="header-admin">
             <div className='header-left'>
-                {/* 🌟 Nút Hamburger xuất hiện ở đây để mở Sidebar khi thu nhỏ */}
+                {/* Nút Hamburger xuất hiện ở đây để mở Sidebar khi thu nhỏ */}
                 <i className="fa-solid fa-bars menu-icon" onClick={toggleSidebar}></i>
                 <h2>Education</h2>
             </div>

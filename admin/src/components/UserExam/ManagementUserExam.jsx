@@ -65,7 +65,7 @@ export const ManagementUserExam = () => {
 
 
   return (
-    <div className="admin-container">
+    <div className="userExam-management">
         {/* Top bar */}
         <div className="top-bar">
             <h2>Quản lý bài thi User</h2>
@@ -123,15 +123,50 @@ export const ManagementUserExam = () => {
                         {/* sử dụng thư viện */}
                         <i className="fa-solid fa-angle-left"></i> 
                     </button>
-                    {Array.from({length: totalPages}, (_, i) => (
-                        <button
-                            key={i}
-                            className={currentPage === i + 1 ? "active" : ""}
-                            onClick={() => setCurrentPage(i + 1)}
-                        >
-                            {i + 1}
-                        </button>
-                    ))}
+                    {(() => {
+                        const pages = [];
+
+                        if (totalPages <= 7) {
+                            for (let i = 1; i <= totalPages; i++) {
+                                pages.push(i);
+                            }
+                        } else {
+                            pages.push(1);
+
+                            if (currentPage > 3) {
+                                pages.push("...");
+                            }
+
+                            const start = Math.max(2, currentPage - 1);
+                            const end = Math.min(totalPages - 1, currentPage + 1);
+
+                            for (let i = start; i <= end; i++) {
+                                pages.push(i);
+                            }
+
+                            if (currentPage < totalPages - 2) {
+                                pages.push("...");
+                            }
+
+                            pages.push(totalPages);
+                        }
+
+                        return pages.map((page, index) =>
+                            page === "..." ? (
+                                <span key={index} className="pagination-dots">
+                                    ...
+                                </span>
+                            ) : (
+                                <button
+                                    key={index}
+                                    className={currentPage === page ? "active" : ""}
+                                    onClick={() => setCurrentPage(page)}
+                                >
+                                    {page}
+                                </button>
+                            )
+                        );
+                    })()}
                     <button
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage(currentPage + 1)}

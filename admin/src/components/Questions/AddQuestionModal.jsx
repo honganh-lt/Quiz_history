@@ -122,7 +122,7 @@ export const AddQuestionModal = ({
     );
 
     return (
-        <div className="modal-overlay-ques">
+        <div className="modal-overlay-addques">
             <div className="modal-ques">
 
                 <h3>Thêm câu hỏi</h3>

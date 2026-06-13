@@ -39,7 +39,7 @@ export const AddSubjectModal = ({isOpen, onClose, onSuccess}) => {
   }
 
   return (
-    <div className="modal-overlay-sub">
+    <div className="modal-overlay-addsub">
       <div className="modal-sub">
         <h3>Thêm môn học</h3>
 

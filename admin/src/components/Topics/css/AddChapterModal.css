@@ -1,4 +1,4 @@
-.modal-overlay-chap {
+.modal-overlay-addchap {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +13,7 @@
 }
 
 /* Box modal */
-.modal-chap {
+.modal-overlay-addchap .modal-chap {
     background: #fff;
     padding: 25px;
     width: 600px;
@@ -26,17 +26,18 @@
 }
 
 /* Title */
-.modal-chap h3 {
+.modal-overlay-addchap .modal-chap h3 {
     text-align: center;
     margin-bottom: 10px;
+    font-size: 24px;
 }
-.modal-chap h4{
+.modal-overlay-addchap .modal-chap h4{
     margin: 0px 5px;
     color: #817f7f;
 }
 /* Input + select */
-.modal-chap input,
-.modal-chap select {
+.modal-overlay-addchap .modal-chap input,
+.modal-overlay-addchap .modal-chap select {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -48,8 +49,8 @@
     background: #ba3232;
 } */
 /* Focus */
-.modal-chap input:focus,
-.modal-chap select:focus {
+.modal-overlay-addchap .modal-chap input:focus,
+.modal-overlay-addchap .modal-chap select:focus {
     border-color: #007bff;
 }
 
@@ -90,13 +91,13 @@
     background: #999;
 } */
 
-.modal-actions-chap {
+.modal-overlay-addchap .modal-actions-chap {
   display: flex;
   justify-self: flex-end;
   gap: 10px;
 }
 
-.save-btn {
+.modal-overlay-addchap .save-btn {
   background: #0553d0;
    /* margin-left: 20px; */
   color: white;
@@ -106,7 +107,7 @@
   width: 80px;
 }
 
-.cancel-btn {
+.modal-overlay-addchap .cancel-btn {
   background: #929090;
   color: #fff;
   padding: 8px 12px;

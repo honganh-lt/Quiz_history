@@ -2,14 +2,14 @@
   padding: 20px;
   background: #fdf0e3;
 }
-.title{
+.down-title{
   font-size: 24px;
   margin-bottom: 20px;
   padding-left: 300px;
 }
 
 /* Chia 2 cột */
-.subject-list{
+.down-subject-list{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
@@ -17,7 +17,7 @@
   /* Đẩy ra giữa */
   margin: 0 auto; 
 }
-.subject-card{
+.down-subject-card{
   background: #fff;
   border-radius: 12px;
   padding: 15px;
@@ -25,25 +25,25 @@
 }
 
 /* Header trong card */
-.subject-card h2{
+.down-subject-card h2{
   font-size: 18px;
   margin-bottom: 15px;
 }
 
 /* Layout bên trang card */
-.subject-card-item{
+.down-subject-card-item{
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.subject-image{
+.down-subject-image{
     width: 160px;
     height: 120px;
     object-fit: cover;
     border-radius: 14px;
 }
 
-.subject-card-item{
+.down-subject-card-item{
     display: flex;
     align-items: center;
     gap: 20px;

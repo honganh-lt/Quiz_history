@@ -127,7 +127,7 @@ const EditDocument = ({ editData, onClose, onSuccess, subjects, chapters, lesson
                     </label>
                     
                     <label className="upload-label" style={{ marginTop: "10px" }}>
-                        Tải lên file Word mới (Nếu muốn thay thế file cũ):
+                        Tải lên file Word mới (.docx):
                     </label>
                     <input 
                         key={fileInputKey}

@@ -1,5 +1,4 @@
 /* ================= FOOTER ================= */
-
 .site-footer {
     background: linear-gradient(
         180deg,
@@ -169,7 +168,7 @@
 }
 
 /* ================= SOCIAL ================= */
-
+/* 
 .footer-socials {
     margin-top: 18px;
 
@@ -205,7 +204,7 @@
 
     box-shadow:
         0 8px 18px rgba(250, 123, 33, 0.25);
-}
+} */
 
 /* ================= BOTTOM ================= */
 

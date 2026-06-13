@@ -12,7 +12,7 @@ const AdminLayout = ({ children }) => {
 
   return (
     <div className="grid-container">
-      {/* 🌟 KIỂM TRA CHỖ NÀY: Phải truyền hàm OpenSidebar vào prop tên là toggleSidebar */}
+      {/* Phải truyền hàm OpenSidebar vào prop tên là toggleSidebar */}
       <Header toggleSidebar={OpenSidebar} />
       
       {/* Truyền cả trạng thái openSidebarToggle và hàm OpenSidebar xuống cho Sidebar */}

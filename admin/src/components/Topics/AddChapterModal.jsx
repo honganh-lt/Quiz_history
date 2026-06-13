@@ -56,7 +56,7 @@ export const AddChapterModal = ({isOpen, onClose, onSuccess, subjects}) => {
     //     setChapterName("");
     //     setChapterNumber("");
   return (
-    <div className="modal-overlay-chap">
+    <div className="modal-overlay-addchap">
         <div className="modal-chap">
             <h3>Thêm chương</h3>
 

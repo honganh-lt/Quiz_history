@@ -124,7 +124,7 @@ const Signup = () => {
                 <label>
                     Mật khẩu <span className="required">*</span>
                 </label>
-                <div className="password-wrapper">
+                <div className="password-wrapper-register">
                     <input
                         ref={passwordRef}
                         type={showPassword ? "text" : "password"}

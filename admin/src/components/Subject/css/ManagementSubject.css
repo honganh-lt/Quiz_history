@@ -1,4 +1,4 @@
-.admin-container {
+.subject-management {
     grid-area: main;
     padding: 30px;
     background: #f5f7fb;
@@ -6,15 +6,8 @@
     box-sizing: border-box;
 }
 
-/* Main Content */
-.main-content {
-    flex: 1;
-    padding: 20px;
-    background: #f5f7fa;
-}
-
 /* Header */
-.header {
+/* .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,9 +19,26 @@
     margin: 0;
     font-size: 24px;
     color: #1e293b;
+} */
+.subject-management .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    gap: 15px;
 }
 
-.add-btn {
+/* .subject-management .top-bar h2 {
+ */
+.subject-management .top-bar title {
+
+    margin: 0;
+    font-size: 24px;
+    color: #1e293b;
+}
+.subject-management .add-btn {
     background: #4da3ff;
     border: none;
     padding: 10px 15px;
@@ -40,49 +50,55 @@
     transition: background 0.2s;
 }
 
-.add-btn:hover {
+.subject-management .add-btn:hover {
     background: #258eff; /* Hiệu ứng hover cho nút thêm mới mượt hơn */
 }
 
-/* 🌟 BỌC TABLE TRÁNH VỠ KHUNG TRÊN MOBILE */
-.table-responsive {
+/* Main Content */
+.subject-management .main-content {
+    flex: 1;
+    padding: 20px;
+    background: #f5f7fa;
+}
+
+/* .subject-management .table-responsive {
     width: 100%;
-    overflow-x: auto; /* Tự động tạo thanh cuộn ngang khi bảng quá rộng */
+    overflow-x: auto;
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
+} */
 
 /* Table */
-.subject-table {
+.subject-management .subject-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
     white-space: nowrap; /* Ép các hàng dữ liệu thẳng thớm, không tự ý xuống dòng lung tung */
 }
 
-.subject-table th,
-.subject-table td {
+.subject-management .subject-table th,
+.subject-management .subject-table td {
     padding: 12px 15px;
     border-bottom: 1px solid #ddd;
     text-align: left;
     font-size: 14px;
 }
 
-.subject-table th {
+.subject-management .subject-table th {
     background: #f0f0f0;
     font-weight: 600;
     color: #475569;
 }
 
 /* Container bọc các nút hành động */
-.action-buttons {
+/* .subject-management .action-buttons {
     display: flex;
     gap: 5px;
-}
+} */
 
 /* Button Hành động */
-.edit-btn {
+.subject-management .subject-table .edit-btn {
     background: #f3d73c;
     border: none;
     padding: 6px 12px;
@@ -91,9 +107,10 @@
     cursor: pointer;
     font-size: 13px;
     transition: opacity 0.2s;
+    margin-right: 5px;
 }
 
-.delete-btn {
+.subject-management .delete-btn {
     background: #ff4d4f;
     border: none;
     padding: 6px 12px;
@@ -104,47 +121,76 @@
     transition: opacity 0.2s;
 }
 
-.edit-btn:hover, .delete-btn:hover {
+.subject-management .edit-btn:hover, 
+.subject-management .delete-btn:hover {
     opacity: 0.9; /* Hiệu ứng mờ nhẹ khi di chuột vào nút */
 }
 
 
-/* ======================================================== */
-/* 🌟 ĐOẠN CODE RESPONSIVE (MEDIA QUERIES) CHO CÁC MÀN HÌNH 🌟 */
-/* ======================================================== */
+/* Pagination */
+.subject-management .pagination {
+    margin-top: 20px;
+    display: flex;
+    gap: 5px; /* Sử dụng gap đồng nhất thay vì margin-right đơn lẻ */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Tự động xuống hàng các nút số nếu màn hình quá chật */
+}
+
+.subject-management .pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.subject-management .pagination button.active {
+    background: #2f80ed;
+    color: white;
+    border-color: #2f80ed;
+}
+
+.subject-management .pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 
 /* 1. Màn hình Máy tính bảng & Laptop nhỏ (max-width: 992px) */
 @media screen and (max-width: 992px) {
-    .admin-container {
+    .subject-management {
         padding: 20px; /* Thu nhỏ khoảng trống viền bên ngoài */
     }
 }
 
 /* 2. Màn hình Điện thoại di động (max-width: 576px) */
 @media screen and (max-width: 576px) {
-    .admin-container {
+    .subject-management {
         padding: 15px;
     }
 
     /* Đẩy Tiêu đề trang và Nút "Thêm mới" xếp chồng thành hàng dọc */
-    .header {
+    /* .header {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
     }
 
     .header h2 {
-        font-size: 20px; /* Thu nhỏ chữ tiêu đề một chút trên mobile */
-    }
+        font-size: 20px; 
+    } */
 
-    .add-btn {
+    .subject-management .add-btn {
         width: 100%; /* Nút thêm mới dài full màn hình cho dễ bấm chạm ngón tay */
         text-align: center;
         padding: 12px;
     }
     
-    .subject-table th,
-    .subject-table td {
+    .subject-management .subject-table th,
+    .subject-management .subject-table td {
         padding: 10px; /* Thu bớt đệm ô để hiển thị nhiều thông tin nhất có thể */
         font-size: 13px;
     }

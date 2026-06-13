@@ -14,7 +14,7 @@
 }
 
 /* Box modal */
-.modal-ques {
+.modal-overlay-ques .modal-ques {
   width: 600px;
   max-height: 80vh;
   overflow-y: auto;
@@ -29,22 +29,23 @@
 }
 
 /* Title */
-.modal-ques h3 {
+.modal-overlay-ques .modal-ques h3 {
   text-align: center;
   margin-bottom: 10px;
+  font-size: 24px;
 }
 
 /* Label */
-.modal-ques h4 {
+.modal-overlay-ques .modal-ques h4 {
   font-size: 14px;
   margin: 5px 0;
   color: #666;
 }
 
 /* Input - select - textarea */
-.modal-ques input,
-.modal-ques select,
-.modal-ques textarea {
+.modal-overlay-ques .modal-ques input,
+.modal-overlay-ques .modal-ques select,
+.modal-overlay-ques .modal-ques textarea {
   width: 100%;
   padding: 8px 10px;
 
@@ -56,21 +57,21 @@
 }
 
 /* textarea */
-.modal-ques textarea {
+.modal-overlay-ques .modal-ques textarea {
   min-height: 80px;
   resize: vertical;
 }
 
 /* focus */
-.modal-ques input:focus,
-.modal-ques select:focus,
-.modal-ques textarea:focus {
+.modal-overlay-ques .modal-ques input:focus,
+.modal-overlay-ques .modal-ques select:focus,
+.modal-overlay-ques .modal-ques textarea:focus {
   outline: none;
   border-color: #3b82f6;
 }
 
 /* ===== ĐÁP ÁN ===== */
-.answer-item {
+.modal-overlay-ques .answer-item {
   display: flex;
   align-items: center;
   gap: 10px; /* khoảng cách radio và input */
@@ -78,27 +79,27 @@
 }
 
 /* radio nhỏ gọn lại */
-.answer-item input[type="radio"] {
+.modal-overlay-ques .answer-item input[type="radio"] {
   width: 16px;
   height: 16px;
   cursor: pointer;
 }
 
 /* input chiếm hết phần còn lại */
-.answer-item input[type="text"] {
+.modal-overlay-ques .answer-item input[type="text"] {
   flex: 1;
 }
 
 
 /* Button */
-.modal-actions-ques {
+.modal-overlay-ques .modal-actions-ques {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
   margin-top: 10px;
 }
 
-.modal-actions-ques .save-btn {
+.modal-overlay-ques .modal-actions-ques .save-btn {
   background: #0553d0;
   color: white;
   /* Tăng độ rộng */
@@ -110,11 +111,11 @@
   cursor: pointer;
 }
 
-.modal-actions-ques .save-btn:hover {
+.modal-overlay-ques .modal-actions-ques .save-btn:hover {
   background: #033c9e;
 }
 
-.modal-actions-ques .close-btn {
+.modal-overlay-ques .modal-actions-ques .close-btn {
   background: #929090;
   color: white;
   min-width: 30px;

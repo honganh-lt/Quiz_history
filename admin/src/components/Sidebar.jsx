@@ -25,7 +25,7 @@ function Sidebar({ openSidebarToggle, toggleSidebar }) { // 🌟 Nhận thêm to
   };
 
   return (
-    // 🌟 Nếu openSidebarToggle = true thì thêm class sidebar-responsive
+    //  Nếu openSidebarToggle = true thì thêm class sidebar-responsive
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
      <div className="sidebar-mobile-header">
          {/* Nút X này giúp người dùng đóng menu lại khi ở mobile */}

@@ -4,18 +4,17 @@
     justify-content: center; 
     align-items: center;
     min-height: 100vh; /* Đảm bảo trang luôn cao bằng toàn bộ màn hình */
-    background-color: #f5f5f5; /* Màu nền nhẹ (tùy chọn) */
-    padding: 20px; /* Tạo khoảng cách an toàn với rìa màn hình điện thoại */
+    background-color: #f5f5f5; 
+    padding: 20px; 
     box-sizing: border-box;
 }
 
 /* Hộp container đăng ký */
 .auth-container-register {
     width: 100%;
-    max-width: 380px; /* Giới hạn độ rộng tối đa trên máy tính */
+    max-width: 380px; 
     margin: 40px auto; 
-    padding: 30px 25px; /* Tăng padding trên/dưới để form trông cao ráo, thoáng hơn */
-    display: flex;
+    padding: 30px 25px; 
     flex-direction: column;
     gap: 12px;
     border-radius: 8px;
@@ -45,7 +44,7 @@
 .auth-container-register label p {
     color: #555;
     font-size: 12px;
-    margin: 0 0 0 5px; /* Thụt lề sang phải một chút so với chữ "Email" */
+    margin: 0 0 0 5px; 
     font-weight: normal;
 }
 
@@ -60,35 +59,41 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box; /* Giữ input không bị vỡ bố cục rộng ra ngoài */
+    box-sizing: border-box; 
     outline: none;
+    margin-bottom: 20px;
 }
 
 /* Khung bọc riêng cho mật khẩu và con mắt */
-.password-wrapper {
+.password-wrapper-register {
     position: relative;
     width: 100%;
     box-sizing: border-box;
 }
 
 /* Input password nằm bên trong wrapper */
-.password-wrapper input {
-    width: 100%;
-    padding-right: 40px; /* Chừa khoảng trống bên phải để không bị chữ đè lên icon con mắt */
+.password-wrapper-register input {
+    /* width: 100%; */
+    /* padding-right: 40px;  */
+    padding-right: 38px !important; 
 }
 
 /* Icon con mắt */
-.eye-icon {
+.password-wrapper-register .eye-icon {
     position: absolute;
     right: 12px;
-    top: 50%;
+    top: 35%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #444;
+    color: #888;
     display: flex;
     align-items: center;
     font-size: 16px;
+    transition: color 0.2s ease;
 }
+/* .eye-icon:hover {
+    color: #e67e22; 
+} */
 
 /* Nút đăng ký */
 .auth-container-register button {
@@ -128,9 +133,7 @@
     text-decoration: underline;
 }
 
-/* ==========================================
-   MEDIA QUERIES (Tối ưu cho di động siêu nhỏ)
-   ========================================== */
+/* MEDIA QUERIES (Tối ưu cho di động siêu nhỏ)*/
 @media (max-width: 400px) {
     .auth-container-register {
         padding: 25px 15px; /* Thu nhỏ khoảng cách viền trong để chừa chỗ cho nội dung */

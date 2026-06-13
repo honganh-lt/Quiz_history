@@ -15,6 +15,38 @@ export const getExams = async () => {
   }
 };
 
+//POst CREATE RANDOM theo subject = BE
+export const createExamBySubject = async (data) => {
+  try {
+   const res = await axiosClient.post(`${API_URL}/subject`, data);
+  return res.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+//Thống kê độ khó
+export const getDifficultyCount = async (subjectId) => {
+    return axiosClient.get(
+        `${API_URL}/difficulty-count/${subjectId}`
+    );
+};
+
+
+
+// PUT cập nhật exam theo id
+export const updateExam = async (id, data) => {
+  try {
+    const res = await axiosClient.put(`${API_URL}/${id}`, data);
+    return res.data;
+  } catch (err) {
+    console.error("Lỗi PUT exam:", err);
+    throw err;
+  }
+};
+
+
 //====Get Detail======= user
 // export const getExamDetail = async (id) => {
 //   try {
@@ -39,36 +71,6 @@ export const getExams = async () => {
 //   }
 // };
 
-//POst CREATE RANDOM theo subject = BE
-export const createExamBySubject = async (data) => {
-  try {
-   const res = await axiosClient.post(`${API_URL}/subject`, data);
-  return res.data;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
-
-//Thống kê độ khó
-export const getDifficultyCount = async (subjectId) => {
-    return axiosClient.get(
-        `${API_URL}/difficulty-count/${subjectId}`
-    );
-};
-
-
-
-// PUT cập nhật exam theo id
-// export const updateExam = async (id, data) => {
-//   try {
-//     const res = await axiosClient.put(`${API_URL}/${id}`, data);
-//     return res.data;
-//   } catch (err) {
-//     console.error("Lỗi PUT exam:", err);
-//     throw err;
-//   }
-// };
 // export const checkExamLock = (id) => {
 //   return axiosClient.get(`${API_URL}/check-lock/${id}`);
 // };

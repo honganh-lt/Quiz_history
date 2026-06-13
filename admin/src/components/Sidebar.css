@@ -16,7 +16,7 @@
 
 .sidebar-list {
     list-style: none;
-    /* 🌟 Đổi từ padding: 10px 0; thành thế này để đẩy phía trên xuống 40px */
+    /* Đổi từ padding: 10px 0; thành thế này để đẩy phía trên xuống 40px */
     padding: 45px 0 10px 0;
     margin: 0;
 }
@@ -74,7 +74,6 @@
     background: #fee2e2;
 }
 
-/* ===== 🌟 ĐOẠN MEDIA QUERIES XỬ LÝ KHI THU NHỎ MÀN HÌNH 🌟 ===== */
 @media screen and (max-width: 992px) {
     .sidebar {
         position: fixed;
@@ -96,7 +95,6 @@
         cursor: pointer;
     }
 
-    /* 🌟 KHI BẤM HAMBURGER: Kích hoạt class này để đưa menu trượt ra */
     .sidebar-responsive {
         left: 0 !important;
     }

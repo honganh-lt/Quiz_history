@@ -17,8 +17,7 @@ export const Footer = () => {
             <ul>
                 <li><a href="/">Trang chủ</a></li>
                 <li><a href="/exam">Đề thi</a></li>
-                <li><a href="profile">Thông tin</a></li>
-                {/* <li><a href="/document">Tài liệu</a></li> */}
+                <li><a href="/profile">Thông tin</a></li>
             </ul>
         </div>
 
@@ -35,7 +34,6 @@ export const Footer = () => {
         {/* </div> */}
     </div>
 
-    {/* <!-- Dòng bản quyền (Giữ lại từ image_56ec27.png nhưng tối ưu hơn) --> */}
     <div className="footer-bottom">
         <p>&copy; 2026 Trắc nghiệm lịch sử. All rights reserved.</p>
     </div>

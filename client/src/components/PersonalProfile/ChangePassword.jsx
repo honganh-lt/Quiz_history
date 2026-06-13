@@ -45,45 +45,47 @@ const ChangePassword = ({ onClose }) => {
                 <h2>Đổi mật khẩu</h2>
 
                 {/* Phần Mật khẩu cũ */}
-                <div className="input-group">
-                    <h4>Mật khẩu cũ <span className="required">*</span></h4>
-                    <div className="input-wrapper">
+                <div className="input-group-change">
+                    <h4>Mật khẩu cũ <span className="required-change">*</span></h4>
+                    <div className="input-wrapper-change">
                         <input
                             type={showOldPassword ? "text" : "password"}
                             placeholder="Mật khẩu cũ"
                             value={oldPassword}
                             onChange={(e) => setOldPassword(e.target.value)}
                         />
-                        <span className="eye-icon" onClick={() => setShowOldPassword(!showOldPassword)}>
+                        <span className="eye-icon-change" onClick={() => setShowOldPassword(!showOldPassword)}>
                             {showOldPassword ? <FaEyeSlash /> : <FaEye />}
                         </span>
                     </div>
                 </div>
 
                 {/* Phần Mật khẩu mới */}
-                <div className="input-group">
-                    <h4>Mật khẩu mới <span className="required">*</span></h4>
-                    <div className="input-wrapper">
+                <div className="input-group-change">
+                    <h4>Mật khẩu mới <span className="required-change">*</span></h4>
+                    <div className="input-wrapper-change">
                         <input
                             type={showNewPassword ? "text" : "password"}
                             placeholder="Mật khẩu mới"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
-                        <span className="eye-icon" onClick={() => setShowNewPassword(!showNewPassword)}>
+                        <span className="eye-icon-change" onClick={() => setShowNewPassword(!showNewPassword)}>
                             {showNewPassword ? <FaEyeSlash /> : <FaEye />}
                         </span>
                     </div>
                 </div>
 
                 {/* Thêm type="button" cho các button để tường minh */}
-                <button type="button" onClick={handleSubmit}>
-                    Xác nhận đổi mật khẩu
-                </button>
+                {/* <div className='change-button'>  */}
+                    <button type="button" onClick={handleSubmit}>
+                        Xác nhận đổi mật khẩu
+                    </button>
 
-                <button type="button" onClick={onClose}>
-                    Đóng
-                </button>
+                    <button type="button" onClick={onClose}>
+                        Đóng
+                    </button>
+                {/* </div> */}
             </div>
         </div>
     );

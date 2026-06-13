@@ -28,6 +28,22 @@
     color: #0f172a;
 }
 
+.document .add-btn {
+    background: #4da3ff;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap; 
+    transition: background 0.2s;
+}
+
+.document .add-btn:hover {
+    background: #258eff;
+}
+
 /* TABLE WRAPPER */
 .document-main-content {
     width: 100%;
@@ -138,33 +154,36 @@
     padding: 20px;
     color: #9ca3af;
 }
-
-/* BUTTON DELETE (nếu bạn dùng class này) */
-.document-delete-btn {
-    width: 40px;
-    height: 40px;
-
+/* CSS cho nút trong bảng */
+.document .edit-btn {
+    background: #f3d73c;
     border: none;
-    border-radius: 10px;
-
-    background: #ef4444;
+    padding: 6px 12px;
     color: white;
-
+    border-radius: 5px;
     cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 15px;
-
-    transition: 0.25s ease;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    margin-right: 5px;
 }
 
-.document-delete-btn:hover {
-    background: #dc2626;
-    transform: scale(1.05);
+.document .delete-btn {
+    background: #ff4d4f;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
 }
+
+.document .edit-btn:hover, .document .delete-btn:hover {
+    opacity: 0.9;
+}
+
 
 /* SCROLLBAR */
 .document-main-content::-webkit-scrollbar {

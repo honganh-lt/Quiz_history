@@ -1,5 +1,5 @@
 /* Bao quanh toàn bộ trang */
-.login-container {
+.main-login {
     display: flex;
     justify-content: center; 
     align-items: center;
@@ -13,15 +13,15 @@
 /* Hộp đăng nhập chính - ĐÃ THU GỌN PADDING & GAP */
 .auth-container {
     width: 100%;
-    max-width: 350px; /* Độ rộng vừa vặn, không quá bè */
+    max-width: 350px; 
     margin: auto;
-    padding: 25px 20px; /* ĐÃ GIẢM: Giúp hộp gọn gàng, không bị quá cao hay rộng thừa thãi */
+    padding: 25px 20px; 
     display: flex;
     flex-direction: column;
-    gap: 12px; /* ĐÃ GIẢM: Các phần tử đứng gần nhau hơn, form nhìn chắc chắn hơn */
+    gap: 12px; 
     text-align: center;
-    border-radius: 10px; /* Bo góc nhẹ nhàng hơn */
-    background-color: #f7b731; /* Giữ màu vàng chủ đạo */
+    border-radius: 10px; 
+    background-color: #f7b731; 
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); /* Đổ bóng nhẹ nhàng */
     box-sizing: border-box;
 }
@@ -29,7 +29,7 @@
 /* Tiêu đề Đăng nhập */
 .auth-container h2 {
     margin-top: 0;
-    margin-bottom: 5px; /* Giảm khoảng cách dưới tiêu đề */
+    margin-bottom: 5px; 
     font-size: 24px;
     font-weight: 700;
     color: #2c3e50; 
@@ -38,11 +38,11 @@
 /* Định dạng chung cho Input - ĐÃ GIẢM PADDING */
 .auth-container input {
     width: 100%;
-    padding: 10px 12px; /* ĐÃ GIẢM: Ô nhập mỏng và thanh thoát hơn, không bị quá thô */
+    padding: 10px 12px; 
     border: 2px solid transparent; 
     border-radius: 6px; 
     background-color: #ffffff;
-    font-size: 14px; /* Giảm nhẹ size chữ cho cân đối với padding */
+    font-size: 14px; 
     color: #333;
     box-sizing: border-box;
     outline: none;
@@ -54,13 +54,13 @@
     border-color: #e67e22; 
     box-shadow: 0 0 6px rgba(230, 126, 34, 0.15);
 }
-a {
+.auth-container a {
   font-weight: 500;
   color: #0b15e0;
   text-decoration: inherit;
 }
 
-a:hover {
+.auth-container a:hover {
   color: #4a53f1;
 }
 /* .auth-container p link{
@@ -98,14 +98,14 @@ a:hover {
 }
 
 /* Link Quên mật khẩu */
-.forgot-link {
+/* .forgot-link {
     text-align: right; 
-    margin: -3px 0 3px 0 !important; /* Co ngắn khoảng cách */
+    margin: -3px 0 3px 0 !important; 
 }
 
 .forgot-link a {
     color: #2c3e50 !important; 
-    font-size: 12px; /* Chữ nhỏ lại một chút cho tinh tế */
+    font-size: 12px; 
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s;
@@ -114,12 +114,12 @@ a:hover {
 .forgot-link a:hover {
     color: #e67e22 !important; 
     text-decoration: underline;
-}
+} */
 
-/* NÚT ĐĂNG NHẬP - ĐÃ GIẢM PADDING */
+/* NÚT ĐĂNG NHẬP */
 .btn-practice {
     width: 100%;
-    padding: 10px; /* ĐÃ GIẢM: Nút bấm gọn gàng, đồng bộ với độ cao của ô Input */
+    padding: 10px; 
     cursor: pointer;
     border: none;
     border-radius: 6px;
@@ -144,7 +144,7 @@ a:hover {
 }
 
 /* Dòng chuyển hướng Đăng ký ở dưới cùng */
-.register-link {
+/* .register-link {
     margin-top: 5px !important;
     font-size: 13px;
     color: #555;
@@ -161,11 +161,9 @@ a:hover {
 .register-link a:hover {
     color: #e67e22;
     text-decoration: underline;
-}
+} */
 
-/* ==========================================
-   RESPONSIVE (Tối ưu cho di động màn hình nhỏ)
-   ========================================== */
+/* RESPONSIVE (Tối ưu cho di động màn hình nhỏ) */
 @media (max-width: 360px) {
     .auth-container {
         padding: 20px 15px; /* Thu gọn thêm một chút khi ở màn hình cực hẹp */

@@ -10,31 +10,18 @@ const examController = require("../controllers/examController");
 //GET=========Lấy danh sách đề thi============
 router.get("/", examController.getExams);
 
-//Update
-// router.put("/:id", examController.updateExam);
-// router.get("/check-lock/:id", examController.checkExamLock);
-
-// thống kê độ khó
+//Thống kê độ khó
 router.get(
     "/difficulty-count/:subject_id",
     examController.getQuestionCountByDifficulty
 );
 
+//random theo môn học
+router.post("/subject", examController.createExamBySubject);
 
-//POST =========Tạo đề thi============
-// router.post("/", examController.postExam);
-//POST tạo API: tạo đề + random câu hỏi
-// router.post('/', examController.postExam); //tạo thủ công
-router.post("/subject", examController.createExamBySubject); // QUAN TRỌNG tạo random đề
-
-
-//Lấy chi tiết đề == chưa hiểu. User
+//hiển thị phía user
 router.get("/:id", examController.getExamDetail);
 
-//PUT 
-// router.put("/:id", examController.putExam);
-
-//DELETE
-// router.delete("/:id", examController.deleteExam);
+router.put("/:id", examController.updateExam);
 
 module.exports = router;

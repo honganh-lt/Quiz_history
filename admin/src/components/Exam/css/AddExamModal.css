@@ -1,4 +1,4 @@
-.modal-overlay-exam {
+.modal-overlay-addexam {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.45);
@@ -13,7 +13,7 @@
 }
 
 /* Modal */
-.modal-exam {
+.modal-overlay-addexam .modal-exam {
     width: 100%;
     max-width: 620px;
 
@@ -34,7 +34,7 @@
 }
 
 /* Title */
-.modal-exam h3 {
+.modal-overlay-addexam .modal-exam h3 {
     text-align: center;
     font-size: 28px;
     margin: 0;
@@ -43,7 +43,7 @@
 }
 
 /* Label */
-.modal-exam h4 {
+.modal-overlay-addexam .modal-exam h4 {
     margin: 0 0 6px;
     color: #64748b;
     font-size: 15px;
@@ -51,9 +51,9 @@
 }
 
 /* Inputs */
-.modal-exam input,
-.modal-exam select,
-.modal-exam textarea {
+.modal-overlay-addexam .modal-exam input,
+.modal-overlay-addexam .modal-exam select,
+.modal-overlay-addexam .modal-exam textarea {
     width: 100%;
 
     padding: 12px 14px;
@@ -73,15 +73,15 @@
 }
 
 /* Textarea */
-.modal-exam textarea {
+.modal-overlay-addexam .modal-exam textarea {
     min-height: 100px;
     resize: vertical;
 }
 
 /* Focus */
-.modal-exam input:focus,
-.modal-exam select:focus,
-.modal-exam textarea:focus {
+.modal-overlay-addexam .modal-exam input:focus,
+.modal-overlay-addexam .modal-exam select:focus,
+.modal-overlay-addexam .modal-exam textarea:focus {
     border-color: #2563eb;
     background: #fff;
 
@@ -90,13 +90,13 @@
 }
 
 /* Difficulty section */
-.difficulty-inputs {
+.modal-overlay-addexam .difficulty-inputs {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
 }
 
-.difficulty-inputs label {
+.modal-overlay-addexam .difficulty-inputs label {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -115,7 +115,7 @@
 }
 
 /* Tổng số câu */
-.mb-3 {
+.modal-overlay-addexam .mb-3 {
     background: #eff6ff;
     border: 1px solid #bfdbfe;
 
@@ -125,10 +125,11 @@
 
     color: #1d4ed8;
     font-size: 16px;
+    width: 180px;
 }
 
 /* Action buttons */
-.modal-actions-exam {
+.modal-overlay-addexam .modal-actions-exam {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
@@ -137,7 +138,7 @@
 }
 
 /* Save button */
-.save-btn {
+.modal-overlay-addexam .save-btn {
     min-width: 110px;
 
     padding: 12px 18px;
@@ -156,13 +157,13 @@
     transition: 0.2s ease;
 }
 
-.save-btn:hover {
+.modal-overlay-addexam .save-btn:hover {
     background: #1d4ed8;
     transform: translateY(-1px);
 }
 
 /* Cancel button */
-.cancel-btn {
+.modal-overlay-addexam .cancel-btn {
     min-width: 110px;
 
     padding: 12px 18px;
@@ -181,7 +182,7 @@
     transition: 0.2s ease;
 }
 
-.cancel-btn:hover {
+.modal-overlay-addexam .cancel-btn:hover {
     background: #cbd5e1;
     transform: translateY(-1px);
 }
@@ -201,40 +202,40 @@
 
 /* Tablet */
 @media (max-width: 768px) {
-    .modal-exam {
+    .modal-overlay-addexam .modal-exam {
         padding: 22px;
     }
 
-    .difficulty-inputs {
+    .modal-overlay-addexam .difficulty-inputs {
         grid-template-columns: 1fr;
     }
 
-    .modal-exam h3 {
+    .modal-overlay-addexam .modal-exam h3 {
         font-size: 24px;
     }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
-    .modal-overlay-exam {
+    .modal-overlay-addexam .modal-overlay-exam {
         padding: 12px;
     }
 
-    .modal-exam {
+    .modal-overlay-addexam .modal-exam {
         padding: 18px;
         border-radius: 14px;
     }
 
-    .modal-actions-exam {
+    .modal-overlay-addexam .modal-actions-exam {
         flex-direction: column;
     }
 
-    .save-btn,
-    .cancel-btn {
+    .modal-overlay-addexam .save-btn,
+    .modal-overlay-addexam .cancel-btn {
         width: 100%;
     }
 
-    .modal-exam h3 {
+    .modal-overlay-addexam .modal-exam h3 {
         font-size: 22px;
     }
 }

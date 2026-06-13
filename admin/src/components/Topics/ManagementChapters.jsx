@@ -115,7 +115,7 @@ export const ManagementChapters = () => {
 
 
   return (
-    <div className='admin-container'>
+    <div className='chapter-management'>
         {/* Sidebar */}
       <div className='top-bar'>
             <h2 className='title'>Quản lý chương</h2>

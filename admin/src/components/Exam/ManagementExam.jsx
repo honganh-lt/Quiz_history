@@ -3,7 +3,7 @@ import "./css/ManagementExam.css";
 import { getExams } from "../../api/examApi";
 import { getSubjects } from "../../api/subjectApi";
 import AddExamModal from "./AddExamModal";
-// import EditExamModal from "./EditExamModal";
+import EditExamModal from "./EditExamModal";
 
 export const ManagementExam = () => {
 
@@ -11,8 +11,8 @@ export const ManagementExam = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [subjects, setSubjects] = useState([]);
 
-  // const [showEditModal, setShowEditModal] = useState(false);
-  // const [selectedExam, setSelectedExam] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedExam, setSelectedExam] = useState(null);
 
   // =======Search=========
   const [search,setSearch] = useState("");
@@ -44,19 +44,7 @@ export const ManagementExam = () => {
       console.error(err);
     }
   };
-
-  // FIX UPDATE UI
-  // const handleUpdateExam = (updated) => {
-  //   setExam((prev) =>
-  //     prev.map((ex) =>
-  //       ex.exam_id === updated.exam.exam_id
-  //         ? { ...ex, ...updated.exam }
-  //         : ex
-  //     )
-  //   );
-  // };
   
-
   //=======Search========
   const normalize = (str) => 
       str 
@@ -74,13 +62,12 @@ export const ManagementExam = () => {
 
   const currentExam =filteredExam.slice(indexOfFirstExam, indexOfLastExam) || [];
 
-  const totalPages = Math.ceil((exam?.length || 0) / examPerPage);
-
+  const totalPages = Math.ceil(filteredExam.length / examPerPage);
   return (
-    <div className="admin-container">
+    <div className="exam-management">
       <div className="top-bar">
         <h2>Quản lý đề thi</h2>
-        <div className="action-buttons-exam">
+        <div className="action-buttons">
           <input 
               type="text"
               className='search-ques'
@@ -105,7 +92,7 @@ export const ManagementExam = () => {
               {/* <th>Mô tả</th> */}
               <th>Thời gian</th>
               <th>Số câu hỏi</th>
-              {/* <th>Action</th> */}
+              <th>Action</th>
             </tr>
           </thead>
 
@@ -119,21 +106,17 @@ export const ManagementExam = () => {
                   <td>{ex.duration} phút</td>
                   <td>{ex.question_count}</td>
 
-                  {/* <td>
+                  <td>
                     <button
+                      className='edit-btn'
                       onClick={() => {
-                        if (ex.has_attempt) {
-                          alert("Đề thi đã có người làm, không thể chỉnh sửa");
-                          return;
-                        }
-
                         setSelectedExam(ex);
                         setShowEditModal(true);
                       }}
                     >
-                      Edit
-                    </button> */}
-                  {/* </td> */}
+                   <i className="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -152,18 +135,53 @@ export const ManagementExam = () => {
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
           >
-            <i className="fa-solid fa-angle-left"></i> 
+            <i className="fa-solid fa-angle-left"></i>
           </button>
 
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i}
-              className={currentPage === i + 1 ? "active" : ""}
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
+          {(() => {
+            const pages = [];
+
+            if (totalPages <= 7) {
+              for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+              }
+            } else {
+              pages.push(1);
+
+              if (currentPage > 3) {
+                pages.push("...");
+              }
+
+              const start = Math.max(2, currentPage - 1);
+              const end = Math.min(totalPages - 1, currentPage + 1);
+
+              for (let i = start; i <= end; i++) {
+                pages.push(i);
+              }
+
+              if (currentPage < totalPages - 2) {
+                pages.push("...");
+              }
+
+              pages.push(totalPages);
+            }
+
+            return pages.map((page, index) =>
+              page === "..." ? (
+                <span key={index} className="pagination-dots">
+                  ...
+                </span>
+              ) : (
+                <button
+                  key={index}
+                  className={currentPage === page ? "active" : ""}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              )
+            );
+          })()}
 
           <button
             disabled={currentPage === totalPages || totalPages === 0}
@@ -182,15 +200,16 @@ export const ManagementExam = () => {
         />
 
         {/* EDIT */}
-        {/* {showEditModal && selectedExam && (
+        {showEditModal && selectedExam && (
           <EditExamModal
-            exam={selectedExam}
-            onClose={() => setShowEditModal(false)}
-            subjects={subjects}
-            updateExam={handleUpdateExam}
-            onSuccess={fetchData}
-          />
-        )} */}
+              exam={selectedExam}
+              onClose={() => {
+                setShowEditModal(false);
+                setSelectedExam(null);
+              }}
+              onSuccess={fetchData}
+            />
+          )}
       </div>
     </div>
   );

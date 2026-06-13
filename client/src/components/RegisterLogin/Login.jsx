@@ -50,7 +50,7 @@ const Login = () => {
     };
 
     return (
-        <div className="login-container">
+        <div className="main-login">
             <div className="auth-container">
                 <h2>Đăng nhập</h2>
 

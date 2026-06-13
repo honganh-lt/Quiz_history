@@ -13,7 +13,7 @@
 }
 
 /* Box modal */
-.modal-adduser {
+.modal-overlay-adduser .modal-adduser {
     background: #fff;
     padding: 25px;
     width: 600px;
@@ -26,17 +26,17 @@
 }
 
 /* Title */
-.modal-adduser h3 {
+.modal-overlay-adduser .modal-adduser h3 {
     text-align: center;
     margin-bottom: 10px;
 }
-.modal-adduser h4{
+.modal-overlay-adduser .modal-adduser h4{
     margin: 0px 5px;
     color: #817f7f;
 }
 /* Input + select */
-.modal-adduser input,
-.modal-adduser select {
+.modal-overlay-adduser .modal-adduser input,
+.modal-overlay-adduser .modal-adduser select {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -48,19 +48,19 @@
     background: #ba3232;
 } */
 /* Focus */
-.modal-adduser input:focus,
-.modal-adduser select:focus {
+.modal-overlay-adduser .modal-adduser input:focus,
+.modal-overlay-adduser .modal-adduser select:focus {
     border-color: #007bff;
 }
 
 /* password wrapper */
-.password-wrap{
+.modal-overlay-adduser .password-wrap{
     position: relative;
     width: 100%;
 }
 
 /* ô input password */
-.password-wrap input{
+.modal-overlay-adduser .password-wrap input{
     width: 100%;
     padding: 10px 40px 10px 10px;
     border: 1px solid #ccc;
@@ -69,7 +69,7 @@
 }
 
 /* icon mắt */
-.eye-icon{
+.modal-overlay-adduser .eye-icon{
     position: absolute;
     right: 12px;
     top: 50%;
@@ -114,13 +114,13 @@
     background: #999;
 } */
 
-.modal-actions-adduser {
+.modal-overlay-adduser .modal-actions-adduser {
   display: flex;
   justify-self: flex-end;
   gap: 10px;
 }
 
-.save-btn {
+.modal-overlay-adduser .save-btn {
   background: #0553d0;
    /* margin-left: 20px; */
   color: white;
@@ -130,7 +130,7 @@
   width: 80px;
 }
 
-.cancel-btn {
+.modal-overlay-adduser .cancel-btn {
   background: #929090;
   color: #fff;
   padding: 8px 12px;

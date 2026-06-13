@@ -53,47 +53,47 @@ export const UserExamDetail = () => {
     }
 
   return (
-    <div className='admin-container'>
+    <div className='userExam-detail'>
         <h2>Chi tiết bài thi người dùng</h2>
 
         {/* Thông người làm bài */}
-{currentUserExam && (
-    <div className="exam-info">
-        <h4>Môn học: {currentUserExam.subject_name}</h4>
-        <h4>Đề thi: {currentUserExam.exam_title}</h4>
-        <h4>Thời gian bắt đầu: {formatDateTime(currentUserExam.start_time)}</h4>
-        <h4>Thời gian kết thúc: {formatDateTime(currentUserExam.end_time)}</h4>
-        <h4>Điểm: {currentUserExam.score}</h4>
-        <h4>Username: {currentUserExam.username}</h4>
-    </div>
-)}
+        {currentUserExam && (
+            <div className="exam-info">
+                <h4>Môn học: {currentUserExam.subject_name}</h4>
+                <h4>Đề thi: {currentUserExam.exam_title}</h4>
+                <h4>Thời gian bắt đầu: {formatDateTime(currentUserExam.start_time)}</h4>
+                <h4>Thời gian kết thúc: {formatDateTime(currentUserExam.end_time)}</h4>
+                <h4>Điểm: {currentUserExam.score}</h4>
+                <h4>Username: {currentUserExam.username}</h4>
+            </div>
+        )}
 
-{/* Thông tin bài thi */}
-{data.map((q, index) => (
-    <div key={q.question_id} className="question-card">
-        <div className="question-title">
-            Câu {index + 1}: {q.question}
-        </div>
-
-        {q.answers.map(a => {
-            let className = "answer normal";
-
-            if (a.answer_id === a.user_answer_id) {
-                className = a.is_correct === 1 ? "answer correct" : "answer wrong";
-            } else if (a.is_correct === 1) {
-                className = "answer correct";
-            }
-
-            return (
-                <div key={a.answer_id} className={className}>
-                    {a.answer}
+        {/* Thông tin bài thi */}
+        {data.map((q, index) => (
+            <div key={q.question_id} className="question-card">
+                <div className="question-title">
+                    Câu {index + 1}: {q.question}
                 </div>
-            );
-        })}
-    </div>
-))}
-    </div>
-  )
-}
+
+                {q.answers.map(a => {
+                    let className = "answer normal";
+
+                    if (a.answer_id === a.user_answer_id) {
+                        className = a.is_correct === 1 ? "answer correct" : "answer wrong";
+                    } else if (a.is_correct === 1) {
+                        className = "answer correct";
+                    }
+
+                    return (
+                        <div key={a.answer_id} className={className}>
+                            {a.answer}
+                        </div>
+                    );
+                })}
+            </div>
+        ))}
+            </div>
+        )
+        }
 
 export default UserExamDetail

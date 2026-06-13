@@ -1,6 +1,3 @@
-/* =========================
-   MAIN LAYOUT
-========================= */
 .main-examMake {
     height: 100vh;
 
@@ -17,9 +14,6 @@
         );
 }
 
-/* =========================
-   EXAM LAYOUT
-========================= */
 .exam-layout-make {
     flex: 1;
 
@@ -31,10 +25,7 @@
     overflow: hidden;
     min-height: 0;
 }
-
-/* =========================
-   LEFT SIDEBAR
-========================= */
+/* LEFT */
 .exam-left-sidebar {
     width: 290px;
     flex-shrink: 0;
@@ -64,9 +55,6 @@
     border-radius: 20px;
 }
 
-/* =========================
-   SIDEBAR TEXT
-========================= */
 .exam-left-sidebar h2 {
     font-size: 23px;
     font-weight: 800;
@@ -99,9 +87,6 @@
     margin-bottom: 18px;
 }
 
-/* =========================
-   TIMER
-========================= */
 .exam-left-sidebar p {
     display: flex;
     align-items: center;
@@ -133,9 +118,7 @@
     font-size: 18px;
 }
 
-/* =========================
-   QUESTION STATUS
-========================= */
+/* QUESTION STATUS */
 .question-status-exam {
     display: flex;
     flex-wrap: wrap;
@@ -189,9 +172,7 @@
         0 6px 14px rgba(250,123,33,0.25);
 }
 
-/* =========================
-   RIGHT CONTENT
-========================= */
+/* RIGHT CONTENT */
 .exam-right-content {
     flex: 1;
 
@@ -220,9 +201,6 @@
     border-radius: 20px;
 }
 
-/* =========================
-   TITLE
-========================= */
 .exam-right-content h1 {
     text-align: center;
 
@@ -234,9 +212,6 @@
     margin-bottom: 30px;
 }
 
-/* =========================
-   QUESTION CARD
-========================= */
 .question-card-exam {
     background:
         linear-gradient(
@@ -277,9 +252,6 @@
     margin-bottom: 18px;
 }
 
-/* =========================
-   ANSWERS
-========================= */
 .answers-exam {
     display: flex;
     flex-direction: column;
@@ -340,9 +312,7 @@
         0 10px 20px rgba(250,123,33,0.22);
 }
 
-/* =========================
-   SUBMIT
-========================= */
+/* Submit*/
 .submit-exam {
     display: flex;
     justify-content: center;
@@ -388,9 +358,7 @@
     transform: scale(0.97);
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* Responsive */
 @media (max-width: 992px) {
 
     .exam-layout-make {

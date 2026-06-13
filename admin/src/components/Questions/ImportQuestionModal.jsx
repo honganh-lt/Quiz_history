@@ -113,7 +113,7 @@ const ImportQuestionModal = ({
     };
 
     return (
-        <div className="modal-overlay">
+        <div className="modal-overlay-import">
 
             <div className="import-modal">
 
@@ -191,11 +191,11 @@ const ImportQuestionModal = ({
                 </select>
 
                 {/* FILE */}
-                <h4>Chọn file</h4>
+                <h4>Chọn file <span>(.xlsx,.xls,.csv)</span></h4>
 
                 <input
                     type="file"
-                    accept=".xlsx,.csv"
+                    accept=".xlsx,.xls,.csv"
                     onChange={(e) =>
                         setSelectedFile(e.target.files[0])
                     }

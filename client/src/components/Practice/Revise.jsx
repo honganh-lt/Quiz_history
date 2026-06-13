@@ -58,72 +58,63 @@ function Revise() {
             {/* Khung dưới */}
            <section className='feature-section-revise'>
 
-    <div className='feature-list-revise'>
+            <div className='feature-list-revise'>
 
-        {subjects.map((item) => {
+                {subjects.map((item) => {
 
-            let currentImage = "";
+                    // let currentImage = "";
 
-            // if (item.subject_id === 1)
-            //     // currentImage = "/imghome/ot-2.png";
-
-            // else if (item.subject_id === 2)
-            //     // currentImage = "/imghome/ot-3.png";
-
-            // else if (item.subject_id === 3)
-            //     currentImage = "/imghome/ot-4.png";
-
-            return (
-               <div
-                    className='feature-card-revise'
-                    key={item.subject_id}
-                >
-
-                    {/* Background mờ */}
+                    return (
                     <div
-                        className='card-bg-revise'
-                        style={{
-                            backgroundImage: `url(${currentImage})`
-                        }}
-                    ></div>
-
-                    {/* Overlay trắng */}
-                    <div className='overlay-revise'></div>
-
-                    {/* Nội dung */}
-                    <div className='card-content-revise'>
-
-                        {/* Icon */}
-                        {/* <img
-                            className='subject-icon-revise'
-                            src={
-                                item.subject_id === 1
-                                    ? "/imghome/đt-3.png"
-                                    : item.subject_id === 2
-                                    ? "/imghome/đt-4.png"
-                                    : "/imghome/đt-5.png"
-                            }
-                            alt=""
-                        /> */}
-
-                        <h3>{item.subject_name}</h3>
-
-                        <button
-                            className="btn-practice-p"
-                            onClick={() =>
-                                navigate(`/practice/${item.subject_id}`)
-                            }
+                            className='feature-card-revise'
+                            key={item.subject_id}
                         >
-                            Vào Ôn Tập
-                        </button>
 
-                    </div>
+                            {/* Background mờ */}
+                            {/* <div
+                                className='card-bg-revise'
+                                style={{
+                                    backgroundImage: `url(${currentImage})`
+                                }}
+                            ></div> */}
 
-                </div>
-            );
-        })}
+                            {/* Overlay trắng */}
+                            {/* <div className='overlay-revise'></div> */}
 
-    </div>
+                            {/* Nội dung */}
+                            <div className='card-content-revise'>
+
+                                {/* Icon */}
+                                {/* <img
+                                    className='subject-icon-revise'
+                                    src={
+                                        item.subject_id === 1
+                                            ? "/imghome/đt-3.png"
+                                            : item.subject_id === 2
+                                            ? "/imghome/đt-4.png"
+                                            : "/imghome/đt-5.png"
+                                    }
+                                    alt=""
+                                /> */}
+
+                                <h3>{item.subject_name}</h3>
+
+                                <button
+                                    className="btn-practice-p"
+                                    onClick={() =>
+                                        navigate(`/practice/${item.subject_id}`)
+                                    }
+                                >
+                                    Vào Ôn Tập
+                                </button>
+
+                            </div>
+
+                        </div>
+                    );
+                })}
+
+            </div>
 
 </section>
         <Footer/>

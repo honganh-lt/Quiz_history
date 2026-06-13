@@ -8,7 +8,6 @@
 }
 
 /* Khung trên */
-/* Khung trên */
 .hero-section {
     padding: 70px 0;
 }
@@ -28,14 +27,11 @@
 }
 
 /* Phần chữ */
-/* ===== TEXT HERO ===== */
-
 .body-text {
     position: relative;
     z-index: 2;
 }
 
-/* TITLE */
 .body-text h1 {
     font-size: 50px;
     font-weight: 900;
@@ -55,7 +51,7 @@
 }
 
 /* highlight chữ */
-.body-text h1 span {
+/* .body-text h1 span {
     background: linear-gradient(
         90deg,
         #fa7b21,
@@ -64,7 +60,7 @@
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
+} */
 
 /* DESCRIPTION */
 .body-text p {
@@ -82,7 +78,7 @@
 }
 
 /* button nếu thêm sau này */
-.body-text .hero-btn {
+/* .body-text .hero-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -108,14 +104,14 @@
         0 12px 24px rgba(250,123,33,0.22);
 
     transition: all 0.3s ease;
-}
+} */
 
-.body-text .hero-btn:hover {
+/* .body-text .hero-btn:hover {
     transform: translateY(-3px);
 
     box-shadow:
         0 16px 30px rgba(250,123,33,0.28);
-}
+} */
 /* Phần ảnh */
 .body-images {
     display: flex;
@@ -171,14 +167,12 @@
     }
 }
 /*============================= Khung dưới =================================*/
-/* ================= SECTION ================= */
-
 .feature-section {
     position: relative;
     overflow: hidden;
 
     padding: 90px 7%;
-
+    /* Trên -> dưới */
     background:
         linear-gradient(
             180deg,
@@ -313,13 +307,10 @@
 .feature-card:hover {
     transform: translateY(-10px);
 
-    box-shadow:
-        0 28px 45px rgba(250,123,33,0.16);
+    box-shadow: 0 28px 45px rgba(250,123,33,0.16);
 }
 
-/* ================= ICON ================= */
-
-.feature-card img {
+/* .feature-card img {
     width: 120px;
     height: 120px;
 
@@ -332,7 +323,7 @@
 
 .feature-card:hover img {
     transform: scale(1.08);
-}
+} */
 
 /* ================= TEXT ================= */
 

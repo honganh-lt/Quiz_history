@@ -1,5 +1,5 @@
 /* ================= OVERLAY ================= */
-.modal-overlay{
+.modal-overlay-import{
     position: fixed;
     inset: 0;
 
@@ -13,7 +13,7 @@
 }
 
 /* ================= MODAL ================= */
-.import-modal{
+.modal-overlay-import .import-modal{
     width: 550px;
     max-width: 95%;
 
@@ -28,7 +28,7 @@
     animation: fadeIn 0.25s ease;
 }
 
-.import-modal h2{
+.modal-overlay-import .import-modal h2{
     text-align: center;
 
     margin-bottom: 25px;
@@ -40,7 +40,7 @@
 }
 
 /* ================= LABEL ================= */
-.import-modal h4{
+.modal-overlay-import .import-modal h4{
     margin-bottom: 8px;
     margin-top: 18px;
 
@@ -49,9 +49,12 @@
     font-size: 16px;
     font-weight: 600;
 }
+.modal-overlay-import .import-modal h4 span{
+    color: #1677ff;
+}
 
 /* ================= INPUT / SELECT ================= */
-.import-modal select{
+.modal-overlay-import .import-modal select{
     width: 100%;
 
     padding: 12px 14px;
@@ -66,26 +69,26 @@
     transition: 0.2s;
 }
 
-.import-modal select:focus:focus{
+.modal-overlay-import .import-modal select:focus:focus{
     border-color: #1677ff;
 
     box-shadow: 0 0 0 3px rgba(22,119,255,0.15);
 }
 
 /* ================= FILE INPUT ================= */
-.import-modal input[type="file"]{
+.modal-overlay-import .import-modal input[type="file"]{
     background: #fafafa;
 
     cursor: pointer;
 }
-.import-modal input[type="file"]:focus{
+.modal-overlay-import .import-modal input[type="file"]:focus{
     border-color: #1677ff;
 
     box-shadow: 0 0 0 2px rgba(22,119,255,0.15);
 }
 
 /* ================= BUTTON AREA ================= */
-.import-actions{
+.modal-overlay-import .import-actions{
     margin-top: 30px;
 
     display: flex;
@@ -94,8 +97,8 @@
 }
 
 /* ================= BUTTON ================= */
-.upload-btn,
-.cancel-btn{
+.modal-overlay-import .upload-btn,
+.modal-overlay-import .cancel-btn{
     border: none;
 
     padding: 11px 22px;
@@ -111,27 +114,27 @@
 }
 
 /* IMPORT */
-.upload-btn{
+.modal-overlay-import .upload-btn{
     background: #1677ff;
     color: white;
 }
 
-.upload-btn:hover{
+.modal-overlay-import .upload-btn:hover{
     background: #0958d9;
 }
 
 /* CLOSE */
-.cancel-btn{
+.modal-overlay-import .cancel-btn{
     background: #f1f1f1;
     color: #333;
 }
 
-.cancel-btn:hover{
+.modal-overlay-import .cancel-btn:hover{
     background: #ddd;
 }
 
 /* DISABLED */
-.upload-btn:disabled{
+.modal-overlay-import .upload-btn:disabled{
     opacity: 0.7;
     cursor: not-allowed;
 }

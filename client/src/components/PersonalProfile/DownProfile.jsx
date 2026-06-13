@@ -23,9 +23,9 @@ const DownProfile = () => {
 
   return (
     <div className="profile-container">
-      <h2 className="title">Lịch sử học tập</h2>
+      <h2 className="down-title">Lịch sử học tập</h2>
 
-      <div className="subject-list">
+      <div className="down-subject-list">
         {subjects.map((item) => {
           // ảnh theo từng môn
           let currentImage = "";
@@ -39,12 +39,12 @@ const DownProfile = () => {
           }
 
           return (
-            <div className="subject-card" key={item.subject_id}>
-              <div className="subject-card-item">
+            <div className="down-subject-card" key={item.subject_id}>
+              <div className="down-subject-card-item">
                 <img
                   src={currentImage}
                   alt={item.subject_name}
-                  className="subject-image"
+                  className="down-subject-image"
                 />
 
                 <div className="profile-nav">

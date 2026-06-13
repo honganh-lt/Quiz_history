@@ -1,16 +1,10 @@
-/* =========================
-   GLOBAL
-========================= */
-.main-ten {
+.main-ten-revise {
     width: 100%;
     min-height: 100vh;
     background: #fffaf5;
 }
 
-/* =========================
-   HERO SECTION
-========================= */
-.hero-section-ten {
+.section-ten-revise {
     width: 100%;
 
     padding: 80px 0 60px;
@@ -27,7 +21,7 @@
 }
 
 /* Glow background */
-.hero-section-ten::before {
+.section-ten-revise::before {
     content: "";
 
     position: absolute;
@@ -43,7 +37,7 @@
     right: -120px;
 }
 
-.hero-section-ten::after {
+.section-ten-revise::after {
     content: "";
 
     position: absolute;
@@ -59,9 +53,6 @@
     left: -100px;
 }
 
-/* =========================
-   CONTAINER
-========================= */
 .container-ten {
     width: 92%;
     max-width: 1250px;
@@ -72,9 +63,7 @@
     z-index: 2;
 }
 
-/* =========================
-   HERO LAYOUT
-========================= */
+/* Trên */
 .body-layout-ten {
     display: flex;
 
@@ -84,9 +73,6 @@
     text-align: center;
 }
 
-/* =========================
-   HERO TEXT
-========================= */
 .body-text-ten h1 {
     font-size: 46px;
     font-weight: 800;
@@ -103,9 +89,7 @@
         0 4px 12px rgba(255,255,255,0.3);
 }
 
-/* =========================
-   FEATURE SECTION
-========================= */
+/* Dưới */
 .feature-section-ten {
     width: 92%;
     max-width: 1250px;
@@ -116,9 +100,6 @@
     z-index: 10;
 }
 
-/* =========================
-   LIST
-========================= */
 .feature-list-ten {
     display: flex;
     flex-direction: column;
@@ -126,10 +107,7 @@
     gap: 18px;
 }
 
-/* =========================
-   CHAPTER CARD
-========================= */
-.card-list {
+.card-list-revise {
     /* background: #fffdf9; */
 
     border-radius: 18px;
@@ -145,12 +123,12 @@
 
     transition: 0.25s ease;
 }
-.card-list:hover {
+.card-list-revise:hover {
     transform: translateY(-3px);
 }
 
 /* Chapter title */
-.card-list h2 {
+.card-list-revise h2 {
     font-size: 22px;
     font-weight: 800;
 
@@ -164,7 +142,7 @@
 }
 
 /* Left line */
-.card-list h2::before {
+.card-list-revise h2::before {
     content: "";
 
     position: absolute;
@@ -185,9 +163,6 @@
     );
 }
 
-/* =========================
-   LESSON GRID
-========================= */
 .card-list-ten {
     display: grid;
 
@@ -197,9 +172,6 @@
     gap: 22px;
 }
 
-/* =========================
-   LESSON CARD
-========================= */
 .card-ten-item {
     background: white;
 
@@ -253,15 +225,12 @@
         0 14px 30px rgba(250,123,33,0.12);
 }
 
-/* =========================
-   DONE CARD
-========================= */
 .card-ten-item.done {
     background:
         linear-gradient(
             135deg,
             #fff8ef,
-            #fff2df
+            #fbc787
         );
 
     border: 1px solid #ffd39d;
@@ -288,9 +257,6 @@
     border-radius: 30px;
 }
 
-/* =========================
-   TEXT
-========================= */
 .card-ten-item h3 {
     font-size: 13px;
     font-weight: 700;
@@ -315,9 +281,7 @@
     margin-bottom: 24px;
 }
 
-/* =========================
-   BUTTON
-========================= */
+/* BUTTON */
 .btn-practice-lop {
 
     width: fit-content;
@@ -330,7 +294,7 @@
     background:
         linear-gradient(
             90deg,
-            #ffbf73,
+            #fcba6a,
             #f5a142
         );
 

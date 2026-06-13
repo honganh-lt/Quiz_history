@@ -119,7 +119,7 @@ body {
   color: #1e293b;
 }
 
-/* 🌟 ĐÈ MÀU KHI ĐANG ACTIVE TRANG ĐÓ (XANH DƯƠNG NHẠT) */
+/* ĐÈ MÀU KHI ĐANG ACTIVE TRANG ĐÓ (XANH DƯƠNG NHẠT) */
 .sidebar-list-item > a.active {
   background-color: #dbeafe; /* Màu nền xanh nhạt */
   color: #2563eb;           /* Chữ xanh đậm */

@@ -122,7 +122,6 @@ function ExamTen() {
                             <span
                                 key={q.question_id}
                                 className={selectedAnswers[q.question_id] ? "question-number answered" : "question-number"}
-                                // TÍNH NĂNG MỚI: Bấm để cuộn
                                 onClick={() => scrollToQuestion(q.question_id)}
                                 style={{ cursor: 'pointer' }}
                             >
@@ -141,7 +140,6 @@ function ExamTen() {
                             <div
                                 key={q.question_id}
                                 className="question-card"
-                                // TÍNH NĂNG MỚI: Gán ref cho từng thẻ câu hỏi
                                 ref={(el) => (questionRefs.current[q.question_id] = el)}
                             >
                                 <h4>Câu {index + 1}: {q.content}</h4>

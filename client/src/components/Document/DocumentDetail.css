@@ -1,6 +1,4 @@
-/* =========================
-   TRANG CHI TIẾT TÀI LIỆU
-========================= */
+/* TRANG CHI TIẾT TÀI LIỆU */
 
 .detail-page{
     width: 92%;
@@ -20,9 +18,7 @@
     overflow-x: auto;
 }
 
-/* =========================
-   NỘI DUNG TÀI LIỆU
-========================= */
+/* NỘI DUNG TÀI LIỆU */
 
 .detail-content{
     font-family: Arial, Helvetica, sans-serif;
@@ -44,9 +40,7 @@
     margin: 0 0 16px;
 }
 
-/* =========================
-   TIÊU ĐỀ
-========================= */
+/* TIÊU ĐỀ */
 
 .detail-content h1{
     font-size: 32px;
@@ -76,9 +70,7 @@
     font-weight: 700;
 }
 
-/* =========================
-   DANH SÁCH
-========================= */
+/* DANH SÁCH */
 
 .detail-content ul,
 .detail-content ol{
@@ -90,9 +82,7 @@
     margin-bottom: 8px;
 }
 
-/* =========================
-   CHỮ NHẤN MẠNH
-========================= */
+/* CHỮ NHẤN MẠNH */
 
 .detail-content strong{
     font-weight: 700;
@@ -103,9 +93,7 @@
     font-style: italic;
 }
 
-/* =========================
-   BLOCKQUOTE
-========================= */
+/* BLOCKQUOTE */
 
 .detail-content blockquote{
     border-left: 4px solid #ff8800;
@@ -122,7 +110,7 @@
 /* =========================
    HÌNH ẢNH
 ========================= */
-
+/* 
 .detail-content img{
     max-width: 100%;
 
@@ -133,11 +121,9 @@
     margin: 25px auto;
 
     border-radius: 12px;
-}
+} */
 
-/* =========================
-   BẢNG
-========================= */
+/* BẢNG */
 
 .detail-content table{
     width: 100%;
@@ -173,9 +159,7 @@
     background: #fafafa;
 }
 
-/* =========================
-   LINK
-========================= */
+/* LINK */
 
 .detail-content a{
     color: #2563eb;
@@ -187,9 +171,7 @@
     text-decoration: underline;
 }
 
-/* =========================
-   CODE
-========================= */
+/* CODE */
 
 .detail-content pre{
     background: #f8f9fa;
@@ -207,9 +189,7 @@
     font-family: Consolas, monospace;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* Responsive*/
 
 @media (max-width:768px){
 

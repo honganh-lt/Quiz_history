@@ -1,5 +1,4 @@
 /* ================= MAIN FEATURE ================= */
-
 .home-feature {
     display: flex;
     align-items: center;
@@ -95,7 +94,6 @@
 }
 
 /* ================= RIGHT ================= */
-
 .home-feature-right {
     flex: 1.1;
 
@@ -166,7 +164,6 @@
 }
 
 /* ================= CONTENT ================= */
-
 .list-main3-item {
     text-align: left;
 }

@@ -65,24 +65,30 @@ const Progress = () => {
     return exam?.subject_name || "Môn học";
   }, [exams, subjectId]);
 
-  // GROUP EXAM
+  // Gom nhóm các lần làm bài thi theo tên đề thi
   const grouped = useMemo(() => {
     const map = {};
 
+    //duyệt qua tất cả lịch sử làm bài đã lọc theo môn học
     filteredData.forEach(item => {
+      //lấy tên đề thi
       const exam = (item.title || "").trim();
 
+      //Kiểm tra đề thi tồn tại trong map(chưa tồn tại(true) thì chạy if - tồn tại(false) bỏ qua if)
       if (!map[exam]) {
+        // Khởi tạo object cho đề thi
         map[exam] = {
           title: exam,
+          // Mảng chứa các lần làm bài của đề này
           attempts: []
         };
       }
-
+      // Thêm lần làm bài hiện tại vào danh sách attempts
       map[exam].attempts.push(item);
     });
-
+    // Trả về object đã được nhóm
     return map;
+    // Chỉ tính toán lại khi filteredData thay đổi
   }, [filteredData]);
 
   // CHART DATA -> hiển thị 
@@ -176,7 +182,7 @@ const Progress = () => {
               {paged.map((a, index) => (
                 <div key={a.user_exam_id} className="attempt-card">
                   <div className="attempt-info">
-                    <div>Đề số {start + index + 1}</div>
+                    <div>Lần {start + index + 1}</div>
                     <div>Điểm: {a.score || 0}</div>
                     <div>
                       {new Date(a.start_time).toLocaleString("vi-VN")} -{" "}
@@ -194,7 +200,7 @@ const Progress = () => {
 
               {/* PAGINATION */}
               {totalPages > 1 && (
-                <div className="pagination">
+                <div className="pagination-progress">
                   <button
                     disabled={currentPage === 1}
                     onClick={() => changePage(exam.title, currentPage - 1)}

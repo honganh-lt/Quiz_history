@@ -40,8 +40,8 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
     } 
 
   return (
-    <div className="modal-overlay-u">
-        <div className='modal-u'>
+    <div className="modal-overlay-user">
+        <div className='modal-user'>
             <div className="modal-content">
                 <h3>Edit</h3>
                 <input 
@@ -71,7 +71,7 @@ export const EditUserModal = ({user, onClose, updateUser}) => {
 
                 <div className="modal-actions">
                 <button className='save-btn' onClick={handleSubmit}>Cập nhật</button>
-                <button className='close-btn-btn' onClick={onClose}>Đóng</button>
+                <button className='close-btn' onClick={onClose}>Đóng</button>
             </div>
             </div>
         </div>

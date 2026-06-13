@@ -84,7 +84,7 @@ export const ManageLessons = () => {
     const totalPages = Math.ceil(lessons.length / lessonsPerPage);
 
     return (
-        <div className='admin-container'>
+        <div className='lesson-management'>
 
             {/* TOP */}
             <div className="top-bar">
@@ -98,7 +98,7 @@ export const ManageLessons = () => {
                     <table className="lesson-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Mã bài học</th>
                                 <th>Tên bài</th>
                                 <th>Môn</th>
                                 <th>Chương</th>

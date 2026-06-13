@@ -1,6 +1,7 @@
 // import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { updateLesson } from '../../api/lessonApi';
+import "./css/EditLessonModal.css"
 
 export const EditLessonModal = ({ les, onClose, updateLes, chapters, subjects }) => {
 

@@ -67,7 +67,7 @@ export const Exam2 = () => {
 
                             <h3>{item.subject_name}</h3>
 
-                            <button className="btn-exam-btn"
+                            <button className="btn-exam-e"
                                 onClick={() => navigate(`/exam/${item.subject_id}`)}
                             >
                                 Chọn đề

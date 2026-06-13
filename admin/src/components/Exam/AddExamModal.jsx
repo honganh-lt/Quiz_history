@@ -133,9 +133,9 @@ const AddExamModal = ({ isOpen, onClose, onSuccess, subjects }) => {
 
 
     return (
-        <div className="modal-overlay-exam">
+        <div className="modal-overlay-addexam">
             <div className="modal-exam">
-                <h3>Thêm bài thi</h3>
+                <h3>Thêm đề thi</h3>
 
                 <h4>Chọn môn học</h4>
                 <select

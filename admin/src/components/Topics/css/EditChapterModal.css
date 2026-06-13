@@ -5,70 +5,81 @@
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.5);
-
   display: flex;
   justify-content: center;
   align-items: center;
 
-  z-index: 9999;
+  z-index: 999;
 }
 
 /* Box modal */
-.modal-chap {
-  /* background: #fff; */
+.modal-overlay-chap .modal-chap {
+    background: #fff;
     padding: 25px;
     width: 600px;
     border-radius: 12px;
-    /* box-shadow: 0 5px 20px rgba(0,0,0,0.2); */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
     gap: 15px;
     animation: fadeIn 0.3s ease;
 }
-/* .modal-content{
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-.modal-content h3{
+
+.modal-overlay-chap .modal-chap h3 {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 20px;
-
-} */
- .modal-sub h4{
-    color: #686767;
-    /* font-size: 14px; */
-    font-weight: 500;
-    margin-bottom: 4px;
- }
-.modal-sub input,
-.modal-sub textarea {
-  width: 100%;
-  padding: 8px 10px;
-
-  border: 1px solid #ddd;
-  border-radius: 6px;
-
-  box-sizing: border-box; /* 👈 CỰC KỲ QUAN TRỌNG */
+    margin-bottom: 10px;
 }
-.modal-sub input:focus,
-.modal-sub textarea:focus{
+.modal-overlay-chap .modal-chap h4{
+    margin: 0px 5px;
+    color: #817f7f;
+}
+
+/* Input + select */
+.modal-overlay-chap .modal-chap input,
+.modal-overlay-chap .modal-chap select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
     outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+    font-size: 14px;
+    transition: 0.2s;
 }
-.modal-actions-chap{
+/* .option-subject option{
+    background: #ba3232;
+} */
+/* Focus */
+.modal-overlay-chap .modal-chap input:focus,
+.modal-overlay-chap .modal-chap select:focus {
+    border-color: #007bff;
+}
+
+.modal-overlay-chap .modal-actions-chap{
     display: flex;
     justify-self: flex-end;
     gap: 10px;
     /* margin-top: 10px; */
 }
+
+.modal-overlay-chap .save-btn{
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+ }
+
+.modal-overlay-chap .save-btn:hover{
+    background: #2563eb;
+ }
+.modal-overlay-chap .close-btn{
+    background: #919293;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+ }
+
 /* .modal-actions button{
     padding: 8px 16px;
     border: none;
@@ -87,23 +98,3 @@
 /* .modal-actions button:last-child{
     background:#e5e7eb;
 } */
- .save-btn{
-    background: #3b82f6;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
- }
-
- .save-btn:hover{
-    background: #2563eb;
- }
- .close-btn{
-    background: #919293;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
- }
-

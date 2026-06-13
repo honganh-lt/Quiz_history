@@ -107,7 +107,7 @@ exports.getExamDetail = async (req, res, next) => {
 //     }
 // };
 
-// ================= RANDOM CÂU HỎI & TẠO ĐỀ (Bản Sửa Lỗi Logic) =================
+// ================= RANDOM CÂU HỎI & TẠO ĐỀ =================
 exports.createExamBySubject = async (req, res, next) => {
     const {
         subject_id, title, description, duration,
@@ -227,6 +227,48 @@ exports.getQuestionCountByDifficulty = async (req, res, next) => {
         });
 
         res.json(data);
+    } catch (err) {
+        next(err);
+    }
+};
+
+///
+exports.updateExam = async (req, res, next) => {
+    const { id } = req.params;
+    const { title, description, duration } = req.body;
+
+    if (!title || !duration) {
+        return res.status(400).json({
+            message: "Tên đề thi và thời gian làm bài là bắt buộc"
+        });
+    }
+
+    try {
+        const sql = `
+            UPDATE exam
+            SET
+                title = ?,
+                description = ?,
+                duration = ?
+            WHERE exam_id = ?
+        `;
+
+        const [result] = await db.query(sql, [
+            title,
+            description,
+            duration,
+            id
+        ]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "Không tìm thấy đề thi"
+            });
+        }
+
+        res.json({
+            message: "Cập nhật đề thi thành công"
+        });
     } catch (err) {
         next(err);
     }

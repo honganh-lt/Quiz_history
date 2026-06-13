@@ -7,7 +7,7 @@
 }
 
 /* tên môn */
-.subject-title{
+.document-subject-title{
 
     text-align:center;
 
@@ -21,14 +21,14 @@
 }
 
 /* grid */
-.chapter-grid{
+.document-page .chapter-grid{
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
     gap:24px;
 }
 
-.chapter-card{
+.document-page .chapter-card{
     width:520px;
     max-width:100%;
 
@@ -43,30 +43,30 @@
     transition:.3s;
 }
 
-.chapter-card:hover{
+.document-page .chapter-card:hover{
     transform:translateY(-4px);
 }
 
-.chapter-card h2{
+.document-page .chapter-card h2{
     font-size:22px;
     margin-bottom:20px;
 }
 
-.lesson-item{
+.document-page .lesson-item{
     margin-bottom:16px;
 }
 
-.lesson-item h3{
+.document-page .lesson-item h3{
     font-size:18px;
 }
 
-.chapter-card:hover{
+.document-page .chapter-card:hover{
 
     transform:translateY(-4px);
 }
 
 /* title */
-.chapter-card h2{
+.document-page .chapter-card h2{
 
     color:#001b8e;
 
@@ -78,7 +78,7 @@
 }
 
 /* bài */
-.lesson-item{
+.document-page .lesson-item{
 
     margin-bottom:24px;
 
@@ -87,13 +87,13 @@
     transition:0.3s;
 }
 
-.lesson-item:hover{
+.document-page .lesson-item:hover{
 
     transform:translateX(6px);
 }
 
 /* tên bài */
-.lesson-item h3{
+.document-page .lesson-item h3{
 
     color:#001b8e;
 
@@ -104,7 +104,7 @@
     font-weight:600;
 }
 
-.lesson-item:hover h3{
+.document-page .lesson-item:hover h3{
 
     color:#ff6600;
 }

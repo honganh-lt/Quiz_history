@@ -161,7 +161,7 @@ export const UserManagement = () => {
     const totalPages = Math.ceil(filteredUsers.length / usersPerPage); //sau khi thêm search
 
   return (
-    <main className='main-conatiner'>
+    <main className='main-user'>
         <div className='top-bar'>
             <h2 className='title'>Quản lý User</h2>
             <button 
@@ -289,8 +289,8 @@ export const UserManagement = () => {
                                 >
                                     {
                                         user.status === "blocked"
-                                        ? <i class="fa-solid fa-lock-open"></i>
-                                        : <i class="fa-solid fa-lock"></i>
+                                        ? <i className="fa-solid fa-lock-open"></i>
+                                        : <i className="fa-solid fa-lock"></i>
                                     }
                                 </button>
                             </td>

@@ -3,7 +3,7 @@
   background: #fdf0e3;
 }
 /* Progress */
-.progress{
+/* .progress{
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -27,7 +27,7 @@
   background: #fc9e40;
   border-radius: 20px;
   transition: width 0.3s ease;
-}
+} */
 
 /* ChART - biểu đồ */
 
@@ -100,14 +100,14 @@
 } 
 
 /* Phân trang */
-.pagination {
+.pagination-progress {
   display: flex;
   gap: 6px;
 
   justify-content: flex-end; /* đẩy sang phải */
   margin-top: 10px;
 }
-.pagination button.active {
+.pagination-progress button.active {
   background: #fdaa4c;
   color: white;
   font-weight: bold;
@@ -124,30 +124,30 @@
 }
 
 /* nếu muốn nó luôn dính đáy phải của box */
-.exam-box .pagination {
+.exam-box .pagination-progress {
   width: 100%;
 }
 /* Khi màn hình nhỏ hơn 768px (Máy tính bảng và điện thoại lớn) */
 @media (max-width: 768px) {
   .progress-container {
-    padding: 20px; /* Giảm padding từ 50px xuống 20px cho đỡ chiếm diện tích */
+    padding: 20px; 
   }
 
   .progress {
-    margin: 16px 0 -10px; /* Bỏ bớt margin 2 bên của thanh tiến độ */
+    margin: 16px 0 -10px; 
   }
 }
 
 /* Khi màn hình nhỏ hơn 480px (Điện thoại di động thông thường) */
 @media (max-width: 480px) {
   .progress-container {
-    padding: 15px 10px; /* Ép chặt không gian hơn trên màn hình nhỏ */
+    padding: 15px 10px; 
   }
 
   /* Chuyển card lịch sử làm bài từ hàng ngang thành hàng dọc để tránh tràn chữ */
   .attempt-card {
     flex-direction: column;
-    align-items: flex-start; /* Căn lề trái toàn bộ nội dung */
+    align-items: flex-start; 
     gap: 12px;
     position: relative;
   }
@@ -167,7 +167,7 @@
   }
 
   .pagination button {
-    padding: 6px 10px; /* Điều chỉnh lại kích thước nút phân trang trên mobile */
+    padding: 6px 10px; 
     font-size: 13px;
   }
 }

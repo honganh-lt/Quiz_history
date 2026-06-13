@@ -1,4 +1,4 @@
-.modal-overlay-addles{
+.modal-overlay-les{
     position: fixed;
     top: 0;
     left: 0;
@@ -11,7 +11,7 @@
     z-index: 999;
 }
 /* Box modal */
-.modal-overlay-addles .modal-les{
+.modal-overlay-les .modal-les{
     background: white;
     padding: 25px;
     width: 600px;
@@ -22,18 +22,18 @@
     gap: 15px;
     animation: faden 0.3s ease;
 }
-.modal-overlay-addles .modal-les h3 {
+.modal-overlay-les .modal-les h3 {
     text-align: center;
     margin-bottom: 10px;
 }
-.modal-overlay-addles .modal-les h4 {
+.modal-overlay-les .modal-les h4 {
     margin: 0 5px;
     color: #817f7f;
 }
 
 /* Input - select */
-.modal-overlay-addles .modal-les input,
-.modal-overlay-addles .modal-les select {
+.modal-overlay-les .modal-les input,
+.modal-overlay-les .modal-les select {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -41,17 +41,17 @@
     font-size: 14px;
     transition: 0.2s;
 }
-.modal-overlay-addles .modal-les input:focus,
-.modal-overlay-addles .modal-les select:focus {
+.modal-overlay-les .modal-les input:focus,
+.modal-overlay-les .modal-les select:focus {
     border-color: #007bff;
 }
 
-.modal-overlay-addles .modal-actions-les{
+.modal-overlay-les .modal-actions-les{
     display: flex;
     justify-content: flex-start;
     gap: 10px;
 }
-.modal-overlay-addles .save-btn {
+.modal-overlay-les .save-btn {
   background: #0553d0;
    /* margin-left: 20px; */
   color: white;
@@ -61,7 +61,7 @@
   width: 80px;
 }
 
-.modal-overlay-addles .cancel-btn {
+.modal-overlay-les .cancel-btn {
   background: #929090;
   color: #fff;
   padding: 8px 12px;

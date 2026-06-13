@@ -1,108 +1,117 @@
 .modal-overlay-edit {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  z-index: 9999;
+    z-index: 999;
 }
 
-/* Box modal */
 .modal-exam-edit {
-  background: #fff;
-    padding: 25px;
-    width: 600px;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    width: 500px;
+    background: #fff;
+
+    border-radius: 14px;
+    padding: 24px;
+
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    animation: fadeIn 0.3s ease;
+    gap: 10px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
-/* .modal-content{
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}*/
-/* Title */
+
 .modal-exam-edit h3 {
     text-align: center;
     margin-bottom: 10px;
+
+    color: #1e293b;
+    font-size: 26px;
+    font-weight: 700;
 }
-.modal-exam-edit h4{
-    margin: 0px 5px;
-    color: #817f7f;
+
+.modal-exam-edit h4 {
+    margin: 0;
+    color: #475569;
+    font-size: 15px;
+    font-weight: 600;
 }
-/* Input + select */
+
+/* INPUT NHỎ LẠI */
 .modal-exam-edit input,
-.modal-exam-edit select {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    outline: none;
+.modal-exam-edit textarea {
+    width: 90%;
+    /* align-self: ; */
+
+    padding: 10px 14px;
+
+    border: 1px solid #dbe1ea;
+    border-radius: 10px;
+
+    background: #f8fafc;
     font-size: 14px;
+
+    outline: none;
     transition: 0.2s;
 }
-/* .option-subject option{
-    background: #ba3232;
-} */
-/* Focus */
+
 .modal-exam-edit input:focus,
-.modal-exam-edit select:focus {
-    border-color: #007bff;
+.modal-exam-edit textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+
+    background: white;
 }
-.modal-actions-exam{
+
+.modal-exam-edit textarea {
+    min-height: 40px;
+    resize: vertical;
+}
+
+/* BUTTON */
+.modal-actions-exam-edit {
     display: flex;
-    justify-self: flex-end;
-    gap: 10px;
-    /* margin-top: 10px; */
-}
-/* .modal-actions button{
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-.modal-actions button:first-child{
-    background:#2d7ef7;
-    color:white;
+    /* justify-content: center; */
+    gap: 12px;
+
+    margin-top: 15px;
 }
 
-.modal-actions button:first-child:hover{
-    background:#1f63c7;
-} */
-
-/* .modal-actions button:last-child{
-    background:#e5e7eb;
-} */
- .save-btn-exam{
-    background: #3b82f6;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
- }
-
- .save-btn-exam:hover{
+.modal-actions-exam-edit button:first-child {
     background: #2563eb;
- }
- .close-btn{
-    background: #919293;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
- }
+    color: white;
 
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 20px;
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+.modal-actions-exam-edit button:first-child:hover {
+    background: #1d4ed8;
+}
+
+.modal-actions-exam-edit button:last-child {
+    background: #e2e8f0;
+    color: #334155;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 20px;
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+.modal-actions-exam-edit button:last-child:hover {
+    background: #cbd5e1;
+}

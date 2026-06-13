@@ -1,6 +1,3 @@
-/* =========================
-   GLOBAL
-========================= */
 .main-examTen{
     min-height:100vh;
 
@@ -15,9 +12,6 @@
     flex-direction:column;
 }
 
-/* =========================
-   LAYOUT
-========================= */
 .exam-layout{
     flex:1;
 
@@ -33,9 +27,7 @@
     margin:auto;
 }
 
-/* =========================
-   LEFT SIDEBAR
-========================= */
+/* Left*/
 .exam-left{
 
     width:320px;
@@ -105,9 +97,7 @@
     margin-bottom:16px;
 }
 
-/* =========================
-   QUESTION STATUS
-========================= */
+/* QUESTION STATUS */
 .question-status{
     display:flex;
 
@@ -162,16 +152,12 @@
         0 8px 18px rgba(245,161,66,0.25);
 }
 
-.reset-btn {
-    /* Màu sắc theo yêu cầu */
+/* Nút làm lại */
+/* .reset-btn {
     background-color: #c97316;
     color: white;
-    
-    /* Căn giữa */
-    display: block;      /* Biến nút thành block để căn lề */
-    margin: 20px auto;   /* auto sẽ căn giữa theo chiều ngang */
-    
-    /* Định dạng nút */
+    display: block;      
+    margin: 20px auto;  
     border: none;
     padding: 12px 24px;
     border-radius: 6px;
@@ -182,12 +168,10 @@
 }
 
 .reset-btn:hover {
-    background-color: #f3840d; /* Màu cam đậm hơn khi di chuột vào */
-}
+    background-color: #f3840d; 
+} */
 
-/* =========================
-   RIGHT CONTENT
-========================= */
+/* RIGHT */
 .exam-right{
 
     flex:1;
@@ -216,9 +200,6 @@
     margin-bottom:36px;
 }
 
-/* =========================
-   QUESTION CARD
-========================= */
 .question-card{
 
     background:white;
@@ -256,9 +237,6 @@
     margin-bottom:22px;
 }
 
-/* =========================
-   ANSWERS
-========================= */
 .answers-practice{
 
     display:flex;
@@ -339,9 +317,7 @@
     font-weight:700;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+
 @media (max-width:1100px){
 
     .exam-layout{

@@ -1,6 +1,3 @@
-/* =========================
-   GLOBAL
-========================= */
 .main-revise {
     width: 100%;
     min-height: 100vh;
@@ -13,9 +10,7 @@
         );
 }
 
-/* =========================
-   HERO
-========================= */
+/* Khung trên */
 .hero-section-revise {
     width: 100%;
 
@@ -58,9 +53,6 @@
     left: -70px;
 }
 
-/* =========================
-   CONTAINER
-========================= */
 .container-revise {
     width: 92%;
     max-width: 1200px;
@@ -71,9 +63,6 @@
     z-index: 2;
 }
 
-/* =========================
-   HERO BOX
-========================= */
 .body-layout-revise {
 
     max-width: 760px;
@@ -101,9 +90,6 @@
     text-align: center;
 }
 
-/* =========================
-   HERO TEXT
-========================= */
 .body-text-revise h1 {
     font-size: 40px;
     line-height: 1.35;
@@ -128,9 +114,7 @@
     margin: auto;
 }
 
-/* =========================
-   FEATURE SECTION
-========================= */
+/* Khung dưới */
 .feature-section-revise {
     width: 92%;
     max-width: 1200px;
@@ -138,9 +122,6 @@
     margin: 0 auto 70px;
 }
 
-/* =========================
-   GRID
-========================= */
 .feature-list-revise {
     display: grid;
 
@@ -150,9 +131,6 @@
     gap: 26px;
 }
 
-/* =========================
-   CARD
-========================= */
 .feature-card-revise {
     position: relative;
 
@@ -207,10 +185,7 @@
         );
 }
 
-/* =========================
-   BG IMAGE
-========================= */
-.card-bg-revise {
+/* .card-bg-revise {
     position: absolute;
     inset: 0;
 
@@ -218,10 +193,10 @@
     background-position: center;
 
     opacity: 0.08;
-}
+} */
 
 /* overlay */
-.overlay-revise {
+/* .overlay-revise {
     position: absolute;
     inset: 0;
 
@@ -231,11 +206,9 @@
             rgba(255,255,255,0.15),
             rgba(255,255,255,0.82)
         );
-}
+} */
 
-/* =========================
-   CONTENT
-========================= */
+/* ========================= CONTENT ========================= */
 .card-content-revise {
     position: relative;
     z-index: 2;
@@ -252,10 +225,6 @@
 
     padding: 28px;
 }
-
-/* =========================
-   TITLE
-========================= */
 .card-content-revise h3 {
     font-size: 26px;
     font-weight: 800;
@@ -267,9 +236,6 @@
     line-height: 1.4;
 }
 
-/* =========================
-   BUTTON
-========================= */
 .btn-practice-p {
 
     padding: 12px 24px;

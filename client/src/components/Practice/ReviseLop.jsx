@@ -75,14 +75,14 @@ function ReviseLop() {
     );
 
     return (
-        <main className='main-ten'>
+        <main className='main-ten-revise'>
 
             <div>
                 <Header />
             </div>
 
             {/* TOP */}
-            <section className='hero-section-ten'>
+            <section className='section-ten-revise'>
 
                 <div className='container-ten'>
 
@@ -106,7 +106,7 @@ function ReviseLop() {
                     {filteredChapters.map((chapter) => (
 
                         <div
-                            className="card-list"
+                            className="card-list-revise"
                             key={chapter.chapter_id}
                         >
 

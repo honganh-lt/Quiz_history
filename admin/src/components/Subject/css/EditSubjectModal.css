@@ -1,9 +1,10 @@
+/* Overlay */
 .modal-overlay-sub {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;  /* toàn viewport */
+  height: 100vh;
   background: rgba(0,0,0,0.5);
 
   display: flex;
@@ -13,99 +14,105 @@
   z-index: 9999;
 }
 
-/* Box modal */
-.modal-sub {
-  background: white;
-  /* Tạo khoảng cách 2 bên */
-  padding: 20px 24px ;
-  border-radius: 10px;
-  width: 400px;
+.modal-overlay-sub .modal-sub {
+  background: #fff;
+  padding: 25px;
+  width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
 
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+  /* max-width: 90vw;
+  box-sizing: border-box; */
 }
-/* .modal-content{
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-.modal-content h3{
+
+/* Title */
+.modal-overlay-sub .modal-sub h3 {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 20px;
-
-} */
- .modal-sub h4{
-    color: #686767;
-    /* font-size: 14px; */
-    font-weight: 500;
-    margin-bottom: 4px;
- }
-.modal-sub input,
-.modal-sub textarea {
-  width: 100%;
-  padding: 8px 10px;
-
-  border: 1px solid #ddd;
-  border-radius: 6px;
-
-  box-sizing: border-box; /* 👈 CỰC KỲ QUAN TRỌNG */
+    font-size: 24px;
+    margin: 0;
+    color: #000;
+    font-weight: 700;
 }
-.modal-sub input:focus,
-.modal-sub textarea:focus{
+
+/* Label */
+.modal-overlay-sub .modal-sub h4 {
+    margin: 0 0 3px;
+    color: #000;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Label */
+.modal-overlay-sub .modal-sub label {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* Input + textarea */
+.modal-overlay-sub .modal-sub input,
+.modal-overlay-sub .modal-sub textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* QUAN TRỌNG */
+
     outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
-}
-.modal-actions-sub{
-    display: flex;
-    justify-self: flex-end;
-    gap: 10px;
-    /* margin-top: 10px; */
-}
-/* .modal-actions button{
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-.modal-actions button:first-child{
-    background:#2d7ef7;
-    color:white;
+    font-size: 14px;
+    transition: 0.2s;
 }
 
-.modal-actions button:first-child:hover{
-    background:#1f63c7;
-} */
+/* Focus */
+.modal-overlay-sub .modal-sub input:focus,
+.modal-overlay-sub .modal-sub textarea:focus {
+  border-color: #1d5bd1;
+}
 
-/* .modal-actions button:last-child{
-    background:#e5e7eb;
-} */
- .save-btn{
-    background: #3b82f6;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
- }
+/* Textarea */
+.modal-overlay-sub .modal-sub textarea {
+  min-height: 100px;
+  resize: none;
+}
 
- .save-btn:hover{
-    background: #2563eb;
- }
- .close-btn{
-    background: #919293;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
- }
+/* Button group */
+.modal-overlay-sub .modal-actions-sub {
+  display: flex;
+  justify-self: flex-end;
+  gap: 10px;
+}
 
+/* Button */
+.modal-overlay-sub .save-btn {
+  background: #1d5bd1;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-overlay-sub .close-btn {
+  background: #999;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Hover */
+.modal-overlay-sub .save-btn:hover {
+  background: #1747a6;
+}
+
+.modal-overlay-sub .close-btn:hover {
+  background: #777;
+}

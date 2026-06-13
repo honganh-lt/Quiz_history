@@ -80,18 +80,6 @@ const getCorrectAnswer = (answers) => {
     normalize(q.content).includes(normalize(search)) ||
     normalize(q.difficulty).includes(normalize(search))
   );
-//   // TÍNH TOÁN THỐNG KÊ (Dựa trên danh sách đã lọc)
-//   const stats = filteredQuestion.reduce((acc, q) => {
-// // Thống kê độ khó
-//     const diff = q.difficulty || "Khác";
-//     acc.difficulty[diff] = (acc.difficulty[diff] || 0) + 1;
-
-//     // Thống kê môn học
-//     const sub = q.subject_name || "Chưa có môn";
-//     acc.subjects[sub] = (acc.subjects[sub] || 0) + 1;
-
-//     return acc;
-//   }, {difficulty: {}, subjects: {}}); 
 
   //ADD - subject, Chapter, lesson
   const fetchSubjects = async () => {
@@ -161,21 +149,21 @@ const getCorrectAnswer = (answers) => {
     const totalPages = Math.ceil(filteredQuestion.length / questionsPerPage);
 
   return (
-    <div className='admin-container'>
+    <div className='question-management'>
       {/* Top bar */}
       <div className="top-bar">
         <h2>Quản lý câu hỏi</h2>
 
         <div className="action-buttons">
-            {/* <input 
-              type="text"
-              className='search-ques'
-              placeholder='Search...'
-              value={search}
-              onChange={(e) => {setSearch(e.target.value);
-                setCurrentPage(1); //tìm ở trang 1
-              }} 
-            /> */}
+          <input 
+            type="text"
+            className='search-ques'
+            placeholder='Tìm kiếm môn, độ khó,...'
+            value={search}
+            onChange={(e) => {setSearch(e.target.value);
+              setCurrentPage(1); //tìm ở trang 1
+            }} 
+          /> 
             <button 
                 className='add-btn'
                 onClick={() => setIsOpen(true)}
@@ -221,15 +209,6 @@ const getCorrectAnswer = (answers) => {
             </small> */}
           </div>
         )}
-        <input 
-          type="text"
-          className='search-ques'
-          placeholder='Tìm kiếm môn, độ khó,...'
-          value={search}
-          onChange={(e) => {setSearch(e.target.value);
-            setCurrentPage(1); //tìm ở trang 1
-          }} 
-        /> 
 
       </div>
 
@@ -315,15 +294,50 @@ const getCorrectAnswer = (answers) => {
             <i className="fa-solid fa-angle-left"></i> 
           </button>
 
-          {Array.from({length: totalPages}, (_, i) => (
-            <button
-              key={i}
-              className={currentPage === i + 1 ? "active" : ""}
-              onClick={() => {setCurrentPage(i+1)}}
-            >
-              {i + 1}
-            </button>
-          ))}
+          {(() => {
+            const pages = [];
+
+            if (totalPages <= 7) {
+              for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+              }
+            } else {
+              pages.push(1);
+
+              if (currentPage > 3) {
+                pages.push("...");
+              }
+              //Tính khoảng trang cần hiện trang hiện tại avf trước sau
+              const start = Math.max(2, currentPage - 1);
+              const end = Math.min(totalPages - 1, currentPage + 1);
+
+              for (let i = start; i <= end; i++) {
+                pages.push(i);
+              }
+
+              if (currentPage < totalPages - 2) {
+                pages.push("...");
+              }
+
+              pages.push(totalPages);
+            }
+
+            return pages.map((page, index) =>
+              page === "..." ? (
+                <span key={index} className="pagination-dots">
+                  ...
+                </span>
+              ) : (
+                <button
+                  key={index}
+                  className={currentPage === page ? "active" : ""}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              )
+            );
+          })()}
 
           <button
             disabled={currentPage === totalPages}

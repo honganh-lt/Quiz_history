@@ -99,7 +99,8 @@ export const ManagementSubject = () => {
 
 
   return (
-     <div className='admin-container'>
+    // admin-container
+     <div className='subject-management'>
         {/* Sidebar */}
       <div className='top-bar'>
             <h2 className='title'>Quản lý môn học</h2>

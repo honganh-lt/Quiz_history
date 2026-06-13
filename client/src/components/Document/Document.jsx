@@ -63,7 +63,7 @@ const Document = () => {
             
             <div className="document-page">
                 {/* Tên môn học */}
-                <h1 className="subject-title">
+                <h1 className="document-subject-title">
                     {subjectName || "Tài liệu học tập"}
                 </h1>
 

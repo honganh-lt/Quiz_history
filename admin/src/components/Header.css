@@ -6,7 +6,7 @@
   background: #4058f3;
   display: flex;
   align-items: center;
-  /* 🌟 Đổi từ flex-end thành space-between để đẩy 2 khối về 2 đầu biệt lập */
+  /* Đổi từ flex-end thành space-between để đẩy 2 khối về 2 đầu biệt lập */
   justify-content: space-between; 
   padding: 0 30px;
   box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
@@ -15,7 +15,7 @@
 
 /* Khối bên trái (Nút menu + chữ Education) */
 .header-admin .header-left {
-  /* 🌟 Xóa align-self: start để chữ căn giữa chuẩn theo chiều dọc của header */
+  /* Xóa align-self: start để chữ căn giữa chuẩn theo chiều dọc của header */
   display: flex;
   align-items: center;
 }
@@ -28,7 +28,7 @@
 /* Khối bên phải (Tên người dùng + Icon) */
 .header-right {
   margin: 0;
-  /* 🌟 Xóa thuộc tính grid-area không cần thiết ở đây */
+  /*Xóa thuộc tính grid-area không cần thiết ở đây */
 }
 
 .header-admin .header-right h4 {
@@ -54,7 +54,7 @@
   .menu-icon {
     display: block !important; /* Hiện nút lên */
     font-size: 24px;          /* Tăng kích cỡ cho dễ bấm */
-    color: #fff;              /* 🌟 Đổi sang màu trắng để nổi bật trên nền xanh của Header nhé! */
+    color: #fff;              /* Đổi sang màu trắng để nổi bật trên nền xanh của Header nhé! */
     cursor: pointer;          /* Biến con trỏ chuột thành hình bàn tay */
     margin-right: 15px;       /* Tạo khoảng cách với chữ bên cạnh */
     z-index: 1000;            /* Đảm bảo nút nằm trên cùng */

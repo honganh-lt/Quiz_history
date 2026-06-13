@@ -1,4 +1,4 @@
-.modal-overlay-ques{
+.modal-overlay-addques{
     position: fixed;
     top: 0;
     left: 0;
@@ -11,46 +11,47 @@
     z-index: 999;
 }
 /* Box modal */
-.modal-ques{
-    /* background: white;
-    padding: 65px;
-    width: 800px;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    animation: faden 0.3s ease; */
+.modal-overlay-addques .modal-ques{
     width: 600px;              /* nhỏ lại */
     max-height: 80vh;          
     overflow-y: auto;          /* scroll dọc */
     background: #fff;
     padding: 20px;
     border-radius: 5px;
+        /* background: white;
+    padding: 25px;
+    width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    animation: faden 0.3s ease; */
 }
-.modal-ques h3 {
+.modal-overlay-addques .modal-ques h3 {
     text-align: center;
     margin-bottom: 20px;
     /* position: sticky; */
   /* top: 0; */
   background: white;
+  font-size: 24px;
   /* padding-bottom: 10px; */
 }
-.modal-ques h4 {
+.modal-overlay-addques .modal-ques h4 {
     margin: 10px 5px;
     color: #817f7f;
 }
 
 /* Input - select */
-.modal-ques input,
-.modal-ques select,
-.modal-ques textarea {
+.modal-overlay-addques .modal-ques input,
+.modal-overlay-addques .modal-ques select,
+.modal-overlay-addques .modal-ques textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 6px;
     border: 1px solid #ccc;
-     box-sizing: border-box; /* QUAN TRỌNG */
+    box-sizing: border-box; /* QUAN TRỌNG */
 
     outline: none;
     font-size: 14px;
@@ -61,19 +62,73 @@
     min-height: 80px;
   resize: vertical; 
 } */
-.modal-ques input:focus,
-.modal-ques select:focus {
+.modal-overlay-addques .modal-ques input:focus,
+.modal-overlay-addques .modal-ques select:focus {
     border-color: #007bff;
 }
 /* Mượt hơn */
-.modal-ques::-webkit-scrollbar {
+.modal-overlay-addques .modal-ques::-webkit-scrollbar {
   width: 6px;
 }
-.modal-ques::-webkit-scrollbar-thumb {
+.modal-overlay-addques .modal-ques::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 10px;
 }
 
+.modal-overlay-addques .answer-item {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* khoảng cách radio và input */
+  margin-bottom: 10px;
+}
+
+/* radio nhỏ gọn lại */
+.modal-overlay-addques .answer-item input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* input chiếm hết phần còn lại */
+.modal-overlay-addques .answer-item input[type="text"] {
+  flex: 1;
+}
+
+/* Thêm + đóng */
+.modal-overlay-addques .modal-actions-ques{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.modal-overlay-addques .modal-actions-ques .save-btn {
+  background: #0553d0;
+   /* margin-left: 20px; */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  width: 120px;
+}
+
+.modal-overlay-addques .close-btn {
+  background: #929090;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Animation */
+/* @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} */
 
 /* Radio-group */
 /* .radio-group {
@@ -114,59 +169,4 @@
   background: #4da3ff;
   color: white;
   border-color: #4da3ff;
-} */
-
-.answer-item {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* khoảng cách radio và input */
-  margin-bottom: 10px;
-}
-
-/* radio nhỏ gọn lại */
-.answer-item input[type="radio"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
-
-/* input chiếm hết phần còn lại */
-.answer-item input[type="text"] {
-  flex: 1;
-}
-
-/* Thêm + đóng */
-.modal-actions-ques{
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-.modal-actions-ques .save-btn {
-  background: #0553d0;
-   /* margin-left: 20px; */
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  width: 120px;
-}
-
-.close-btn {
-  background: #929090;
-  color: #fff;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-}
-
-/* Animation */
-/* @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 } */

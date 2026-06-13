@@ -1,4 +1,4 @@
-.modal-overlay-u {
+.modal-overlay-user {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +13,7 @@
 }
 
 /* Box modal */
-.modal-u {
+.modal-overlay-user .modal-user {
     /* background: #fff; */
     padding: 25px;
     width: 600px;
@@ -25,7 +25,7 @@
     animation: fadeIn 0.3s ease;
 }
 
-.modal-content{
+.modal-overlay-user .modal-content{
     background: white;
     padding: 25px;
     border-radius: 8px;
@@ -35,14 +35,14 @@
     gap: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-.modal-content h3{
+.modal-overlay-user .modal-content h3{
     text-align: center;
     margin-bottom: 20px;
     font-size: 20px;
 
 }
-.modal-content input,
-.modal-content select{
+.modal-overlay-user .modal-content input,
+.modal-overlay-user .modal-content select{
     /* width: 90%; */
     padding: 10px;
     margin-bottom: 12px;
@@ -50,12 +50,12 @@
     border-radius: 6px;
     font-size: 14px;
 }
-.modal-content input:focus,
-.modal-content select:focus{
+.modal-overlay-user .modal-content input:focus,
+.modal-overlay-user .modal-content select:focus{
     outline: none;
     border-color: #4a90e2;
 }
-.modal-actions{
+.modal-overlay-user .modal-actions{
     display: flex;
     justify-self: flex-end;
     gap: 10px;
@@ -79,7 +79,7 @@
 /* .modal-actions button:last-child{
     background:#e5e7eb;
 } */
- .save-btn{
+.modal-overlay-user .save-btn{
     background: #3b82f6;
     color: white;
     border: none;
@@ -88,10 +88,10 @@
     cursor: pointer;
  }
 
- .save-btn:hover{
+.modal-overlay-user .save-btn:hover{
     background: #2563eb;
  }
- .close-btn-btn{
+.modal-overlay-user .close-btn{
     background: #e5e7eb;
     border: none;
     padding: 8px 16px;
