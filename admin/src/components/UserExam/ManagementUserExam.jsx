@@ -9,6 +9,8 @@ export const ManagementUserExam = () => {
 
     const [data, setData] = useState([]);
 
+    const [search, setSearch] = useState("");
+
     //==========Phân trang=========
     const [currentPage, setCurrentPage] = useState(1);
     const userExamPerPage = 8;
@@ -53,15 +55,37 @@ export const ManagementUserExam = () => {
         return `${day}/${month}/${year}, ${String(hours).padStart(2, "0")}:${minutes}:${seconds}:${ampm}`;
     }
 
+    //SEARCH
+    // const normalize = (str) => 
+    //     str 
+    //         ?.normalize("NFD")  //Chữ và dấu bị tách riêng ra.
+    //         .replace(/[\u0300-\u036f]/g, "") //Xóa toàn bộ dấu vừa được tách.
+    //         .toLowerCase(); //chuyển thành chữ thường
+
+    const normalize = (str) =>
+    String(str || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    
+    const filteredUserExam = data.filter((ue) => 
+        normalize(ue.subject_name).includes(normalize(search)) ||
+        normalize(ue.exam_title).includes(normalize(search)) ||
+        normalize(ue.username).includes(normalize(search)) 
+    ); 
+
     //======Phân trang==========
     const indexOfLastUserExam = currentPage * userExamPerPage;
     const indexOfFirstUserExam = indexOfLastUserExam - userExamPerPage;
     //slice từ danh sach userExam
-    const currentUserExam = data.slice(indexOfFirstUserExam, indexOfLastUserExam);
+    // const currentUserExam = data.slice(indexOfFirstUserExam, indexOfLastUserExam);
+    const currentUserExam = filteredUserExam.slice(indexOfFirstUserExam, indexOfLastUserExam);
 
     //tính tổng số trang
     //vì không có userExam
-    const totalPages = Math.ceil(data.length / userExamPerPage);
+    // const totalPages = Math.ceil(data.length / userExamPerPage);
+        const totalPages = Math.ceil(filteredUserExam.length / userExamPerPage);
+
 
 
   return (
@@ -69,6 +93,15 @@ export const ManagementUserExam = () => {
         {/* Top bar */}
         <div className="top-bar">
             <h2>Quản lý bài thi User</h2>
+            <input 
+                type="text"
+                className='search-ques'
+                placeholder='Tìm kiếm môn, đề thi, username'
+                value={search}
+                onChange={(e) => {setSearch(e.target.value);
+                setCurrentPage(1); //tìm ở trang 1
+                }} 
+            /> 
         </div>
 
         {/* Table */}
@@ -98,9 +131,10 @@ export const ManagementUserExam = () => {
                                 <td>{item.username}</td>
                                 <td>
                                     <button
+                                        className='action'
                                         onClick={() => navigate(`/admin/user-exam/${item.user_exam_id}`)}
                                     >
-                                       <i class="fa-solid fa-circle-check"></i>
+                                       <i className="fa-solid fa-circle-check"></i>
                                     </button>
                                 </td>
                             </tr>

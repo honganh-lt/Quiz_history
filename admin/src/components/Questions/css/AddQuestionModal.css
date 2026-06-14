@@ -66,14 +66,14 @@
 .modal-overlay-addques .modal-ques select:focus {
     border-color: #007bff;
 }
-/* Mượt hơn */
-.modal-overlay-addques .modal-ques::-webkit-scrollbar {
+/* Mượt hơn thanh cuộn */
+/* .modal-overlay-addques .modal-ques::-webkit-scrollbar {
   width: 6px;
 }
 .modal-overlay-addques .modal-ques::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 10px;
-}
+} */
 
 .modal-overlay-addques .answer-item {
   display: flex;

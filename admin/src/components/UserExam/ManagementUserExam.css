@@ -38,6 +38,25 @@
     font-size: 24px;
     color: #1e293b;
 }
+.userExam-management .search-ques{
+    width: 250px;
+    padding: 10px 14px;
+    border: 1px solid #4da3ff;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.userExam-management .search-ques:focus{
+    outline: none;
+    border-color: #4da3ff;
+    /* box-shadow: 0 0 0 3px rgba(77,163,255,0.15); */
+}
+
+.userExam-management .search-ques::placeholder{
+    color: #94a3b8;
+}
 /* .subject-management .add-btn {
     background: #4da3ff;
     border: none;
@@ -98,32 +117,18 @@
 } */
 
 /* Button Hành động */
-.userExam-management .exam-table .edit-btn {
-    background: #f3d73c;
+.userExam-management .action {
+    background: #fff;
     border: none;
     padding: 6px 12px;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: opacity 0.2s;
-    margin-right: 5px;
-}
-
-.userExam-management .delete-btn {
-    background: #ff4d4f;
-    border: none;
-    padding: 6px 12px;
-    color: white;
     border-radius: 5px;
     cursor: pointer;
     font-size: 13px;
     transition: opacity 0.2s;
 }
-
-.userExam-management .edit-btn:hover, 
-.userExam-management .delete-btn:hover {
-    opacity: 0.9; /* Hiệu ứng mờ nhẹ khi di chuột vào nút */
+.userExam-management .action i{
+    color: #05ca05;
+    /* max-width: 150px; */
 }
 
 
@@ -195,3 +200,31 @@
         font-size: 13px;
     }
 }
+
+/* .userExam-management .exam-table .edit-btn {
+    background: #f3d73c;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: opacity 0.2s;
+    margin-right: 5px;
+}
+
+.userExam-management .delete-btn {
+    background: #ff4d4f;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: opacity 0.2s;
+}
+
+.userExam-management .edit-btn:hover, 
+.userExam-management .delete-btn:hover {
+    opacity: 0.9; 
+} */

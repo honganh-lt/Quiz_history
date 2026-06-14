@@ -17,7 +17,8 @@
 .modal-overlay-ques .modal-ques {
   width: 600px;
   max-height: 80vh;
-  overflow-y: auto;
+  /* Thanh cuộn dọc */
+  overflow-y: auto; 
 
   background: #fff;
   padding: 20px 24px;
@@ -69,6 +70,15 @@
   outline: none;
   border-color: #3b82f6;
 }
+
+/* Mượt hơn thanh cuộn */
+/* .modal-overlay-aques .modal-ques::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-overlay-ques .modal-ques::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+} */
 
 /* ===== ĐÁP ÁN ===== */
 .modal-overlay-ques .answer-item {

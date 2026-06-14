@@ -21,7 +21,7 @@
 /* NỘI DUNG TÀI LIỆU */
 
 .detail-content{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
 
     font-size: 17px;
 
@@ -35,39 +35,70 @@
 }
 
 /* Đoạn văn */
-
 .detail-content p{
     margin: 0 0 16px;
+    /* font-size: 14px; */
+    /* text-align: center; */
 }
+/* .detail-content title{
+
+    text-align: center;
+} */
 
 /* TIÊU ĐỀ */
 
 .detail-content h1{
     font-size: 32px;
-    color: #001b8e;
-    margin: 30px 0 15px;
+    /* color: #001b8e; */
+    color: #000;
+    margin: 10px 0 65px;
     font-weight: 800;
+    text-align: center;
+    /* margin-bottom: 20px; */
+    border: 1px solid #ff8800;
+    border-radius: 8px;
+    background: 
+        linear-gradient(
+            90deg,
+            #ffd9a8 0%,
+            #ffc47a 100%
+        )
+    ;
+
 }
 
 .detail-content h2{
-    font-size: 26px;
-    color: #003bb3;
+    font-size: 24px;
+    /* color: #003bb3; */
+    /* color: #000; */
+        color: #ed370a;
     margin: 25px 0 12px;
     font-weight: 700;
+    text-align: center;
 }
 
 .detail-content h3{
-    font-size: 22px;
-    color: #0f3ea8;
+    font-size: 20px;
+    /* color: #0f3ea8; */
+    color: #ed370a;
     margin: 20px 0 10px;
     font-weight: 700;
 }
 
 .detail-content h4{
     font-size: 18px;
-    color: #1e40af;
+    /* color: #1e40af; */
+    color: #000;
     margin: 18px 0 8px;
     font-weight: 700;
+}
+.detail-content h5{
+    font-size: 18px;
+    /* color: #1e40af; */
+    color: #000;
+    margin: 18px 0 8px;
+    font-weight: 700;
+    text-align: center;
 }
 
 /* DANH SÁCH */
@@ -87,6 +118,7 @@
 .detail-content strong{
     font-weight: 700;
     color: #111827;
+    /* text-align: center; */
 }
 
 .detail-content em{
@@ -107,9 +139,7 @@
     border-radius: 8px;
 }
 
-/* =========================
-   HÌNH ẢNH
-========================= */
+/* HÌNH ẢNH */
 /* 
 .detail-content img{
     max-width: 100%;
@@ -133,6 +163,7 @@
     margin: 25px 0;
 
     font-size: 15px;
+    /* text-align: center; */
 }
 
 .detail-content th{
@@ -145,6 +176,7 @@
     border: 1px solid #ddd;
 
     padding: 12px;
+    /* text-align: center; */
 }
 
 .detail-content td{

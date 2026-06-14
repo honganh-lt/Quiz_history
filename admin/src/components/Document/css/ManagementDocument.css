@@ -76,9 +76,7 @@
 /* .document-table td {
     position: relative;
 } */
-/* ============================= */
-/* TEXT ELLIPSIS + TOOLTIP      */
-/* ============================= */
+
 
 /* TEXT BỊ RÚT GỌN */
 .text-ellipsis {
@@ -195,9 +193,39 @@
     border-radius: 10px;
 }
 
-/* ============================= */
-/* TABLET                       */
-/* ============================= */
+
+/* Pagination */
+.document .pagination {
+    margin-top: 20px;
+    display: flex;
+    gap: 5px; /* Sử dụng gap đồng nhất thay vì margin-right đơn lẻ */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Tự động xuống hàng các nút số nếu màn hình quá chật */
+}
+
+.document .pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.document .pagination button.active {
+    background: #2f80ed;
+    color: white;
+    border-color: #2f80ed;
+}
+
+.document .pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
 @media screen and (max-width: 992px) {
     .document {
         padding: 20px;
@@ -212,9 +240,7 @@
     }
 }
 
-/* ============================= */
-/* MOBILE                       */
-/* ============================= */
+
 @media screen and (max-width: 768px) {
     .document {
         padding: 15px;

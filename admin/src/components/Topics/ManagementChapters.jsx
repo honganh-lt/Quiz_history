@@ -174,14 +174,14 @@ export const ManagementChapters = () => {
                           }}
                       >
                         {/* Edit */}
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                       <button 
                         className='delete-btn' 
                         onClick={() => handleDelete(chap.chapter_id)}
                       >
                         {/* Delete */}
-                        <i class="fa-solid fa-trash"></i>
+                        <i className="fa-solid fa-trash"></i>
                       </button>
                     </td>
                   </tr>
