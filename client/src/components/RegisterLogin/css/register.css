@@ -15,6 +15,7 @@
     max-width: 380px; 
     margin: 40px auto; 
     padding: 30px 25px; 
+    display: flex;
     flex-direction: column;
     gap: 12px;
     border-radius: 8px;
@@ -61,7 +62,7 @@
     border-radius: 4px;
     box-sizing: border-box; 
     outline: none;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 /* Khung bọc riêng cho mật khẩu và con mắt */
@@ -82,7 +83,7 @@
 .password-wrapper-register .eye-icon {
     position: absolute;
     right: 12px;
-    top: 35%;
+    top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     color: #888;
