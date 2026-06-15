@@ -33,6 +33,11 @@
 
 
 /* List exam */
+/* .attempt-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+} */
 .exam-box {
   background: #ffffff;
   border-radius: 12px;
@@ -64,6 +69,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+
 }
 
 .attempt-info div {

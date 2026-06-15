@@ -142,7 +142,7 @@ exports.createExamBySubject = async (req, res, next) => {
             return res.status(400).json({ error: `Ngân hàng chỉ có ${questions.length} câu, không đủ cung cấp ${total_questions} câu theo yêu cầu` });
         }
 
-        // Lọc danh sách theo độ khó chuẩn (Loại bỏ khoảng trắng dư thừa)
+        // Lọc danh sách theo độ khó (Loại bỏ khoảng trắng dư thừa)
         const easyList = questions.filter(q => q.difficulty?.trim().toUpperCase() === "EASY");
         const mediumList = questions.filter(q => q.difficulty?.trim().toUpperCase() === "MEDIUM");
         const hardList = questions.filter(q => q.difficulty?.trim().toUpperCase() === "HARD");

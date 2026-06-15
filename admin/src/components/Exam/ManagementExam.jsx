@@ -11,8 +11,8 @@ export const ManagementExam = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [subjects, setSubjects] = useState([]);
 
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedExam, setSelectedExam] = useState(null);
+  // const [showEditModal, setShowEditModal] = useState(false);
+  // const [selectedExam, setSelectedExam] = useState(null);
 
   // =======Search=========
   const [search,setSearch] = useState("");
@@ -92,7 +92,7 @@ export const ManagementExam = () => {
               {/* <th>Mô tả</th> */}
               <th>Thời gian</th>
               <th>Số câu hỏi</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
 
@@ -106,7 +106,7 @@ export const ManagementExam = () => {
                   <td>{ex.duration} phút</td>
                   <td>{ex.question_count}</td>
 
-                  <td>
+                  {/* <td>
                     <button
                       className='edit-btn'
                       onClick={() => {
@@ -116,7 +116,7 @@ export const ManagementExam = () => {
                     >
                    <i className="fa-solid fa-pen-to-square"></i>
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))
             ) : (
@@ -200,7 +200,7 @@ export const ManagementExam = () => {
         />
 
         {/* EDIT */}
-        {showEditModal && selectedExam && (
+        {/* {showEditModal && selectedExam && (
           <EditExamModal
               exam={selectedExam}
               onClose={() => {
@@ -209,7 +209,7 @@ export const ManagementExam = () => {
               }}
               onSuccess={fetchData}
             />
-          )}
+          )} */}
       </div>
     </div>
   );

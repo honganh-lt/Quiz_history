@@ -25,17 +25,65 @@ axiosClient.interceptors.response.use(
         return response; 
     },
 
-    // Nếu API bị lỗi (Status 4xx, 5xx...)
-    (error) => {
-        // ĐOẠN PHÉP THUẬT: Đè tin nhắn tiếng Anh bằng tin nhắn tiếng Việt từ BE trả về
-        if (error.response && error.response.data && error.response.data.message) {
-            error.message = error.response.data.message; 
+    async (error) => {
+
+        if (error.response?.data?.message) {
+            error.message = error.response.data.message;
         }
 
-        // LOGIC CŨ CỦA BẠN: Tự logout khi token hết hạn hoặc tài khoản bị khóa
+        const originalRequest = error.config;
+
+        // Access token hết hạn
+        if (
+            error.response?.status === 401 &&
+            error.response?.data?.message === "Token đã hết hạn" &&
+            !originalRequest._retry
+        ) {
+            originalRequest._retry = true;
+
+            try {
+                const refreshToken =
+                    localStorage.getItem("refresh_token");
+
+                const res = await axios.post(
+                    "http://localhost:3000/api/auth/refresh-token",
+                    {
+                        refresh_token: refreshToken
+                    }
+                );
+
+                const newAccessToken =
+                    res.data.access_token;
+
+                localStorage.setItem(
+                    "access_token",
+                    newAccessToken
+                );
+
+                originalRequest.headers.Authorization =
+                    `Bearer ${newAccessToken}`;
+
+                return axiosClient(originalRequest);
+
+            } catch (refreshError) {
+
+                localStorage.clear();
+
+                alert("Phiên đăng nhập đã hết hạn");
+
+                window.location.href = "/";
+
+                return Promise.reject(refreshError);
+            }
+        }
+
+        // Tài khoản bị khóa hoặc refresh token không hợp lệ
         if (error.response?.status === 403) {
-            alert(error.message || "Phiên đăng nhập đã hết hạn hoặc tài khoản đã bị khóa");
+
+            alert(error.message);
+
             localStorage.clear();
+
             window.location.href = "/";
         }
 

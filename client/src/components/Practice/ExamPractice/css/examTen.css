@@ -152,6 +152,24 @@
         0 8px 18px rgba(245,161,66,0.25);
 }
 
+/* .reset-exam-btn {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #ff9800;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 30px auto 0;
+    display: block;
+
+}
+
+.reset-exam-btn:hover {
+    background: #f57c00;
+} */
+
 /* Nút làm lại */
 /* .reset-btn {
     background-color: #c97316;
@@ -268,7 +286,7 @@
 
     cursor:pointer;
 
-    transition:all 0.25s ease;
+    /* transition:all 0.25s ease; */
 }
 
 /* hover */

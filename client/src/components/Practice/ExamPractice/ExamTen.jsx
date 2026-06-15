@@ -69,7 +69,11 @@ function ExamTen() {
         }
     }, [lessonId]);
 
-    // ================= LOCAL STORAGE =================
+    // const handleResetExam = () => {
+    //     setSelectedAnswers({});
+    // };
+
+    // ================= LOCAL STORAGE(lưu) =================
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const userId = user?.user_id;
     const storageKey = `doneLessons_${userId}`;
@@ -107,8 +111,8 @@ function ExamTen() {
                 {/* ================= LEFT ================= */}
                 <aside className="exam-left">
                     <h3>Trắc nghiệm {subject?.subject_name || ""}</h3>
-                    <h4> Chương {chapter?.chapter_id || ""}: { chapter?.chapter_name || ""}</h4>
-                    <h5>Bài {lesson?.lesson_id || ""}: {lesson?.lesson_name || ""}</h5>
+                    <h4> Chương {chapter?.chapter_number || ""}: { chapter?.chapter_name || ""}</h4>
+                    <h5>Bài {lesson?.lesson_number || ""}: {lesson?.lesson_name || ""}</h5>
 
                     <p>
                         Số câu đúng:
@@ -129,6 +133,12 @@ function ExamTen() {
                             </span>
                         ))}
                     </div>
+                    {/* <button
+                        className="reset-exam-btn"
+                        onClick={handleResetExam}
+                    >
+                        Làm lại
+                    </button> */}
                 </aside>
 
                 {/* ================= RIGHT ================= */}

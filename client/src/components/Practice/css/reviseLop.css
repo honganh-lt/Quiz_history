@@ -109,7 +109,7 @@
 
 .card-list-revise {
     /* background: #fffdf9; */
-
+    /* width: 500px; */
     border-radius: 18px;
 
     padding: 18px;
@@ -170,6 +170,7 @@
         repeat(auto-fit, minmax(260px, 1fr));
 
     gap: 22px;
+    /* grid-template-columns: repeat(3,1fr); */
 }
 
 .card-ten-item {

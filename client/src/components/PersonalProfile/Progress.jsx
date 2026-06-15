@@ -25,7 +25,7 @@ const Progress = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const userId = user?.user_id;
 
-  const pageSize = 2;
+  const pageSize = 3;
 
   //Gom 2 API chạy song song qua Promise.all và bọc try-catch, chặn request nếu chưa có userId
   useEffect(() => {
@@ -175,28 +175,31 @@ const Progress = () => {
           const paged = exam.attempts.slice(start, end);
 
           return (
+
             <div key={exam.title} className="exam-box">
               <h4>{exam.title}</h4>
 
               {/* ATTEMPTS */}
-              {paged.map((a, index) => (
-                <div key={a.user_exam_id} className="attempt-card">
-                  <div className="attempt-info">
-                    <div>Lần {start + index + 1}</div>
-                    <div>Điểm: {a.score || 0}</div>
-                    <div>
-                      {new Date(a.start_time).toLocaleString("vi-VN")} -{" "}
-                      {new Date(a.end_time).toLocaleString("vi-VN")}
+              {/* <div className='attempt-grid'> */}
+                {paged.map((a, index) => (
+                  <div key={a.user_exam_id} className="attempt-card">
+                      <div className="attempt-info">
+                      <div>Lần {start + index + 1}</div>
+                      <div>Điểm: {a.score || 0}</div>
+                      <div>
+                        {new Date(a.start_time).toLocaleString("vi-VN")} -{" "}
+                        {new Date(a.end_time).toLocaleString("vi-VN")}
+                      </div>
                     </div>
-                  </div>
 
-                  <button
-                    onClick={() => navigate(`/review/${a.user_exam_id}`)}
-                  >
-                    Xem chi tiết
-                  </button>
-                </div>
-              ))}
+                    <button
+                      onClick={() => navigate(`/review/${a.user_exam_id}`)}
+                    >
+                      Xem chi tiết
+                    </button>
+                    </div>
+                ))}
+              {/* </div> */}
 
               {/* PAGINATION */}
               {totalPages > 1 && (
@@ -227,6 +230,7 @@ const Progress = () => {
                 </div>
               )}
             </div>
+            // </div>
           );
         })}
       </div>

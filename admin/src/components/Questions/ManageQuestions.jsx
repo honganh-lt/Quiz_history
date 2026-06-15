@@ -21,6 +21,8 @@ export const ManageQuestions = () => {
 
   //=====Search=====
   const [search, setSearch] = useState("");
+  const [subjectFilter, setSubjectFilter] = useState("");
+  const [difficultyFilter, setDifficultyFilter] = useState("");
 
   //==========Edit===============
   const [showEditModal, setShowEditModal] = useState(false);
@@ -75,11 +77,52 @@ const getCorrectAnswer = (answers) => {
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase(); //chữ in thường
       
-  const filteredQuestion = questions.filter((q) => 
-    normalize(q.subject_name).includes(normalize(search)) ||
-    normalize(q.content).includes(normalize(search)) ||
-    normalize(q.difficulty).includes(normalize(search))
-  );
+  // const filteredQuestion = questions.filter((q) => 
+  //   normalize(q.subject_name).includes(normalize(search)) ||
+  //   normalize(q.content).includes(normalize(search)) ||
+  //   normalize(q.difficulty).includes(normalize(search))
+  // );
+
+  const filteredQuestion = questions.filter((q) => {
+    const matchSearch =
+      search === "" ||
+      normalize(q.content).includes(normalize(search));
+
+    const matchSubject =
+      subjectFilter === "" ||
+      q.subject_name === subjectFilter;
+
+  const matchDifficulty =
+    difficultyFilter === "" ||
+    normalize(q.difficulty) === normalize(difficultyFilter);
+
+      return (
+        matchSearch &&
+        matchSubject &&
+        matchDifficulty
+      );
+    });
+
+//   const filterStats = filteredQuestion.reduce(
+//   (acc, q) => {
+//     acc.subject_name++;
+
+//     const diff = q.difficulty?.toLowerCase();
+
+//     if (diff === "easy") acc.easy++;
+//     if (diff === "medium") acc.medium++;
+//     if (diff === "hard") acc.hard++;
+
+//     return acc;
+//   },
+//   {
+//     subject_name: 0,
+//     easy: 0,
+//     medium: 0,
+//     hard: 0,
+//   }
+// );
+
 
   //ADD - subject, Chapter, lesson
   const fetchSubjects = async () => {
@@ -155,7 +198,7 @@ const getCorrectAnswer = (answers) => {
         <h2>Quản lý câu hỏi</h2>
 
         <div className="action-buttons">
-          <input 
+          {/* <input 
             type="text"
             className='search-ques'
             placeholder='Tìm kiếm môn, độ khó,...'
@@ -163,7 +206,47 @@ const getCorrectAnswer = (answers) => {
             onChange={(e) => {setSearch(e.target.value);
               setCurrentPage(1); //tìm ở trang 1
             }} 
-          /> 
+          />  */}
+          <div className="filter-bar">
+
+              <select
+                value={subjectFilter}
+                onChange={(e) => setSubjectFilter(e.target.value)}
+              >
+                <option value="">Tất cả môn</option>
+
+                {subjects.map((s) => (
+                  <option
+                    key={s.subject_id}
+                    value={s.subject_name}
+                  >
+                    {s.subject_name}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={difficultyFilter}
+                onChange={(e) => setDifficultyFilter(e.target.value)}
+              >
+                <option value="">Tất cả độ khó</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+
+              <input
+                type="text"
+                className='search-ques'
+                placeholder="Tìm nội dung câu hỏi..."
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setCurrentPage(1);
+                }}
+              />
+
+            </div>
             <button 
                 className='add-btn'
                 onClick={() => setIsOpen(true)}
@@ -182,7 +265,7 @@ const getCorrectAnswer = (answers) => {
 
       {/* Phần thống kê mới thêm */}
       {/* ===== Thông tin câu hỏi ===== */}
-      <div className="question-info-bar">
+      {/* <div className="question-info-bar">
 
         <div className="info-card">
           <span className="info-label">
@@ -204,12 +287,23 @@ const getCorrectAnswer = (answers) => {
               {filteredQuestion.length}
             </span>
 
-            {/* <small>
-              Từ khóa: "{search}"
-            </small> */}
           </div>
         )}
 
+      </div> */}
+
+      <div className="question-info-bar">
+        {(subjectFilter || difficultyFilter || search) && (
+          <div className="info-card">
+            <span className="info-label">
+              Kết quả 
+            </span>
+
+            <span className="info-value">
+              {filteredQuestion.length}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Table */}
