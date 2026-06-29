@@ -1,6 +1,7 @@
+// import { redirect } from 'react-router-dom';
 import './css/Main.css'
 
-export const Main = () => {
+export const Session1 = () => {
     return (
         <main className='main'>
             {/* Khung trên */}
@@ -10,6 +11,7 @@ export const Main = () => {
                     <div className='body-layout'>
                         <div className='body-text'>
                             <h1>Trắc nghiệm lịch sử kết nối tri thức</h1>
+                            {/* <h1 style={{color: 'red'}}>Trắc nghiệm lịch sử kết nối tri thức</h1> */}
                             <p>
                                 Nền tảng hỗ trợ ôn luyện, kiểm tra và nâng cao kiến thức với hệ thống
                                 bài học trực quan, sinh động.
@@ -43,4 +45,4 @@ export const Main = () => {
     );
 };
 
-export default Main;
+export default Session1;

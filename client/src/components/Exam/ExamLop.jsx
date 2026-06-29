@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../Home/Header';
 // import { useNavigate } from 'react-router-dom';
 import "./css/ExamLop.css"
 import { useNavigate, useParams } from 'react-router-dom';
 import { getSubjects } from '../../api/subjectApi';
 import { getExams } from '../../api/examApi';
-import { getHistory } from '../../api/userExamApi';
+// import { getExamAttempts, getHistory } from '../../api/userExamApi';
+import { getExamAttempts } from '../../api/userExamApi';
+
 //, startExam
 import Footer from '../Home/Footer';
 
@@ -19,8 +21,8 @@ function ExamLop() {
     const [exams, setExams] = useState([]);
 
     //========Thêm số lần thi===========
-    // const [attempts, setAttempts] = useState([]);
-    const [history, setHistory] = useState([]);
+    const [attempts, setAttempts] = useState({});
+    // const [history, setHistory] = useState([]);
 
 
     //lấy user -> thêm
@@ -49,43 +51,64 @@ function ExamLop() {
         fetchInitialData();
     }, []);
 
-    //Lần thi load history
-    useEffect(() => {
-        if(!userId) return;
 
-        const fetchHistoryData = async () => {
-            try {
-                const res = await getHistory(userId);
-                console.log("History", res.data);
-                setHistory(res.data);
-            } catch (err) {
-                console.error("Lỗi khi tải lịch sử thi: ", err);
+    // useEffect(() => {
+    //     if(!userId) return;
+
+    //     const fetchHistoryData = async () => {
+    //         try {
+    //             const res = await getHistory(userId);
+    //             console.log("History", res.data);
+    //             setHistory(res.data);
+    //         } catch (err) {
+    //             console.error("Lỗi khi tải lịch sử thi: ", err);
                 
-            }
-        }
+    //         }
+    //     }
 
-        fetchHistoryData();
+    //     fetchHistoryData();
+    // }, [userId]);
+
+    // const attemptMap = useMemo(() => {
+    //     const map = {};
+
+    //     //chỉ lưu lần thi khi nộp bài
+    //     history
+    //     .filter(h => h.status === "submitted")
+    //     .forEach(h => {
+    //         const examId = Number(h.exam_id);
+
+    //         if (!map[examId]) {
+    //             map[examId] = 0;
+    //         }
+
+    //         map[examId] += 1;  // mỗi lần gặp cùng 1 đề thì số lần sẽ +1
+    //     });
+
+    //     return map;
+    // }, [history]);
+
+    useEffect(() => {
+        if (!userId) return;
+
+        const fetchAttempts = async () => {
+            try {
+                const res = await getExamAttempts(userId);
+
+                const map = {};
+
+                res.data.forEach(item => {
+                    map[item.exam_id] = item.attempts;
+                });
+
+                setAttempts(map);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchAttempts();
     }, [userId]);
-
-    //số lần thi
-    const attemptMap = useMemo(() => {
-        const map = {};
-
-        //chỉ lưu lần thi khi nộp bài
-        history
-        .filter(h => h.status === "submitted")
-        .forEach(h => {
-            const examId = Number(h.exam_id);
-
-            if (!map[examId]) {
-                map[examId] = 0;
-            }
-
-            map[examId] += 1;  // mỗi lần gặp cùng 1 đề thì số lần sẽ +1
-        });
-
-        return map;
-    }, [history]);
 
     
     //Tìm subject hiện tại
@@ -122,7 +145,7 @@ function ExamLop() {
                             <div 
                             // đổi màu để biết đề đã làm
                                 className={`card-item-exam ${
-                                    attemptMap[exam.exam_id] > 0 ? "done-exam" : ""
+                                    attempts[exam.exam_id] > 0 ? "done-exam" : ""
                                 }`} 
                                 key={exam.exam_id}
                             >
@@ -133,7 +156,7 @@ function ExamLop() {
                                 <div className="exam-bottom">
                                     {/* <h4>Lần thi: {getAttemptCount(exam.exam_id)}</h4> */}
                                      <h4>
-                                        Lần thi: {attemptMap[exam.exam_id] || 0}
+                                        Lần thi: {attempts[exam.exam_id] || 0}
                                     </h4>
                                     <button
                                     className='btn-exam'

@@ -120,8 +120,9 @@ exports.submitExam = async (req, res, next) => {
         const [calcResult] = await db.query(calculateSql, [user_exam_id]);
         const correct = calcResult[0].correct || 0;
         
-        // Thang điểm 10 tròn trịa, lấy 2 chữ số thập phân
-        const score = Number(((correct / total) * 10).toFixed(2));
+        
+        // Thang điểm 10 tròn trịa, lấy 1 chữ số thập phân 
+        const score = Number(((correct / total) * 10).toFixed(1));
 
         // 5. CẬP NHẬT ĐIỂM VÀ ĐỔI TRẠNG THÁI SANG 'SUBMITTED'
         const updateFinalSql = `
@@ -216,6 +217,28 @@ exports.reviewExam = async (req, res, next) => {
         });
 
         res.json(result);
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.getAttemptCount = async (req, res, next) => {
+    const { user_id } = req.params;
+
+    const sql = `
+        SELECT
+            exam_id,
+            COUNT(*) AS attempts
+        FROM user_exam
+        WHERE user_id = ?
+        AND status = 'submitted'
+        GROUP BY exam_id
+    `;
+
+    try {
+        const [rows] = await db.query(sql, [user_id]);
+
+        res.json(rows);
     } catch (err) {
         next(err);
     }

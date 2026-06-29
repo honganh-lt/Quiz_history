@@ -124,7 +124,7 @@
     border: none;
     border-radius: 6px;
     color: #000;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.5px;
     background: #f78d31;
@@ -136,7 +136,8 @@
 /* Hiệu ứng Hover nút bấm */
 .btn-practice:hover {
     background: #f87c10; 
-    color: #000;
+    color: #fff;
+
 }
 
 .btn-practice:active {

@@ -1,7 +1,7 @@
 import React from 'react'
 import "./css/Main3.css"
 
-export const Main3 = () => {
+export const Session3 = () => {
   return (
     <div className='home-feature'>
         {/* Khung trái */}
@@ -58,3 +58,6 @@ export const Main3 = () => {
     </div>
   )
 }
+
+// export default Session3:
+export default Session3;

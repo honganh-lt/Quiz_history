@@ -89,7 +89,7 @@ function ReviseLop() {
                     <div className='body-layout-ten'>
 
                         <div className='body-text-ten'>
-                            <h1>{currentSubject?.subject_name}</h1>
+                            <h1 style={{color: "blue"}}>{currentSubject?.subject_name}</h1>
                         </div>
 
                     </div>
@@ -105,10 +105,11 @@ function ReviseLop() {
 
                     {filteredChapters.map((chapter) => (
 
-                        <div
+                        <div 
                             className="card-list-revise"
                             key={chapter.chapter_id}
                         >
+                            
 
                             <h2>
                                 Chương {chapter.chapter_number}: {chapter.chapter_name}
@@ -130,6 +131,7 @@ function ReviseLop() {
                                                     : ""
                                             }`}
                                         >
+
 
                                             <h3>Trắc nghiệm</h3>
 
@@ -160,7 +162,7 @@ function ReviseLop() {
 
                                                 }}
                                             >
-                                                Làm đề
+                                                Làm bài
                                             </button>
 
                                         </div>

@@ -68,7 +68,7 @@ function LoginAdmin() {
 
         <input
           type="text"
-          placeholder='Tên'
+          placeholder='Tên tài khoản'
           onChange={(e) => setUsername(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {

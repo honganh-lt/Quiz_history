@@ -5,6 +5,8 @@ import "./css/MakeAnExamTen.css"
 import { getExamDetail } from '../../api/examApi';
 import { submitExam, startExam } from '../../api/userExamApi';
 import { getSubjects } from '../../api/subjectApi';
+// import ReportQuestionModal from '../ReportForm/ReportQuetionModal';
+// import ReportQuestionModal from "./ReportQuestionModal";
 
 function MakeAnExamTen() {
     const navigate = useNavigate();
@@ -17,6 +19,11 @@ function MakeAnExamTen() {
     const [userExamId, setUserExamId] = useState(null);
     const [timeLeft, setTimeLeft] = useState(null);
 
+    //Báo lỗi
+    // const [showReportModal, setShowReportModal] = useState(false);
+
+    // const [selectedQuestion, setSelectedQuestion] = useState(null);
+    
     // ===== LOAD SUBJECTS =====
     useEffect(() => {
         const fetchExamAndSubjects = async () => {
@@ -203,7 +210,21 @@ function MakeAnExamTen() {
                     {questions.map((q, index) => (
                         // THÊM ID CHO TỪNG THẺ CÂU HỎI ĐỂ ĐỊNH VỊ
                         <div key={q.question_id} id={`question-${index}`} className="question-card-exam">
-                            <h4>Câu {index + 1}: {q.content}</h4>
+                            {/* <div className="question-header"> */}
+                                <h4>
+                                    Câu {index + 1}: {q.content}
+                                </h4>
+
+                                {/* <button
+                                    className="report-btn"
+                                    onClick={() => {
+                                        setSelectedQuestion(q);
+                                        setShowReportModal(true);
+                                    }}
+                                >
+                                    ⚠️
+                                </button> */}
+                            {/* </div> */}
 
                             <div className="answers-exam">
                                 {q.answers.map((ans) => (
@@ -234,6 +255,21 @@ function MakeAnExamTen() {
                     </div>
                 </section>
             </div>
+
+            {/* {
+    showReportModal &&
+    selectedQuestion && (
+
+        <ReportQuestionModal
+            question={selectedQuestion}
+            onClose={() => {
+                setShowReportModal(false);
+                setSelectedQuestion(null);
+            }}
+        />
+
+    )
+} */}
         </main>
     );
 }

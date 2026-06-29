@@ -43,4 +43,11 @@ router.get(
 );
 
 
+router.get(
+    "/attempts/:user_id", 
+    verifyToken, 
+    userExamController.getAttemptCount
+);
+
+
 module.exports = router;

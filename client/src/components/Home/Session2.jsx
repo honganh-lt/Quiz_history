@@ -1,6 +1,6 @@
 import './css/Main2.css'
 
-export const Main2 = () => {
+export const Session2 = () => {
     return (
         <section className="timeline-section">
             <h2 className='timeline-title'>Chinh phục điểm 10 môn Lịch sử</h2>
@@ -38,4 +38,4 @@ export const Main2 = () => {
     );
 };
 
-export default Main2;
+export default Session2;

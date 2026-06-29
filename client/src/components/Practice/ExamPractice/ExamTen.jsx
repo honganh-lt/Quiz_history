@@ -8,6 +8,7 @@ import { getSubjects } from '../../../api/subjectApi';
 import Header from '../../Home/Header';
 import { getChapters } from '../../../api/chapterApi';
 import { getLesson } from '../../../api/lessonApi';
+// import ReportQuestionModal from '../../ReportForm/ReportQuetionModal';
 
 function ExamTen() {
     // ================= PARAMS =================
@@ -31,6 +32,12 @@ function ExamTen() {
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
+
+    //Báo lỗi
+    // const [showReportModal, setShowReportModal] = useState(false);
+
+    // const [selectedQuestion, setSelectedQuestion] = useState(null);
+    
 
     // ================= LOAD DATA =================
     useEffect(() => {
@@ -69,9 +76,10 @@ function ExamTen() {
         }
     }, [lessonId]);
 
-    // const handleResetExam = () => {
-    //     setSelectedAnswers({});
-    // };
+    //lam lai
+    const handleResetExam = () => {
+        setSelectedAnswers({});
+    };
 
     // ================= LOCAL STORAGE(lưu) =================
     const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -133,12 +141,12 @@ function ExamTen() {
                             </span>
                         ))}
                     </div>
-                    {/* <button
+                    <button
                         className="reset-exam-btn"
                         onClick={handleResetExam}
                     >
                         Làm lại
-                    </button> */}
+                    </button>
                 </aside>
 
                 {/* ================= RIGHT ================= */}
@@ -152,7 +160,23 @@ function ExamTen() {
                                 className="question-card"
                                 ref={(el) => (questionRefs.current[q.question_id] = el)}
                             >
-                                <h4>Câu {index + 1}: {q.content}</h4>
+                                {/* <h4>Câu {index + 1}: {q.content}</h4> */}
+                                 {/* <div className="question-header"> */}
+                                <h4>
+                                    Câu {index + 1}: {q.content}
+                                </h4>
+
+                                    {/* <button
+                                        className="report-btn"
+                                        onClick={() => {
+                                            setSelectedQuestion(q);
+                                            setShowReportModal(true);
+                                        }}
+                                    >
+                                        
+                                    </button> */}
+                                {/* </div> */}
+
                                 <div className="answers-practice">
                                     {q.answers?.map(ans => {
                                         let className = "answer-practice-btn";
@@ -179,6 +203,21 @@ function ExamTen() {
                     })}
                 </section>
             </div>
+
+             {/* {
+    showReportModal &&
+    selectedQuestion && (
+
+        <ReportQuestionModal
+            question={selectedQuestion}
+            onClose={() => {
+                setShowReportModal(false);
+                setSelectedQuestion(null);
+            }}
+        />
+
+    )
+} */}
         </main>
     );
 }

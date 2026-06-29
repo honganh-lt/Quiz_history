@@ -1,0 +1,118 @@
+.modal-overlay-report {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.4);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+/* Box modal */
+.modal-overlay-report .modal-report {
+    width: 600px;
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    background: #fff;
+    padding: 20px 24px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Title */
+.modal-overlay-report .modal-report h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+/* Label */
+.modal-overlay-report .modal-report h4 {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Input */
+.modal-overlay-report .modal-report input,
+.modal-overlay-report .modal-report select,
+.modal-overlay-report .modal-report textarea {
+
+    width: 100%;
+    padding: 8px 10px;
+
+    border-radius: 6px;
+    border: 1px solid #ccc;
+
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Disabled */
+.modal-overlay-report .modal-report input:disabled,
+.modal-overlay-report .modal-report textarea:disabled {
+
+    background: #f8fafc;
+    color: #475569;
+}
+
+/* Textarea */
+.modal-overlay-report .modal-report textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Focus */
+.modal-overlay-report .modal-report select:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+/* Buttons */
+.modal-overlay-report .modal-actions-report {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.modal-overlay-report .save-btn {
+    background: #0553d0;
+    color: white;
+
+    min-width: 90px;
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-overlay-report .save-btn:hover {
+    background: #033c9e;
+}
+
+.modal-overlay-report .close-btn {
+    background: #929090;
+    color: white;
+
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-overlay-report .close-btn:hover {
+    background: #777;
+}

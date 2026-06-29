@@ -97,6 +97,13 @@ function Sidebar({ openSidebarToggle, toggleSidebar }) { // 🌟 Nhận thêm to
           </NavLink>
         </li>
 
+        {/* <li className="sidebar-list-item">
+          <NavLink to="/question-reports">
+            <i className="fa-solid fa-graduation-cap icon"></i>
+            <span>Quản lý phản ánh</span>
+          </NavLink>
+        </li> */}
+
         <li className="sidebar-list-item-login">
           <span onClick={handleLogout} className="logout-button">
             <i className="fa-solid fa-right-from-bracket icon"></i>

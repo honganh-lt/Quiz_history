@@ -2,18 +2,18 @@
 // import LoginSignup from '../RegisterLogin/LoginSignup'
 import Footer from './Footer'
 import Header from './Header'
-import Main from './Main'
-import Main2 from './Main2'
-import { Main3 } from './Main3'
+import Session1 from './Session1'
+import Session2 from './Session2'
+import Session3 from './Session3'
 
 
 function Homepage() {
     return (
         <>
             <Header />
-            <Main />
-            <Main2 />
-            <Main3/>
+            <Session1 />
+            <Session2 />
+            <Session3/>
             <Footer/>
 
         </>

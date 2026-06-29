@@ -1,8 +1,8 @@
 const db = require("../config/db");
 
-// Thuật toán trộn mảng ngẫu nhiên chuẩn hóa (Fisher-Yates Shuffle)
+// Thuật toán trộn mảng ngẫu nhiên
 const shuffle = (array) => {
-    const arr = [...array]; // Tạo bản sao tránh làm thay đổi mảng gốc
+    const arr = [...array]; 
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];

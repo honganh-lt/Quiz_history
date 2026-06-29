@@ -190,7 +190,7 @@ const getCorrectAnswer = (answers) => {
     //slice từ danh sách chapters
     const currentQuestion = filteredQuestion.slice(indexOfFirstChap, indexOfLastChap);
     const totalPages = Math.ceil(filteredQuestion.length / questionsPerPage);
-
+    
   return (
     <div className='question-management'>
       {/* Top bar */}
@@ -211,7 +211,10 @@ const getCorrectAnswer = (answers) => {
 
               <select
                 value={subjectFilter}
-                onChange={(e) => setSubjectFilter(e.target.value)}
+                onChange={(e) => {
+                  setSubjectFilter(e.target.value);
+                  setCurrentPage(1);
+                }}
               >
                 <option value="">Tất cả môn</option>
 
@@ -227,8 +230,10 @@ const getCorrectAnswer = (answers) => {
 
               <select
                 value={difficultyFilter}
-                onChange={(e) => setDifficultyFilter(e.target.value)}
-              >
+                onChange={(e) => {
+                    setDifficultyFilter(e.target.value);
+                    setCurrentPage(1);
+                }}              >
                 <option value="">Tất cả độ khó</option>
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>

@@ -24,6 +24,8 @@ import UserExamDetail from './components/UserExam/UserExamDetail'
 import AdminLayout from './LayoutAdmin/AdminLayout'
 import ProtectedRoute from './Login/ProtectedRoute'
 import ManagementDocument from './components/Document/ManagementDocument'
+// import ManagementReportQuestion from './components/ReportQuestion/ManagementReportQuestion'
+// import ManagementReportQuestion from './components/ReportQuestion/ManagementReportQuestion'
 // import ManageTopics from './components/Chapters/ManageTopics'
 
 function App() {
@@ -133,6 +135,14 @@ function App() {
                 </AdminLayout>
             </ProtectedRoute>
       } />
+
+      {/* <Route path="/question-reports" element={ 
+            <ProtectedRoute>
+                <AdminLayout>
+                  <ManagementReportQuestion/>
+                </AdminLayout>
+            </ProtectedRoute>
+      } /> */}
 
       {/* vào web sẽ chuyển về login */}
       <Route path="/" element={<Navigate to="/login" />} />

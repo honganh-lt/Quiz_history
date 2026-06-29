@@ -25,7 +25,7 @@ export const ManagementChapters = () => {
   //==============Phân trang================
   const [currentPage, setCurrentPage] = useState(1);
   //số lượng dữ liệu cho 1 trang
-  const chaptersPerPage = 5;
+  const chaptersPerPage = 7;
 
 
 

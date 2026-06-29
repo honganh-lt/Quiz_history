@@ -12,7 +12,7 @@ exports.getLesson = async (req, res, next) => {
         s.subject_name       
     FROM lessons l
     JOIN chapters c ON l.chapter_id = c.chapter_id
-    JOIN subjects s ON c.subject_id = s.subject_id
+    JOIN subjects s ON c.subject_id = s.subject_id 
     `;
 
     if (chapter_id) {

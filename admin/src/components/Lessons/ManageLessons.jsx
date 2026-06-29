@@ -20,7 +20,7 @@ export const ManageLessons = () => {
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const lessonsPerPage = 5;
+    const lessonsPerPage = 7;
 
     useEffect(() => {
         fetchData();

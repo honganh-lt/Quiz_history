@@ -59,4 +59,8 @@ export const reviewExam = (id) => {
     return axiosClient.get(`${BASE_URL}/review/${id}`);
 };
 
+export const getExamAttempts = (id) => {
+    return axiosClient.get(`${BASE_URL}/attempts/${id}`);
+};
+
 // export const getExamAttempts = () => axios.get(`${BASE_URL}`);

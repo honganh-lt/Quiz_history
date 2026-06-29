@@ -19,7 +19,7 @@ export const ManagementSubject = () => {
 
     //=============Phân trang============
     const [currentPage, setCurrentPage] = useState(1);
-    const questionsPerPage = 5;
+    const subjectPerPage = 5;
     
 
 
@@ -90,12 +90,12 @@ export const ManagementSubject = () => {
     }
 
     //Phân trang
-    const indexOfLastChap = currentPage * questionsPerPage;
-    const indexOfFirstChap = indexOfLastChap - questionsPerPage;
+    const indexOfLastChap = currentPage * subjectPerPage;
+    const indexOfFirstChap = indexOfLastChap - subjectPerPage;
 
     //slice từ danh sách chapters
     const currentSubjects = subjects.slice(indexOfFirstChap, indexOfLastChap);
-    const totalPages = Math.ceil(subjects.length / questionsPerPage);
+    const totalPages = Math.ceil(subjects.length / subjectPerPage);
 
 
   return (

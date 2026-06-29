@@ -241,6 +241,26 @@
         0 12px 24px rgba(250,123,33,0.10);
 }
 
+.question-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.report-btn{
+    border:none;
+    background:#fff;
+    color:white;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.report-btn:hover{
+    /* background:#dc2626; */
+}
 .question-card-exam h4 {
     font-size: 18px;
     line-height: 1.6;

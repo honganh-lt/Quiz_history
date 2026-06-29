@@ -1,0 +1,106 @@
+/* ManagementReportQuestion.css */
+
+.report-management {
+    grid-area: main;
+    padding: 30px;
+    background: #f5f7fb;
+    min-height: calc(100vh - 60px);
+    box-sizing: border-box;
+}
+
+.report-management h2 {
+    margin-bottom: 20px;
+    color: #1e293b;
+    font-size: 24px;
+}
+
+.report-management table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.report-management th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+}
+
+.report-management th,
+.report-management td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    font-size: 14px;
+}
+
+.report-management tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Cột mô tả */
+.report-management td:nth-child(4),
+.report-management td:nth-child(5) {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Trạng thái */
+.report-management .status-pending {
+    color: #f59e0b;
+    font-weight: 600;
+}
+
+.report-management .status-reviewed {
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.report-management .status-resolved {
+    color: #22c55e;
+    font-weight: 600;
+}
+
+/* Nút */
+.report-management button {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.report-management button:hover {
+    opacity: 0.9;
+}
+
+.report-management .detail-btn {
+    background: #f3d73c;
+    color: white;
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+
+    .report-management {
+        padding: 15px;
+    }
+
+    .report-management table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .report-management th,
+    .report-management td {
+        font-size: 13px;
+        padding: 10px;
+    }
+}

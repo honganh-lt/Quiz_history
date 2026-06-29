@@ -49,6 +49,7 @@ const questionRoutes = require("./routes/questionRoutes");
 const examRoutes = require("./routes/examRoutes");
 const userExamRoutes = require("./routes/userExamRoutes");
 const documentRoute = require("./routes/documentRoutes");
+// const questionReportRoute = require("./routes/questionReportRoutes");
 
 // ===== 3. ĐỊNH TUYẾN API (ROUTES) =====
 app.use("/api/auth", authRoutes);
@@ -61,6 +62,8 @@ app.use("/api/questions", questionRoutes);
 app.use("/api/exams", examRoutes);
 app.use("/api/user-exam", userExamRoutes);
 app.use("/api/documents", documentRoute);
+// app.use("/api/question-reports", questionReportRoute);
+
 
 // API kiểm tra tình trạng server
 app.get("/", (req, res) => {

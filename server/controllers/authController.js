@@ -32,7 +32,7 @@ exports.register = async (req, res, next) => {
             return res.status(400).json({ message: "Địa chỉ email này đã được đăng ký sử dụng" });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10); //hash gì?
         
         const sql = `
             INSERT INTO users (username, email, password, role, full_name)
@@ -80,7 +80,7 @@ exports.login = async (req, res, next) => {
         const accessToken = jwt.sign(
             { user_id: user.user_id, role: user.role },
             process.env.JWT_SECRET, 
-            { expiresIn: "45m" } 
+            { expiresIn: "15m" } 
         );
 
         const refreshToken = crypto.randomBytes(64).toString("hex");
@@ -248,11 +248,11 @@ exports.refreshToken = async (req, res, next) => {
         }
         const user = users[0];
 
-        //Đồng bộ thời gian sống ngắn hạn tương đồng với hàm login (1 ngày)
+        //Đồng bộ thời gian sống ngắn hạn
         const newAccessToken = jwt.sign(
             { user_id: tokenData.user_id, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: "45m" }
+            { expiresIn: "15m" }
         );
 
         return res.json({ access_token: newAccessToken });

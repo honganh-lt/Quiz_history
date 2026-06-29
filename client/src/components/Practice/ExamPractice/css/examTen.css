@@ -152,7 +152,7 @@
         0 8px 18px rgba(245,161,66,0.25);
 }
 
-/* .reset-exam-btn {
+.reset-exam-btn {
     width: 50%;
     padding: 10px;
     border: none;
@@ -168,7 +168,7 @@
 
 .reset-exam-btn:hover {
     background: #f57c00;
-} */
+}
 
 /* Nút làm lại */
 /* .reset-btn {
@@ -244,6 +244,27 @@
 }
 
 /* question title */
+
+.question-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.report-btn{
+    border:none;
+    background:#fff;
+    color:white;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.report-btn:hover{
+    /* background:#dc2626; */
+}
 .question-card h4{
 
     font-size:20px;

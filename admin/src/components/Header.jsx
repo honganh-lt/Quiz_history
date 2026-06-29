@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./Header.css"
 
-export const Header = ({ toggleSidebar }) => { // 🌟 Thêm prop toggleSidebar vào đây
+export const Header = ({ toggleSidebar }) => { //Thêm prop toggleSidebar vào đây
 
     const [users, setUsers] = useState(null);
 
